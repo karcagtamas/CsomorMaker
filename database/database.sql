@@ -41,3 +41,16 @@ CREATE TABLE events(
     CONSTRAINT fk_creater_users FOREIGN KEY (creater)
     REFERENCES users(id) 
 );
+
+CREATE TABLE payouttypes(
+  id int(11) AUTO_INCREMENT NOT NULL,
+  name varchar(50) NOT NULL
+  );
+
+CREATE TABLE payouts(
+  id int(11) AUTO_INCREMENT NOT NULL,
+  name varchar(75) NOT NULL,
+  eventId int(11) NOT NULL,
+  type int(11) NOT NULL,
+  cost decimal NOT NULL
+);
