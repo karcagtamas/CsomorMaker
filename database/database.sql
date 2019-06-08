@@ -7,7 +7,7 @@ USE csomormaker;
 CREATE TABLE roles(
   id int(11) NOT NULL,
   name varchar(100) NOT NULL,
-  accessLevel int(1) NOT NULL,
+  accessLevel int(1) NOT NULL DEFAULT 0,
   PRIMARY KEY(id)
 );
 
