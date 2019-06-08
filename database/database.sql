@@ -44,7 +44,8 @@ CREATE TABLE events(
 
 CREATE TABLE payouttypes(
   id int(11) AUTO_INCREMENT NOT NULL,
-  name varchar(50) NOT NULL
+  name varchar(50) NOT NULL,
+  PRIMARY KEY(id)
   );
 
 CREATE TABLE payouts(
@@ -52,5 +53,43 @@ CREATE TABLE payouts(
   name varchar(75) NOT NULL,
   eventId int(11) NOT NULL,
   type int(11) NOT NULL,
-  cost decimal NOT NULL
+  cost decimal NOT NULL,
+  PRIMARY KEY(id),
+  CONSTRAINT fk_type_payouttypes FOREIGN KEY (type)
+  REFERENCES payouttypes(id),
+  CONSTRAINT fk_eventId_events FOREIGN KEY (eventId)
+  REFERENCES events(id)
+);
+
+CREATE TABLE bosses(
+  user int(11) NOT NULL,
+  event int(11) NOT NULL,
+  promoteDate datetime DEFAULT NOW(),
+  PRIMARY KEY(user, event),
+  CONSTRAINT fk_user_users_boss FOREIGN KEY (user)
+  REFERENCES users(id),
+  CONSTRAINT fk_event_events_boss FOREIGN KEY(event)
+  REFERENCES events(id)
+);
+
+CREATE TABLE todoes(
+  id int(11) AUTO_INCREMENT NOT NULL,
+  eventId int(11) AUTO_INCREMENT NOT NULL,
+  date datetime DEFAULT CURRENT_TIMESTAMP,
+  text longtext NOT NULL,
+  PRIMARY KEY(id),
+  CONSTRAINT fk_eventId_events_todo FOREIGN KEY (eventId)
+  REFERENCES events(id)
+);
+
+CREATE TABLE messages(
+  id int(11) AUTO_INCREMENT NOT NULL,
+  sender int(11) NOT NULL,
+  event int(11) NOT NULL,
+  dateOfSent datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(id),
+  CONSTRAINT fk_sender_users_messages FOREIGN KEY (sender)
+  REFERENCES users(id),
+  CONSTRAINT fk_event_events_messages FOREIGN KEY (event)
+  REFERENCES events (id)
 );
