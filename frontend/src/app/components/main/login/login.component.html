@@ -1,3 +1,22 @@
-<p>
-  login works!
-</p>
+<div class="panel col col-12 col-sm-6 offset-sm-3 col-lg-4 offset-lg-4 border rounded">
+  <div class="text-center p-1 border rounded title">
+    Bejelentkezés
+  </div>
+
+  <div class="alert alert-danger" *ngIf="alert"><strong>HIBA!</strong> {{ alert }}</div>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Felhasználónév</mat-label>
+    <input matInput placeholder="Felhasználónév" [formControl]="usernameControl" />
+    <mat-error *ngIf="usernameControl.hasError('required')">A felhasználónév megadás kötelező</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Jelszó</mat-label>
+    <input matInput placeholder="Jelszó" type="password" [formControl]="passwordControl" />
+    <mat-error *ngIf="passwordControl.hasError('required')">A jelszó megadás kötelező</mat-error>
+  </mat-form-field>
+
+  <div class="text-center">
+    <button mat-raised-button color="primary" (click)="login()">Bejelentkezés</button>
+  </div>
+</div>

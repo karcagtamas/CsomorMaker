@@ -1,3 +1,51 @@
-<p>
-  registration works!
-</p>
+<div class="panel col col-12 col-sm-6 offset-sm-3 col-lg-4 offset-lg-4 border rounded">
+  <div class="text-center p-1 border rounded title">
+    Regisztráció
+  </div>
+  <div class="alert alert-danger" *ngIf="alert && !success"><strong>HIBA!</strong> {{ alert }}</div>
+  <div class="alert alert-success" *ngIf="alert && success">{{ alert }}</div>
+
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Felhasználónév</mat-label>
+    <input matInput placeholder="Felhasználónév" [formControl]="usernameControl" />
+    <mat-error *ngIf="usernameControl.hasError('required')">A felhasználónév megadás kötelező</mat-error>
+    <mat-error *ngIf="usernameControl.hasError('maxlength')"
+      >A felhasználónév hossza maximum 50 karakter lehet</mat-error
+    >
+    <mat-error *ngIf="usernameControl.hasError('minlength')"
+      >A felhasználónév hossza minimum 6 karakternek kell lennie</mat-error
+    >
+  </mat-form-field>
+
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Jelszó</mat-label>
+    <input matInput placeholder="Jelszó" type="password" [formControl]="passwordControl" />
+    <mat-error *ngIf="passwordControl.hasError('required')">A jelszó megadás kötelező</mat-error>
+    <mat-error *ngIf="passwordControl.hasError('maxlength')">A jelszó hossza maximum 50 karakter lehet</mat-error>
+    <mat-error *ngIf="passwordControl.hasError('minlength')"
+      >A jelszó hossza minimum 8 karakternek kell lennie
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Jelszó újra</mat-label>
+    <input matInput placeholder="Jelszó újra" type="password" [formControl]="rePasswordControl" />
+    <mat-error *ngIf="rePasswordControl.hasError('required')">A jelszó megadás kötelező</mat-error>
+    <mat-error *ngIf="rePasswordControl.hasError('maxlength')">A jelszó hossza maximum 50 karakter lehet</mat-error>
+    <mat-error *ngIf="rePasswordControl.hasError('minlength')"
+      >A jelszó hossza minimum 8 karakternek kell lennie
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>E-mail</mat-label>
+    <input matInput placeholder="E-mail" type="email" [formControl]="emailControl" />
+    <mat-error *ngIf="emailControl.hasError('required')">Az e-mail cím megadás kötelező</mat-error>
+    <mat-error *ngIf="emailControl.hasError('email')">Az e-mail cím formája nem helyes</mat-error>
+    <mat-error *ngIf="emailControl.hasError('maxLength')">Az e-mail cím hossza maximum 255 karakter lehet</mat-error>
+  </mat-form-field>
+
+  <div class="text-center">
+    <button mat-raised-button color="primary" (click)="reg()">Regisztráció</button>
+  </div>
+</div>

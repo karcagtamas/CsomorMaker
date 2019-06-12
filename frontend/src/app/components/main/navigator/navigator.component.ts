@@ -1,3 +1,4 @@
+import { LoginService } from 'src/app/services';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navigator.component.scss']
 })
 export class NavigatorComponent implements OnInit {
+  constructor(private loginservice: LoginService) {}
 
-  constructor() { }
+  ngOnInit() {}
 
-  ngOnInit() {
+  logout() {
+    this.loginservice
+      .logout()
+      .then(res => {})
+      .catch(err => {});
   }
-
 }
