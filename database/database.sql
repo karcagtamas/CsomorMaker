@@ -16,7 +16,7 @@ CREATE TABLE users(
   username varchar(100) NOT NULL,
   email varchar(255) NOT NULL,
   name varchar(100) NOT NULL,
-  role int(11) NOT NULL,
+  role int(11) NOT NULL DEFAULT 1,
   PRIMARY KEY(id),
   CONSTRAINT fk_role_roles FOREIGN KEY (role)
   REFERENCES roles(id)

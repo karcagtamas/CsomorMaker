@@ -1,4 +1,4 @@
-﻿USE csomormaker;
+USE csomormaker;
 /* Roles */
 
   CREATE OR REPLACE PROCEDURE getRoles()
@@ -40,6 +40,8 @@
     BEGIN
      INSERT INTO events (name, creater)
       VALUES (_name, _creater);
+
+     CALL addUserToEvent(_creater, LAST_INSERT_ID());
     END;
 
   CREATE OR REPLACE PROCEDURE disableEvent(_id int(11))
@@ -116,3 +118,100 @@
       WHERE usereventswitch.event = _id;
     END;
 
+  CREATE OR REPLACE PROCEDURE addBossToEvent(_userId int(11), _eventId int(11))
+    BEGIN
+     INSERT INTO bosses (user, event)
+      VALUES (_userId, _eventId);
+    END;
+
+  /* Users */
+
+  CREATE OR REPLACE PROCEDURE getUsers()
+    BEGIN
+     SELECT * FROM users;
+    END;
+
+  CREATE OR REPLACE PROCEDURE getUser(_id int(11))
+    BEGIN
+     SELECT * FROM users WHERE id = _id;
+    END;
+
+  CREATE OR REPLACE PROCEDURE updateUser(_id int(11), _name varchar(100))
+    BEGIN
+     SELECT * FROM users WHERE id = _id;
+    END;
+
+  CREATE OR REPLACE PROCEDURE deleteUser(_id int(11))
+    BEGIN
+     DELETE FROM users WHERE id = _id;
+    END;
+
+  CREATE OR REPLACE PROCEDURE addUser(_username varchar(100), _email varchar(255))
+    BEGIN
+     INSERT INTO users(username, email, name)
+      VALUES(_username, _email, _email);
+    END;
+
+  CREATE OR REPLACE PROCEDURE addUserToEvent(_userId int(11), _eventId int(11))
+    BEGIN
+     INSERT INTO usereventswitch(user, event)
+      VALUES(_userId, _eventId);
+    END;
+
+  /* Payout types */
+
+  CREATE OR REPLACE PROCEDURE getPayOutTypes()
+    BEGIN
+     SELECT * FROM payouttypes;
+    END;
+
+  CREATE OR REPLACE PROCEDURE getPayOutType(_id int(11))
+    BEGIN
+     SELECT * FROM payouttypes WHERE id = _id;
+    END;
+
+  /* Payouts */
+
+  CREATE OR REPLACE PROCEDURE getPayOuts()
+    BEGIN
+     SELECT * FROM payouts;
+    END;
+
+  CREATE OR REPLACE PROCEDURE getPayOut(_id int(11))
+    BEGIN
+     SELECT * FROM payouts WHERE id = _id;
+    END;
+
+  CREATE OR REPLACE PROCEDURE addPayOut(_name varchar(75), _eventId int(11), _type int(11), _cost decimal)
+    BEGIN
+     INSERT INTO payouts (name, eventId, type, cost)
+        VALUES (_name, _eventId, _type, _cost);
+    END;
+
+  CREATE OR REPLACE PROCEDURE deletePayOut(_id int(11))
+    BEGIN
+     DELETE FROM payouts WHERE id = _id;
+    END;
+
+  /* Todoes */
+
+  CREATE OR REPLACE PROCEDURE getToDoes()
+    BEGIN
+     SELECT * FROM todoes;
+    END;
+
+  CREATE OR REPLACE PROCEDURE getToDo(_id int(11))
+    BEGIN
+     SELECT * FROM todoes WHERE id = _id;
+    END;
+
+  CREATE OR REPLACE PROCEDURE addToDo(_eventId int(11), _text longtext)
+    BEGIN
+     INSERT INTO todoes (eventId, text)
+        VALUES (_eventId, _text);
+    END;
+
+  CREATE OR REPLACE PROCEDURE deleteToDo(_id int(11))
+    BEGIN
+     DELETE FROM todoes WHERE id = _id;
+    END;
