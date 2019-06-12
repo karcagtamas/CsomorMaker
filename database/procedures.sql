@@ -133,6 +133,13 @@ USE csomormaker;
 
   /* Users */
 
+  CREATE OR REPLACE PROCEDURE getHash(_username varchar(50))
+    BEGIN
+      SELECT password AS hash FROM users
+        WHERE username = _username;
+    END;
+
+
   CREATE OR REPLACE PROCEDURE getUsers()
     BEGIN
      SELECT * FROM users;
@@ -161,10 +168,10 @@ USE csomormaker;
      DELETE FROM users WHERE id = _id;
     END;
 
-  CREATE OR REPLACE PROCEDURE addUser(_username varchar(100), _email varchar(255))
+  CREATE OR REPLACE PROCEDURE addUser(_username varchar(100), _email varchar(255), _password varchar(100))
     BEGIN
-     INSERT INTO users(username, email, name)
-      VALUES(_username, _email, _email);
+     INSERT INTO users(username, email, name, password)
+      VALUES(_username, _email, _email, _password);
     END;
 
   CREATE OR REPLACE PROCEDURE addUserToEvent(_userId int(11), _eventId int(11))

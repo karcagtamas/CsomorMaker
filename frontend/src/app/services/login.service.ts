@@ -21,8 +21,8 @@ export class LoginService {
     return this.http.post<Response>(`${URL}/user/reg`, { username, email, password }, HttpHeader).toPromise();
   }
 
-  isLoggedIn(username: string): Promise<boolean> {
-    return this.http.post<boolean>(`${URL}/user/isloggedin`, { username }, HttpHeader).toPromise();
+  isLoggedIn(): Promise<boolean> {
+    return this.http.get<boolean>(`${URL}/user/isloggedin`, HttpHeader).toPromise();
   }
 
   logout(): Promise<Response> {

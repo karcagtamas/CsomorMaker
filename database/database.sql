@@ -13,8 +13,9 @@ CREATE TABLE roles(
 
 CREATE TABLE users(
   id int(11) AUTO_INCREMENT NOT NULL,
-  username varchar(100) NOT NULL,
-  email varchar(255) NOT NULL,
+  username varchar(100) NOT NULL UNIQUE,
+  email varchar(255) NOT NULL UNIQUE,
+  password varchar(100) NOT NULL,
   name varchar(100) NOT NULL,
   role int(11) NOT NULL DEFAULT 1,
   PRIMARY KEY(id),

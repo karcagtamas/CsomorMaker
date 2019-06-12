@@ -33,7 +33,11 @@ export class RegistrationComponent implements OnInit {
       this.loginservice
         .registration(this.usernameControl.value, this.emailControl.value, this.passwordControl.value)
         .then(res => {
-          this.setAlert('Sikeres regisztráció!', true);
+          if (res.response === 'reg-success') {
+            this.setAlert('Sikeres regisztráció!', true);
+          } else {
+            this.setAlert(res.message, false);
+          }
         })
         .catch(err => {
           this.setAlert('Valamilyen hiba lépett fel a kommunikáció során, kérem próbálja újra kéőbb!', false);

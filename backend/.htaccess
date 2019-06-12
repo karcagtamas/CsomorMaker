@@ -1,0 +1,5 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    RewriteRule ^api/([a-z]*)/?(.*)$ index.php?type=$1&url=$2
+</IfModule>
