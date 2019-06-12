@@ -30,6 +30,13 @@ USE csomormaker;
       WHERE NOT isDisabled;
     END;
 
+  CREATE OR REPLACE PROCEDURE getUsersEvents(_userId int(11))
+    BEGIN
+     SELECT events.* FROM events
+      INNER JOIN usereventswitch ON events.id = usereventswitch.event
+      WHERE NOT events.isDisabled AND user = _userId;
+    END;
+
   CREATE OR REPLACE PROCEDURE getEvent(_id int(11))
     BEGIN
      SELECT * FROM events
@@ -135,6 +142,14 @@ USE csomormaker;
     BEGIN
      SELECT * FROM users WHERE id = _id;
     END;
+  
+  CREATE OR REPLACE PROCEDURE getEventUsers(_eventId int(11))
+    BEGIN
+     SELECT users.* FROM users
+      INNER JOIN usereventswitch ON users.id = usereventswitch.user
+      WHERE usereventswitch.event = _eventId;
+    END;
+
 
   CREATE OR REPLACE PROCEDURE updateUser(_id int(11), _name varchar(100))
     BEGIN
@@ -172,9 +187,9 @@ USE csomormaker;
 
   /* Payouts */
 
-  CREATE OR REPLACE PROCEDURE getPayOuts()
+  CREATE OR REPLACE PROCEDURE getPayOuts(_eventId int(11))
     BEGIN
-     SELECT * FROM payouts;
+     SELECT * FROM payouts WHERE eventId = _eventId;
     END;
 
   CREATE OR REPLACE PROCEDURE getPayOut(_id int(11))
@@ -195,9 +210,9 @@ USE csomormaker;
 
   /* Todoes */
 
-  CREATE OR REPLACE PROCEDURE getToDoes()
+  CREATE OR REPLACE PROCEDURE getToDoes(_eventId int(11))
     BEGIN
-     SELECT * FROM todoes;
+     SELECT * FROM todoes WHERE eventId = _eventId;
     END;
 
   CREATE OR REPLACE PROCEDURE getToDo(_id int(11))
@@ -214,4 +229,39 @@ USE csomormaker;
   CREATE OR REPLACE PROCEDURE deleteToDo(_id int(11))
     BEGIN
      DELETE FROM todoes WHERE id = _id;
+    END;
+
+  /* Messages */
+
+  CREATE OR REPLACE PROCEDURE getMessages(_eventId int(11))
+    BEGIN
+     SELECT * FROM messages WHERE event = _eventId ORDER BY dateOfSent;
+    END;
+
+  CREATE OR REPLACE PROCEDURE addMessage(_eventId int(11), _sender int(11), _message text)
+    BEGIN
+     INSERT INTO messages (sender, event, message)
+       VALUES (_sender, _eventId, _message);
+    END;
+
+  CREATE OR REPLACE PROCEDURE deleteMessage(_id int(11))
+    BEGIN
+     DELETE FROM messages WHERE id = _id;
+    END;
+
+  /* Works */
+
+  CREATE OR REPLACE PROCEDURE getWorks(_eventId int(11))
+    BEGIN
+     SELECT * FROM works WHERE event = _eventId;
+    END;
+
+  CREATE OR REPLACE PROCEDURE getWork(id int(11))
+    BEGIN
+     SELECT * FROM works WHERE id = _id;
+    END;
+
+  CREATE OR REPLACE PROCEDURE deleteWork(_id int(11))
+    BEGIN
+     DELETE FROM works WHERE id = _id;
     END;

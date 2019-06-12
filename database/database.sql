@@ -102,6 +102,7 @@ CREATE TABLE messages(
   sender int(11) NOT NULL,
   event int(11) NOT NULL,
   dateOfSent datetime DEFAULT CURRENT_TIMESTAMP,
+  message text NOT NULL,
   PRIMARY KEY(id),
   CONSTRAINT fk_sender_users_messages FOREIGN KEY (sender)
   REFERENCES users(id),
