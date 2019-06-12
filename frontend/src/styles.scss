@@ -1,3 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-@import '~bootstrap/dist/bootstrap.min.css';
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+* {
+  font-family: 'Bree Serif', serif !important;
+  font-size: 20px;
+}
+
+.activeMenu {
+  color: rgba(54, 202, 228, 0.685);
+}

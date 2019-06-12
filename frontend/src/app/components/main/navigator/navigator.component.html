@@ -1,0 +1,28 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span class="title" [routerLink]="['/home']" routerLinkActive="activeMenu">CsömörMaker</span>
+    <button mat-button [routerLink]="['/login']" routerLinkActive="activeMenu">Bejelentkezés</button>
+    <button mat-button [routerLink]="['/registration']" routerLinkActive="activeMenu">Regisztráció</button>
+    <button mat-button [matMenuTriggerFor]="menu">Profil</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item [routerLink]="['/']" routerLinkActive="activeMenu">Beállítások</button>
+      <button mat-menu-item [routerLink]="['/']" routerLinkActive="activeMenu">Jelszó csere</button>
+    </mat-menu>
+
+    <button mat-button [matMenuTriggerFor]="menu1">Események</button>
+    <mat-menu #menu1="matMenu">
+      <button mat-menu-item [routerLink]="['/']" routerLinkActive="activeMenu">Új esemény létrehozása</button>
+      <button mat-menu-item [routerLink]="['/']" routerLinkActive="activeMenu">Eseményeim áttekintése</button>
+    </mat-menu>
+
+    <button mat-button [matMenuTriggerFor]="menu2">Gólyatábor</button>
+    <mat-menu #menu2="matMenu">
+      <button mat-menu-item [routerLink]="['/']" routerLinkActive="activeMenu">Valami 1</button>
+      <button mat-menu-item [routerLink]="['/']" routerLinkActive="activeMenu">Valami 2</button>
+    </mat-menu>
+
+    <span class="spacer"></span>
+
+    <button mat-button>Kijelentkezés</button>
+  </mat-toolbar-row>
+</mat-toolbar>
