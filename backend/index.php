@@ -62,6 +62,10 @@
                     case 'get-one':
                         getEvent($_POST['id']);
                         break;
+
+                    case 'update':
+                        updateEvent($_POST['event']);
+                        break;
                         
                     default:
                         echo '{"response" : "bad-event", "message" : "Bad request event!"}';

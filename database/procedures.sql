@@ -123,7 +123,7 @@ USE csomormaker;
       visitors = _visitors,
       visitorLimit = _visitorLimit,
       playerCost = _playerCost,
-      visitorsCost = _visitorCost,
+      visitorCost = _visitorCost,
       playerDeposit = _playerDeposit,
       days = _days,
       startHour = _startHour,

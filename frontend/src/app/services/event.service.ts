@@ -24,4 +24,8 @@ export class EventService {
   getEvent(id: number): Promise<Event> {
     return this.http.post<Event>(`${URL}/event/get-one`, { id }, HttpHeader).toPromise();
   }
+
+  updateEvent(event: Event): Promise<Response> {
+    return this.http.post<Response>(`${URL}/event/update`, { event }, HttpHeader).toPromise();
+  }
 }

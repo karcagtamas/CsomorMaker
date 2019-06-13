@@ -49,4 +49,26 @@
          echo json_encode($row);
     }
 
+    function updateEvent($event){
+        global $db;
+
+        $sql = "CALL updateEvent(?, ?, ?,?, ?, ?, ? ,?, ?, ? ,? , ?, ?, ?);";
+        $stmt = $db->prepare($sql);
+        $days = $event['days'];
+        $start = $event['startHour'];
+        $end = $event['endHour'];
+        $length = $days * 24 - $start + $end;
+        $stmt->bind_param("isiiiiiiiiiiii", $event['id'], $event['name'], $event['currentPlayers'], $event['playerLimit'], $event['injured'],$event['visitors'],$event['visitorLimit'], $event['playerCost'], $event['visitorCost'], $event['playerDeposit'], $days, $start,$end, $length);
+        $stmt->execute();
+        if ($stmt->errno){
+            $array['response'] =  'update-event-failure';
+            $array['message'] = 'Something went wrong!';
+            echo json_encode($array);
+        }else{
+             $array['response'] =  'update-event-success';
+            $array['message'] = 'The event update was success!!';
+            echo json_encode($array);
+        }
+    }
+
 ?>

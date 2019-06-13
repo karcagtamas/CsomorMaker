@@ -37,9 +37,15 @@
 
     .event {
       padding: 0.2rem;
+
+      &:hover {
+        cursor: pointer;
+        background-color: #9a68f1af;
+      }
     }
     .purple {
       color: #683ab7;
+      font-weight: bold;
     }
   }
 
@@ -53,9 +59,15 @@
     }
     .item {
       padding: 0.2rem;
+
+      &:hover {
+        cursor: pointer;
+        background-color: #9a68f1af;
+      }
     }
     .purple {
       color: #683ab7;
+      font-weight: bold;
     }
   }
 }

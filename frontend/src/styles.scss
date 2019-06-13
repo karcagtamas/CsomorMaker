@@ -2,6 +2,8 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import '~bootstrap/dist/css/bootstrap.min.css';
 
+$main-color: #683ab7;
+
 * {
   font-family: 'Bree Serif', serif !important;
   font-size: 20px;
@@ -9,4 +11,10 @@
 
 .activeMenu {
   color: rgba(54, 202, 228, 0.685);
+}
+
+.panel-title {
+  background-color: #683ab7;
+  color: white;
+  font-size: 150%;
 }

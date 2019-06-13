@@ -1,3 +1,81 @@
-<p>
-  event-settings works!
-</p>
+<div class="text-center panel-title border rounded">Beállítások</div>
+<div class="settings" *ngIf="event">
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Név</mat-label>
+    <input matInput type="text" placeholder="Név" [formControl]="nameControl" />
+    <mat-error *ngIf="nameControl.hasError('required')">A név megadása kötelező!</mat-error>
+    <mat-error *ngIf="nameControl.hasError('maxlength')">A név maximum hossza 50 karakter lehet!</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Jelenlegi játékos szám</mat-label>
+    <input matInput type="number" placeholder="Jelenlegi játékos szám" [formControl]="currentPlayersControl" />
+    <mat-error *ngIf="currentPlayersControl.hasError('required')">A játékos szám megadása kötelező!</mat-error>
+    <mat-error *ngIf="currentPlayersControl.hasError('min')">A játékos szám minimuma 0!</mat-error>
+    <mat-error *ngIf="currentPlayersControl.hasError('max')">A játékos szám maximum {{ event.playerLimit }}!</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Játékos limit</mat-label>
+    <input matInput type="number" placeholder="Játékos limit" [formControl]="playerLimitControl" />
+    <mat-error *ngIf="playerLimitControl.hasError('required')">A játékos limit megadása kötelező!</mat-error>
+    <mat-error *ngIf="playerLimitControl.hasError('min')">A játékos limit minimuma 0!</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Látógatók</mat-label>
+    <input matInput type="number" placeholder="Látógatók" [formControl]="visitorsControl" />
+    <mat-error *ngIf="visitorsControl.hasError('required')">A látógató szám megadása kötelező!</mat-error>
+    <mat-error *ngIf="visitorsControl.hasError('min')">A látógató szám minimuma 0!</mat-error>
+    <mat-error *ngIf="visitorsControl.hasError('max')">A látógató szám maximum {{ event.visitorLimit }}!</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Látógató limit</mat-label>
+    <input matInput type="number" placeholder="Látógató limit" [formControl]="visitorLimitControl" />
+    <mat-error *ngIf="visitorLimitControl.hasError('required')">A látógató limit megadása kötelező!</mat-error>
+    <mat-error *ngIf="visitorLimitControl.hasError('min')">A látógató limit minimuma 0!</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Játékos ár</mat-label>
+    <input matInput type="number" placeholder="Játékos ár" [formControl]="playerCostControl" />
+    <mat-error *ngIf="playerCostControl.hasError('required')">A játékos ár megadása kötelező!</mat-error>
+    <mat-error *ngIf="playerCostControl.hasError('min')">A játékos ár minimuma 0!</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Látógató ár</mat-label>
+    <input matInput type="number" placeholder="Látógató ár" [formControl]="visitorCostControl" />
+    <mat-error *ngIf="visitorCostControl.hasError('required')">A látógató ár megadása kötelező!</mat-error>
+    <mat-error *ngIf="visitorCostControl.hasError('min')">A látógató ár minimuma 0!</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Játékos előleg</mat-label>
+    <input matInput type="number" placeholder="Játékos előleg" [formControl]="playerDepositControl" />
+    <mat-error *ngIf="playerDepositControl.hasError('required')">A játékos előleg megadása kötelező!</mat-error>
+    <mat-error *ngIf="playerDepositControl.hasError('min')">A játékos előleg minimuma 0!</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Napok</mat-label>
+    <input matInput type="number" placeholder="Napok" [formControl]="daysControl" />
+    <mat-error *ngIf="daysControl.hasError('required')">A nap megadása kötelező!</mat-error>
+    <mat-error *ngIf="daysControl.hasError('min')">A nap szám minimuma 0!</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Kezdeti óra</mat-label>
+    <input matInput type="number" placeholder="Kezdeti óra" [formControl]="startHourControl" />
+    <mat-error *ngIf="startHourControl.hasError('required')">A kezdeti óra megadása kötelező!</mat-error>
+    <mat-error *ngIf="startHourControl.hasError('min')">A kezdeti óra minimuma 0!</mat-error>
+    <mat-error *ngIf="startHourControl.hasError('max')">A kezdeti óra maximuma 23!</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Vége óra</mat-label>
+    <input matInput type="number" placeholder="Vége óra" [formControl]="endHourControl" />
+    <mat-error *ngIf="endHourControl.hasError('required')">A vége óra megadása kötelező!</mat-error>
+    <mat-error *ngIf="endHourControl.hasError('min')">A vége óra minimuma 0!</mat-error>
+    <mat-error *ngIf="endHourControl.hasError('max')">A vége óra maximuma 23!</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Sérültek</mat-label>
+    <input matInput type="number" placeholder="Sérültek" [formControl]="injuredControl" />
+    <mat-error *ngIf="injuredControl.hasError('required')">A sérültek megadása kötelező!</mat-error>
+    <mat-error *ngIf="injuredControl.hasError('min')">A sérültek minimuma 0!</mat-error>
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="save()">Mentés</button>
+  <button mat-raised-button color="primary" (click)="reset()">Visszaállítás</button>
+</div>
