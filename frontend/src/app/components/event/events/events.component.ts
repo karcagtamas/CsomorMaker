@@ -18,7 +18,8 @@ export class EventsComponent implements OnInit {
     { name: 'ToDo', link: 'todo' },
     { name: 'Chat', link: 'chat' }
   ];
-  currentEvent = 1;
+  currentEventId = 0;
+  currentEvent = new Event();
   currentPage = 'details';
 
   constructor(private eventservice: EventService, private route: ActivatedRoute, private router: Router) {}
@@ -26,12 +27,22 @@ export class EventsComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(data => {
       console.log(data);
-      if (data.id && data.page) {
-        this.currentEvent = data.id;
-        this.currentPage = data.page;
-      } else {
-        this.router.navigateByUrl(`/events/${this.events[0].id}/details`);
-      }
+      this.eventservice
+        .getEvents()
+        .then(res => {
+          this.events = res;
+          if (data.id && data.page) {
+            this.currentEventId = data.id;
+            this.currentPage = data.page;
+            this.currentEvent = this.events.find(x => x.id === +this.currentEventId);
+            // console.log(this.events);
+          } else {
+            this.router.navigateByUrl(`/events/${this.events[0].id}/details`);
+          }
+        })
+        .catch(() => {
+          this.events = [];
+        });
     });
     this.getEvents();
   }

@@ -8,3 +8,5 @@ export * from './is-admin.pipe';
 export * from './person-count.pipe';
 export * from './test.pipe';
 export * from './trust-html.pipe';
+export * from './is-ready.pipe';
+export * from './is-locked.pipe';

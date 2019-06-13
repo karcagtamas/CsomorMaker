@@ -32,7 +32,9 @@ import {
   IsAdminPipe,
   PersonCountPipe,
   TestPipe,
-  TrustHTMLPipe
+  TrustHTMLPipe,
+  IsReadyPipe,
+  IsLockedPipe
 } from './pipes';
 import { EventSettingsComponent } from './components/event/event-settings';
 import { EventChatComponent } from './components/event/event-chat';
@@ -40,7 +42,7 @@ import { EventCsomorComponent } from './components/event/event-csomor';
 import { EventDetailsComponent } from './components/event/event-details';
 import { EventGeneratorComponent } from './components/event/event-generator';
 import { EventSummaryComponent } from './components/event/event-summary';
-import { EventToDoComponent } from './components/event-todo';
+import { EventToDoComponent } from './components/event/event-todo';
 
 @NgModule({
   declarations: [
@@ -68,7 +70,9 @@ import { EventToDoComponent } from './components/event-todo';
     EventDetailsComponent,
     EventGeneratorComponent,
     EventSummaryComponent,
-    EventToDoComponent
+    EventToDoComponent,
+    IsLockedPipe,
+    IsReadyPipe
   ],
   imports: [
     BrowserModule,

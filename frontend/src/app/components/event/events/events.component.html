@@ -1,4 +1,4 @@
-<div class="col col-12 row">
+<div class="col col-12 row panel">
   <div class="col col-4 menu">
     <div class="events border rounded">
       <div class="title text-center border rounded">Eseményeid</div>
@@ -13,19 +13,25 @@
     </div>
     <div class="menuitems border rounded">
       <div class="title text-center border rounded">Menü</div>
-      <div class="item" *ngFor="let item of menuItems" [routerLink]="['/events', currentEvent, item.link]" routerLinkActive="router-link-active" >{{item.name}}</div>
+      <div
+        class="item"
+        *ngFor="let item of menuItems"
+        [routerLink]="['/events', currentEventId, item.link]"
+        routerLinkActive="router-link-active"
+      >
+        {{ item.name }}
+      </div>
     </div>
   </div>
-  <div class="col col-8 changer">
+  <div class="col col-8 changer" *ngIf="currentEvent">
     <div [ngSwitch]="currentPage">
-      <app-event-details *ngSwitchCase="'details'"></app-event-details>
+      <app-event-details *ngSwitchCase="'details'" [event]="currentEvent"></app-event-details>
       <app-event-csomor *ngSwitchCase="'csomor'"></app-event-csomor>
       <app-event-chat *ngSwitchCase="'chat'"></app-event-chat>
       <app-event-generator *ngSwitchCase="'generator'"></app-event-generator>
       <app-event-settings *ngSwitchCase="'settings'"></app-event-settings>
       <app-event-summary *ngSwitchCase="'summary'"></app-event-summary>
       <app-event-to-do *ngSwitchCase="'todo'"></app-event-to-do>
-      <div *ngSwitchDefault>output2</div>
     </div>
   </div>
 </div>

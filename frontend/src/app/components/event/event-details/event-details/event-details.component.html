@@ -1,3 +1,21 @@
-<p>
-  event-details works!
-</p>
+<div class="text-center title border rounded">Adatok</div>
+<div class="details" *ngIf="event">
+  <div class="element"><span class="name">Név:</span> {{ event.name }}</div>
+  <div class="element"><span class="name">Zárolási állapot:</span> {{ event.isLocked | isLocked }}</div>
+  <div class="element"><span class="name">Létrehozó:</span> {{ event.creater }}</div>
+  <div class="element"><span class="name">Létrehozás dátuma:</span> {{ event.creationDate }}</div>
+  <div class="element"><span class="name">Jelenlegi játékos szám:</span> {{ event.currentPlayers | personCount }}</div>
+  <div class="element"><span class="name">Maximum játékos szám:</span> {{ event.playerLimit | personCount }}</div>
+  <div class="element"><span class="name">Nézők:</span> {{ event.visitors | personCount }}</div>
+  <div class="element"><span class="name">Maximum néző szám:</span> {{ event.visitorLimit | personCount }}</div>
+  <div class="element"><span class="name">Játékos díj:</span> {{ event.playerCost | forint }}</div>
+  <div class="element"><span class="name">Játékos előleg:</span> {{ event.playerDeposit | forint }}</div>
+  <div class="element"><span class="name">Néző díj:</span> {{ event.visitorCost | forint }}</div>
+  <div class="element"><span class="name">Napok:</span> {{ event.days }}</div>
+  <div class="element"><span class="name">Kezdeti óra:</span> {{ event.startHour | hours }}</div>
+  <div class="element"><span class="name">Vége óra:</span> {{ event.endHour | hours }}</div>
+  <div class="element"><span class="name">Hossz:</span> {{ event.length | hours }}</div>
+  <div class="element"><span class="name">Tagok:</span> {{ event.members | personCount }}</div>
+  <div class="element"><span class="name">Generátor állapot:</span> {{ event.ready | isReady }}</div>
+  <div class="element"><span class="name">Sérültek:</span> {{ event.injured | personCount }}</div>
+</div>

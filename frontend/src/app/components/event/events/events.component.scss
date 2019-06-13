@@ -17,6 +17,11 @@
 }
  */
 
+.panel {
+  margin: 0;
+  padding: 0;
+}
+
 .menu {
   padding: 0.2rem;
 
@@ -33,7 +38,7 @@
     .event {
       padding: 0.2rem;
     }
-    .purple{
+    .purple {
       color: #683ab7;
     }
   }
@@ -49,8 +54,12 @@
     .item {
       padding: 0.2rem;
     }
-    .purple{
+    .purple {
       color: #683ab7;
     }
   }
+}
+
+.changer {
+  padding: 0.2rem;
 }
