@@ -66,6 +66,26 @@
                     case 'update':
                         updateEvent($_POST['event']);
                         break;
+
+                    case 'lock':
+                        lock($_POST['id']);
+                        break;
+
+                    case 'inc-visitors':
+                        increaseVisitors($_POST['id']);
+                        break;
+
+                    case 'dec-visitors':
+                        decreaseVisitors($_POST['id']);
+                        break;
+
+                    case 'inc-injured':
+                        increaseInjured($_POST['id']);
+                        break;
+
+                    case 'dec-injured':
+                        decreaseInjured($_POST['id']);
+                        break;
                         
                     default:
                         echo '{"response" : "bad-event", "message" : "Bad request event!"}';

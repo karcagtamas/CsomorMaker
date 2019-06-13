@@ -71,4 +71,94 @@
         }
     }
 
+    function lock($id){
+        global $db;
+
+        $sql = "CALL setLockedEvent(?)";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        if ($stmt->errno){
+            $array['response'] =  'event-lock-failure';
+            $array['message'] = 'Something went wrong!';
+            echo json_encode($array);
+        }else{
+             $array['response'] =  'event-lock-success';
+            $array['message'] = 'The event lock was success!!';
+            echo json_encode($array);
+        }
+    }
+
+    function increaseVisitors($id){
+        global $db;
+
+        $sql = "CALL increaseVisitors(?)";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        if ($stmt->errno){
+            $array['response'] =  'visitor-increase-failure';
+            $array['message'] = 'Something went wrong!';
+            echo json_encode($array);
+        }else{
+             $array['response'] =  'visitor-increase-success';
+            $array['message'] = 'The visitor increase was success!!';
+            echo json_encode($array);
+        }
+    }
+
+    function decreaseVisitors($id){
+        global $db;
+
+        $sql = "CALL decreaseVisitors(?)";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        if ($stmt->errno){
+            $array['response'] =  'visitor-decrease-failure';
+            $array['message'] = 'Something went wrong!';
+            echo json_encode($array);
+        }else{
+             $array['response'] =  'visitor-decrease-success';
+            $array['message'] = 'The visitor decrease was success!!';
+            echo json_encode($array);
+        }
+    }
+
+    function increaseInjured($id){
+        global $db;
+
+        $sql = "CALL increaseInjured(?)";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        if ($stmt->errno){
+            $array['response'] =  'injured-increase-failure';
+            $array['message'] = 'Something went wrong!';
+            echo json_encode($array);
+        }else{
+             $array['response'] =  'injured-increase-success';
+            $array['message'] = 'The injured increase was success!!';
+            echo json_encode($array);
+        }
+    }
+
+    function decreaseInjured($id){
+        global $db;
+
+        $sql = "CALL decreaseInjured(?)";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        if ($stmt->errno){
+            $array['response'] =  'injured-decrease-failure';
+            $array['message'] = 'Something went wrong!';
+            echo json_encode($array);
+        }else{
+             $array['response'] =  'injured-decrease-success';
+            $array['message'] = 'The injured decrease was success!!';
+            echo json_encode($array);
+        }
+    }
+
 ?>

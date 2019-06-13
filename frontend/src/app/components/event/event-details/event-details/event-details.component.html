@@ -18,4 +18,16 @@
   <div class="element"><span class="name">Tagok:</span> {{ event.members | personCount }}</div>
   <div class="element"><span class="name">Generátor állapot:</span> {{ event.ready | isReady }}</div>
   <div class="element"><span class="name">Sérültek:</span> {{ event.injured | personCount }}</div>
+  <div class="text-center">
+    <button mat-raised-button color="primary" *ngIf="!event.isLocked" (click)="lockEvent()">Zárolás</button>
+    <button mat-raised-button color="primary" *ngIf="event.isLocked" (click)="lockEvent()">Zárolás bontása</button>
+  </div>
+  <div class="text-center">
+    <button mat-raised-button color="primary" (click)="decreaseV()">Látógató -</button>
+    <button mat-raised-button color="primary" (click)="increaseV()">Látógató +</button>
+  </div>
+  <div class="text-center">
+    <button mat-raised-button color="primary" (click)="decreaseI()">Sérült -</button>
+    <button mat-raised-button color="primary" (click)="increaseI()">Sérült +</button>
+  </div>
 </div>

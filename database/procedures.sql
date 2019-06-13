@@ -160,6 +160,27 @@ USE csomormaker;
       UPDATE events SET isLocked = _lock WHERE id = _id;
     END;
 
+  CREATE OR REPLACE PROCEDURE increaseVisitors(_id int(11))
+    BEGIN
+      UPDATE events SET visitors = visitors + 1 WHERE id = _id;
+    END;
+
+  CREATE OR REPLACE PROCEDURE decreaseVisitors(_id int(11))
+    BEGIN
+      UPDATE events SET visitors = visitors - 1 WHERE id = _id;
+    END;
+
+  CREATE OR REPLACE PROCEDURE increaseInjured(_id int(11))
+    BEGIN
+      UPDATE events SET injured = injured + 1 WHERE id = _id;
+    END;
+
+  CREATE OR REPLACE PROCEDURE decreaseInjured(_id int(11))
+    BEGIN
+      UPDATE events SET injured = injured - 1 WHERE id = _id;
+    END;
+
+
   CREATE OR REPLACE PROCEDURE getEventUsers(_id int(11))
     BEGIN
      SELECT users.id, users.username, users.email, users.name, users.role FROM users

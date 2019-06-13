@@ -71,7 +71,6 @@ export class EventsComponent implements OnInit {
           const old = this.events.findIndex(x => x.id === +event.event.id);
           this.events[old] = event.event;
           this.currentEvent = this.events.find(x => x.id === +this.currentEventId);
-          console.log(this.events);
         } else {
           this.setAlert(res.message, false);
         }
@@ -91,5 +90,107 @@ export class EventsComponent implements OnInit {
 
   updateAlert(event) {
     this.setAlert(event.msg, false);
+  }
+
+  lockEvent(event) {
+    this.eventservice
+      .lockEvent(event.id)
+      .then(res => {
+        if (res.response === 'event-lock-success') {
+          this.setAlert('Az esemény zárolása/feloldása sikeres!', true);
+          const old = this.events.findIndex(x => x.id === +event.id);
+          this.events[old].isLocked = this.events[old].isLocked ? false : true;
+          this.currentEvent = this.events.find(x => x.id === +this.currentEventId);
+        } else {
+          this.setAlert(res.message, false);
+        }
+      })
+      .catch(() => {
+        this.setAlert('Az esemény zárolása/feloldása közben hiba történt! Kérjük próbálja újra késöbb!', false);
+      });
+  }
+
+  increaseVisitors(event) {
+    this.eventservice
+      .increaseVisitors(event.id)
+      .then(res => {
+        if (res.response === 'visitor-increase-success') {
+          this.setAlert('Az esemény részvevőinek száma sikeresen növelve!', true);
+          const old = this.events.findIndex(x => x.id === +event.id);
+          this.events[old].visitors++;
+          this.currentEvent = this.events.find(x => x.id === +this.currentEventId);
+        } else {
+          this.setAlert(res.message, false);
+        }
+      })
+      .catch(() => {
+        this.setAlert(
+          'Az esemény részvevőinek számának növelése közben hiba történt! Kérjük próbálja újra késöbb!',
+          false
+        );
+      });
+  }
+
+  decreaseVisitors(event) {
+    this.eventservice
+      .decreaseVisitors(event.id)
+      .then(res => {
+        if (res.response === 'visitor-decrease-success') {
+          this.setAlert('Az esemény részvevőinek száma sikeresen csökkentve!', true);
+          const old = this.events.findIndex(x => x.id === +event.id);
+          this.events[old].visitors--;
+          this.currentEvent = this.events.find(x => x.id === +this.currentEventId);
+        } else {
+          this.setAlert(res.message, false);
+        }
+      })
+      .catch(() => {
+        this.setAlert(
+          'Az esemény részvevőinek számának csökkentése közben hiba történt! Kérjük próbálja újra késöbb!',
+          false
+        );
+      });
+  }
+
+  increaseInjured(event) {
+    this.eventservice
+      .increaseInjured(event.id)
+      .then(res => {
+        if (res.response === 'injured-increase-success') {
+          this.setAlert('Az esemény sérültjeinek száma sikeresen növelve!', true);
+          const old = this.events.findIndex(x => x.id === +event.id);
+          this.events[old].injured++;
+          this.currentEvent = this.events.find(x => x.id === +this.currentEventId);
+        } else {
+          this.setAlert(res.message, false);
+        }
+      })
+      .catch(() => {
+        this.setAlert(
+          'Az esemény sérültjeinek számának növelése közben hiba történt! Kérjük próbálja újra késöbb!',
+          false
+        );
+      });
+  }
+
+  decreaseInjured(event) {
+    this.eventservice
+      .decreaseInjured(event.id)
+      .then(res => {
+        if (res.response === 'injured-decrease-success') {
+          this.setAlert('Az esemény sérültjeinek száma sikeresen csökkentve!', true);
+          const old = this.events.findIndex(x => x.id === +event.id);
+          this.events[old].injured--;
+          this.currentEvent = this.events.find(x => x.id === +this.currentEventId);
+        } else {
+          this.setAlert(res.message, false);
+        }
+      })
+      .catch(() => {
+        this.setAlert(
+          'Az esemény sérültjeinek számának csökkentése közben hiba történt! Kérjük próbálja újra késöbb!',
+          false
+        );
+      });
   }
 }

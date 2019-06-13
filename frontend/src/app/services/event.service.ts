@@ -28,4 +28,24 @@ export class EventService {
   updateEvent(event: Event): Promise<Response> {
     return this.http.post<Response>(`${URL}/event/update`, { event }, HttpHeader).toPromise();
   }
+
+  lockEvent(id: number): Promise<Response> {
+    return this.http.post<Response>(`${URL}/event/lock`, { id }, HttpHeader).toPromise();
+  }
+
+  increaseVisitors(id: number): Promise<Response> {
+    return this.http.post<Response>(`${URL}/event/inc-visitors`, { id }, HttpHeader).toPromise();
+  }
+
+  decreaseVisitors(id: number): Promise<Response> {
+    return this.http.post<Response>(`${URL}/event/dec-visitors`, { id }, HttpHeader).toPromise();
+  }
+
+  increaseInjured(id: number): Promise<Response> {
+    return this.http.post<Response>(`${URL}/event/inc-injured`, { id }, HttpHeader).toPromise();
+  }
+
+  decreaseInjured(id: number): Promise<Response> {
+    return this.http.post<Response>(`${URL}/event/dec-injured`, { id }, HttpHeader).toPromise();
+  }
 }
