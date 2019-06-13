@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Event } from 'src/app/models';
 import { EventService } from 'src/app/services';
 import { ActivatedRoute, Router } from '@angular/router';
-
 @Component({
   selector: 'app-events',
   templateUrl: './events.component.html',
@@ -10,6 +9,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class EventsComponent implements OnInit {
   events: Event[] = [];
+  menuItems = [
+    { name: 'Adatok', link: 'details' },
+    { name: 'Beállítások', link: 'settings' },
+    { name: 'Generátor', link: 'generator' },
+    { name: 'Csömör', link: 'csomor' },
+    { name: 'Áttekintés', link: 'summary' },
+    { name: 'ToDo', link: 'todo' },
+    { name: 'Chat', link: 'chat' }
+  ];
   currentEvent = 1;
   currentPage = 'details';
 

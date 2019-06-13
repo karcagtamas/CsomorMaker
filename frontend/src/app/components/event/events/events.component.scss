@@ -22,6 +22,7 @@
 
   .events {
     padding: 0.2rem;
+    margin-bottom: 0.5rem;
 
     .title {
       background-color: #683ab7;
@@ -31,6 +32,9 @@
 
     .event {
       padding: 0.2rem;
+    }
+    .purple{
+      color: #683ab7;
     }
   }
 
@@ -44,6 +48,9 @@
     }
     .item {
       padding: 0.2rem;
+    }
+    .purple{
+      color: #683ab7;
     }
   }
 }

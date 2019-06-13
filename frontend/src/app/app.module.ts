@@ -34,13 +34,13 @@ import {
   TestPipe,
   TrustHTMLPipe
 } from './pipes';
-import { EventSettingsComponent } from './components/event/event-settings;
-import { EventChatComponent } from './components/event/event-chat;
-import { EventCsomorComponent } from './components/event/event-csomor;
-import { EventDetailsComponent } from './components/event/event-details;
-import { EventGeneratorComponent } from './components/event/event-generator;
-import { EventSummaryComponent } from './components/event/event-summary;
-import { EventToDoComponent } from './components/event-todo;
+import { EventSettingsComponent } from './components/event/event-settings';
+import { EventChatComponent } from './components/event/event-chat';
+import { EventCsomorComponent } from './components/event/event-csomor';
+import { EventDetailsComponent } from './components/event/event-details';
+import { EventGeneratorComponent } from './components/event/event-generator';
+import { EventSummaryComponent } from './components/event/event-summary';
+import { EventToDoComponent } from './components/event-todo';
 
 @NgModule({
   declarations: [
