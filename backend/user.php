@@ -13,7 +13,7 @@
         if ($row = $result->fetch_assoc()){
             if (password_verify($password, $row['hash'])){
                 echo '{"response" : "valid-login", "message" : "The login is success!"}';
-                $_SESSION['userId'] = $stmt->insert_id;
+                $_SESSION['userId'] = $row['userId'];
             }else{
                 echo '{"response" : "invalid-password", "message" : "The gave password is invalid"}';
             }
@@ -44,6 +44,29 @@
     function logout(){
         session_destroy();
             echo '{"response" : "logout-success", "message" : "The log out was success!"}';
+
+    }
+
+    function isAdmin(){
+        global $db;
+
+        if (isset($_SESSION['userId'])){
+            $sql = "CALL isAdmin(?);";
+            $stmt = $db->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+
+            if ($row['isAdmin']){
+                echo true;
+            }
+            else{
+                echo false;
+            }
+
+        }else{
+            echo false;
+        }
 
     }
 

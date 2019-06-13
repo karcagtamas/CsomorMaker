@@ -15,8 +15,8 @@
 
     <button mat-button [matMenuTriggerFor]="menu1" *ngIf="isLoggedIn">Események</button>
     <mat-menu #menu1="matMenu">
-      <button mat-menu-item [routerLink]="['/']" routerLinkActive="activeMenu">Új esemény létrehozása</button>
-      <button mat-menu-item [routerLink]="['/']" routerLinkActive="activeMenu">Eseményeim áttekintése</button>
+      <button mat-menu-item [routerLink]="['/new-event']" routerLinkActive="activeMenu">Új esemény létrehozása</button>
+      <button mat-menu-item [routerLink]="['/events']" routerLinkActive="activeMenu">Eseményeim áttekintése</button>
     </mat-menu>
 
     <button mat-button [matMenuTriggerFor]="menu2" *ngIf="isLoggedIn">Gólyatábor</button>

@@ -5,6 +5,7 @@ export class Event {
   isDisabled: boolean;
   createrId: number;
   creater: string;
+  creationDate: Date;
   currentPlayers: number;
   playerLimit: number;
   injured: number;
@@ -18,4 +19,5 @@ export class Event {
   endHour: number;
   length: number;
   ready: boolean;
+  members: number;
 }

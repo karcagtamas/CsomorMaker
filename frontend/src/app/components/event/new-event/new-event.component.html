@@ -1,0 +1,18 @@
+<div class="panel col col-12 col-sm-6 offset-sm-3 col-lg-4 offset-lg-4 border rounded">
+  <div class="text-center p-1 border rounded title">
+    Új esemény felvétele
+  </div>
+
+  <div class="alert alert-danger" *ngIf="alert && !success"><strong>HIBA!</strong> {{ alert }}</div>
+  <div class="alert alert-success" *ngIf="alert && success">{{ alert }}</div>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Esemény név</mat-label>
+    <input matInput placeholder="Név" [formControl]="nameControl" />
+    <mat-error *ngIf="nameControl.hasError('required')">A név megadás kötelező</mat-error>
+    <mat-error *ngIf="nameControl.hasError('maxlength')">A név maximális hossz 50 karakter megadás kötelező</mat-error>
+  </mat-form-field>
+
+  <div class="text-center">
+    <button mat-raised-button color="primary" (click)="addEvent()">Esemény felvétele</button>
+  </div>
+</div>

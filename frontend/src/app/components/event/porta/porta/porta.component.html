@@ -1,0 +1,97 @@
+<!-- <button class="btn btn-primary m-2" (click)="openDialog()" *ngIf="isAdmin">
+  Új esemény létrehozás
+</button>
+<mat-tab-group>
+  <mat-tab label="{{ event.name }}" *ngFor="let event of Events">
+    <button class="btn btn-primary m-2" *ngIf="!event.isLocked" (click)="lock(event.eventId, true)">Zárolás</button>
+    <button class="btn btn-primary m-2" *ngIf="event.isLocked" (click)="lock(event.eventId, false)">
+      Zárolás bontása
+    </button>
+    <div class="border rounded m-2 p-2">
+      <button class="btn btn-danger float-right m-1" (click)="deleteEvent(event.eventId)" *ngIf="isAdmin">
+        Esemény törlése
+      </button>
+      <button class="btn btn-warning float-right m-1" (click)="openModify(event)" *ngIf="isAdmin">Módosítás</button>
+      <h6>
+        Esemény: <strong>{{ event.name }}</strong>
+      </h6>
+      <h6>
+        Létrehozója: <strong>{{ event.creater }}</strong>
+      </h6>
+      <h6>
+        Főnökök: <strong> {{ event.bosses }}</strong>
+      </h6>
+      <h6>
+        Nézők: <strong>{{ event.visitors }}</strong>
+      </h6>
+      <h6>
+        Sérültek: <strong>{{ event.injured }}</strong>
+      </h6>
+      <h6>
+        Néző limit: <strong>{{ event.visitorLimit }}</strong>
+      </h6>
+      <h6>
+        Játékos limit: <strong>{{ event.playerLimit }}</strong>
+      </h6>
+      <h6>
+        Jelenlegi játékos szám: <strong>{{ event.currentPlayers }}</strong>
+      </h6>
+    </div>
+    <div class="p-2" *ngIf="isAdmin">
+      <div class="border rounded p-2 row col-12">
+        <div class="col-6">
+          <h6>Nézők</h6>
+          <div class="row col-12">
+            <button
+              class="btn btn-outline-success visitor-button m-2"
+              (click)="incrementVisitors(event.eventId, +event.visitors, +event.visitorLimit)"
+            >
+              +
+            </button>
+            <button
+              class="btn btn-outline-danger visitor-button m-2"
+              (click)="decrementVisitors(event.eventId, event.visitors)"
+            >
+              -
+            </button>
+          </div>
+        </div>
+        <div class="col-6">
+          <h6>Sérültek</h6>
+          <div class="row col-12">
+            <button
+              class="btn btn-outline-success visitor-button m-2"
+              (click)="incrementInjured(event.eventId, event.injured)"
+            >
+              +
+            </button>
+            <button
+              class="btn btn-outline-danger visitor-button m-2"
+              (click)="decrementInjured(event.eventId, event.injured)"
+            >
+              -
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="p-2">
+      <div class="border rounded p-2 col-12">
+        <button class="btn btn-danger float-right m-1" (click)="clearAds(event.eventId)" *ngIf="isAdmin">
+          Reklámok tisztítása
+        </button>
+        <button
+          class="btn btn-info float-right m-1"
+          (click)="openAddAd(event.eventId, event.advertisments)"
+          *ngIf="isAdmin"
+        >
+          Reklám hozzáadása
+        </button>
+
+        <h6 class="advertisment-title">Reklámok</h6>
+        <h6 *ngFor="let ad of event.advertisments" class="border rounded p-2" [innerHtml]="ad | trustHTML"></h6>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+ -->

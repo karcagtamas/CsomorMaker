@@ -1,0 +1,45 @@
+<div class="col col-12 row">
+  <div class="col col-4 menu">
+    <div class="events border rounded">
+      <div class="title text-center border rounded">Eseményeid</div>
+      <div
+        *ngFor="let event of events"
+        class="event"
+        [routerLink]="['/events', event.id, currentPage]"
+        routerLinkActive="router-link-active"
+      >
+        {{ event.name }}
+      </div>
+    </div>
+    <div class="menuitems border rounded">
+      <div class="title text-center border rounded">Menü</div>
+      <div class="item">Adatok</div>
+      <div class="item">Beállítások</div>
+      <div class="item">Chat</div>
+      <div class="item">Generátor</div>
+      <div class="item">Csömörök</div>
+      <div class="item">Áttekintés</div>
+      <div class="item">ToDo</div>
+    </div>
+  </div>
+  <div class="col col-8 changer"></div>
+</div>
+
+<!-- <div>
+  <h2 class="text-center">Események</h2>
+  <div class="col col-12 events">
+    <div class="event border rounded" *ngFor="let event of events">
+      <div><span class="title">Név:</span> {{ event.name }}</div>
+      <div><span class="title">Létrehozó:</span> {{ event.creater }}</div>
+      <div><span class="title">Jelenlegi játékos szám:</span> {{ event.currentPlayers | personCount }}</div>
+      <div><span class="title">Tagok:</span> {{ event.members | personCount }}</div>
+      <div><span class="title">Létrehozás dátuma:</span> {{ event.creationDate }}</div>
+      <button mat-raised-button color="primary">Beállítások</button>
+      <button mat-raised-button color="primary">Chat</button>
+      <button mat-raised-button color="primary">Generátor</button>
+      <button mat-raised-button color="primary">Csömörök</button>
+      <button mat-raised-button color="primary">Áttekintés</button>
+      <button mat-raised-button color="primary">ToDo lista</button>
+    </div>
+  </div>
+</div> -->

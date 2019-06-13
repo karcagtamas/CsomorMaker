@@ -21,6 +21,26 @@ import {
   RegistrationComponent,
   PageNotFoundComponent
 } from './components/main';
+import { EventsComponent, NewEventComponent } from './components/event';
+import {
+  ChatDatePipe,
+  ConvertToHourPipe,
+  CreateLetterPipe,
+  ExistsPipe,
+  ForintPipe,
+  HoursPipe,
+  IsAdminPipe,
+  PersonCountPipe,
+  TestPipe,
+  TrustHTMLPipe
+} from './pipes';
+import { EventSettingsComponent } from './components/event/event-settings;
+import { EventChatComponent } from './components/event/event-chat;
+import { EventCsomorComponent } from './components/event/event-csomor;
+import { EventDetailsComponent } from './components/event/event-details;
+import { EventGeneratorComponent } from './components/event/event-generator;
+import { EventSummaryComponent } from './components/event/event-summary;
+import { EventToDoComponent } from './components/event-todo;
 
 @NgModule({
   declarations: [
@@ -29,7 +49,26 @@ import {
     NavigatorComponent,
     LoginComponent,
     RegistrationComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    EventsComponent,
+    ChatDatePipe,
+    ConvertToHourPipe,
+    CreateLetterPipe,
+    ExistsPipe,
+    ForintPipe,
+    HoursPipe,
+    IsAdminPipe,
+    PersonCountPipe,
+    TestPipe,
+    TrustHTMLPipe,
+    NewEventComponent,
+    EventSettingsComponent,
+    EventChatComponent,
+    EventCsomorComponent,
+    EventDetailsComponent,
+    EventGeneratorComponent,
+    EventSummaryComponent,
+    EventToDoComponent
   ],
   imports: [
     BrowserModule,

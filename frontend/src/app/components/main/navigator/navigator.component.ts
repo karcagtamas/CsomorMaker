@@ -1,5 +1,6 @@
 import { LoginService } from 'src/app/services';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigator',
@@ -9,9 +10,10 @@ import { Component, OnInit } from '@angular/core';
 export class NavigatorComponent implements OnInit {
   isLoggedIn = false;
   interval;
-  constructor(private loginservice: LoginService) {}
+  constructor(private loginservice: LoginService, private router: Router) {}
 
   ngOnInit() {
+    this.getIsLoggedIn();
     this.interval = setInterval(() => {
       this.getIsLoggedIn();
     }, 5000);
@@ -34,6 +36,8 @@ export class NavigatorComponent implements OnInit {
       .then(res => {
         if (res.response === 'logout-success') {
           window.alert('Sikeres kijelentkezés!');
+          this.router.navigateByUrl('/login');
+          this.getIsLoggedIn();
         } else {
           window.alert('Sikertelen kijelentkezés!');
         }

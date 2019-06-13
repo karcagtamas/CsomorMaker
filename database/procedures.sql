@@ -32,18 +32,60 @@ USE csomormaker;
 
   CREATE OR REPLACE PROCEDURE getUsersEvents(_userId int(11))
     BEGIN
-     SELECT events.* FROM events
+     SELECT events.id, 
+      events.name,
+      events.isLocked, 
+      events.isDisabled, 
+      events.currentPlayers, 
+      events.playerLimit, 
+      events.injured, 
+      events.visitors, 
+      events.visitorLimit, 
+      events.playerCost, 
+      events.visitorCost, 
+      EVENTS.playerDeposit, 
+      events.days, 
+      events.startHour, 
+      events.endHour, 
+      events.length, 
+      events.ready, 
+      events.creationDate,
+      events.members,
+      events.creater AS createId, 
+      users.name AS creater FROM events
       INNER JOIN usereventswitch ON events.id = usereventswitch.event
+      INNER JOIN users ON events.creater = users.id
       WHERE NOT events.isDisabled AND user = _userId;
     END;
 
   CREATE OR REPLACE PROCEDURE getEvent(_id int(11))
     BEGIN
-     SELECT * FROM events
-      WHERE NOT events.isLocked AND events.id = _id;
+     SELECT events.id, 
+      events.name,
+      events.isLocked, 
+      events.isDisabled, 
+      events.currentPlayers, 
+      events.playerLimit, 
+      events.injured, 
+      events.visitors, 
+      events.visitorLimit, 
+      events.playerCost, 
+      events.visitorCost, 
+      EVENTS.playerDeposit, 
+      events.days, 
+      events.startHour, 
+      events.endHour, 
+      events.length, 
+      events.ready, 
+      events.creationDate,
+      events.members,
+      events.creater AS createId, 
+      users.name AS creater FROM events
+      INNER JOIN users ON events.creater = users.id
+      WHERE NOT events.isDisabled AND events.id = _id;
     END;
 
-  CREATE OR REPLACE PROCEDURE addEvents(_name varchar(50), _creater int(11))
+  CREATE OR REPLACE PROCEDURE addEvent(_name varchar(50), _creater int(11))
     BEGIN
      INSERT INTO events (name, creater)
       VALUES (_name, _creater);
@@ -135,10 +177,21 @@ USE csomormaker;
 
   CREATE OR REPLACE PROCEDURE getHash(_username varchar(50))
     BEGIN
-      SELECT password AS hash FROM users
+      SELECT password AS hash, id AS userId FROM users
         WHERE username = _username;
     END;
-
+  
+  CREATE OR REPLACE PROCEDURE isAdmin(_userId int(11))
+    BEGIN
+      DECLARE level int(1);
+      DECLARE roleId int(11);
+      SELECT role INTO roleId FROM users WHERE id = _userId;
+      SELECT accessLevel INTO level FROM roles WHERE id = roleId;
+      IF level = 3
+        THEN SELECT TRUE AS isAdmin;
+        ELSE SELECT FALSE AS isAdmin;
+        END IF;
+    END;
 
   CREATE OR REPLACE PROCEDURE getUsers()
     BEGIN

@@ -17,7 +17,7 @@ CREATE TABLE users(
   email varchar(255) NOT NULL UNIQUE,
   password varchar(100) NOT NULL,
   name varchar(100) NOT NULL,
-  role int(11) NOT NULL DEFAULT 1,
+  role int(11) NOT NULL DEFAULT 3,
   PRIMARY KEY(id),
   CONSTRAINT fk_role_roles FOREIGN KEY (role)
   REFERENCES roles(id)
@@ -29,6 +29,7 @@ CREATE TABLE events(
     isLocked boolean NOT NULL DEFAULT FALSE,
     isDisabled boolean NOT NULL DEFAULT FALSE,
     creater int(11) NOT NULL,
+    creationDate datetime NOT NULL DEFAULT NOW(),
     currentPlayers int(11) NOT NULL DEFAULT 0,
     playerLimit int(11) NOT NULL DEFAULT 0,
     injured int(11) NOT NULL DEFAULT 0,
@@ -42,6 +43,7 @@ CREATE TABLE events(
     endHour int(2) NOT NULL DEFAULT 12,
     length int(4),
     ready boolean NOT NULL DEFAULT TRUE,
+    members int(11) NOT NULL DEFAULT 0,
     PRIMARY KEY(id),
     CONSTRAINT fk_creater_users FOREIGN KEY (creater)
     REFERENCES users(id) 
@@ -61,6 +63,7 @@ CREATE TABLE usereventswitch(
 CREATE TABLE payouttypes(
   id int(11) AUTO_INCREMENT NOT NULL,
   name varchar(50) NOT NULL,
+  isOut boolean NOT NULL,
   PRIMARY KEY(id)
   );
 
@@ -158,3 +161,9 @@ CREATE TABLE workworkerswitch(
   CONSTRAINT fk_work_works_workworkerswitch FOREIGN KEY (work)
   REFERENCES works(id)
   );
+
+CREATE TRIGGER event_members AFTER INSERT ON usereventswitch
+  FOR EACH ROW
+  BEGIN
+    UPDATE events SET members = members + 1 WHERE id = NEW.event;
+  END;

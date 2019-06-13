@@ -1,0 +1,22 @@
+.visitor-button {
+  width: 100px;
+  height: 100px;
+}
+
+.col-12 {
+  margin: 0;
+}
+
+.modify {
+  font-size: 0.5rem;
+}
+
+.advertisment-title {
+  margin-bottom: 2rem;
+}
+
+@media screen and (max-width: 600px) {
+  .advertisment-title {
+    margin-bottom: 5rem;
+  }
+}

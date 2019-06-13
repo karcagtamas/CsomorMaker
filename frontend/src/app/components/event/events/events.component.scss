@@ -1,0 +1,49 @@
+/* .events {
+  padding: 0.5rem;
+  .event {
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    .title {
+      font-weight: bold;
+    }
+    button {
+      margin: 0.2rem;
+    }
+    &:hover {
+      background-color: #683ab79a;
+      transition-duration: 0.5s;
+    }
+  }
+}
+ */
+
+.menu {
+  padding: 0.2rem;
+
+  .events {
+    padding: 0.2rem;
+
+    .title {
+      background-color: #683ab7;
+      color: white;
+      padding: 0.2rem;
+    }
+
+    .event {
+      padding: 0.2rem;
+    }
+  }
+
+  .menuitems {
+    padding: 0.2rem;
+
+    .title {
+      background-color: #683ab7;
+      color: white;
+      padding: 0.2rem;
+    }
+    .item {
+      padding: 0.2rem;
+    }
+  }
+}

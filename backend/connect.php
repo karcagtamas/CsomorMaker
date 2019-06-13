@@ -9,4 +9,6 @@
     if ($db->connect_error){
         die('Database fail');
     }
+
+    $db->set_charset('utf8');
 ?>

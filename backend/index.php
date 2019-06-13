@@ -37,10 +37,35 @@
                 case 'isloggedin':
                     echo $isLoggedIn;
                     break;
+
+                case 'isadmin':
+                    isAdmin();
+                    break;
                 
                 default:
                     echo '{"response" : "bad-event", "message" : "Bad request event!"}';
                     break;
+                }
+                break;
+
+            case 'event':
+                require 'event.php';
+                switch ($event) {
+                    case 'get':
+                        getEvents();
+                        break;
+
+                    case 'add':
+                        newEvent($_POST['name']);
+                        break;
+
+                    case 'get-one':
+                        getEvent($_POST['id']);
+                        break;
+                        
+                    default:
+                        echo '{"response" : "bad-event", "message" : "Bad request event!"}';
+                        break;
                 }
                 break;
                 
