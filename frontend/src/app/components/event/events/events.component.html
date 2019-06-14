@@ -49,7 +49,7 @@
         (alert)="updateAlert($event)"
         (update)="updateEvent($event)"
       ></app-event-settings>
-      <app-event-summary *ngSwitchCase="'summary'"></app-event-summary>
+      <app-event-summary *ngSwitchCase="'summary'" [event]="currentEvent"></app-event-summary>
       <app-event-to-do *ngSwitchCase="'todo'"></app-event-to-do>
     </div>
   </div>

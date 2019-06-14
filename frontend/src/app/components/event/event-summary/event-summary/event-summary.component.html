@@ -1,3 +1,15 @@
-<p>
-  event-summary works!
-</p>
+<div class="text-center panel-title border rounded">Áttekintés</div>
+<div class="summary" *ngIf="event">
+  <div class="element input col-12 row border rounded">
+    <div class="col-6 text-left">
+      Játékosok
+    </div>
+    <div class="col-6 text-right">{{ playerSummary | forint }}</div>
+  </div>
+  <div class="element input col-12 row border rounded">
+    <div class="col-6 text-left">
+      Látógatók
+    </div>
+    <div class="col-6 text-right">{{ visitorSumamry | forint }}</div>
+  </div>
+</div>
