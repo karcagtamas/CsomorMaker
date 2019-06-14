@@ -223,13 +223,6 @@ USE csomormaker;
     BEGIN
      SELECT * FROM users WHERE id = _id;
     END;
-  
-  CREATE OR REPLACE PROCEDURE getEventUsers(_eventId int(11))
-    BEGIN
-     SELECT users.* FROM users
-      INNER JOIN usereventswitch ON users.id = usereventswitch.user
-      WHERE usereventswitch.event = _eventId;
-    END;
 
 
   CREATE OR REPLACE PROCEDURE updateUser(_id int(11), _name varchar(100))

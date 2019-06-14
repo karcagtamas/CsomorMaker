@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  api: 'localhost/api'
+  api: 'http://csomormakerapi.karcags.hu/api'
 };
