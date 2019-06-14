@@ -20,7 +20,8 @@ export class EventsComponent implements OnInit {
     { name: 'Áttekintés', link: 'summary' },
     { name: 'ToDo', link: 'todo' },
     { name: 'Chat', link: 'chat' },
-    { name: 'Tagok', link: 'members' }
+    { name: 'Tagok', link: 'members' },
+    { name: 'Csapatok', link: 'teams' }
   ];
   currentEventId = 0;
   currentEvent = new Event();

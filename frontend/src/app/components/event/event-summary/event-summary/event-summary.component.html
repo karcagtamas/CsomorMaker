@@ -12,4 +12,24 @@
     </div>
     <div class="col-6 text-right">{{ visitorSumamry | forint }}</div>
   </div>
+  <div
+    class="element col-12 row border rounded"
+    *ngFor="let payout of payOuts"
+    [ngClass]="{ input: !payout.isOut, output: payout.isOut }"
+  >
+    <div class="col-6 text-left">
+      {{ payout.name }}
+    </div>
+    <div class="col-6 text-right">{{ payout.cost | forint }}</div>
+  </div>
+  <div class="element summary col-12 row border rounded">
+    <div class="col-6 text-left">
+      Végösszeg
+    </div>
+    <div class="col-6 text-right">{{ summary | forint }}</div>
+  </div>
+  <div>
+    <button mat-raised-button color="primary" (click)="openNewPayOutDialog()">Új kifizetés/befizetés</button>
+    <button mat-raised-button color="primary" (click)="openDeletePayOutDialog()">Kifizetés/befizetés törlése</button>
+  </div>
 </div>

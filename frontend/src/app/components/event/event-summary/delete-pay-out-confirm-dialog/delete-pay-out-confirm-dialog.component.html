@@ -1,0 +1,10 @@
+<div mat-dialog-title class="text-center panel-title border rounded">Törlés</div>
+<div mat-dialog-content>
+  <h6>Biztonsan törölni kívánja {{ data.name }} nevű kifizetését/befizetésést?</h6>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true">Igen</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="false">
+    Nem
+  </button>
+</div>

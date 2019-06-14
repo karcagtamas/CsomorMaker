@@ -1,0 +1,18 @@
+<div mat-dialog-title class="text-center panel-title border rounded">Kifizetés/befizetés törlése</div>
+<div mat-dialog-content>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Kifizetés/Befizetés</mat-label>
+    <mat-select [formControl]="payoutControl">
+      <mat-option *ngFor="let payout of data" [value]="payout.id">
+        {{ payout.name }}-{{ payout.type }}-{{ payout.cost | forint }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="payoutControl.hasError('required')">A kifizetés/befizetés megadása kötelező!</mat-error>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions class="text-center">
+  <button mat-raised-button color="primary" (click)="delete()" cdkFocusInitial [disabled]="payoutControl.invalid">
+    Törlés
+  </button>
+  <button mat-raised-button color="primary" (click)="onNoClick()">Mégsem</button>
+</div>

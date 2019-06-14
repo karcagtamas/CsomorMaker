@@ -5,4 +5,5 @@ export class EventPayOut {
   typeId: number;
   type: string;
   cost: number;
+  isOut: boolean;
 }

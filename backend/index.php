@@ -86,6 +86,22 @@
                     case 'dec-injured':
                         decreaseInjured($_POST['id']);
                         break;
+
+                    case 'get-payouts':
+                        getPayOuts($_POST['id']);
+                        break;
+
+                    case 'get-payouttypes':
+                        getPayOutTypes();
+                        break;
+
+                    case 'add-payout':
+                        addPayOut($_POST['name'], $_POST['eventId'], $_POST['type'], $_POST['cost']);
+                        break;
+                    
+                    case 'delete-payout':
+                        deletePayOut($_POST['id']);
+                        break;
                         
                     default:
                         echo '{"response" : "bad-event", "message" : "Bad request event!"}';

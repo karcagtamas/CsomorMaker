@@ -10,6 +10,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { HttpClientModule } from '@angular/common/http';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -41,7 +43,12 @@ import { EventChatComponent } from './components/event/event-chat';
 import { EventCsomorComponent } from './components/event/event-csomor';
 import { EventDetailsComponent } from './components/event/event-details';
 import { EventGeneratorComponent } from './components/event/event-generator';
-import { EventSummaryComponent } from './components/event/event-summary';
+import {
+  EventSummaryComponent,
+  NewPayOutDialogComponent,
+  DeletePayOutDialogComponent,
+  DeletePayOutConfirmDialogComponent
+} from './components/event/event-summary';
 import { EventToDoComponent } from './components/event/event-todo';
 
 @NgModule({
@@ -72,7 +79,10 @@ import { EventToDoComponent } from './components/event/event-todo';
     EventSummaryComponent,
     EventToDoComponent,
     IsLockedPipe,
-    IsReadyPipe
+    IsReadyPipe,
+    NewPayOutDialogComponent,
+    DeletePayOutDialogComponent,
+    DeletePayOutConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -87,9 +97,13 @@ import { EventToDoComponent } from './components/event/event-todo';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule,
+    MatSelectModule
   ],
   providers: [EventService, UserService, LoginService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [NewPayOutDialogComponent, DeletePayOutDialogComponent, DeletePayOutConfirmDialogComponent],
+  exports: [NewPayOutDialogComponent, DeletePayOutDialogComponent, DeletePayOutConfirmDialogComponent]
 })
 export class AppModule {}

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Event, Response } from '../models';
+import { Event, Response, EventPayOut, EventPayOutType } from '../models';
 
 const URL = environment.api;
 
@@ -47,5 +47,27 @@ export class EventService {
 
   decreaseInjured(id: number): Promise<Response> {
     return this.http.post<Response>(`${URL}/event/dec-injured`, { id }, HttpHeader).toPromise();
+  }
+
+  getPayOuts(id: number): Promise<EventPayOut[]> {
+    return this.http.post<EventPayOut[]>(`${URL}/event/get-payouts`, { id }, HttpHeader).toPromise();
+  }
+
+  getPayOutTypes(): Promise<EventPayOutType[]> {
+    return this.http.get<EventPayOutType[]>(`${URL}/event/get-payouttypes`, HttpHeader).toPromise();
+  }
+
+  addPayout(payout: EventPayOut): Promise<Response> {
+    return this.http
+      .post<Response>(
+        `${URL}/event/add-payout`,
+        { name: payout.name, eventId: payout.eventId, cost: payout.cost, type: payout.typeId },
+        HttpHeader
+      )
+      .toPromise();
+  }
+
+  deletePayout(id: number): Promise<Response> {
+    return this.http.post<Response>(`${URL}/event/delete-payout`, { id }, HttpHeader).toPromise();
   }
 }

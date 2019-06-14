@@ -270,12 +270,16 @@ USE csomormaker;
 
   CREATE OR REPLACE PROCEDURE getPayOuts(_eventId int(11))
     BEGIN
-     SELECT * FROM payouts WHERE eventId = _eventId;
+     SELECT payouts.name, payouts.id, payouts.eventId, payouts.cost, payouts.type AS typeId, payouttypes.name AS type, payouttypes.isOut FROM payouts 
+     INNER JOIN payouttypes ON payouts.type = payouttypes.id
+     WHERE payouts.eventId = _eventId;
     END;
 
   CREATE OR REPLACE PROCEDURE getPayOut(_id int(11))
     BEGIN
-     SELECT * FROM payouts WHERE id = _id;
+    SELECT  payouts.name, payouts.id, payouts.eventId, payouts.cost, payouts.type AS typeId, payouttypes.name AS type, payouttypes.isOu FROM payouts 
+     INNER JOIN payouttypes ON payouts.type = payouttypes.id
+     WHERE payouts.id = _id;
     END;
 
   CREATE OR REPLACE PROCEDURE addPayOut(_name varchar(75), _eventId int(11), _type int(11), _cost decimal)
