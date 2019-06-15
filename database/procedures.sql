@@ -43,7 +43,7 @@ USE csomormaker;
       events.visitorLimit, 
       events.playerCost, 
       events.visitorCost, 
-      EVENTS.playerDeposit, 
+      events.playerDeposit, 
       events.days, 
       events.startHour, 
       events.endHour, 

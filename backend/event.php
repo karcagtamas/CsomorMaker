@@ -3,6 +3,7 @@
         global $db;
 
         $sql = "CALL getUsersEvents(?);";
+        
 
         $stmt = $db->prepare($sql);
         $stmt->bind_param("i",$_SESSION['userId']);
