@@ -124,15 +124,14 @@ CREATE TABLE works(
 );
 
 CREATE TABLE workTables(
-   id int(11) AUTO_INCREMENT NOT NULL,
    day int(2) NOT NULL,
    hour int(2) NOT NULL,
    isActive boolean DEFAULT TRUE,
    worker int(11),
    work int(11) NOT NULL,
-   PRIMARY KEY(id),
+   PRIMARY KEY(day, hour, work),
    CONSTRAINT fk_work_works_workTables FOREIGN KEY (work)
-   REFERENCES works(id),
+   REFERENCES works(id) ON DELETE CASCADE,
    CONSTRAINT fk_worker_users_workTables FOREIGN KEY (worker)
    REFERENCES users(id)
  );
@@ -146,7 +145,7 @@ CREATE TABLE workerTables(
   worker int(11) NOT NULL,
   PRIMARY KEY(id),
   CONSTRAINT fk_work_works_workerTables FOREIGN KEY (work)
-  REFERENCES works(id),
+  REFERENCES works(id) ON DELETE SET NULL,
   CONSTRAINT fk_worker_users_workerTables FOREIGN KEY (worker)
   REFERENCES users(id)
 );
@@ -159,7 +158,7 @@ CREATE TABLE workworkerswitch(
   CONSTRAINT fk_worker_users_workworkerswitch FOREIGN KEY (worker)
   REFERENCES users(id),
   CONSTRAINT fk_work_works_workworkerswitch FOREIGN KEY (work)
-  REFERENCES works(id)
+  REFERENCES works(id) ON DELETE CASCADE
   );
 
 CREATE TRIGGER event_members AFTER INSERT ON usereventswitch

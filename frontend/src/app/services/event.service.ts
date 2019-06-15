@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Event, Response, EventPayOut, EventPayOutType } from '../models';
+import { Event, Response, EventPayOut, EventPayOutType, EventWork } from '../models';
+import { EventWorkTable } from '../models/event.work.table.model';
 
 const URL = environment.api;
 
@@ -69,5 +70,21 @@ export class EventService {
 
   deletePayout(id: number): Promise<Response> {
     return this.http.post<Response>(`${URL}/event/delete-payout`, { id }, HttpHeader).toPromise();
+  }
+
+  getWorks(id: number): Promise<EventWork[]> {
+    return this.http.post<EventWork[]>(`${URL}/event/get-works`, { id }, HttpHeader).toPromise();
+  }
+
+  deleteWork(id: number): Promise<Response> {
+    return this.http.post<Response>(`${URL}/event/delete-work`, { id }, HttpHeader).toPromise();
+  }
+
+  addWork(name: string, eventId: number): Promise<Response> {
+    return this.http.post<Response>(`${URL}/event/add-work`, { name, eventId }, HttpHeader).toPromise();
+  }
+
+  getWorkTablesWithoutWorkerNames(id: number): Promise<EventWorkTable[]> {
+    return this.http.post<EventWorkTable[]>(`${URL}/event/get-work-tables`, { id }, HttpHeader).toPromise();
   }
 }

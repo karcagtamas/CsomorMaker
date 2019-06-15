@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -42,7 +43,7 @@ import { EventSettingsComponent } from './components/event/event-settings';
 import { EventChatComponent } from './components/event/event-chat';
 import { EventCsomorComponent } from './components/event/event-csomor';
 import { EventDetailsComponent } from './components/event/event-details';
-import { EventGeneratorComponent } from './components/event/event-generator';
+import { EventGeneratorComponent, WorkSettingsComponent } from './components/event/event-generator';
 import {
   EventSummaryComponent,
   NewPayOutDialogComponent,
@@ -82,7 +83,8 @@ import { EventToDoComponent } from './components/event/event-todo';
     IsReadyPipe,
     NewPayOutDialogComponent,
     DeletePayOutDialogComponent,
-    DeletePayOutConfirmDialogComponent
+    DeletePayOutConfirmDialogComponent,
+    WorkSettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -99,7 +101,8 @@ import { EventToDoComponent } from './components/event/event-todo';
     MatInputModule,
     HttpClientModule,
     MatDialogModule,
-    MatSelectModule
+    MatSelectModule,
+    MatExpansionModule
   ],
   providers: [EventService, UserService, LoginService],
   bootstrap: [AppComponent],

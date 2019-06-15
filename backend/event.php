@@ -15,6 +15,8 @@
             array_push($array, $row);
         }
         echo json_encode($array);
+        $stmt->close();
+
     }
 
     function newEvent($name){
@@ -35,6 +37,8 @@
             $array['message'] = 'The event adding was success!!';
             echo json_encode($array);
         }
+        $stmt->close();
+
     }
 
     function getEvent($id){
@@ -48,6 +52,8 @@
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
          echo json_encode($row);
+        $stmt->close();
+
     }
 
     function updateEvent($event){
@@ -70,6 +76,24 @@
             $array['message'] = 'The event update was success!!';
             echo json_encode($array);
         }
+        $stmt->close();
+
+
+        $sql = "CALL getWorks(?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i",$event);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $stmt->close();
+
+        while($row = $result->fetch_assoc()){
+            $sql = "CALL updateWorkTables(?, ?);";
+            $stmt = $db->prepare($sql);
+            $stmt->bind_param("ii",$row['id'], $event['id']);
+            $stmt->execute();
+            $stmt->close();
+        }
     }
 
     function lock($id){
@@ -88,6 +112,8 @@
             $array['message'] = 'The event lock was success!!';
             echo json_encode($array);
         }
+        $stmt->close();
+
     }
 
     function increaseVisitors($id){
@@ -106,6 +132,8 @@
             $array['message'] = 'The visitor increase was success!!';
             echo json_encode($array);
         }
+        $stmt->close();
+
     }
 
     function decreaseVisitors($id){
@@ -124,6 +152,8 @@
             $array['message'] = 'The visitor decrease was success!!';
             echo json_encode($array);
         }
+        $stmt->close();
+
     }
 
     function increaseInjured($id){
@@ -142,6 +172,8 @@
             $array['message'] = 'The injured increase was success!!';
             echo json_encode($array);
         }
+        $stmt->close();
+
     }
 
     function decreaseInjured($id){
@@ -160,6 +192,8 @@
             $array['message'] = 'The injured decrease was success!!';
             echo json_encode($array);
         }
+        $stmt->close();
+
     }
 
     function getPayOuts($id){
@@ -176,6 +210,8 @@
             array_push($array, $row);
         }
         echo json_encode($array);
+        $stmt->close();
+
     }
 
     function getPayOutTypes(){
@@ -191,6 +227,8 @@
             array_push($array, $row);
         }
         echo json_encode($array);
+        $stmt->close();
+
     }
 
     function addPayOut($name, $eventId, $type, $cost){
@@ -210,6 +248,8 @@
             $array['message'] = 'The payout adding was success!!';
             echo json_encode($array);
         }
+        $stmt->close();
+
     }
 
     function deletePayOut($id){
@@ -229,6 +269,86 @@
             $array['message'] = 'The payout deleting was success!!';
             echo json_encode($array);
         }
+        $stmt->close();
+
     }
+
+    function getWorks($id){
+        global $db;
+
+        $sql = "CALL getWorks(?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $array = [];
+        while($row = $result->fetch_assoc()){
+            array_push($array, $row);
+        }
+        echo json_encode($array);
+        $stmt->close();
+
+    }
+
+    function deleteWork($id){
+        global $db;
+
+        $sql = "CALL deleteWork(?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+
+       if ($stmt->errno){
+            $array['response'] =  'delete-work-failure';
+            $array['message'] = 'Something went wrong!';
+            echo json_encode($array);
+        }else{
+             $array['response'] =  'delete-work-success';
+            $array['message'] = 'The work deleting was success!!';
+            echo json_encode($array);
+        }
+        $stmt->close();
+
+    }
+
+    function addWork($name, $eventId){
+        global $db;
+
+        $sql = "CALL addWork(?, ?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("si", $name, $eventId);
+        $stmt->execute();
+
+       if ($stmt->errno){
+            $array['response'] =  'add-work-failure';
+            $array['message'] = 'Something went wrong!';
+            echo json_encode($array);
+        }else{
+             $array['response'] =  'add-work-success';
+            $array['message'] = 'The work adding was success!!';
+            echo json_encode($array);
+        }
+        $stmt->close();
+
+    }
+
+    function getWorkTablesWithoutWorkerNames($id){
+        global $db;
+
+        $sql = "CALL getWorkTablesWithoutWorkerNames(?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $array = [];
+        while($row = $result->fetch_assoc()){
+            array_push($array, $row);
+        }
+        echo json_encode($array);
+        $stmt->close();
+    }
+
 
 ?>

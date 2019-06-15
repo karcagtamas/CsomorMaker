@@ -42,7 +42,11 @@
       ></app-event-details>
       <app-event-csomor *ngSwitchCase="'csomor'"></app-event-csomor>
       <app-event-chat *ngSwitchCase="'chat'"></app-event-chat>
-      <app-event-generator *ngSwitchCase="'generator'"></app-event-generator>
+      <app-event-generator
+        *ngSwitchCase="'generator'"
+        [event]="currentEvent"
+        (alert)="updateAlert($event)"
+      ></app-event-generator>
       <app-event-settings
         *ngSwitchCase="'settings'"
         [event]="currentEvent"

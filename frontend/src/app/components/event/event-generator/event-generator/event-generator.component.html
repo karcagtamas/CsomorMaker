@@ -1,3 +1,25 @@
-<p>
-  event-generator works!
-</p>
+<div class="text-center panel-title border rounded">Generátor</div>
+<div class="generator" *ngIf="event">
+  <div class="eventWorks">
+    <div class="text-center panel-title border rounded">Posztok</div>
+    <mat-accordion>
+      <mat-expansion-panel
+        *ngFor="let work of eventWorks; let i = index"
+        [expanded]="step === i"
+        (opened)="setStep(i)"
+        hideToggle
+      >
+        <mat-expansion-panel-header>
+          {{ work.name }}
+        </mat-expansion-panel-header>
+        <app-work-settings [work]="work" (delete)="deleteWork($event)"></app-work-settings>
+        <mat-action-row>
+          <button mat-raised-button color="warn" (click)="prevStep()" *ngIf="step !== 0">Elöző</button>
+          <button mat-raised-button color="primary" (click)="nextStep()" *ngIf="step !== eventWorks.length - 1">
+            Következő
+          </button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>

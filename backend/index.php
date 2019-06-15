@@ -107,6 +107,22 @@
                     case 'delete-payout':
                         deletePayOut($_POST['id']);
                         break;
+
+                    case 'get-works':
+                        getWorks($_POST['id']);
+                        break;
+
+                    case 'delete-work':
+                        deleteWorks($_POST['id']);
+                        break;
+
+                    case 'add-work':
+                        addWork($_POST['name'], $_POST['eventId']);
+                        break;
+
+                    case 'get-work-tables':
+                        getWorkTablesWithoutWorkerNames($_POST['id']);
+                        break;
                         
                     default:
                         echo '{"response" : "bad-event", "message" : "Bad request event!"}';

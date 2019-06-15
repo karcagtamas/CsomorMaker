@@ -334,12 +334,84 @@ USE csomormaker;
      SELECT * FROM works WHERE event = _eventId;
     END;
 
-  CREATE OR REPLACE PROCEDURE getWork(id int(11))
+  CREATE OR REPLACE PROCEDURE getWork(_id int(11))
     BEGIN
      SELECT * FROM works WHERE id = _id;
     END;
 
   CREATE OR REPLACE PROCEDURE deleteWork(_id int(11))
     BEGIN
-     DELETE FROM works WHERE id = _id;
+   /* DELETE FROM worktables WHERE work = _id;*/
+    DELETE FROM works WHERE id = _id;
     END;
+
+  CREATE OR REPLACE PROCEDURE addWork(_name varchar(50), _eventId int(11))
+    BEGIN
+      DECLARE _days int(2);
+      DECLARE _currentDay int(2) DEFAULT 0;
+      DECLARE _startHour int(2);
+      DECLARE _endHour int(11);
+      DECLARE _workId int(11);
+
+       INSERT INTO works (name, event)
+        VALUES (_name, _eventId);
+
+      SET _workId = LAST_INSERT_ID();
+
+      SELECT days, startHour, endHour  INTO _days, _startHour, _endHour FROM events WHERE id = _eventId;
+
+      WHILE _days <> _currentDay OR _startHour <> _endHour DO 
+        INSERT INTO worktables (day, hour, work)
+        VALUES (_currentDay, _startHour, _workId);
+
+        SET _startHour = _startHour + 1;
+        IF _startHour = 24
+          THEN SET _startHour = 0;
+          SET _currentDay = _currentDay + 1;
+        END IF;
+      END WHILE;
+    END;
+
+
+  CREATE OR REPLACE PROCEDURE getWorkTablesWithWorkerNames(_id int(11))
+    BEGIN
+     SELECT worktables.day, worktables.hour, worktables.work AS workId, works.name AS work, worktables.isActive, worktables.worker AS workerId, users.name AS worker FROM worktables
+      INNER JOIN works ON worktables.work = works.id
+      INNER JOIN users ON worktables.worker = users.id
+    WHERE worktables.work = _id
+    ORDER BY worktables.day, worktables.hour;
+    END;
+
+    CREATE OR REPLACE PROCEDURE getWorkTablesWithoutWorkerNames(_id int(11))
+    BEGIN
+     SELECT worktables.day, worktables.hour, worktables.work AS workId, works.name AS work, worktables.isActive, worktables.worker AS workerId FROM worktables
+      INNER JOIN works ON worktables.work = works.id
+    WHERE worktables.work = _id
+    ORDER BY worktables.day, worktables.hour;
+    END;
+
+    CREATE OR REPLACE PROCEDURE updateWorkTables(_workId int(11), _eventId int(11))
+    BEGIN
+      DECLARE _days int(2);
+      DECLARE _currentDay int(2) DEFAULT 0;
+      DECLARE _startHour int(2);
+      DECLARE _endHour int(11);
+      DELETE FROM worktables WHERE work = _workId;
+
+       SELECT days, startHour, endHour  INTO _days, _startHour, _endHour FROM events WHERE id = _eventId;
+
+      WHILE _days <> _currentDay OR _startHour <> _endHour DO 
+        INSERT INTO worktables (day, hour, work)
+        VALUES (_currentDay, _startHour, _workId);
+
+        SET _startHour = _startHour + 1;
+        IF _startHour = 24
+          THEN SET _startHour = 0;
+          SET _currentDay = _currentDay + 1;
+        END IF;
+      END WHILE;
+      
+    END;
+
+  CALL getWorkTablesWithoutWorkerNames(1);
+  CALL updateWorkTables(1,1);

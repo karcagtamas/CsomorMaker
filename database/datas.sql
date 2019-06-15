@@ -27,4 +27,3 @@ INSERT INTO bosses (user, event)
 INSERT INTO todoes (eventId, text)
   VALUES (1, 'Tortát venni!');
 
-CALL getEvent(1);
