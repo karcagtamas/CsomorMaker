@@ -56,7 +56,7 @@
       <app-event-summary
         *ngSwitchCase="'summary'"
         [event]="currentEvent"
-        (alert)="updateEvent($event)"
+        (alert)="updateAlert($event)"
       ></app-event-summary>
       <app-event-to-do *ngSwitchCase="'todo'"></app-event-to-do>
     </div>

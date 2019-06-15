@@ -87,4 +87,8 @@ export class EventService {
   getWorkTablesWithoutWorkerNames(id: number): Promise<EventWorkTable[]> {
     return this.http.post<EventWorkTable[]>(`${URL}/event/get-work-tables`, { id }, HttpHeader).toPromise();
   }
+
+  setIsActiveWorkHour(day: number, hour: number, work: number): Promise<Response> {
+    return this.http.post<Response>(`${URL}/event/set-work-table-active`, { day, hour, work }, HttpHeader).toPromise();
+  }
 }

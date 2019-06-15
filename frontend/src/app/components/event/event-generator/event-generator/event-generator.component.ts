@@ -46,18 +46,38 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
   prevStep() {
     this.step--;
   }
+
   deleteWork(event) {
     this.eventservice
       .deleteWork(event.id)
       .then(res => {
         if (res.response === 'delete-work-success') {
-          this.alert.emit({ msg: 'Sikeresen törölte a posztot!' });
+          this.alert.emit({ msg: 'Sikeresen törölte a posztot!', isSuccess: true });
+          this.eventWorks = this.eventWorks.filter(x => x.id !== event.id);
         } else {
-          this.alert.emit({ msg: res.message });
+          this.alert.emit({ msg: res.message, isSuccess: false });
         }
       })
       .catch(() => {
-        this.alert.emit({ msg: 'A poszt törlése közben hiba történt! Kréjük pórbálja újra késöbb!' });
+        this.alert.emit({ msg: 'A poszt törlése közben hiba történt! Kérjük pórbálja újra késöbb!', isSuccess: false });
+      });
+  }
+
+  saveWorkTable(event) {
+    this.eventservice
+      .setIsActiveWorkHour(event.day, event.hour, event.work)
+      .then(res => {
+        if (res.response === 'set-work-table-is-active-success') {
+          this.alert.emit({ msg: 'Sikeresen állította a tábla elemet!', isSuccess: true });
+        } else {
+          this.alert.emit({ msg: res.message, isSuccess: false });
+        }
+      })
+      .catch(() => {
+        this.alert.emit({
+          msg: 'A poszt tábla elem állítása közben hiba történt! Kérjük pórbálja újra késöbb!',
+          isSuccess: false
+        });
       });
   }
 }

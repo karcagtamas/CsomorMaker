@@ -350,5 +350,26 @@
         $stmt->close();
     }
 
+    function setWorkTableIsActive($day, $hour, $work){
+        global $db;
+
+        $sql = "CALL setWorkTableIsActive(?, ?, ?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("iii", $day, $hour, $work);
+        $stmt->execute();
+
+       if ($stmt->errno){
+            $array['response'] =  'set-work-table-is-active-failure';
+            $array['message'] = 'Something went wrong!';
+            echo json_encode($array);
+        }else{
+             $array['response'] =  'set-work-table-is-active-success';
+            $array['message'] = 'The work table is active setting was success!!';
+            echo json_encode($array);
+        }
+        $stmt->close();
+
+    }
+
 
 ?>

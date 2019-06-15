@@ -113,7 +113,7 @@
                         break;
 
                     case 'delete-work':
-                        deleteWorks($_POST['id']);
+                        deleteWork($_POST['id']);
                         break;
 
                     case 'add-work':
@@ -122,6 +122,10 @@
 
                     case 'get-work-tables':
                         getWorkTablesWithoutWorkerNames($_POST['id']);
+                        break;
+
+                    case 'set-work-table-active':
+                        setWorkTableIsActive($_POST['day'], $_POST['hour'], $_POST['work']);
                         break;
                         
                     default:

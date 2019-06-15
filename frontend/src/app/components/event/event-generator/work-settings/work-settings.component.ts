@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { EventWork } from 'src/app/models';
 import { EventService } from 'src/app/services';
+import { EventWorkTable } from 'src/app/models';
 
 @Component({
   selector: 'app-work-settings',
@@ -10,7 +11,8 @@ import { EventService } from 'src/app/services';
 export class WorkSettingsComponent implements OnInit {
   @Input() work: EventWork;
   @Output() delete = new EventEmitter();
-  workTables = [];
+  @Output() save = new EventEmitter();
+  workTables: EventWorkTable[] = [];
 
   constructor(private eventservice: EventService) {}
 
@@ -31,5 +33,9 @@ export class WorkSettingsComponent implements OnInit {
 
   deleteWork() {
     this.delete.emit({ id: this.work.id });
+  }
+
+  saveWorkTable(day: number, hour: number, work: number) {
+    this.save.emit({ day, hour, work });
   }
 }

@@ -75,7 +75,7 @@ export class EventSettingsComponent implements OnInit, OnChanges {
       this.endHourControl.invalid ||
       this.injuredControl.invalid
     ) {
-      this.alert.emit({ msg: 'Nem megfelelő adatok!' });
+      this.alert.emit({ msg: 'Nem megfelelő adatok!', isSuccess: false });
     } else {
       const event = this.modifiedEvent;
       event.name = this.nameControl.value;

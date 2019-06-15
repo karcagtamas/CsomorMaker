@@ -9,3 +9,4 @@ export * from './event.work.model';
 export * from './response.model';
 export * from './role.model';
 export * from './user.model';
+export * from './event.work.table.model';

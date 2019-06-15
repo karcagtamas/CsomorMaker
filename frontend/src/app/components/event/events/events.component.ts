@@ -90,7 +90,7 @@ export class EventsComponent implements OnInit {
   }
 
   updateAlert(event) {
-    this.setAlert(event.msg, false);
+    this.setAlert(event.msg, event.isSuccess);
   }
 
   lockEvent(event) {

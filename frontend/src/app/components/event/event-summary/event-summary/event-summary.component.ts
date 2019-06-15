@@ -91,15 +91,18 @@ export class EventSummaryComponent implements OnInit, OnChanges {
           .addPayout(result)
           .then(res => {
             if (res.response === 'add-payout-success') {
-              this.alert.emit({ msg: 'A kiadás/bevétel hozzáadása sikeres volt!' });
+              this.alert.emit({ msg: 'A kiadás/bevétel hozzáadása sikeres volt!', isSuccess: true });
               this.payOuts.push(result);
               this.setSummary();
             } else {
-              this.alert.emit({ msg: 'A kiadás/bevétel hozzáadása sikertelen volt!' });
+              this.alert.emit({ msg: 'A kiadás/bevétel hozzáadása sikertelen volt!', isSuccess: false });
             }
           })
           .catch(() => {
-            this.alert.emit({ msg: 'A kiadás/bevétel hozzáadása közben hiba történt! Kérjük próbálja újra késöbb!' });
+            this.alert.emit({
+              msg: 'A kiadás/bevétel hozzáadása közben hiba történt! Kérjük próbálja újra késöbb!',
+              isSuccess: false
+            });
           });
       }
     });
@@ -116,15 +119,18 @@ export class EventSummaryComponent implements OnInit, OnChanges {
           .deletePayout(+result)
           .then(res => {
             if (res.response === 'delete-payout-success') {
-              this.alert.emit({ msg: 'A kiadás/bevétel törlése sikeres volt!' });
+              this.alert.emit({ msg: 'A kiadás/bevétel törlése sikeres volt!', isSuccess: true });
               this.payOuts = this.payOuts.filter(x => x.id !== +result);
               this.setSummary();
             } else {
-              this.alert.emit({ msg: 'A kiadás/bevétel törlése sikertelen volt!' });
+              this.alert.emit({ msg: 'A kiadás/bevétel törlése sikertelen volt!', isSuccess: false });
             }
           })
           .catch(() => {
-            this.alert.emit({ msg: 'A kiadás/bevétel törlése közben hiba történt! Kérjük próbálja újra késöbb!' });
+            this.alert.emit({
+              msg: 'A kiadás/bevétel törlése közben hiba történt! Kérjük próbálja újra késöbb!',
+              isSuccess: false
+            });
           });
       }
     });

@@ -413,5 +413,19 @@ USE csomormaker;
       
     END;
 
+    CREATE OR REPLACE PROCEDURE setWorkTableIsActive(_day int(2), _hour int(2), _work int(11))
+    BEGIN
+     DECLARE _isActive boolean;
+     SELECT isActive INTO _isActive FROM worktables WHERE day = _day AND hour = _hour AND work = _work;
+
+     IF _isActive
+      THEN
+        SET _isActive = FALSE;
+      ELSE
+        SET _isActive = TRUE;
+      END IF;
+      UPDATE worktables SET isActive = _isActive WHERE day = _day AND hour = _hour AND work = _work;
+    END;
+
   CALL getWorkTablesWithoutWorkerNames(1);
   CALL updateWorkTables(1,1);
