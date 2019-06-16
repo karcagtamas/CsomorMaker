@@ -133,11 +133,11 @@
                         break;
 
                     case 'get-worker-tables':
-                        getWorkerTablesWithoutWorkNames($_POST['id']);
+                        getWorkerTablesWithoutWorkNames($_POST['id'], $_POST['event']);
                         break;
 
                     case 'set-worker-table-avaiable':
-                        setWorkerTableIsAvaiable($_POST['day'], $_POST['hour'], $_POST['worker']);
+                        setWorkerTableIsAvaiable($_POST['day'], $_POST['hour'], $_POST['worker'], $_POST['event']);
                         break;
                         
                     default:

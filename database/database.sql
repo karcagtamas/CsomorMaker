@@ -48,7 +48,7 @@ CREATE TABLE events(
     days int(2) NOT NULL DEFAULT 1,
     startHour int(2) NOT NULL DEFAULT 12,
     endHour int(2) NOT NULL DEFAULT 12,
-    length int(4),
+    length int(4) DEFAULT 24,
     ready boolean NOT NULL DEFAULT TRUE,
     members int(11) NOT NULL DEFAULT 0,
     PRIMARY KEY(id),
@@ -141,11 +141,14 @@ CREATE TABLE workerTables(
   isAvaiable boolean NOT NULL DEFAULT TRUE,
   work int(11),
   worker int(11) NOT NULL,
-  PRIMARY KEY(day, hour, worker),
+  event int(11) NOT NULL,
+  PRIMARY KEY(day, hour, worker, event),
   CONSTRAINT fk_work_works_workerTables FOREIGN KEY (work)
   REFERENCES works(id) ON DELETE SET NULL,
   CONSTRAINT fk_worker_users_workerTables FOREIGN KEY (worker)
-  REFERENCES users(id)
+  REFERENCES users(id),
+  CONSTRAINT fk_event_events_workerTables FOREIGN KEY (event)
+  REFERENCES events(id)
 );
 
 CREATE TABLE workworkerswitch(

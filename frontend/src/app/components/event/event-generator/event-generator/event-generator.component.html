@@ -39,7 +39,11 @@
         <mat-expansion-panel-header>
           {{ worker.name }}
         </mat-expansion-panel-header>
-        <app-worker-settings [worker]="worker" (save)="saveWorkerTable($event)"></app-worker-settings>
+        <app-worker-settings
+          [worker]="worker"
+          (save)="saveWorkerTable($event)"
+          [eventId]="event.id"
+        ></app-worker-settings>
         <mat-action-row>
           <button mat-raised-button color="warn" (click)="nextWorkerStep()" *ngIf="workerStep !== 0">Elöző</button>
           <button

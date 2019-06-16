@@ -26,8 +26,6 @@ INSERT INTO payouttypes (name, isOut)
 INSERT INTO payouts (name, eventId, type, cost)
   VALUES ('Torta', 1, 1, 2000);
 
-INSERT INTO bosses (user, event)
-  VALUES (1, 1);
 
 INSERT INTO todoes (eventId, text)
   VALUES (1, 'Tortát venni!');

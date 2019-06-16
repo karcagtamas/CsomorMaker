@@ -10,6 +10,7 @@ import { EventService } from 'src/app/services';
 })
 export class WorkerSettingsComponent implements OnInit {
   @Input() worker: EventWorker;
+  @Input() eventId: number;
   @Output() save = new EventEmitter();
   workerTables: EventWorkerTable[] = [];
 
@@ -21,7 +22,7 @@ export class WorkerSettingsComponent implements OnInit {
 
   getWorkerTables() {
     this.eventservice
-      .getWorkerTablesWithoutWorkNames(this.worker.id)
+      .getWorkerTablesWithoutWorkNames(this.worker.id, this.eventId)
       .then(res => {
         this.workerTables = res;
       })

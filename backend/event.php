@@ -404,12 +404,12 @@
         $stmt->close();
     }
 
-    function getWorkerTablesWithoutWorkNames($id){
+    function getWorkerTablesWithoutWorkNames($id, $event){
         global $db;
 
-        $sql = "CALL getWorkerTablesWithoutWorkNames(?);";
+        $sql = "CALL getWorkerTablesWithoutWorkNames(?, ?);";
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("i", $id);
+        $stmt->bind_param("ii", $id, $event);
         $stmt->execute();
         $result = $stmt->get_result();
         
@@ -421,12 +421,12 @@
         $stmt->close();
     }
 
-    function setWorkerTableIsAvaiable($day, $hour, $worker){
+    function setWorkerTableIsAvaiable($day, $hour, $worker, $event){
         global $db;
 
-        $sql = "CALL setWorkerTableIsAvaiable(?, ?, ?);";
+        $sql = "CALL setWorkerTableIsAvaiable(?, ?, ?, ?);";
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("iii", $day, $hour, $worker);
+        $stmt->bind_param("iiii", $day, $hour, $worker, $event);
         $stmt->execute();
 
        if ($stmt->errno){

@@ -264,8 +264,8 @@ USE csomormaker;
       SELECT days, startHour, endHour  INTO _days, _startHour, _endHour FROM events WHERE id = _eventId;
 
       WHILE _days <> _currentDay OR _startHour <> _endHour DO 
-        INSERT INTO workertables (day, hour, worker)
-        VALUES (_currentDay, _startHour, _workerId);
+        INSERT INTO workertables (day, hour, worker, event)
+        VALUES (_currentDay, _startHour, _workerId, _eventId);
 
         SET _startHour = _startHour + 1;
         IF _startHour = 24
@@ -458,20 +458,20 @@ USE csomormaker;
 
     /* WorkerTables */
 
-   CREATE OR REPLACE PROCEDURE getWorkerTablesWithWorkNames(_id int(11))
+   CREATE OR REPLACE PROCEDURE getWorkerTablesWithWorkNames(_id int(11), _eventId int(11))
     BEGIN
      SELECT workertables.day, workertables.hour, workertables.work AS workId, works.name AS work, workertables.isAvaiable, workertables.worker AS workerId, users.name AS worker FROM workertables
       INNER JOIN works ON workertables.work = works.id
       INNER JOIN users ON workertables.worker = users.id
-    WHERE workertables.worker = _id
+    WHERE workertables.worker = _id AND workertables.event = _eventId
     ORDER BY workertables.day, workertables.hour;
     END;
 
-    CREATE OR REPLACE PROCEDURE getWorkerTablesWithoutWorkNames(_id int(11))
+    CREATE OR REPLACE PROCEDURE getWorkerTablesWithoutWorkNames(_id int(11), _eventId int(11))
     BEGIN
      SELECT workertables.day, workertables.hour, workertables.work AS workId, workertables.isAvaiable, workertables.worker AS workerId, users.name AS worker FROM workertables
       INNER JOIN users ON workertables.worker = users.id
-    WHERE workertables.worker = _id
+    WHERE workertables.worker = _id AND workertables.event = _eventId
     ORDER BY workertables.day, workertables.hour;
     END;
 
@@ -481,13 +481,13 @@ USE csomormaker;
       DECLARE _currentDay int(2) DEFAULT 0;
       DECLARE _startHour int(2);
       DECLARE _endHour int(11);
-      DELETE FROM workertables WHERE worker = _workerId;
+      DELETE FROM workertables WHERE worker = _workerId AND event = _eventId;
 
       SELECT days, startHour, endHour  INTO _days, _startHour, _endHour FROM events WHERE id = _eventId;
 
       WHILE _days <> _currentDay OR _startHour <> _endHour DO 
-        INSERT INTO workertables (day, hour, worker)
-        VALUES (_currentDay, _startHour, _workerId);
+        INSERT INTO workertables (day, hour, worker, event)
+        VALUES (_currentDay, _startHour, _workerId, _eventId);
 
         SET _startHour = _startHour + 1;
         IF _startHour = 24
@@ -498,10 +498,10 @@ USE csomormaker;
       
     END;
 
-    CREATE OR REPLACE PROCEDURE setWorkerTableIsAvaiable(_day int(2), _hour int(2), _worker int(11))
+    CREATE OR REPLACE PROCEDURE setWorkerTableIsAvaiable(_day int(2), _hour int(2), _worker int(11), _eventId int(11))
     BEGIN
      DECLARE _isAvaiable boolean;
-     SELECT isAvaiable INTO _isAvaiable FROM workertables WHERE day = _day AND hour = _hour AND worker = _worker;
+     SELECT isAvaiable INTO _isAvaiable FROM workertables WHERE day = _day AND hour = _hour AND worker = _worker AND event = _eventId;
 
      IF _isAvaiable
       THEN
@@ -509,11 +509,11 @@ USE csomormaker;
       ELSE
         SET _isAvaiable = TRUE;
       END IF;
-      UPDATE workertables SET isAvaiable = _isAvaiable WHERE day = _day AND hour = _hour AND worker = _worker;
+      UPDATE workertables SET isAvaiable = _isAvaiable WHERE day = _day AND hour = _hour AND worker = _worker AND event = _eventId;
     END;
 
 
-CALL getWorkerTablesWithoutWorkNames(1);
+CALL getWorkerTablesWithoutWorkNames(1, 2);
 
   /* CALL getWorkTablesWithoutWorkerNames(1); */
  /* CALL addWork('Portás', 1); */

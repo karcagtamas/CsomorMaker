@@ -113,7 +113,7 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
 
   saveWorkerTable(event) {
     this.eventservice
-      .setIsAvaiableWorkerHour(event.day, event.hour, event.worker)
+      .setIsAvaiableWorkerHour(event.day, event.hour, event.worker, this.event.id)
       .then(res => {
         if (res.response === 'set-worker-table-is-avaiable-success') {
           this.alert.emit({ msg: 'Sikeresen állította a tábla elemet!', isSuccess: true });

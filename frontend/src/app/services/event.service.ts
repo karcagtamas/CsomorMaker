@@ -97,13 +97,13 @@ export class EventService {
     return this.http.post<EventWorker[]>(`${URL}/event/get-low-workers`, { id }, HttpHeader).toPromise();
   }
 
-  getWorkerTablesWithoutWorkNames(id: number): Promise<EventWorkerTable[]> {
-    return this.http.post<EventWorkerTable[]>(`${URL}/event/get-worker-tables`, { id }, HttpHeader).toPromise();
+  getWorkerTablesWithoutWorkNames(id: number, event: number): Promise<EventWorkerTable[]> {
+    return this.http.post<EventWorkerTable[]>(`${URL}/event/get-worker-tables`, { id, event }, HttpHeader).toPromise();
   }
 
-  setIsAvaiableWorkerHour(day: number, hour: number, worker: number): Promise<Response> {
+  setIsAvaiableWorkerHour(day: number, hour: number, worker: number, event: number): Promise<Response> {
     return this.http
-      .post<Response>(`${URL}/event/set-worker-table-avaiable`, { day, hour, worker }, HttpHeader)
+      .post<Response>(`${URL}/event/set-worker-table-avaiable`, { day, hour, worker, event }, HttpHeader)
       .toPromise();
   }
 }
