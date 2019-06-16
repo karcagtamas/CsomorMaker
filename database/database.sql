@@ -190,3 +190,9 @@ CREATE TRIGGER event_members AFTER INSERT ON usereventswitch
   BEGIN
     UPDATE events SET members = members + 1 WHERE id = NEW.event;
   END;
+
+CREATE TRIGGER event_members_de AFTER DELETE ON usereventswitch
+  FOR EACH ROW
+  BEGIN
+    UPDATE events SET members = members - 1 WHERE id = OLD.event;
+  END;

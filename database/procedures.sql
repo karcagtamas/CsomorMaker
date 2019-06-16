@@ -245,6 +245,13 @@ USE csomormaker;
       VALUES(_username, _email, _email, _password);
     END;
 
+  CREATE OR REPLACE PROCEDURE deleteUserFromEvent(_userId int(11), _eventId int(11))
+    BEGIN
+        DELETE FROM usereventswitch WHERE user = _userId AND event = _eventId;
+        DELETE FROM workertables WHERE worker = _userId AND event = _eventId;
+        DELETE FROM workworkerswitch WHERE worker = _userId;
+     END;
+
   CREATE OR REPLACE PROCEDURE addUserToEvent(_userId int(11), _eventId int(11), _role int(11))
     BEGIN
       DECLARE _days int(2);
@@ -273,6 +280,12 @@ USE csomormaker;
           SET _currentDay = _currentDay + 1;
         END IF;
       END WHILE;
+
+     INSERT INTO workworkerswitch (work, worker)
+       SELECT * FROM (
+        SELECT works.id FROM works
+        WHERE works.event = _eventId) AS T1
+    CROSS JOIN (SELECT _workerId) AS T2;
     END;
 
   /* Payout types */
@@ -398,6 +411,13 @@ USE csomormaker;
           SET _currentDay = _currentDay + 1;
         END IF;
       END WHILE;
+
+    INSERT INTO workworkerswitch (worker, work)
+       SELECT * FROM (
+        SELECT users.id FROM users
+        INNER JOIN usereventswitch ON users.id = usereventswitch.user
+        WHERE usereventswitch.event = _eventId) AS T1
+    CROSS JOIN (SELECT _workId) AS T2;
     END;
 
   /* Work Tables */
@@ -517,3 +537,6 @@ CALL getWorkerTablesWithoutWorkNames(1, 2);
 
   /* CALL getWorkTablesWithoutWorkerNames(1); */
  /* CALL addWork('Portás', 1); */
+
+
+   
