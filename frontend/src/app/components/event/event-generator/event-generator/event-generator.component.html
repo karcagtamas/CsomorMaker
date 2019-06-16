@@ -5,8 +5,8 @@
     <mat-accordion>
       <mat-expansion-panel
         *ngFor="let work of eventWorks; let i = index"
-        [expanded]="step === i"
-        (opened)="setStep(i)"
+        [expanded]="workStep === i"
+        (opened)="setWorkStep(i)"
         hideToggle
       >
         <mat-expansion-panel-header>
@@ -18,13 +18,40 @@
           (save)="saveWorkTable($event)"
         ></app-work-settings>
         <mat-action-row>
-          <button mat-raised-button color="warn" (click)="prevStep()" *ngIf="step !== 0">Elöző</button>
-          <button mat-raised-button color="primary" (click)="nextStep()" *ngIf="step !== eventWorks.length - 1">
+          <button mat-raised-button color="warn" (click)="nextWorkStep()" *ngIf="workStep !== 0">Elöző</button>
+          <button mat-raised-button color="primary" (click)="prevWorkStep()" *ngIf="workStep !== eventWorks.length - 1">
             Következő
           </button>
         </mat-action-row>
       </mat-expansion-panel>
     </mat-accordion>
-    <button mat-raised-button color="primary">Új poszt</button>
+    <button mat-raised-button color="primary" (click)="openAddNewWorkDialog()">Új poszt</button>
+  </div>
+  <div class="eventWorks">
+    <div class="text-center panel-title border rounded">Humánok</div>
+    <mat-accordion>
+      <mat-expansion-panel
+        *ngFor="let worker of eventWorkers; let i = index"
+        [expanded]="workerStep === i"
+        (opened)="setWorkerStep(i)"
+        hideToggle
+      >
+        <mat-expansion-panel-header>
+          {{ worker.name }}
+        </mat-expansion-panel-header>
+        <app-worker-settings [worker]="worker" (save)="saveWorkerTable($event)"></app-worker-settings>
+        <mat-action-row>
+          <button mat-raised-button color="warn" (click)="nextWorkerStep()" *ngIf="workerStep !== 0">Elöző</button>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="prevWorkerStep()"
+            *ngIf="workerStep !== eventWorks.length - 1"
+          >
+            Következő
+          </button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </mat-accordion>
   </div>
 </div>

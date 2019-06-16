@@ -44,7 +44,13 @@ import { EventSettingsComponent } from './components/event/event-settings';
 import { EventChatComponent } from './components/event/event-chat';
 import { EventCsomorComponent } from './components/event/event-csomor';
 import { EventDetailsComponent } from './components/event/event-details';
-import { EventGeneratorComponent, WorkSettingsComponent } from './components/event/event-generator';
+import {
+  EventGeneratorComponent,
+  WorkSettingsComponent,
+  ConfirmDeleteWorkDialogComponent,
+  AddNewWorkComponent,
+  WorkerSettingsComponent
+} from './components/event/event-generator';
 import {
   EventSummaryComponent,
   NewPayOutDialogComponent,
@@ -85,7 +91,10 @@ import { EventToDoComponent } from './components/event/event-todo';
     NewPayOutDialogComponent,
     DeletePayOutDialogComponent,
     DeletePayOutConfirmDialogComponent,
-    WorkSettingsComponent
+    WorkSettingsComponent,
+    AddNewWorkComponent,
+    ConfirmDeleteWorkDialogComponent,
+    WorkerSettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -108,7 +117,19 @@ import { EventToDoComponent } from './components/event/event-todo';
   ],
   providers: [EventService, UserService, LoginService],
   bootstrap: [AppComponent],
-  entryComponents: [NewPayOutDialogComponent, DeletePayOutDialogComponent, DeletePayOutConfirmDialogComponent],
-  exports: [NewPayOutDialogComponent, DeletePayOutDialogComponent, DeletePayOutConfirmDialogComponent]
+  entryComponents: [
+    NewPayOutDialogComponent,
+    DeletePayOutDialogComponent,
+    DeletePayOutConfirmDialogComponent,
+    AddNewWorkComponent,
+    ConfirmDeleteWorkDialogComponent
+  ],
+  exports: [
+    NewPayOutDialogComponent,
+    DeletePayOutDialogComponent,
+    DeletePayOutConfirmDialogComponent,
+    AddNewWorkComponent,
+    ConfirmDeleteWorkDialogComponent
+  ]
 })
 export class AppModule {}

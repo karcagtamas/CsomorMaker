@@ -3,7 +3,12 @@ USE csomormaker;
 INSERT INTO roles (id, name, accessLevel)
   VALUES (1, 'Adminisztrátor', 3),
           (2, 'Moderátor', 2),
-          (3, 'Általános flehasználó', 1);
+          (3, 'Általános felhasználó', 1);
+
+INSERT INTO eventroles (name, accessLevel)
+  VALUES ('Fõszervezõ', 3),
+          ('Porszfõszervezõ', 2),
+          ('Humán', 1);
 
 INSERT INTO users (username, email, password, name, role)
   VALUES ('karcagtamas', 'karcagtamas@gmail.com', '$2y$10$H/hBwhyOF8pfqTwugvkCreTRVP7olOOPTLr2ACkH6OescL0FLc2/S', 'Karcag', 1);

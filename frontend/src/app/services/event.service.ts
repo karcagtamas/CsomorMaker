@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Event, Response, EventPayOut, EventPayOutType, EventWork } from '../models';
+import { Event, Response, EventPayOut, EventPayOutType, EventWork, EventWorker } from '../models';
 import { EventWorkTable } from '../models/event.work.table.model';
+import { EventWorkerTable } from '../models/event.worker.table.model';
 
 const URL = environment.api;
 
@@ -90,5 +91,19 @@ export class EventService {
 
   setIsActiveWorkHour(day: number, hour: number, work: number): Promise<Response> {
     return this.http.post<Response>(`${URL}/event/set-work-table-active`, { day, hour, work }, HttpHeader).toPromise();
+  }
+
+  getEventLowWorkers(id: number): Promise<EventWorker[]> {
+    return this.http.post<EventWorker[]>(`${URL}/event/get-low-workers`, { id }, HttpHeader).toPromise();
+  }
+
+  getWorkerTablesWithoutWorkNames(id: number): Promise<EventWorkerTable[]> {
+    return this.http.post<EventWorkerTable[]>(`${URL}/event/get-worker-tables`, { id }, HttpHeader).toPromise();
+  }
+
+  setIsAvaiableWorkerHour(day: number, hour: number, worker: number): Promise<Response> {
+    return this.http
+      .post<Response>(`${URL}/event/set-worker-table-avaiable`, { day, hour, worker }, HttpHeader)
+      .toPromise();
   }
 }

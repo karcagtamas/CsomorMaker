@@ -90,7 +90,7 @@ USE csomormaker;
      INSERT INTO events (name, creater)
       VALUES (_name, _creater);
 
-     CALL addUserToEvent(_creater, LAST_INSERT_ID());
+     CALL addUserToEvent(_creater, LAST_INSERT_ID(), 1);
     END;
 
   CREATE OR REPLACE PROCEDURE disableEvent(_id int(11))
@@ -181,18 +181,22 @@ USE csomormaker;
     END;
 
 
-  CREATE OR REPLACE PROCEDURE getEventUsers(_id int(11))
+  CREATE OR REPLACE PROCEDURE getEventMembers(_id int(11))
     BEGIN
-     SELECT users.id, users.username, users.email, users.name, users.role FROM users
+     SELECT users.id, users.name, usereventswitch.role AS roleId, usereventswitch.connectionDate, usereventswitch.event, eventroles.accessLevel, eventroles.name AS role FROM users
       INNER JOIN usereventswitch ON users.id = usereventswitch.user
+      INNER JOIN eventroles ON usereventswitch.role = eventroles.id
       WHERE usereventswitch.event = _id;
     END;
 
-  CREATE OR REPLACE PROCEDURE addBossToEvent(_userId int(11), _eventId int(11))
+     CREATE OR REPLACE PROCEDURE getEventLowWorkers(_id int(11))
     BEGIN
-     INSERT INTO bosses (user, event)
-      VALUES (_userId, _eventId);
+     SELECT users.id, users.name, eventroles.id AS roleId, eventroles.accessLevel, eventroles.name AS role, usereventswitch.connectionDate, usereventswitch.event FROM users
+      INNER JOIN usereventswitch ON users.id = usereventswitch.user
+      INNER JOIN eventroles ON usereventswitch.role = eventroles.id
+       WHERE usereventswitch.event = _id AND eventroles.accessLevel = 1;
     END;
+
 
   /* Users */
 
@@ -227,7 +231,7 @@ USE csomormaker;
 
   CREATE OR REPLACE PROCEDURE updateUser(_id int(11), _name varchar(100))
     BEGIN
-     SELECT * FROM users WHERE id = _id;
+     UPDATE users SET name = _name WHERE id = _id;
     END;
 
   CREATE OR REPLACE PROCEDURE deleteUser(_id int(11))
@@ -241,10 +245,34 @@ USE csomormaker;
       VALUES(_username, _email, _email, _password);
     END;
 
-  CREATE OR REPLACE PROCEDURE addUserToEvent(_userId int(11), _eventId int(11))
+  CREATE OR REPLACE PROCEDURE addUserToEvent(_userId int(11), _eventId int(11), _role int(11))
     BEGIN
-     INSERT INTO usereventswitch(user, event)
-      VALUES(_userId, _eventId);
+      DECLARE _days int(2);
+      DECLARE _currentDay int(2) DEFAULT 0;
+      DECLARE _startHour int(2);
+      DECLARE _endHour int(11);
+      DECLARE _workerId int(11) DEFAULT _userId;
+
+
+      IF _role = 0
+        THEN SET _role = 3;
+      END IF;
+
+     INSERT INTO usereventswitch(user, event, role)
+      VALUES(_userId, _eventId, _role);
+
+      SELECT days, startHour, endHour  INTO _days, _startHour, _endHour FROM events WHERE id = _eventId;
+
+      WHILE _days <> _currentDay OR _startHour <> _endHour DO 
+        INSERT INTO workertables (day, hour, worker)
+        VALUES (_currentDay, _startHour, _workerId);
+
+        SET _startHour = _startHour + 1;
+        IF _startHour = 24
+          THEN SET _startHour = 0;
+          SET _currentDay = _currentDay + 1;
+        END IF;
+      END WHILE;
     END;
 
   /* Payout types */
@@ -372,6 +400,7 @@ USE csomormaker;
       END WHILE;
     END;
 
+  /* Work Tables */
 
   CREATE OR REPLACE PROCEDURE getWorkTablesWithWorkerNames(_id int(11))
     BEGIN
@@ -427,5 +456,64 @@ USE csomormaker;
       UPDATE worktables SET isActive = _isActive WHERE day = _day AND hour = _hour AND work = _work;
     END;
 
-  CALL getWorkTablesWithoutWorkerNames(1);
-  CALL updateWorkTables(1,1);
+    /* WorkerTables */
+
+   CREATE OR REPLACE PROCEDURE getWorkerTablesWithWorkNames(_id int(11))
+    BEGIN
+     SELECT workertables.day, workertables.hour, workertables.work AS workId, works.name AS work, workertables.isAvaiable, workertables.worker AS workerId, users.name AS worker FROM workertables
+      INNER JOIN works ON workertables.work = works.id
+      INNER JOIN users ON workertables.worker = users.id
+    WHERE workertables.worker = _id
+    ORDER BY workertables.day, workertables.hour;
+    END;
+
+    CREATE OR REPLACE PROCEDURE getWorkerTablesWithoutWorkNames(_id int(11))
+    BEGIN
+     SELECT workertables.day, workertables.hour, workertables.work AS workId, workertables.isAvaiable, workertables.worker AS workerId, users.name AS worker FROM workertables
+      INNER JOIN users ON workertables.worker = users.id
+    WHERE workertables.worker = _id
+    ORDER BY workertables.day, workertables.hour;
+    END;
+
+    CREATE OR REPLACE PROCEDURE updateWorkerTables(_workerId int(11), _eventId int(11))
+    BEGIN
+      DECLARE _days int(2);
+      DECLARE _currentDay int(2) DEFAULT 0;
+      DECLARE _startHour int(2);
+      DECLARE _endHour int(11);
+      DELETE FROM workertables WHERE worker = _workerId;
+
+      SELECT days, startHour, endHour  INTO _days, _startHour, _endHour FROM events WHERE id = _eventId;
+
+      WHILE _days <> _currentDay OR _startHour <> _endHour DO 
+        INSERT INTO workertables (day, hour, worker)
+        VALUES (_currentDay, _startHour, _workerId);
+
+        SET _startHour = _startHour + 1;
+        IF _startHour = 24
+          THEN SET _startHour = 0;
+          SET _currentDay = _currentDay + 1;
+        END IF;
+      END WHILE;
+      
+    END;
+
+    CREATE OR REPLACE PROCEDURE setWorkerTableIsAvaiable(_day int(2), _hour int(2), _worker int(11))
+    BEGIN
+     DECLARE _isAvaiable boolean;
+     SELECT isAvaiable INTO _isAvaiable FROM workertables WHERE day = _day AND hour = _hour AND worker = _worker;
+
+     IF _isAvaiable
+      THEN
+        SET _isAvaiable = FALSE;
+      ELSE
+        SET _isAvaiable = TRUE;
+      END IF;
+      UPDATE workertables SET isAvaiable = _isAvaiable WHERE day = _day AND hour = _hour AND worker = _worker;
+    END;
+
+
+CALL getWorkerTablesWithoutWorkNames(1);
+
+  /* CALL getWorkTablesWithoutWorkerNames(1); */
+ /* CALL addWork('Portás', 1); */

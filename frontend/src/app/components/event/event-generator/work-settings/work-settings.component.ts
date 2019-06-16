@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { EventWork } from 'src/app/models';
 import { EventService } from 'src/app/services';
 import { EventWorkTable } from 'src/app/models';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDeleteWorkDialogComponent } from '../confirm-delete-work-dialog/confirm-delete-work-dialog.component';
 
 @Component({
   selector: 'app-work-settings',
@@ -14,7 +16,7 @@ export class WorkSettingsComponent implements OnInit {
   @Output() save = new EventEmitter();
   workTables: EventWorkTable[] = [];
 
-  constructor(private eventservice: EventService) {}
+  constructor(private eventservice: EventService, public dialog: MatDialog) {}
 
   ngOnInit() {
     this.getWorkTables();
@@ -37,5 +39,17 @@ export class WorkSettingsComponent implements OnInit {
 
   saveWorkTable(day: number, hour: number, work: number) {
     this.save.emit({ day, hour, work });
+  }
+
+  openConfirmDeleteWorkDialog() {
+    const dialogRef = this.dialog.open(ConfirmDeleteWorkDialogComponent, {
+      data: this.work
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteWork();
+      }
+    });
   }
 }

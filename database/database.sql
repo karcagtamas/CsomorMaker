@@ -7,7 +7,7 @@ USE csomormaker;
 CREATE TABLE roles(
   id int(11) NOT NULL,
   name varchar(100) NOT NULL,
-  accessLevel int(1) NOT NULL DEFAULT 0,
+  accessLevel int(1) NOT NULL DEFAULT 1,
   PRIMARY KEY(id)
 );
 
@@ -22,6 +22,13 @@ CREATE TABLE users(
   CONSTRAINT fk_role_roles FOREIGN KEY (role)
   REFERENCES roles(id)
 );
+
+CREATE TABLE eventroles(
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(50) NOT NULL,
+  accessLevel int(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY(id)
+ );
 
 CREATE TABLE events(
     id int(11) AUTO_INCREMENT NOT NULL,
@@ -53,11 +60,14 @@ CREATE TABLE usereventswitch(
   user int(11) NOT NULL,
   event int(11) NOT NULL,
   connectionDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  role int(11) NOT NULL DEFAULT 3,
   PRIMARY KEY(user, event),
   CONSTRAINT fk_user_users_usereventswitch FOREIGN KEY (user)
   REFERENCES users(id),
   CONSTRAINT fk_event_events_usereventswitch FOREIGN KEY (event)
-  REFERENCES events(id)  
+  REFERENCES events(id),
+  CONSTRAINT fk_role_eventroles_usereventswitch FOREIGN KEY (role)
+  REFERENCES eventroles(id)
 );
 
 CREATE TABLE payouttypes(
@@ -77,17 +87,6 @@ CREATE TABLE payouts(
   CONSTRAINT fk_type_payouttypes FOREIGN KEY (type)
   REFERENCES payouttypes(id),
   CONSTRAINT fk_eventId_events FOREIGN KEY (eventId)
-  REFERENCES events(id)
-);
-
-CREATE TABLE bosses(
-  user int(11) NOT NULL,
-  event int(11) NOT NULL,
-  promoteDate datetime DEFAULT NOW(),
-  PRIMARY KEY(user, event),
-  CONSTRAINT fk_user_users_boss FOREIGN KEY (user)
-  REFERENCES users(id),
-  CONSTRAINT fk_event_events_boss FOREIGN KEY(event)
   REFERENCES events(id)
 );
 
@@ -137,13 +136,12 @@ CREATE TABLE workTables(
  );
 
 CREATE TABLE workerTables(
-  id int(11) AUTO_INCREMENT NOT NULL,
   day int(2) NOT NULL,
   hour int(2) NOT NULL,
   isAvaiable boolean NOT NULL DEFAULT TRUE,
   work int(11),
   worker int(11) NOT NULL,
-  PRIMARY KEY(id),
+  PRIMARY KEY(day, hour, worker),
   CONSTRAINT fk_work_works_workerTables FOREIGN KEY (work)
   REFERENCES works(id) ON DELETE SET NULL,
   CONSTRAINT fk_worker_users_workerTables FOREIGN KEY (worker)
@@ -160,6 +158,29 @@ CREATE TABLE workworkerswitch(
   CONSTRAINT fk_work_works_workworkerswitch FOREIGN KEY (work)
   REFERENCES works(id) ON DELETE CASCADE
   );
+
+CREATE TABLE teams(
+  id int(11) AUTO_INCREMENT NOT NULL,
+  name varchar(100) NOT NULL,
+  event int(11) NOT NULL,
+  members int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_event_events_teams FOREIGN KEY (event)
+  REFERENCES events(id)
+);
+
+CREATE TABLE teammembers(
+  id int(11) NOT NULL,
+  name varchar(100) NOT NULL,
+  isPaidCost boolean NOT NULL DEFAULT FALSE,
+  isPaidDeposit boolean NOT NULL DEFAULT FALSE,
+  team int(11) NOT NULL,
+  PRIMARY KEY(id),
+  CONSTRAINT fk_team_teams_teammembers FOREIGN KEY (team)
+  REFERENCES teams(id)
+  );
+
+
 
 CREATE TRIGGER event_members AFTER INSERT ON usereventswitch
   FOR EACH ROW

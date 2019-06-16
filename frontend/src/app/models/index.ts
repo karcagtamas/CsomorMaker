@@ -1,4 +1,3 @@
-export * from './event.boss.model';
 export * from './event.message.model';
 export * from './event.model';
 export * from './event.payout.model';
@@ -10,3 +9,4 @@ export * from './response.model';
 export * from './role.model';
 export * from './user.model';
 export * from './event.work.table.model';
+export * from './event.worker.model';

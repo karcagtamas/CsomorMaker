@@ -127,6 +127,18 @@
                     case 'set-work-table-active':
                         setWorkTableIsActive($_POST['day'], $_POST['hour'], $_POST['work']);
                         break;
+                    
+                    case 'get-low-workers':
+                        getEventLowWorkers($_POST['id']);
+                        break;
+
+                    case 'get-worker-tables':
+                        getWorkerTablesWithoutWorkNames($_POST['id']);
+                        break;
+
+                    case 'set-worker-table-avaiable':
+                        setWorkerTableIsAvaiable($_POST['day'], $_POST['hour'], $_POST['worker']);
+                        break;
                         
                     default:
                         echo '{"response" : "bad-event", "message" : "Bad request event!"}';

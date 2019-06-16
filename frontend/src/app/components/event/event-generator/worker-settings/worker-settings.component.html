@@ -1,0 +1,12 @@
+<div class="hours">
+  <section>
+    <mat-checkbox
+      *ngFor="let table of workerTables"
+      [(ngModel)]="table.isAvaiable"
+      [labelPosition]="'before'"
+      (change)="saveWorkerTable(table.day, table.hour, table.workerId)"
+    >
+      {{ table.day }} - {{ table.hour }}
+    </mat-checkbox>
+  </section>
+</div>

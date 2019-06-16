@@ -94,6 +94,22 @@
             $stmt->execute();
             $stmt->close();
         }
+
+        $sql = "CALL getEventMembers(?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i",$event);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $stmt->close();
+
+        while($row = $result->fetch_assoc()){
+            $sql = "CALL updateWorkerTables(?, ?);";
+            $stmt = $db->prepare($sql);
+            $stmt->bind_param("ii",$row['id'], $event['id']);
+            $stmt->execute();
+            $stmt->close();
+        }
     }
 
     function lock($id){
@@ -371,5 +387,58 @@
 
     }
 
+    function getEventLowWorkers($id){
+        global $db;
 
+        $sql = "CALL getEventLowWorkers(?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $array = [];
+        while($row = $result->fetch_assoc()){
+            array_push($array, $row);
+        }
+        echo json_encode($array);
+        $stmt->close();
+    }
+
+    function getWorkerTablesWithoutWorkNames($id){
+        global $db;
+
+        $sql = "CALL getWorkerTablesWithoutWorkNames(?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $array = [];
+        while($row = $result->fetch_assoc()){
+            array_push($array, $row);
+        }
+        echo json_encode($array);
+        $stmt->close();
+    }
+
+    function setWorkerTableIsAvaiable($day, $hour, $worker){
+        global $db;
+
+        $sql = "CALL setWorkerTableIsAvaiable(?, ?, ?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("iii", $day, $hour, $worker);
+        $stmt->execute();
+
+       if ($stmt->errno){
+            $array['response'] =  'set-worker-table-is-avaiable-failure';
+            $array['message'] = 'Something went wrong!';
+            echo json_encode($array);
+        }else{
+             $array['response'] =  'set-worker-table-is-avaiable-success';
+            $array['message'] = 'The worker table is avaiable setting was success!!';
+            echo json_encode($array);
+        }
+        $stmt->close();
+
+    }
 ?>
