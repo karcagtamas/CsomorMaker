@@ -18,8 +18,8 @@
           (save)="saveWorkTable($event)"
         ></app-work-settings>
         <mat-action-row>
-          <button mat-raised-button color="warn" (click)="nextWorkStep()" *ngIf="workStep !== 0">Elöző</button>
-          <button mat-raised-button color="primary" (click)="prevWorkStep()" *ngIf="workStep !== eventWorks.length - 1">
+          <button mat-raised-button color="warn" (click)="prevWorkStep()" *ngIf="workStep !== 0">Elöző</button>
+          <button mat-raised-button color="primary" (click)="nextWorkStep()" *ngIf="workStep !== eventWorks.length - 1">
             Következő
           </button>
         </mat-action-row>
@@ -27,7 +27,7 @@
     </mat-accordion>
     <button mat-raised-button color="primary" (click)="openAddNewWorkDialog()">Új poszt</button>
   </div>
-  <div class="eventWorks">
+  <div class="eventWorkers">
     <div class="text-center panel-title border rounded">Humánok</div>
     <mat-accordion>
       <mat-expansion-panel
@@ -45,12 +45,12 @@
           [eventId]="event.id"
         ></app-worker-settings>
         <mat-action-row>
-          <button mat-raised-button color="warn" (click)="nextWorkerStep()" *ngIf="workerStep !== 0">Elöző</button>
+          <button mat-raised-button color="warn" (click)="prevWorkerStep()" *ngIf="workerStep !== 0">Elöző</button>
           <button
             mat-raised-button
             color="primary"
-            (click)="prevWorkerStep()"
-            *ngIf="workerStep !== eventWorks.length - 1"
+            (click)="nextWorkerStep()"
+            *ngIf="workerStep !== eventWorkers.length - 1"
           >
             Következő
           </button>

@@ -1,6 +1,7 @@
 import { Event } from 'src/app/models';
 import { Component, OnInit, Input, OnChanges, SimpleChanges, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { NotificationService } from 'src/app/services';
 
 @Component({
   selector: 'app-event-settings',
@@ -9,7 +10,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class EventSettingsComponent implements OnInit, OnChanges {
   @Input() event: Event = new Event();
-  @Output() alert = new EventEmitter();
   @Output() update = new EventEmitter();
   modifiedEvent: Event;
   nameControl = new FormControl('', [Validators.required, Validators.maxLength(50)]);
@@ -25,7 +25,7 @@ export class EventSettingsComponent implements OnInit, OnChanges {
   endHourControl = new FormControl('', [Validators.required, Validators.min(0), Validators.max(23)]);
   injuredControl = new FormControl('', [Validators.required, Validators.min(0)]);
 
-  constructor() {}
+  constructor(private notificationservice: NotificationService) {}
 
   ngOnInit() {
     this.modifiedEvent = { ...this.event };
@@ -75,7 +75,7 @@ export class EventSettingsComponent implements OnInit, OnChanges {
       this.endHourControl.invalid ||
       this.injuredControl.invalid
     ) {
-      this.alert.emit({ msg: 'Nem megfelelő adatok!', isSuccess: false });
+      this.notificationservice.error('Nem megfelelő adatok!');
     } else {
       const event = this.modifiedEvent;
       event.name = this.nameControl.value;

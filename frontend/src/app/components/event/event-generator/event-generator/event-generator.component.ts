@@ -1,7 +1,7 @@
 import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { Event, EventWork, EventWorker } from 'src/app/models';
-import { EventService } from 'src/app/services';
+import { EventService, NotificationService } from 'src/app/services';
 import { AddNewWorkComponent } from '../add-new-work/add-new-work.component';
 
 @Component({
@@ -11,13 +11,16 @@ import { AddNewWorkComponent } from '../add-new-work/add-new-work.component';
 })
 export class EventGeneratorComponent implements OnInit, OnChanges {
   @Input() event: Event;
-  @Output() alert = new EventEmitter();
   eventWorks: EventWork[] = [];
   eventWorkers: EventWorker[] = [];
   workStep = -1;
   workerStep = -1;
 
-  constructor(private eventservice: EventService, public dialog: MatDialog) {}
+  constructor(
+    private eventservice: EventService,
+    public dialog: MatDialog,
+    private notificationservice: NotificationService
+  ) {}
 
   ngOnInit() {
     this.getWorks();
@@ -82,14 +85,14 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
       .deleteWork(event.id)
       .then(res => {
         if (res.response === 'delete-work-success') {
-          this.alert.emit({ msg: 'Sikeresen törölte a posztot!', isSuccess: true });
+          this.notificationservice.success('Sikeresen törölte a posztot!');
           this.eventWorks = this.eventWorks.filter(x => x.id !== event.id);
         } else {
-          this.alert.emit({ msg: res.message, isSuccess: false });
+          this.notificationservice.error(res.message);
         }
       })
       .catch(() => {
-        this.alert.emit({ msg: 'A poszt törlése közben hiba történt! Kérjük pórbálja újra késöbb!', isSuccess: false });
+        this.notificationservice.error('A poszt törlése közben hiba történt! Kérjük pórbálja újra késöbb!');
       });
   }
 
@@ -98,16 +101,15 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
       .setIsActiveWorkHour(event.day, event.hour, event.work)
       .then(res => {
         if (res.response === 'set-work-table-is-active-success') {
-          this.alert.emit({ msg: 'Sikeresen állította a tábla elemet!', isSuccess: true });
+          this.notificationservice.success('Sikeresen állította a tábla elemet!');
         } else {
-          this.alert.emit({ msg: res.message, isSuccess: false });
+          this.notificationservice.success(res.message);
         }
       })
       .catch(() => {
-        this.alert.emit({
-          msg: 'A poszt tábla elem állítása közben hiba történt! Kérjük pórbálja újra késöbb!',
-          isSuccess: false
-        });
+        this.notificationservice.success(
+          'A poszt tábla elem állítása közben hiba történt! Kérjük pórbálja újra késöbb!'
+        );
       });
   }
 
@@ -116,16 +118,13 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
       .setIsAvaiableWorkerHour(event.day, event.hour, event.worker, this.event.id)
       .then(res => {
         if (res.response === 'set-worker-table-is-avaiable-success') {
-          this.alert.emit({ msg: 'Sikeresen állította a tábla elemet!', isSuccess: true });
+          this.notificationservice.success('Sikeresen állította a tábla elemet!');
         } else {
-          this.alert.emit({ msg: res.message, isSuccess: false });
+          this.notificationservice.error(res.message);
         }
       })
       .catch(() => {
-        this.alert.emit({
-          msg: 'A humán tábla elem állítása közben hiba történt! Kérjük pórbálja újra késöbb!',
-          isSuccess: false
-        });
+        this.notificationservice.error('A humán tábla elem állítása közben hiba történt! Kérjük pórbálja újra késöbb!');
       });
   }
 
@@ -138,17 +137,14 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
           .addWork(result.name, this.event.id)
           .then(res => {
             if (res.response === 'add-work-success') {
-              this.alert.emit({ msg: 'A poszt felvétele sikeres volt!', isSuccess: true });
+              this.notificationservice.success('A poszt felvétele sikeres volt!');
               this.getWorks();
             } else {
-              this.alert.emit({ msg: res.message, isSuccess: false });
+              this.notificationservice.error(res.message);
             }
           })
           .catch(() => {
-            this.alert.emit({
-              msg: 'A poszt felvétele közben hiba történt! Kérjük próbálja újra késöbb!',
-              isSuccess: false
-            });
+            this.notificationservice.error('A poszt felvétele közben hiba történt! Kérjük próbálja újra késöbb!');
           });
       }
     });

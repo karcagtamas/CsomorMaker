@@ -3,7 +3,7 @@ import { EventWork } from 'src/app/models';
 import { EventService } from 'src/app/services';
 import { EventWorkTable } from 'src/app/models';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDeleteWorkDialogComponent } from '../confirm-delete-work-dialog/confirm-delete-work-dialog.component';
+import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-work-settings',
@@ -42,8 +42,8 @@ export class WorkSettingsComponent implements OnInit {
   }
 
   openConfirmDeleteWorkDialog() {
-    const dialogRef = this.dialog.open(ConfirmDeleteWorkDialogComponent, {
-      data: this.work
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: { title: 'Poszt törlése', name: this.work.name }
     });
 
     dialogRef.afterClosed().subscribe(result => {

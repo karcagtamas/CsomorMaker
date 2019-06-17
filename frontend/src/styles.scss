@@ -18,3 +18,15 @@ $main-color: #683ab7;
   color: white;
   font-size: 150%;
 }
+
+.error-snackbar {
+  background-color: rgba(95, 7, 7, 0.781);
+}
+
+.warning-snackbar {
+  background-color: rgba(105, 105, 5, 0.787);
+}
+
+.success-snackbar {
+  background-color: rgba(5, 46, 5, 0.774);
+}

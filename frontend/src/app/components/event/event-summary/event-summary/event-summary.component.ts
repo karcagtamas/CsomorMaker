@@ -1,7 +1,7 @@
 import { NewPayOutDialogComponent } from './../new-pay-out-dialog/new-pay-out-dialog.component';
 import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { Event, EventPayOut, EventPayOutType } from 'src/app/models';
-import { EventService } from 'src/app/services';
+import { EventService, NotificationService } from 'src/app/services';
 import { MatDialog } from '@angular/material/dialog';
 import { DeletePayOutDialogComponent } from '../delete-pay-out-dialog/delete-pay-out-dialog.component';
 
@@ -12,14 +12,17 @@ import { DeletePayOutDialogComponent } from '../delete-pay-out-dialog/delete-pay
 })
 export class EventSummaryComponent implements OnInit, OnChanges {
   @Input() event: Event;
-  @Output() alert = new EventEmitter();
   payOuts: EventPayOut[] = [];
   payOutTypes: EventPayOutType[] = [];
   playerSummary = 0;
   visitorSumamry = 0;
   summary = 0;
 
-  constructor(private eventservice: EventService, public dialog: MatDialog) {}
+  constructor(
+    private eventservice: EventService,
+    public dialog: MatDialog,
+    private notificationservice: NotificationService
+  ) {}
 
   ngOnInit() {
     this.getPayOuts();
@@ -91,18 +94,17 @@ export class EventSummaryComponent implements OnInit, OnChanges {
           .addPayout(result)
           .then(res => {
             if (res.response === 'add-payout-success') {
-              this.alert.emit({ msg: 'A kiadás/bevétel hozzáadása sikeres volt!', isSuccess: true });
+              this.notificationservice.success('A kiadás/bevétel hozzáadása sikeres volt!');
               this.payOuts.push(result);
               this.setSummary();
             } else {
-              this.alert.emit({ msg: 'A kiadás/bevétel hozzáadása sikertelen volt!', isSuccess: false });
+              this.notificationservice.error('A kiadás / bevétel hozzáadása sikertelen volt!');
             }
           })
           .catch(() => {
-            this.alert.emit({
-              msg: 'A kiadás/bevétel hozzáadása közben hiba történt! Kérjük próbálja újra késöbb!',
-              isSuccess: false
-            });
+            this.notificationservice.error(
+              'A kiadás/bevétel hozzáadása közben hiba történt! Kérjük próbálja újra késöbb!'
+            );
           });
       }
     });
@@ -119,18 +121,17 @@ export class EventSummaryComponent implements OnInit, OnChanges {
           .deletePayout(+result)
           .then(res => {
             if (res.response === 'delete-payout-success') {
-              this.alert.emit({ msg: 'A kiadás/bevétel törlése sikeres volt!', isSuccess: true });
+              this.notificationservice.success('A kiadás/bevétel törlése sikeres volt!');
               this.payOuts = this.payOuts.filter(x => x.id !== +result);
               this.setSummary();
             } else {
-              this.alert.emit({ msg: 'A kiadás/bevétel törlése sikertelen volt!', isSuccess: false });
+              this.notificationservice.error('A kiadás/bevétel törlése sikertelen volt!');
             }
           })
           .catch(() => {
-            this.alert.emit({
-              msg: 'A kiadás/bevétel törlése közben hiba történt! Kérjük próbálja újra késöbb!',
-              isSuccess: false
-            });
+            this.notificationservice.error(
+              'A kiadás/bevétel törlése közben hiba történt! Kérjük próbálja újra késöbb!'
+            );
           });
       }
     });

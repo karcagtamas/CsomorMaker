@@ -14,10 +14,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { EventService, UserService, LoginService } from './services';
+import { EventService, UserService, LoginService, NotificationService } from './services';
 import {
   HomeComponent,
   NavigatorComponent,
@@ -47,17 +48,16 @@ import { EventDetailsComponent } from './components/event/event-details';
 import {
   EventGeneratorComponent,
   WorkSettingsComponent,
-  ConfirmDeleteWorkDialogComponent,
   AddNewWorkComponent,
   WorkerSettingsComponent
 } from './components/event/event-generator';
 import {
   EventSummaryComponent,
   NewPayOutDialogComponent,
-  DeletePayOutDialogComponent,
-  DeletePayOutConfirmDialogComponent
+  DeletePayOutDialogComponent
 } from './components/event/event-summary';
 import { EventToDoComponent } from './components/event/event-todo';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -90,11 +90,10 @@ import { EventToDoComponent } from './components/event/event-todo';
     IsReadyPipe,
     NewPayOutDialogComponent,
     DeletePayOutDialogComponent,
-    DeletePayOutConfirmDialogComponent,
     WorkSettingsComponent,
     AddNewWorkComponent,
-    ConfirmDeleteWorkDialogComponent,
-    WorkerSettingsComponent
+    WorkerSettingsComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -113,23 +112,12 @@ import { EventToDoComponent } from './components/event/event-todo';
     MatDialogModule,
     MatSelectModule,
     MatExpansionModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSnackBarModule
   ],
-  providers: [EventService, UserService, LoginService],
+  providers: [EventService, UserService, LoginService, NotificationService],
   bootstrap: [AppComponent],
-  entryComponents: [
-    NewPayOutDialogComponent,
-    DeletePayOutDialogComponent,
-    DeletePayOutConfirmDialogComponent,
-    AddNewWorkComponent,
-    ConfirmDeleteWorkDialogComponent
-  ],
-  exports: [
-    NewPayOutDialogComponent,
-    DeletePayOutDialogComponent,
-    DeletePayOutConfirmDialogComponent,
-    AddNewWorkComponent,
-    ConfirmDeleteWorkDialogComponent
-  ]
+  entryComponents: [NewPayOutDialogComponent, DeletePayOutDialogComponent, AddNewWorkComponent, ConfirmDialogComponent],
+  exports: [NewPayOutDialogComponent, DeletePayOutDialogComponent, AddNewWorkComponent, ConfirmDialogComponent]
 })
 export class AppModule {}

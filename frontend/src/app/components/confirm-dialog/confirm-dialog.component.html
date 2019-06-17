@@ -1,6 +1,6 @@
-<div mat-dialog-title class="text-center panel-title border rounded">Törlés</div>
+<div mat-dialog-title class="text-center panel-title border rounded">{{ data.title }}</div>
 <div mat-dialog-content>
-  <h6>Biztonsan törölni kívánja {{ data.name }} posztot?</h6>
+  <h6>{{ data.name }} törlése fog kerülni! Biztosan végrehajtja?</h6>
 </div>
 <div mat-dialog-actions>
   <button mat-raised-button color="primary" [mat-dialog-close]="true">Igen</button>

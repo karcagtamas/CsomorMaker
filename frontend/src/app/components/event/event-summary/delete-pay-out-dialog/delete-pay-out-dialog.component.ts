@@ -2,7 +2,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, Inject } from '@angular/core';
 import { EventPayOut } from 'src/app/models';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { DeletePayOutConfirmDialogComponent } from '../delete-pay-out-confirm-dialog/delete-pay-out-confirm-dialog.component';
+import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-delete-pay-out-dialog',
@@ -26,8 +26,8 @@ export class DeletePayOutDialogComponent implements OnInit {
 
   delete() {
     const payout = this.data.find(x => x.id === +this.payoutControl.value);
-    const dialogRef = this.dialog.open(DeletePayOutConfirmDialogComponent, {
-      data: payout
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: { title: 'Ki/Befizetés törlése', name: payout.name }
     });
 
     dialogRef.afterClosed().subscribe(result => {
