@@ -38,26 +38,16 @@
         (decreaseVisitors)="decreaseVisitors($event)"
         (increaseInjured)="increaseInjured($event)"
         (decreaseInjured)="decreaseInjured($event)"
-        (alert)="updateAlert($event)"
       ></app-event-details>
       <app-event-csomor *ngSwitchCase="'csomor'"></app-event-csomor>
       <app-event-chat *ngSwitchCase="'chat'"></app-event-chat>
-      <app-event-generator
-        *ngSwitchCase="'generator'"
-        [event]="currentEvent"
-        (alert)="updateAlert($event)"
-      ></app-event-generator>
+      <app-event-generator *ngSwitchCase="'generator'" [event]="currentEvent"></app-event-generator>
       <app-event-settings
         *ngSwitchCase="'settings'"
         [event]="currentEvent"
-        (alert)="updateAlert($event)"
         (update)="updateEvent($event)"
       ></app-event-settings>
-      <app-event-summary
-        *ngSwitchCase="'summary'"
-        [event]="currentEvent"
-        (alert)="updateAlert($event)"
-      ></app-event-summary>
+      <app-event-summary *ngSwitchCase="'summary'" [event]="currentEvent"></app-event-summary>
       <app-event-to-do *ngSwitchCase="'todo'"></app-event-to-do>
     </div>
   </div>

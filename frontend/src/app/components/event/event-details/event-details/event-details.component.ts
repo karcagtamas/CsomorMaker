@@ -1,5 +1,6 @@
 import { Event } from 'src/app/models';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { NotificationService } from 'src/app/services';
 
 @Component({
   selector: 'app-event-details',
@@ -13,9 +14,8 @@ export class EventDetailsComponent implements OnInit {
   @Output() decreaseVisitors = new EventEmitter();
   @Output() increaseInjured = new EventEmitter();
   @Output() decreaseInjured = new EventEmitter();
-  @Output() alert = new EventEmitter();
 
-  constructor() {}
+  constructor(private notificationservice: NotificationService) {}
 
   ngOnInit() {}
 
@@ -25,7 +25,7 @@ export class EventDetailsComponent implements OnInit {
 
   increaseV() {
     if (this.event.visitors === this.event.visitorLimit) {
-      this.alert.emit({ msg: 'Elérte a nézői limitet!' });
+      this.notificationservice.warning('Elérte a nézői limitet!');
     } else {
       this.increaseVisitors.emit({ id: this.event.id });
     }
@@ -33,7 +33,7 @@ export class EventDetailsComponent implements OnInit {
 
   decreaseV() {
     if (this.event.visitors === 0) {
-      this.alert.emit({ msg: 'Nullánál kevesebb nézője nem lehet!' });
+      this.notificationservice.warning('Nullánál kevesebb nézője nem lehet!');
     } else {
       this.decreaseVisitors.emit({ id: this.event.id });
     }
@@ -45,7 +45,7 @@ export class EventDetailsComponent implements OnInit {
 
   decreaseI() {
     if (this.event.injured === 0) {
-      this.alert.emit({ msg: 'Nullánál kevesebb sérültje nem lehet!' });
+      this.notificationservice.warning('Nullánál kevesebb sérültje nem lehet!');
     } else {
       this.decreaseInjured.emit({ id: this.event.id });
     }
