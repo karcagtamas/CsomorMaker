@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Event } from 'src/app/models';
-import { EventService } from 'src/app/services';
+import { EventService, NotificationService } from 'src/app/services';
 import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-events',
@@ -9,8 +9,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class EventsComponent implements OnInit {
   events: Event[] = [];
-  updateIsSuccess = false;
-  alert = '';
 
   menuItems = [
     { name: 'Adatok', link: 'details' },
@@ -27,7 +25,12 @@ export class EventsComponent implements OnInit {
   currentEvent = new Event();
   currentPage = 'details';
 
-  constructor(private eventservice: EventService, private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private eventservice: EventService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private notificationservice: NotificationService
+  ) {}
 
   ngOnInit() {
     this.route.params.subscribe(data => {
@@ -82,11 +85,11 @@ export class EventsComponent implements OnInit {
   }
 
   setAlert(value: string, isSuccess: boolean) {
-    this.alert = value;
-    this.updateIsSuccess = isSuccess;
-    setTimeout(() => {
-      this.alert = '';
-    }, 5000);
+    if (isSuccess) {
+      this.notificationservice.success(value);
+    } else {
+      this.notificationservice.error(value);
+    }
   }
 
   updateAlert(event) {
