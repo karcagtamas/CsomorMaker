@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Event, Response, EventPayOut, EventPayOutType, EventWork, EventWorker } from '../models';
+import { Event, Response, EventPayOut, EventPayOutType, EventWork, EventWorker, EventWorkStatus } from '../models';
 import { EventWorkTable } from '../models/event.work.table.model';
 import { EventWorkerTable } from '../models/event.worker.table.model';
 
@@ -105,5 +105,19 @@ export class EventService {
     return this.http
       .post<Response>(`${URL}/event/set-worker-table-avaiable`, { day, hour, worker, event }, HttpHeader)
       .toPromise();
+  }
+
+  getWorkStatuses(worker: number, event: number): Promise<EventWorkStatus[]> {
+    return this.http
+      .post<EventWorkStatus[]>(`${URL}/event/get-work-statuses`, { worker, event }, HttpHeader)
+      .toPromise();
+  }
+
+  setIsValidWorkStatus(worker: number, work: number): Promise<Response> {
+    return this.http.post<Response>(`${URL}/event/set-work-status-valid`, { worker, work }, HttpHeader).toPromise();
+  }
+
+  generate(event: number): Promise<Response> {
+    return this.http.post<Response>(`${URL}/event/generate`, { event }, HttpHeader).toPromise();
   }
 }

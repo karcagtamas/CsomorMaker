@@ -41,7 +41,8 @@
         </mat-expansion-panel-header>
         <app-worker-settings
           [worker]="worker"
-          (save)="saveWorkerTable($event)"
+          (saveTable)="saveWorkerTable($event)"
+          (saveStatus)="saveWorkStatus($event)"
           [eventId]="event.id"
         ></app-worker-settings>
         <mat-action-row>
@@ -58,4 +59,5 @@
       </mat-expansion-panel>
     </mat-accordion>
   </div>
+  <button mat-raised-button color="primary" (click)="generate()">Generálás</button>
 </div>

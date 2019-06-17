@@ -441,4 +441,41 @@
         $stmt->close();
 
     }
+
+    function getWorkStatuses($worker, $event){
+        global $db;
+
+        $sql = "CALL getWorkStatuses(?, ?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("ii", $worker, $event);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $array = [];
+        while($row = $result->fetch_assoc()){
+            array_push($array, $row);
+        }
+        echo json_encode($array);
+        $stmt->close();
+    }
+
+    function setIsValidWorkStatus($worker, $work){
+        global $db;
+
+        $sql = "CALL setIsValidWorkStatus(?, ?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("ii", $work, $worker);
+        $stmt->execute();
+       if ($stmt->errno){
+            $array['response'] =  'set-work-status-is-valid-failure';
+            $array['message'] = 'Something went wrong!';
+            echo json_encode($array);
+        }else{
+             $array['response'] =  'set-work-status-is-valid-success';
+            $array['message'] = 'The work status is valid setting was success!!';
+            echo json_encode($array);
+        }
+        $stmt->close();
+
+    }
 ?>

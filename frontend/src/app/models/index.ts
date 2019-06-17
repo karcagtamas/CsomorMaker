@@ -10,3 +10,4 @@ export * from './role.model';
 export * from './user.model';
 export * from './event.work.table.model';
 export * from './event.worker.model';
+export * from './event.work.status.model';

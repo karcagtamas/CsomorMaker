@@ -103,12 +103,27 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
         if (res.response === 'set-work-table-is-active-success') {
           this.notificationservice.success('Sikeresen állította a tábla elemet!');
         } else {
-          this.notificationservice.success(res.message);
+          this.notificationservice.error(res.message);
         }
       })
       .catch(() => {
-        this.notificationservice.success(
-          'A poszt tábla elem állítása közben hiba történt! Kérjük pórbálja újra késöbb!'
+        this.notificationservice.error('A poszt tábla elem állítása közben hiba történt! Kérjük pórbálja újra késöbb!');
+      });
+  }
+
+  saveWorkStatus(event) {
+    this.eventservice
+      .setIsValidWorkStatus(event.worker, event.work)
+      .then(res => {
+        if (res.response === 'set-work-status-is-valid-success') {
+          this.notificationservice.success('Sikeresen állította a poszt és humán kapcsolatát!');
+        } else {
+          this.notificationservice.error(res.message);
+        }
+      })
+      .catch(() => {
+        this.notificationservice.error(
+          'A poszt és humán kapcsolatának beállítása közben hiba történt! Kérjük pórbálja újra késöbb!'
         );
       });
   }
@@ -148,5 +163,20 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
           });
       }
     });
+  }
+
+  generate() {
+    this.eventservice
+      .generate(this.event.id)
+      .then(res => {
+        if (res.response === '') {
+          this.notificationservice.success('A generálás sikeres!');
+        } else {
+          this.notificationservice.error(res.message);
+        }
+      })
+      .catch(() => {
+        this.notificationservice.error('A generálás során valami hiba történt! Kérjük próbálja meg újra késöbb!');
+      });
   }
 }

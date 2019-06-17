@@ -139,6 +139,18 @@
                     case 'set-worker-table-avaiable':
                         setWorkerTableIsAvaiable($_POST['day'], $_POST['hour'], $_POST['worker'], $_POST['event']);
                         break;
+
+                    case 'get-work-statuses':
+                        getWorkStatuses($_POST['worker'], $_POST['event']);
+                        break;
+
+                    case 'set-work-status-valid':
+                        setIsValidWorkStatus($_POST['worker'], $_POST['work']);
+                        break;
+
+                    case 'generate':
+                        generate($_POST['event']);
+                        break;
                         
                     default:
                         echo '{"response" : "bad-event", "message" : "Bad request event!"}';

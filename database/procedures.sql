@@ -532,8 +532,32 @@ USE csomormaker;
       UPDATE workertables SET isAvaiable = _isAvaiable WHERE day = _day AND hour = _hour AND worker = _worker AND event = _eventId;
     END;
 
+    /* workworkerswitch */
 
-CALL getWorkerTablesWithoutWorkNames(1, 2);
+
+CREATE OR REPLACE PROCEDURE getWorkStatuses(_worker int(11), _event int(11))
+    BEGIN
+    SELECT users.id AS workerId, users.name AS worker, works.id AS workId, works.name AS work, workworkerswitch.isValid FROM workworkerswitch
+      INNER JOIN users ON workworkerswitch.worker = users.id
+      INNER JOIN works ON workworkerswitch.work = works.id
+    WHERE workworkerswitch.worker = _worker AND works.event = _event;
+    END;
+
+CREATE OR REPLACE PROCEDURE setIsValidWorkStatus(_work int(11), _worker int(11))
+    BEGIN
+     DECLARE _isValid boolean;
+     SELECT isValid INTO _isValid FROM workworkerswitch WHERE work = _work AND worker = _worker;
+
+     IF _isValid
+      THEN
+        SET _isValid = FALSE;
+      ELSE
+        SET _isValid = TRUE;
+      END IF;
+      UPDATE workworkerswitch SET isValid = _isValid  WHERE work = _work AND worker = _worker;
+    END;
+
+CALL setIsValidWorkStatus(1, 11);
 
   /* CALL getWorkTablesWithoutWorkerNames(1); */
  /* CALL addWork('Portás', 1); */

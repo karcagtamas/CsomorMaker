@@ -9,4 +9,14 @@
       {{ table.day }} - {{ table.hour }}
     </mat-checkbox>
   </section>
+  <section>
+    <mat-checkbox
+      *ngFor="let status of workStatuses"
+      [(ngModel)]="status.isValid"
+      [labelPosition]="'before'"
+      (change)="saveWorkStatus(status.workId)"
+    >
+      {{ status.work }}
+    </mat-checkbox>
+  </section>
 </div>
