@@ -122,7 +122,7 @@ CREATE TABLE works(
   REFERENCES events(id)
 );
 
-CREATE TABLE workTables(
+CREATE TABLE worktables(
    day int(2) NOT NULL,
    hour int(2) NOT NULL,
    isActive boolean DEFAULT TRUE,
@@ -135,7 +135,7 @@ CREATE TABLE workTables(
    REFERENCES users(id)
  );
 
-CREATE TABLE workerTables(
+CREATE TABLE workertables(
   day int(2) NOT NULL,
   hour int(2) NOT NULL,
   isAvaiable boolean NOT NULL DEFAULT TRUE,
