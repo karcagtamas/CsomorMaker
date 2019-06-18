@@ -478,4 +478,71 @@
         $stmt->close();
 
     }
+
+    function generate($eventId){
+        global $db;
+        require 'generator.php';
+
+        
+        // Get Event
+        $event = getEventForGen($eventId);
+
+        // Get Users
+        $workers = getWorkersForGen($eventId);
+
+        // Get Works
+        $works = getWorksForGen($eventId);
+
+        $workers = setWorkers($event, $workers, $works);
+        
+
+        if (checkInput($event, $workers, $works)){
+            $stop = true; // Leállító segéd változó
+            $limit = 500; // Ciklus periódus limit
+            $index = 0;
+            
+            // Órák
+            for ($i=0; $i < $event['length'] && $stop; $i++) { 
+                // $tableId
+
+                // Posztok
+                for ($j=0; $j < count($works) && $stop; $j++) { 
+                    // Ha aktív az adott poszt, az adott órába
+                    if ($works[$j]['tables'][$i]['isActive']){
+                        $worker;
+                        $count = 0; // Segéd változó
+                        do {
+                            // Random humán
+                            $index = rand(0, count($workers) - 1);
+                            $worker = $workers[$index];
+                            $count++;
+                            
+                            // Csere ha a próbálkozások száma nagyobb mint 100
+                            if ($count >= 100){
+
+                            }
+                        } while (!workerIsValid($worker, $i, $works[$j]) && $count < $limit);
+
+                        if ($count < $limit){
+
+                        }else{
+                            $stop = false;
+                        }
+                    }
+                }
+            }
+
+            if (!$stop){
+                 $res['response'] = 'fail';
+                $res['message']= 'The generate was unsuccess! Sorry :/';
+                echo json_encode($res);
+            }
+            else{
+                save();
+                $res['response'] = 'success';
+                $res['message']= 'Yee!';
+                echo json_encode($res);
+            }
+        }
+    }
 ?>

@@ -189,7 +189,7 @@ USE csomormaker;
       WHERE usereventswitch.event = _id;
     END;
 
-     CREATE OR REPLACE PROCEDURE getEventLowWorkers(_id int(11))
+  CREATE OR REPLACE PROCEDURE getEventLowWorkers(_id int(11))
     BEGIN
      SELECT users.id, users.name, eventroles.id AS roleId, eventroles.accessLevel, eventroles.name AS role, usereventswitch.connectionDate, usereventswitch.event FROM users
       INNER JOIN usereventswitch ON users.id = usereventswitch.user
@@ -557,10 +557,7 @@ CREATE OR REPLACE PROCEDURE setIsValidWorkStatus(_work int(11), _worker int(11))
       UPDATE workworkerswitch SET isValid = _isValid  WHERE work = _work AND worker = _worker;
     END;
 
-CALL setIsValidWorkStatus(1, 11);
-
-  /* CALL getWorkTablesWithoutWorkerNames(1); */
- /* CALL addWork('Portás', 1); */
+CALL addUserToEvent(2, 1, 3);
 
 
    
