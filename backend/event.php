@@ -519,12 +519,43 @@
                             
                             // Csere ha a próbálkozások száma nagyobb mint 100
                             if ($count >= 100){
+                                $newIndex = rand(0, count($workers) - 1);
+                                $newWorker = $workers[$newIndex];
+                                $param = rand(0, $i - 1);
+
+                                $addedWorkId = $newWorker['tables'][$param]['workId'];
+                                $addedWork = null;
+                                if ($addedWorkId != null){
+                                    $addedWork = $works[array_search($addedWorkId, array_column($works, 'id'))];
+                                }
+
+                                if ($newWorker['tables'][$i]['isAvaiable'] && 
+                                $newWorker['tables'][$i]['workId'] == null &&
+                                workerIsValid($worker, $param, $addedWork) && $i != $param){
+                                    if ($addedWork != null){
+                                        $workers[$index]['workerHours']--;
+                                        $workers[$index]['tables'][$param]['workId'] = $addedWork['id'];
+                                        $workers[$index]['tables'][$param]['work'] = $addedWork['name'];
+                                        $workers[$newIndex]['workerHours']++;
+                                        $workers[$newIndex]['tables'][$param]['workId'] = null;
+                                        $workers[$newIndex]['tables'][$param]['work'] = null;
+                                        $works[array_search($addedWorkId, array_column($works, 'id'))]['tables'][$param]['worker'] = $worker['name'];
+                                        $works[array_search($addedWorkId, array_column($works, 'id'))]['tables'][$param]['workerId'] = $worker['id'];
+                                    }
+
+                                    $worker = $newWorker;
+
+                                }
 
                             }
                         } while (!workerIsValid($worker, $i, $works[$j]) && $count < $limit);
 
                         if ($count < $limit){
-
+                            $works[$j]['tables'][$i]['workerId'] = $worker['id'];
+                            $works[$j]['tables'][$i]['worker'] = $worker['name'];
+                            $workers[$index]['tables'][$i]['workId'] = $works[$j]['id'];
+                            $workers[$index]['tables'][$i]['work'] = $works[$j]['name'];
+                            $workers[$index]['workerHours']--;
                         }else{
                             $stop = false;
                         }
@@ -543,6 +574,8 @@
                 $res['message']= 'Yee!';
                 echo json_encode($res);
             }
+
+            var_dump($workers);
         }
     }
 ?>

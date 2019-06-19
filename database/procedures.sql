@@ -433,7 +433,7 @@ USE csomormaker;
 
     CREATE OR REPLACE PROCEDURE getWorkTablesWithoutWorkerNames(_id int(11))
     BEGIN
-     SELECT worktables.day, worktables.hour, worktables.work AS workId, works.name AS work, worktables.isActive, worktables.worker AS workerId FROM worktables
+     SELECT worktables.day, worktables.hour, worktables.work AS workId, works.name AS work, worktables.isActive, worktables.worker AS workerId, NULL AS worker FROM worktables
       INNER JOIN works ON worktables.work = works.id
     WHERE worktables.work = _id
     ORDER BY worktables.day, worktables.hour;
@@ -489,7 +489,7 @@ USE csomormaker;
 
     CREATE OR REPLACE PROCEDURE getWorkerTablesWithoutWorkNames(_id int(11), _eventId int(11))
     BEGIN
-     SELECT workertables.day, workertables.hour, workertables.work AS workId, workertables.isAvaiable, workertables.worker AS workerId, users.name AS worker FROM workertables
+     SELECT workertables.day, workertables.hour, workertables.work AS workId, workertables.isAvaiable, workertables.worker AS workerId, users.name AS worker, NULL AS work FROM workertables
       INNER JOIN users ON workertables.worker = users.id
     WHERE workertables.worker = _id AND workertables.event = _eventId
     ORDER BY workertables.day, workertables.hour;
@@ -557,7 +557,7 @@ CREATE OR REPLACE PROCEDURE setIsValidWorkStatus(_work int(11), _worker int(11))
       UPDATE workworkerswitch SET isValid = _isValid  WHERE work = _work AND worker = _worker;
     END;
 
-CALL addUserToEvent(2, 1, 3);
+CALL getWorkerTablesWithoutWorkNames(1, 1);
 
 
    
