@@ -169,7 +169,7 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
     this.eventservice
       .generate(this.event.id)
       .then(res => {
-        if (res.response === '') {
+        if (res.response === 'gen-success') {
           this.notificationservice.success('A generálás sikeres!');
         } else {
           this.notificationservice.error(res.message);

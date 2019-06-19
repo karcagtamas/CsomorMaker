@@ -128,22 +128,18 @@ USE csomormaker;
       days = _days,
       startHour = _startHour,
       endHour = _endHour,
-      length = _length 
+      length = _length
      WHERE id = _id;
+    END;
+
+  CREATE OR REPLACE PROCEDURE setUnReadyEvent(_id int(11))
+    BEGIN
+      UPDATE events SET ready = FALSE WHERE id = _id;
     END;
 
   CREATE OR REPLACE PROCEDURE setReadyEvent(_id int(11))
     BEGIN
-     DECLARE _ready boolean;
-     SELECT ready INTO _ready FROM events WHERE id = _id;
-
-     IF _ready
-      THEN
-        SET _ready = FALSE;
-      ELSE
-        SET _ready = TRUE;
-      END IF;
-      UPDATE events SET ready = _ready WHERE id = _id;
+      UPDATE events SET ready = TRUE WHERE id = _id;
     END;
 
   CREATE OR REPLACE PROCEDURE setLockedEvent(_id int(11))
@@ -286,6 +282,8 @@ USE csomormaker;
         SELECT works.id FROM works
         WHERE works.event = _eventId) AS T1
     CROSS JOIN (SELECT _workerId) AS T2;
+
+    CALL setUnReadyEvent(_eventId);
     END;
 
   /* Payout types */
@@ -382,8 +380,11 @@ USE csomormaker;
 
   CREATE OR REPLACE PROCEDURE deleteWork(_id int(11))
     BEGIN
+    DECLARE _eventId int(11);
+    SELECT event INTO _eventId FROM works WHERE id = _id;
    /* DELETE FROM worktables WHERE work = _id;*/
     DELETE FROM works WHERE id = _id;
+    CALL setUnReadyEvent(_eventId);
     END;
 
   CREATE OR REPLACE PROCEDURE addWork(_name varchar(50), _eventId int(11))
@@ -418,6 +419,8 @@ USE csomormaker;
         INNER JOIN usereventswitch ON users.id = usereventswitch.user
         WHERE usereventswitch.event = _eventId) AS T1
     CROSS JOIN (SELECT _workId) AS T2;
+
+    CALL setUnReadyEvent(_eventId);
     END;
 
   /* Work Tables */
@@ -459,12 +462,18 @@ USE csomormaker;
           SET _currentDay = _currentDay + 1;
         END IF;
       END WHILE;
-      
+    END;
+
+    CREATE OR REPLACE PROCEDURE updateWorkTable(_work int(11), _day int(2), _hour int(11), _worker int(11))
+    BEGIN
+      UPDATE worktables SET worker = _worker WHERE work = _work AND day = _day AND hour = _hour;
     END;
 
     CREATE OR REPLACE PROCEDURE setWorkTableIsActive(_day int(2), _hour int(2), _work int(11))
     BEGIN
+       DECLARE _eventId int(11);
      DECLARE _isActive boolean;
+      SELECT event INTO _eventId FROM works WHERE id = _work;
      SELECT isActive INTO _isActive FROM worktables WHERE day = _day AND hour = _hour AND work = _work;
 
      IF _isActive
@@ -474,6 +483,7 @@ USE csomormaker;
         SET _isActive = TRUE;
       END IF;
       UPDATE worktables SET isActive = _isActive WHERE day = _day AND hour = _hour AND work = _work;
+      CALL setUnReadyEvent(_eventId);
     END;
 
     /* WorkerTables */
@@ -518,6 +528,11 @@ USE csomormaker;
       
     END;
 
+    CREATE OR REPLACE PROCEDURE updateWorkerTable(_worker int(11), _event int(11), _day int(2), _hour int(11), _work int(11))
+    BEGIN
+      UPDATE workertables SET work = _work WHERE worker = _worker AND event = _event AND day = _day AND hour = _hour;
+    END;
+
     CREATE OR REPLACE PROCEDURE setWorkerTableIsAvaiable(_day int(2), _hour int(2), _worker int(11), _eventId int(11))
     BEGIN
      DECLARE _isAvaiable boolean;
@@ -530,6 +545,7 @@ USE csomormaker;
         SET _isAvaiable = TRUE;
       END IF;
       UPDATE workertables SET isAvaiable = _isAvaiable WHERE day = _day AND hour = _hour AND worker = _worker AND event = _eventId;
+      CALL setUnReadyEvent(_eventId);
     END;
 
     /* workworkerswitch */
@@ -545,7 +561,9 @@ CREATE OR REPLACE PROCEDURE getWorkStatuses(_worker int(11), _event int(11))
 
 CREATE OR REPLACE PROCEDURE setIsValidWorkStatus(_work int(11), _worker int(11))
     BEGIN
+      DECLARE _eventId int(11);
      DECLARE _isValid boolean;
+      SELECT event INTO _eventId FROM works WHERE id = _work;
      SELECT isValid INTO _isValid FROM workworkerswitch WHERE work = _work AND worker = _worker;
 
      IF _isValid
@@ -555,7 +573,10 @@ CREATE OR REPLACE PROCEDURE setIsValidWorkStatus(_work int(11), _worker int(11))
         SET _isValid = TRUE;
       END IF;
       UPDATE workworkerswitch SET isValid = _isValid  WHERE work = _work AND worker = _worker;
-    END;
+  CALL setUnReadyEvent(_eventId);
+  END;
+
+
 
 CALL getWorkerTablesWithoutWorkNames(1, 1);
 

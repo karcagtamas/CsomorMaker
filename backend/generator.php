@@ -279,9 +279,23 @@
         return false;
     }
 
+    function setWorks($event, $workers, $works){
+        for ($i=0; $i < count($works); $i++) { 
+            for ($j=0; $j < count($works[$i]['tables']); $j++) { 
+               $works[$i]['tables'][$j]['worker'] = null;
+               $works[$i]['tables'][$j]['workerId'] = null;
+            }
+        }
+        return $works;
+    }
+
     function setWorkers($event, $workers, $works){
         for ($i=0; $i < count($workers); $i++) { 
             $workers[$i]['workerHours'] = 0;
+            for ($j=0; $j < count($workers[$i]['tables']); $j++) { 
+               $workers[$i]['tables'][$j]['work'] = null;
+               $workers[$i]['tables'][$j]['workId'] = null;
+            }
         }
         $hours = 0;
         foreach ($works as $work) {
@@ -302,8 +316,34 @@
         return $workers;
     }
 
-    function save(){
-        
+    function save($event, $works, $workers){
+        global $db;
+
+        foreach ($workers as $worker) {
+            foreach ($worker['tables'] as $table) {
+                $sql = "CALL updateWorkerTable(?, ?, ?, ?, ?);";
+                $stmt = $db->prepare($sql);
+                $stmt->bind_param("iiiii", $worker['id'], $event['id'], $table['day'], $table['hour'], $table['workId']);
+                $stmt->execute();
+                $stmt->close();
+            }
+        }
+
+        foreach ($works as $work) {
+            foreach ($work['tables'] as $table) {
+                $sql = "CALL updateWorkTable(?, ?, ?, ?);";
+                $stmt = $db->prepare($sql);
+                $stmt->bind_param("iiii", $work['id'], $table['day'], $table['hour'], $table['workerId']);
+                $stmt->execute();
+                $stmt->close();
+            }
+        }
+
+        $sql = "CALL setReadyEvent(?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $event['id']);
+        $stmt->execute();
+        $stmt->close();
     }
 
 ?>

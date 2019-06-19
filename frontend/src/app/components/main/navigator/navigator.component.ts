@@ -1,4 +1,4 @@
-import { LoginService } from 'src/app/services';
+import { LoginService, CommonService } from 'src/app/services';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -10,13 +10,13 @@ import { Router } from '@angular/router';
 export class NavigatorComponent implements OnInit {
   isLoggedIn = false;
   interval;
-  constructor(private loginservice: LoginService, private router: Router) {}
+  constructor(private loginservice: LoginService, private router: Router, private commonservice: CommonService) {}
 
   ngOnInit() {
     this.getIsLoggedIn();
-    this.interval = setInterval(() => {
+    this.commonservice.changeEmitted$.subscribe(res => {
       this.getIsLoggedIn();
-    }, 5000);
+    });
   }
 
   getIsLoggedIn() {

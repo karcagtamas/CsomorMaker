@@ -49,7 +49,7 @@ CREATE TABLE events(
     startHour int(2) NOT NULL DEFAULT 12,
     endHour int(2) NOT NULL DEFAULT 12,
     length int(4) DEFAULT 24,
-    ready boolean NOT NULL DEFAULT TRUE,
+    ready boolean NOT NULL DEFAULT FALSE,
     members int(11) NOT NULL DEFAULT 0,
     PRIMARY KEY(id),
     CONSTRAINT fk_creater_users FOREIGN KEY (creater)

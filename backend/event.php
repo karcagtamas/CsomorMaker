@@ -59,6 +59,16 @@
     function updateEvent($event){
         global $db;
 
+        $sql = "SELECT length FROM events WHERE id = ?";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i",$event['id']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        
+        $oldLength = $row['length'];
+        $stmt->close();
+        
         $sql = "CALL updateEvent(?, ?, ?,?, ?, ?, ? ,?, ?, ? ,? , ?, ?, ?);";
         $stmt = $db->prepare($sql);
         $days = $event['days'];
@@ -77,6 +87,15 @@
             echo json_encode($array);
         }
         $stmt->close();
+
+        if ($oldLength != $length){
+            $sql = "CALL setUnReadyEvent(?)";
+            $stmt = $db->prepare($sql);
+            $stmt->bind_param("i",$event['id']);
+            $stmt->execute();
+            $stmt->close();
+        }
+        
 
 
         $sql = "CALL getWorks(?);";
@@ -494,6 +513,8 @@
         $works = getWorksForGen($eventId);
 
         $workers = setWorkers($event, $workers, $works);
+
+        $works = setWorks($event, $workers, $works);
         
 
         if (checkInput($event, $workers, $works)){
@@ -564,18 +585,16 @@
             }
 
             if (!$stop){
-                 $res['response'] = 'fail';
+                 $res['response'] = 'gen-fail';
                 $res['message']= 'The generate was unsuccess! Sorry :/';
                 echo json_encode($res);
             }
             else{
-                save();
-                $res['response'] = 'success';
+                save($event, $works, $workers);
+                $res['response'] = 'gen-success';
                 $res['message']= 'Yee!';
                 echo json_encode($res);
             }
-
-            var_dump($workers);
         }
     }
 ?>

@@ -18,7 +18,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { EventService, UserService, LoginService, NotificationService } from './services';
+import { EventService, UserService, LoginService, NotificationService, CommonService } from './services';
 import {
   HomeComponent,
   NavigatorComponent,
@@ -115,7 +115,7 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
     MatCheckboxModule,
     MatSnackBarModule
   ],
-  providers: [EventService, UserService, LoginService, NotificationService],
+  providers: [EventService, UserService, LoginService, NotificationService, CommonService],
   bootstrap: [AppComponent],
   entryComponents: [NewPayOutDialogComponent, DeletePayOutDialogComponent, AddNewWorkComponent, ConfirmDialogComponent],
   exports: [NewPayOutDialogComponent, DeletePayOutDialogComponent, AddNewWorkComponent, ConfirmDialogComponent]

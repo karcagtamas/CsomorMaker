@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from 'src/app/services';
+import { LoginService, CommonService } from 'src/app/services';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   usernameControl = new FormControl('', [Validators.required]);
   passwordControl = new FormControl('', [Validators.required]);
 
-  constructor(private loginservice: LoginService, private router: Router) {}
+  constructor(private loginservice: LoginService, private router: Router, private commonservice: CommonService) {}
   ngOnInit() {}
 
   login() {
@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
         .login(this.usernameControl.value, this.passwordControl.value)
         .then(res => {
           if (res.response === 'valid-login') {
+            this.commonservice.emitChange(true);
             this.router.navigateByUrl('/home');
           } else {
             this.setAlert(res.message, false);
