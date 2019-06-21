@@ -63,7 +63,11 @@ import {
 } from './components/event/event-summary';
 import { EventToDoComponent } from './components/event/event-todo';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
-import { EventMembersComponent } from './components/event/event-members';
+import {
+  EventMembersComponent,
+  ModifyEventMemberComponent,
+  EventMemberItemComponent
+} from './components/event/event-members';
 
 @NgModule({
   declarations: [
@@ -100,7 +104,9 @@ import { EventMembersComponent } from './components/event/event-members';
     AddNewWorkComponent,
     WorkerSettingsComponent,
     ConfirmDialogComponent,
-    EventMembersComponent
+    EventMembersComponent,
+    EventMemberItemComponent,
+    ModifyEventMemberComponent
   ],
   imports: [
     BrowserModule,
@@ -129,7 +135,12 @@ import { EventMembersComponent } from './components/event/event-members';
   ],
   providers: [EventService, UserService, LoginService, NotificationService, CommonService],
   bootstrap: [AppComponent],
-  entryComponents: [NewPayOutDialogComponent, DeletePayOutDialogComponent, AddNewWorkComponent, ConfirmDialogComponent],
-  exports: [NewPayOutDialogComponent, DeletePayOutDialogComponent, AddNewWorkComponent, ConfirmDialogComponent]
+  entryComponents: [
+    NewPayOutDialogComponent,
+    DeletePayOutDialogComponent,
+    AddNewWorkComponent,
+    ConfirmDialogComponent,
+    ModifyEventMemberComponent
+  ]
 })
 export class AppModule {}

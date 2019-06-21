@@ -5,30 +5,11 @@
     <input matInput type="text" placeholder="Szűrés" [(ngModel)]="filterValue" (keyup.enter)="filter()" />
   </mat-form-field>
   <div class="table">
-    <table mat-table [dataSource]="dataSource" matSort>
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Név</th>
-        <td mat-cell *matCellDef="let row">{{ row.name }}</td>
-      </ng-container>
-      <ng-container matColumnDef="role">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Rang</th>
-        <td mat-cell *matCellDef="let row">{{ row.role }}</td>
-      </ng-container>
-      <ng-container matColumnDef="connectionDate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Csatlakozás</th>
-        <td mat-cell *matCellDef="let row">{{ row.connectionDate }}</td>
-      </ng-container>
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Akciók</th>
-        <td mat-cell *matCellDef="let row" class="text-center">
-          <i class="fas fa-times">D</i>
-          <i class="fas fa-times">M</i>
-        </td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
-
-    <mat-paginator></mat-paginator>
+    <app-event-member-item
+      *ngFor="let member of eventMembers"
+      [eventMember]="member"
+      (delete)="deleteEventMember($event)"
+      (update)="updateEventMember($event)"
+    ></app-event-member-item>
   </div>
 </div>
