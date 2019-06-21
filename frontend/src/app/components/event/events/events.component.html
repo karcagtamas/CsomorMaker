@@ -26,29 +26,29 @@
     </div>
   </div>
   <div class="col col-8 changer" *ngIf="currentEvent">
-    <div class="alert" [ngClass]="{ 'alert-danger': !updateIsSuccess, 'alert-success': updateIsSuccess }" *ngIf="alert">
-      <strong *ngIf="!updateIsSuccess">HIBA!</strong> {{ alert }}
-    </div>
-    <div [ngSwitch]="currentPage">
-      <app-event-details
-        *ngSwitchCase="'details'"
-        [event]="currentEvent"
-        (lock)="lockEvent($event)"
-        (increaseVisitors)="increaseVisitors($event)"
-        (decreaseVisitors)="decreaseVisitors($event)"
-        (increaseInjured)="increaseInjured($event)"
-        (decreaseInjured)="decreaseInjured($event)"
-      ></app-event-details>
-      <app-event-csomor *ngSwitchCase="'csomor'"></app-event-csomor>
-      <app-event-chat *ngSwitchCase="'chat'"></app-event-chat>
-      <app-event-generator *ngSwitchCase="'generator'" [event]="currentEvent"></app-event-generator>
-      <app-event-settings
-        *ngSwitchCase="'settings'"
-        [event]="currentEvent"
-        (update)="updateEvent($event)"
-      ></app-event-settings>
-      <app-event-summary *ngSwitchCase="'summary'" [event]="currentEvent"></app-event-summary>
-      <app-event-to-do *ngSwitchCase="'todo'"></app-event-to-do>
-    </div>
+    <mat-card class="card">
+      <div [ngSwitch]="currentPage">
+        <app-event-details
+          *ngSwitchCase="'details'"
+          [event]="currentEvent"
+          (lock)="lockEvent($event)"
+          (increaseVisitors)="increaseVisitors($event)"
+          (decreaseVisitors)="decreaseVisitors($event)"
+          (increaseInjured)="increaseInjured($event)"
+          (decreaseInjured)="decreaseInjured($event)"
+        ></app-event-details>
+        <app-event-csomor *ngSwitchCase="'csomor'"></app-event-csomor>
+        <app-event-chat *ngSwitchCase="'chat'"></app-event-chat>
+        <app-event-generator *ngSwitchCase="'generator'" [event]="currentEvent"></app-event-generator>
+        <app-event-settings
+          *ngSwitchCase="'settings'"
+          [event]="currentEvent"
+          (update)="updateEvent($event)"
+        ></app-event-settings>
+        <app-event-summary *ngSwitchCase="'summary'" [event]="currentEvent"></app-event-summary>
+        <app-event-to-do *ngSwitchCase="'todo'"></app-event-to-do>
+        <app-event-members *ngSwitchCase="'members'" [event]="currentEvent"></app-event-members>
+      </div>
+    </mat-card>
   </div>
 </div>

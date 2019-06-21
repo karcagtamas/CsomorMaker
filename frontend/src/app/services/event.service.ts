@@ -1,7 +1,16 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Event, Response, EventPayOut, EventPayOutType, EventWork, EventWorker, EventWorkStatus } from '../models';
+import {
+  Event,
+  Response,
+  EventPayOut,
+  EventPayOutType,
+  EventWork,
+  EventWorker,
+  EventWorkStatus,
+  EventMember
+} from '../models';
 import { EventWorkTable } from '../models/event.work.table.model';
 import { EventWorkerTable } from '../models/event.worker.table.model';
 
@@ -119,5 +128,9 @@ export class EventService {
 
   generate(event: number): Promise<Response> {
     return this.http.post<Response>(`${URL}/event/generate`, { event }, HttpHeader).toPromise();
+  }
+
+  getEventMembers(event: number): Promise<EventMember[]> {
+    return this.http.post<EventMember[]>(`${URL}/event/get-members`, { event }, HttpHeader).toPromise();
   }
 }

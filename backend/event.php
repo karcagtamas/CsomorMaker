@@ -498,6 +498,23 @@
 
     }
 
+   function getEventMembers($event){
+        global $db;
+
+        $sql = "CALL getEventMembers(?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $event);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $array = [];
+        while($row = $result->fetch_assoc()){
+            array_push($array, $row);
+        }
+        echo json_encode($array);
+        $stmt->close();
+    }
+
     function generate($eventId){
         global $db;
         require 'generator.php';

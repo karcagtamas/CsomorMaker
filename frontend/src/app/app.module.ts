@@ -15,6 +15,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatIconModule } from '@angular/material/icon';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -58,6 +63,7 @@ import {
 } from './components/event/event-summary';
 import { EventToDoComponent } from './components/event/event-todo';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { EventMembersComponent } from './components/event/event-members';
 
 @NgModule({
   declarations: [
@@ -93,7 +99,8 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
     WorkSettingsComponent,
     AddNewWorkComponent,
     WorkerSettingsComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    EventMembersComponent
   ],
   imports: [
     BrowserModule,
@@ -113,7 +120,12 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
     MatSelectModule,
     MatExpansionModule,
     MatCheckboxModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatCardModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatIconModule
   ],
   providers: [EventService, UserService, LoginService, NotificationService, CommonService],
   bootstrap: [AppComponent],

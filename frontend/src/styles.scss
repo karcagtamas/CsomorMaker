@@ -30,3 +30,21 @@ $main-color: #683ab7;
 .success-snackbar {
   background-color: rgba(5, 46, 5, 0.774);
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 100px;
+  background: #b99ee7;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #683ab7;
+  border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #5812cf;
+}

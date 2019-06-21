@@ -73,5 +73,23 @@
 }
 
 .changer {
-  padding: 0.2rem;
+  padding: 0.8rem;
+
+  .card {
+    max-height: 85vh;
+    overflow: auto;
+
+    ::-webkit-scrollbar-track {
+      border-radius: 10px;
+      background: red;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #888;
+
+      :hover {
+        background: #555;
+      }
+    }
+  }
 }

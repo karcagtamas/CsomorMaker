@@ -151,6 +151,10 @@
                     case 'generate':
                         generate($_POST['event']);
                         break;
+
+                    case 'get-members':
+                        getEventMembers($_POST['event']);
+                        break;
                         
                     default:
                         echo '{"response" : "bad-event", "message" : "Bad request event!"}';
