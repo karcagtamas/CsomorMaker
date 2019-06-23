@@ -1,7 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { EventMember } from 'src/app/models';
+import { EventMember, EventRole } from 'src/app/models';
 import { FormControl, Validators } from '@angular/forms';
+import { EventService } from 'src/app/services';
 
 @Component({
   selector: 'app-modify-event-member',
@@ -10,14 +11,25 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class ModifyEventMemberComponent implements OnInit {
   roleControl = new FormControl('', Validators.required);
-  eventRoles = [];
+  eventRoles: EventRole[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<ModifyEventMemberComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: EventMember
+    @Inject(MAT_DIALOG_DATA) public data: EventMember,
+    private eventservice: EventService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.eventservice
+      .getEventRoles()
+      .then(res => {
+        this.eventRoles = res;
+        this.roleControl.setValue(this.data.roleId);
+      })
+      .catch(() => {
+        this.eventRoles = [];
+      });
+  }
 
   onNoClick() {
     this.dialogRef.close();

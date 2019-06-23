@@ -155,6 +155,22 @@
                     case 'get-members':
                         getEventMembers($_POST['event']);
                         break;
+
+                    case 'add-user-to-event':
+                        addUserToEvent($_POST['user'], $_POST['event']);
+                        break;
+
+                    case 'delete-user-from-event':
+                        deleteUserFromEvent($_POST['user'], $_POST['event']);
+                        break;
+
+                    case 'update-event-user':
+                        updateEventUser($_POST['user'], $_POST['event'],$_POST['role']);
+                        break;
+
+                    case 'get-event-roles':
+                        getEventRoles();
+                        break;
                         
                     default:
                         echo '{"response" : "bad-event", "message" : "Bad request event!"}';

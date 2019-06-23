@@ -25,7 +25,7 @@ export class EventMemberItemComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.update.emit({ data: result });
+        this.update.emit({ data: result.data });
       }
     });
   }

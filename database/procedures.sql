@@ -241,6 +241,11 @@ USE csomormaker;
       VALUES(_username, _email, _email, _password);
     END;
 
+  CREATE OR REPLACE PROCEDURE updateUserEvenetRole(_userId int(11), _eventId int(11), _roleId int(11))
+    BEGIN 
+        UPDATE usereventswitch SET role = _roleId WHERE user = _userId AND event = _eventId;
+     END;
+
   CREATE OR REPLACE PROCEDURE deleteUserFromEvent(_userId int(11), _eventId int(11))
     BEGIN
         DELETE FROM usereventswitch WHERE user = _userId AND event = _eventId;
@@ -285,6 +290,11 @@ USE csomormaker;
 
     CALL setUnReadyEvent(_eventId);
     END;
+
+  CREATE OR REPLACE PROCEDURE getEventRoles()
+    BEGIN
+        SELECT * FROM eventroles;
+     END;
 
   /* Payout types */
 

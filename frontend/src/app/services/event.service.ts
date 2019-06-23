@@ -9,7 +9,8 @@ import {
   EventWork,
   EventWorker,
   EventWorkStatus,
-  EventMember
+  EventMember,
+  EventRole
 } from '../models';
 import { EventWorkTable } from '../models/event.work.table.model';
 import { EventWorkerTable } from '../models/event.worker.table.model';
@@ -132,5 +133,24 @@ export class EventService {
 
   getEventMembers(event: number): Promise<EventMember[]> {
     return this.http.post<EventMember[]>(`${URL}/event/get-members`, { event }, HttpHeader).toPromise();
+  }
+
+  addUserToEvent(user: number, event: number): Promise<Response> {
+    return this.http.post<Response>(`${URL}/event/add-user-to-event`, { event, user }, HttpHeader).toPromise();
+  }
+
+  deleteUserFromEvent(user: number, event: number): Promise<Response> {
+    return this.http.post<Response>(`${URL}/event/delete-user-from-event`, { event, user }, HttpHeader).toPromise();
+  }
+
+  updateEventUser(user: number, event: number, role: number): Promise<Response> {
+    console.log(event);
+    console.log(user);
+    console.log(role);
+    return this.http.post<Response>(`${URL}/event/update-event-user`, { event, user, role }, HttpHeader).toPromise();
+  }
+
+  getEventRoles(): Promise<EventRole[]> {
+    return this.http.get<EventRole[]>(`${URL}/event/get-event-roles`, HttpHeader).toPromise();
   }
 }

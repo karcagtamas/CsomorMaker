@@ -12,3 +12,4 @@ export * from './event.work.table.model';
 export * from './event.worker.model';
 export * from './event.work.status.model';
 export * from './event.member.model';
+export * from './event.role.model';
