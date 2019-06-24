@@ -179,7 +179,7 @@ USE csomormaker;
 
   CREATE OR REPLACE PROCEDURE getEventMembers(_id int(11))
     BEGIN
-     SELECT users.id, users.name, usereventswitch.role AS roleId, usereventswitch.connectionDate, usereventswitch.event, eventroles.accessLevel, eventroles.name AS role FROM users
+     SELECT users.id, users.name, users.username, usereventswitch.role AS roleId, usereventswitch.connectionDate, usereventswitch.event, eventroles.accessLevel, eventroles.name AS role FROM users
       INNER JOIN usereventswitch ON users.id = usereventswitch.user
       INNER JOIN eventroles ON usereventswitch.role = eventroles.id
       WHERE usereventswitch.event = _id;
@@ -298,12 +298,15 @@ USE csomormaker;
      
    CREATE OR REPLACE PROCEDURE getNotMembers(_event int(11))
     BEGIN
-      SELECT users.name, users.id FROM users 
-      WHERE id NOT IN (
+      SELECT users.id, users.username, users.name, users.role AS roleId, roles.name AS role FROM users
+        INNER JOIN roles ON users.role = roles.id 
+      WHERE users.id NOT IN (
       SELECT user as id FROM usereventswitch
-      WHERE event = _eventId
+      WHERE event = _event
       );
     END;
+
+  CALL getNotMembers(1);
 
   /* Payout types */
 
@@ -595,6 +598,8 @@ CREATE OR REPLACE PROCEDURE setIsValidWorkStatus(_work int(11), _worker int(11))
   CALL setUnReadyEvent(_eventId);
   END;
 
+/* Teams */
+
 CREATE OR REPLACE PROCEDURE getEventTeams(_event int(11))
     BEGIN
       SELECT * FROM teams
@@ -610,7 +615,7 @@ CREATE OR REPLACE PROCEDURE getTeamMembers(_team int(11))
  CREATE OR REPLACE PROCEDURE setTeamMemberCostStatus(_member int(11))
     BEGIN
      DECLARE _isPaid boolean;
-     SELECT isPaid INTO _isPaid FROM teammembers WHERE id = _member;
+     SELECT isPaidCost INTO _isPaid FROM teammembers WHERE id = _member;
 
      IF _isPaid
       THEN
@@ -618,13 +623,13 @@ CREATE OR REPLACE PROCEDURE getTeamMembers(_team int(11))
       ELSE
         SET _isPaid = TRUE;
       END IF;
-      UPDATE teammembers SET isPaid = _isPaid WHERE id = _member;
+      UPDATE teammembers SET isPaidCost = _isPaid WHERE id = _member;
     END;
     
     CREATE OR REPLACE PROCEDURE setTeamMemberDepositStatus(_member int(11))
     BEGIN
      DECLARE _isPaid boolean;
-     SELECT isPaid INTO _isPaid FROM teammembers WHERE id = _member;
+     SELECT isPaidDeposit INTO _isPaid FROM teammembers WHERE id = _member;
 
      IF _isPaid
       THEN
@@ -632,14 +637,14 @@ CREATE OR REPLACE PROCEDURE getTeamMembers(_team int(11))
       ELSE
         SET _isPaid = TRUE;
       END IF;
-      UPDATE teammembers SET isPaid = _isPaid WHERE id = _member;
+      UPDATE teammembers SET isPaidDeposit = _isPaid WHERE id = _member;
     END;
     
   CREATE OR REPLACE PROCEDURE getEventAccessLevel(_user int(11), _event int(11))
     BEGIN
      SELECT eventroles.accessLevel FROM eventroles
       INNER JOIN usereventswitch ON usereventswitch.role = eventroles.id
-      WHERE usereventswitch.user = _user AND usereventswitch.event = _event
+      WHERE usereventswitch.user = _user AND usereventswitch.event = _event;
     END;
 
 

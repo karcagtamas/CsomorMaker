@@ -11,19 +11,20 @@ export class EventsComponent implements OnInit {
   events: Event[] = [];
 
   menuItems = [
-    { name: 'Adatok', link: 'details' },
-    { name: 'Beállítások', link: 'settings' },
-    { name: 'Generátor', link: 'generator' },
-    { name: 'Csömör', link: 'csomor' },
-    { name: 'Áttekintés', link: 'summary' },
-    { name: 'ToDo', link: 'todo' },
-    { name: 'Chat', link: 'chat' },
-    { name: 'Tagok', link: 'members' },
-    { name: 'Csapatok', link: 'teams' }
+    { name: 'Adatok', link: 'details', accessLevel: 1 },
+    { name: 'Beállítások', link: 'settings', accessLevel: 3 },
+    { name: 'Generátor', link: 'generator', accessLevel: 3 },
+    { name: 'Csömör', link: 'csomor', accessLevel: 1 },
+    { name: 'Áttekintés', link: 'summary', accessLevel: 3 },
+    { name: 'ToDo', link: 'todo', accessLevel: 2 },
+    { name: 'Chat', link: 'chat', accessLevel: 1 },
+    { name: 'Tagok', link: 'members', accessLevel: 1 },
+    { name: 'Csapatok', link: 'teams', accessLevel: 2 }
   ];
   currentEventId = 0;
   currentEvent = new Event();
   currentPage = 'details';
+  accessLevel = 0;
 
   constructor(
     private eventservice: EventService,
@@ -43,6 +44,14 @@ export class EventsComponent implements OnInit {
             this.currentEventId = data.id;
             this.currentPage = data.page;
             this.currentEvent = this.events.find(x => x.id === +this.currentEventId);
+            this.eventservice
+              .getEventAccessLevel(this.currentEventId)
+              .then(acl => {
+                this.accessLevel = acl;
+              })
+              .catch(() => {
+                this.accessLevel = 0;
+              });
             console.log(this.currentEvent);
           } else {
             this.router.navigateByUrl(`/events/${this.events[0].id}/details`);

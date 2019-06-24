@@ -1,8 +1,8 @@
 <div mat-dialog-content>
-  <div class="text-center panel-title border rounded">{{ data.name }}</div>
-  Név: {{ data.name }} <br />
-  Felhasználónév: {{ data.username }} <br />
-  Csatlakozás: {{ data.connectionDate }}
+  <div class="text-center panel-title border rounded">{{ data.eventMember.name }}</div>
+  Név: {{ data.eventMember.name }} <br />
+  Felhasználónév: {{ data.eventMember.username }} <br />
+  Csatlakozás: {{ data.eventMember.connectionDate }}
   <mat-form-field class="w-100" appearance="outline">
     <mat-label>Rang</mat-label>
     <mat-select [formControl]="roleControl">

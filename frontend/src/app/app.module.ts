@@ -66,9 +66,9 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
 import {
   EventMembersComponent,
   ModifyEventMemberComponent,
-  EventMemberItemComponent
+  EventMemberItemComponent,
+  AddNewMemberModalComponent
 } from './components/event/event-members';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -106,7 +106,8 @@ import {
     ConfirmDialogComponent,
     EventMembersComponent,
     EventMemberItemComponent,
-    ModifyEventMemberComponent
+    ModifyEventMemberComponent,
+    AddNewMemberModalComponent
   ],
   imports: [
     BrowserModule,
@@ -140,7 +141,8 @@ import {
     DeletePayOutDialogComponent,
     AddNewWorkComponent,
     ConfirmDialogComponent,
-    ModifyEventMemberComponent
+    ModifyEventMemberComponent,
+    AddNewMemberModalComponent
   ]
 })
 export class AppModule {}

@@ -10,7 +10,8 @@ import {
   EventWorker,
   EventWorkStatus,
   EventMember,
-  EventRole
+  EventRole,
+  User
 } from '../models';
 import { EventWorkTable } from '../models/event.work.table.model';
 import { EventWorkerTable } from '../models/event.worker.table.model';
@@ -24,6 +25,10 @@ const HttpHeader = { withCredentials: true };
 })
 export class EventService {
   constructor(public http: HttpClient) {}
+
+  getEventAccessLevel(event: number): Promise<number> {
+    return this.http.post<number>(`${URL}/event/get-accesslevel`, { event }, HttpHeader).toPromise();
+  }
 
   getEvents(): Promise<Event[]> {
     return this.http.get<Event[]>(`${URL}/event/get`, HttpHeader).toPromise();
@@ -135,6 +140,10 @@ export class EventService {
     return this.http.post<EventMember[]>(`${URL}/event/get-members`, { event }, HttpHeader).toPromise();
   }
 
+  getEventNonMembers(event: number): Promise<User[]> {
+    return this.http.post<User[]>(`${URL}/event/get-non-members`, { event }, HttpHeader).toPromise();
+  }
+
   addUserToEvent(user: number, event: number): Promise<Response> {
     return this.http.post<Response>(`${URL}/event/add-user-to-event`, { event, user }, HttpHeader).toPromise();
   }
@@ -151,6 +160,6 @@ export class EventService {
   }
 
   getEventRoles(): Promise<EventRole[]> {
-    return this.http.get<EventRole[]>(`${URL}/event/get-event-roles`, HttpHeader).toPromise();
+    return this.http.get<EventRole[]>(`${URL}/event/get-roles`, HttpHeader).toPromise();
   }
 }

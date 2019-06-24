@@ -15,7 +15,7 @@ export class ModifyEventMemberComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<ModifyEventMemberComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: EventMember,
+    @Inject(MAT_DIALOG_DATA) public data: { eventMember: EventMember; accessLevel: number; userId: number },
     private eventservice: EventService
   ) {}
 
@@ -24,7 +24,7 @@ export class ModifyEventMemberComponent implements OnInit {
       .getEventRoles()
       .then(res => {
         this.eventRoles = res;
-        this.roleControl.setValue(this.data.roleId);
+        this.roleControl.setValue(this.data.eventMember.roleId);
       })
       .catch(() => {
         this.eventRoles = [];
@@ -37,8 +37,8 @@ export class ModifyEventMemberComponent implements OnInit {
 
   save() {
     if (!this.roleControl.invalid) {
-      this.data.roleId = this.roleControl.value;
-      this.dialogRef.close({ data: this.data });
+      this.data.eventMember.roleId = this.roleControl.value;
+      this.dialogRef.close({ data: this.data.eventMember });
     }
   }
 }

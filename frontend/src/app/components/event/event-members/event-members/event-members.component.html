@@ -8,9 +8,13 @@
     <app-event-member-item
       *ngFor="let member of eventMembers"
       [eventMember]="member"
+      [accessLevel]="accessLevel"
+      [userId]="userId"
       (delete)="deleteEventMember($event)"
       (update)="updateEventMember($event)"
     ></app-event-member-item>
   </div>
-  <button mat-raised-button color="primary">Új tag felvétele</button>
+  <button mat-raised-button color="primary" (click)="openAddMemberModal()" *ngIf="accessLevel >= 3">
+    Új tag felvétele
+  </button>
 </div>

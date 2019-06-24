@@ -15,4 +15,8 @@ export class UserService {
   isAdmin(): Promise<boolean> {
     return this.http.get<boolean>(`${URL}/user/isadmin`, HttpHeader).toPromise();
   }
+
+  getId(): Promise<number> {
+    return this.http.get<number>(`${URL}/user/get-id`, HttpHeader).toPromise();
+  }
 }

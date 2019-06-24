@@ -19,6 +19,24 @@
 
     }
 
+    function getEventAccessLevel($event){
+        global $db;
+
+        $sql = "CALL getEventAccessLevel(?, ?);";
+        
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("ii", $_SESSION['userId'], $event);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $row = $result->fetch_assoc();
+
+        echo json_encode($row['accessLevel']);
+        $stmt->close();
+
+    }
+
     function newEvent($name){
         global $db;
 
@@ -534,7 +552,7 @@
     function addUserToEvent($user, $event){
         global $db;
 
-        $sql = "CALL addUserToEvent(?, ?);";
+        $sql = "CALL addUserToEvent(?, ?, ?);";
         $stmt = $db->prepare($sql);
         $role = 3;
         $stmt->bind_param("iii", $user, $event, $role);
@@ -590,6 +608,23 @@
         }
         $stmt->close();
 
+    }
+
+    function getEventNonMembers($event){
+          global $db;
+
+        $sql = "CALL getNotMembers(?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $event);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $array = [];
+        while($row = $result->fetch_assoc()){
+            array_push($array, $row);
+        }
+        echo json_encode($array);
+        $stmt->close();
     }
 
     function generate($eventId){

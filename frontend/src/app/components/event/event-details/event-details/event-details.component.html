@@ -19,15 +19,19 @@
   <div class="element"><span class="name">Generátor állapot:</span> {{ event.ready | isReady }}</div>
   <div class="element"><span class="name">Sérültek:</span> {{ event.injured | personCount }}</div>
   <div class="text-center">
-    <button mat-raised-button color="primary" *ngIf="!event.isLocked" (click)="lockEvent()">Zárolás</button>
-    <button mat-raised-button color="primary" *ngIf="event.isLocked" (click)="lockEvent()">Zárolás bontása</button>
+    <button mat-raised-button color="primary" *ngIf="!event.isLocked && accessLevel >= 3" (click)="lockEvent()">
+      Zárolás
+    </button>
+    <button mat-raised-button color="primary" *ngIf="event.isLocked && accessLevel >= 3" (click)="lockEvent()">
+      Zárolás bontása
+    </button>
   </div>
   <div class="text-center">
-    <button mat-raised-button color="primary" (click)="decreaseV()">Látógató -</button>
-    <button mat-raised-button color="primary" (click)="increaseV()">Látógató +</button>
+    <button mat-raised-button color="primary" (click)="decreaseV()" *ngIf="accessLevel >= 2">Látógató -</button>
+    <button mat-raised-button color="primary" (click)="increaseV()" *ngIf="accessLevel >= 2">Látógató +</button>
   </div>
   <div class="text-center">
-    <button mat-raised-button color="primary" (click)="decreaseI()">Sérült -</button>
-    <button mat-raised-button color="primary" (click)="increaseI()">Sérült +</button>
+    <button mat-raised-button color="primary" (click)="decreaseI()" *ngIf="accessLevel >= 2">Sérült -</button>
+    <button mat-raised-button color="primary" (click)="increaseI()" *ngIf="accessLevel >= 2">Sérült +</button>
   </div>
 </div>

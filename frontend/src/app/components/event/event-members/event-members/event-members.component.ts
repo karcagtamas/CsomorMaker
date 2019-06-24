@@ -1,6 +1,8 @@
+import { AddNewMemberModalComponent } from './../add-new-member-modal/add-new-member-modal.component';
 import { Component, OnInit, ViewChild, Input, OnChanges } from '@angular/core';
 import { EventMember, Event } from 'src/app/models';
-import { EventService, NotificationService } from 'src/app/services';
+import { EventService, NotificationService, UserService } from 'src/app/services';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-event-members',
@@ -9,13 +11,28 @@ import { EventService, NotificationService } from 'src/app/services';
 })
 export class EventMembersComponent implements OnInit, OnChanges {
   @Input() event: Event;
+  @Input() accessLevel: number;
+  userId = 0;
   filterValue = '';
   eventMembers: EventMember[];
 
-  constructor(private eventservice: EventService, private notificationservice: NotificationService) {}
+  constructor(
+    private eventservice: EventService,
+    private notificationservice: NotificationService,
+    public dialog: MatDialog,
+    private userservice: UserService
+  ) {}
 
   ngOnInit() {
     this.getEventMembers();
+    this.userservice
+      .getId()
+      .then(res => {
+        this.userId = res;
+      })
+      .catch(() => {
+        this.userId = 0;
+      });
   }
 
   ngOnChanges() {
@@ -23,9 +40,14 @@ export class EventMembersComponent implements OnInit, OnChanges {
   }
 
   getEventMembers() {
-    this.eventservice.getEventMembers(this.event.id).then(res => {
-      this.eventMembers = res;
-    });
+    this.eventservice
+      .getEventMembers(this.event.id)
+      .then(res => {
+        this.eventMembers = res;
+      })
+      .catch(() => {
+        this.eventMembers = [];
+      });
   }
 
   deleteEventMember(event) {
@@ -33,6 +55,7 @@ export class EventMembersComponent implements OnInit, OnChanges {
       .deleteUserFromEvent(event.id, this.event.id)
       .then(res => {
         if (res.response === 'delete-user-from-event-success') {
+          this.getEventMembers();
           this.notificationservice.success('A tag törlése az eseményből sikeres volt');
         } else {
           this.notificationservice.error(res.message);
@@ -44,11 +67,11 @@ export class EventMembersComponent implements OnInit, OnChanges {
   }
 
   updateEventMember(event) {
-    console.log(event.data);
     this.eventservice
       .updateEventUser(event.data.id, this.event.id, event.data.roleId)
       .then(res => {
         if (res.response === 'update-event-user-success') {
+          this.getEventMembers();
           this.notificationservice.success('A tag rangjának frissítése sikeres volt');
         } else {
           this.notificationservice.error(res.message);
@@ -59,6 +82,28 @@ export class EventMembersComponent implements OnInit, OnChanges {
           'A tag rangjának frissítése közben hiba lépett fel. Kérjük próbálja újra késöbb.'
         );
       });
+  }
+
+  openAddMemberModal() {
+    const dialogRef = this.dialog.open(AddNewMemberModalComponent, { data: this.event.id });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.eventservice
+          .addUserToEvent(result, this.event.id)
+          .then(res => {
+            if (res.response === 'add-user-to-event-success') {
+              this.getEventMembers();
+              this.notificationservice.success('A tag hozzáadása sikeres!');
+            } else {
+              this.notificationservice.error(res.response);
+            }
+          })
+          .catch(() => {
+            this.notificationservice.error('A tag hozzáadása közben hiba történt. Kérjük próbálja újra késübb.');
+          });
+      }
+    });
   }
 
   filter() {}

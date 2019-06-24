@@ -9,6 +9,7 @@ import { NotificationService } from 'src/app/services';
 })
 export class EventDetailsComponent implements OnInit {
   @Input() event: Event;
+  @Input() accessLevel: number;
   @Output() lock = new EventEmitter();
   @Output() increaseVisitors = new EventEmitter();
   @Output() decreaseVisitors = new EventEmitter();

@@ -46,6 +46,10 @@
                 case 'isadmin':
                     isAdmin();
                     break;
+
+                case 'get-id':
+                    echo $_SESSION['userId'];
+                    break;
                 
                 default:
                     echo '{"response" : "bad-event", "message" : "Bad request event!"}';
@@ -156,6 +160,10 @@
                         getEventMembers($_POST['event']);
                         break;
 
+                    case 'get-non-members':
+                        getEventNonMembers($_POST['event']);
+                        break;
+
                     case 'add-user-to-event':
                         addUserToEvent($_POST['user'], $_POST['event']);
                         break;
@@ -168,8 +176,12 @@
                         updateEventUser($_POST['user'], $_POST['event'],$_POST['role']);
                         break;
 
-                    case 'get-event-roles':
+                    case 'get-roles':
                         getEventRoles();
+                        break;
+
+                    case 'get-accesslevel':
+                        getEventAccessLevel($_POST['event']);
                         break;
                         
                     default:

@@ -12,6 +12,8 @@ import { ModifyEventMemberComponent } from '../modify-event-member/modify-event-
 })
 export class EventMemberItemComponent implements OnInit {
   @Input() eventMember: EventMember;
+  @Input() accessLevel: number;
+  @Input() userId: number;
   @Output() delete = new EventEmitter();
   @Output() update = new EventEmitter();
   constructor(public dialog: MatDialog, private notificationservice: NotificationService) {}
@@ -20,7 +22,7 @@ export class EventMemberItemComponent implements OnInit {
 
   openModifyDialog() {
     const dialogRef = this.dialog.open(ModifyEventMemberComponent, {
-      data: this.eventMember
+      data: { eventMember: this.eventMember, accessLevel: this.accessLevel, userId: this.userId }
     });
 
     dialogRef.afterClosed().subscribe(result => {

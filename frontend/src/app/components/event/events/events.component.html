@@ -14,14 +14,19 @@
     </div>
     <div class="menuitems border rounded">
       <div class="title text-center border rounded">Menü</div>
-      <div
-        class="item rounded"
-        *ngFor="let item of menuItems"
-        [routerLink]="['/events', currentEventId, item.link]"
-        routerLinkActive="router-link-active"
-        [ngClass]="{ purple: item.link === currentPage }"
-      >
-        {{ item.name }}
+      <div *ngFor="let item of menuItems">
+        <div
+          class="item rounded"
+          [routerLink]="['/events', currentEventId, item.link]"
+          routerLinkActive="router-link-active"
+          [ngClass]="{ purple: item.link === currentPage }"
+          *ngIf="item.accessLevel <= accessLevel"
+        >
+          {{ item.name }}
+        </div>
+      </div>
+      <div>
+        <div class="item rounded">Esemény deaktiválása</div>
       </div>
     </div>
   </div>
@@ -31,6 +36,7 @@
         <app-event-details
           *ngSwitchCase="'details'"
           [event]="currentEvent"
+          [accessLevel]="accessLevel"
           (lock)="lockEvent($event)"
           (increaseVisitors)="increaseVisitors($event)"
           (decreaseVisitors)="decreaseVisitors($event)"
@@ -47,7 +53,11 @@
         ></app-event-settings>
         <app-event-summary *ngSwitchCase="'summary'" [event]="currentEvent"></app-event-summary>
         <app-event-to-do *ngSwitchCase="'todo'"></app-event-to-do>
-        <app-event-members *ngSwitchCase="'members'" [event]="currentEvent"></app-event-members>
+        <app-event-members
+          *ngSwitchCase="'members'"
+          [event]="currentEvent"
+          [accessLevel]="accessLevel"
+        ></app-event-members>
       </div>
     </mat-card>
   </div>

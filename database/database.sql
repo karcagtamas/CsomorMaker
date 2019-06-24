@@ -196,3 +196,16 @@ CREATE TRIGGER event_members_de AFTER DELETE ON usereventswitch
   BEGIN
     UPDATE events SET members = members - 1 WHERE id = OLD.event;
   END;
+
+CREATE TRIGGER team_members AFTER INSERT ON teammembers
+  FOR EACH ROW
+  BEGIN
+    UPDATE teams SET members = members + 1 WHERE id = NEW.team;
+  END;
+
+CREATE TRIGGER team_members_de AFTER DELETE ON teammembers
+  FOR EACH ROW
+  BEGIN
+    UPDATE teams SET members = members - 1 WHERE id = OLD.team;
+  END;
+
