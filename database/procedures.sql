@@ -295,6 +295,15 @@ USE csomormaker;
     BEGIN
         SELECT * FROM eventroles;
      END;
+     
+   CREATE OR REPLACE PROCEDURE getNotMembers(_event int(11))
+    BEGIN
+      SELECT * FROM users 
+      WHERE id NOT IN (
+      SELECT user as id FROM usereventswitch
+      WHERE event = _eventId
+      );
+    END;
 
   /* Payout types */
 
@@ -586,9 +595,46 @@ CREATE OR REPLACE PROCEDURE setIsValidWorkStatus(_work int(11), _worker int(11))
   CALL setUnReadyEvent(_eventId);
   END;
 
+CREATE OR REPLACE PROCEDURE getEventTeams(_event int(11))
+    BEGIN
+      SELECT * FROM teams
+      WHERE event = _event;
+    END;
+    
+CREATE OR REPLACE PROCEDURE getTeamMembers(_team int(11))
+    BEGIN
+      SELECT * FROM teamsmembers
+      WHERE team = _team;
+    END;
+    
+ CREATE OR REPLACE PROCEDURE setTeamMemberCostStatus(_member int(11))
+    BEGIN
+     DECLARE _isPaid boolean;
+     SELECT isPaid INTO _isPaid FROM teammembers WHERE id = _member;
 
+     IF _isPaid
+      THEN
+        SET _isPaid = FALSE;
+      ELSE
+        SET _isPaid = TRUE;
+      END IF;
+      UPDATE teammembers SET isPaid = _isPaid WHERE id = _member;
+    END;
+    
+    CREATE OR REPLACE PROCEDURE setTeamMemberDepositStatus(_member int(11))
+    BEGIN
+     DECLARE _isPaid boolean;
+     SELECT isPaid INTO _isPaid FROM teammembers WHERE id = _member;
 
-CALL getWorkerTablesWithoutWorkNames(1, 1);
+     IF _isPaid
+      THEN
+        SET _isPaid = FALSE;
+      ELSE
+        SET _isPaid = TRUE;
+      END IF;
+      UPDATE teammembers SET isPaid = _isPaid WHERE id = _member;
+    END;
+
 
 
    
