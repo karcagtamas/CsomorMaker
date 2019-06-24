@@ -26,7 +26,7 @@
         </div>
       </div>
       <div>
-        <div class="item rounded">Esemény deaktiválása</div>
+        <div class="item rounded" *ngIf="accessLevel >= 3">Esemény deaktiválása</div>
       </div>
     </div>
   </div>

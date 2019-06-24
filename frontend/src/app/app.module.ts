@@ -69,6 +69,13 @@ import {
   EventMemberItemComponent,
   AddNewMemberModalComponent
 } from './components/event/event-members';
+import {
+  EventTeamsComponent,
+  AddTeamDialogComponent,
+  TeamDeatilsDialogComponent,
+  AddTeamMemberDialogComponent
+} from './components/event/event-teams';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -107,7 +114,11 @@ import {
     EventMembersComponent,
     EventMemberItemComponent,
     ModifyEventMemberComponent,
-    AddNewMemberModalComponent
+    AddNewMemberModalComponent,
+    EventTeamsComponent,
+    AddTeamDialogComponent,
+    TeamDeatilsDialogComponent,
+    AddTeamMemberDialogComponent
   ],
   imports: [
     BrowserModule,
