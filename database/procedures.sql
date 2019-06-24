@@ -298,7 +298,7 @@ USE csomormaker;
      
    CREATE OR REPLACE PROCEDURE getNotMembers(_event int(11))
     BEGIN
-      SELECT * FROM users 
+      SELECT users.name, users.id FROM users 
       WHERE id NOT IN (
       SELECT user as id FROM usereventswitch
       WHERE event = _eventId
@@ -633,6 +633,13 @@ CREATE OR REPLACE PROCEDURE getTeamMembers(_team int(11))
         SET _isPaid = TRUE;
       END IF;
       UPDATE teammembers SET isPaid = _isPaid WHERE id = _member;
+    END;
+    
+  CREATE OR REPLACE PROCEDURE getEventAccessLevel(_user int(11), _event int(11))
+    BEGIN
+     SELECT eventroles.accessLevel FROM eventroles
+      INNER JOIN usereventswitch ON usereventswitch.role = eventroles.id
+      WHERE usereventswitch.user = _user AND usereventswitch.event = _event
     END;
 
 
