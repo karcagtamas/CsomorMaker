@@ -70,14 +70,14 @@ CREATE TABLE usereventswitch(
   REFERENCES eventroles(id)
 );
 
-CREATE TABLE payouttypes(
+CREATE TABLE eventpayouttypes(
   id int(11) AUTO_INCREMENT NOT NULL,
   name varchar(50) NOT NULL,
   isOut boolean NOT NULL,
   PRIMARY KEY(id)
   );
 
-CREATE TABLE payouts(
+CREATE TABLE eventpayouts(
   id int(11) AUTO_INCREMENT NOT NULL,
   name varchar(75) NOT NULL,
   eventId int(11) NOT NULL,
@@ -90,7 +90,7 @@ CREATE TABLE payouts(
   REFERENCES events(id)
 );
 
-CREATE TABLE todoes(
+CREATE TABLE eventtodoes(
   id int(11) AUTO_INCREMENT NOT NULL,
   eventId int(11) NOT NULL,
   date datetime DEFAULT CURRENT_TIMESTAMP,
@@ -100,7 +100,7 @@ CREATE TABLE todoes(
   REFERENCES events(id)
 );
 
-CREATE TABLE messages(
+CREATE TABLE eventmessages(
   id int(11) AUTO_INCREMENT NOT NULL,
   sender int(11) NOT NULL,
   event int(11) NOT NULL,
@@ -113,7 +113,7 @@ CREATE TABLE messages(
   REFERENCES events (id)
 );
 
-CREATE TABLE works(
+CREATE TABLE eventworks(
   id int(11) AUTO_INCREMENT NOT NULL,
   name varchar(50) NOT NULL,
   event int(11) NOT NULL,
@@ -122,7 +122,7 @@ CREATE TABLE works(
   REFERENCES events(id)
 );
 
-CREATE TABLE worktables(
+CREATE TABLE eventworktables(
    day int(2) NOT NULL,
    hour int(2) NOT NULL,
    isActive boolean DEFAULT TRUE,
@@ -135,7 +135,7 @@ CREATE TABLE worktables(
    REFERENCES users(id)
  );
 
-CREATE TABLE workertables(
+CREATE TABLE eventworkertables(
   day int(2) NOT NULL,
   hour int(2) NOT NULL,
   isAvaiable boolean NOT NULL DEFAULT TRUE,
@@ -151,7 +151,7 @@ CREATE TABLE workertables(
   REFERENCES events(id)
 );
 
-CREATE TABLE workworkerswitch(
+CREATE TABLE eventworkworkerswitch(
   worker int(11) NOT NULL,
   work int(11) NOT NULL,
   isValid boolean NOT NULL DEFAULT TRUE,
@@ -162,7 +162,7 @@ CREATE TABLE workworkerswitch(
   REFERENCES works(id) ON DELETE CASCADE
   );
 
-CREATE TABLE teams(
+CREATE TABLE eventteams(
   id int(11) AUTO_INCREMENT NOT NULL,
   name varchar(100) NOT NULL,
   event int(11) NOT NULL,
@@ -172,7 +172,7 @@ CREATE TABLE teams(
   REFERENCES events(id)
 );
 
-CREATE TABLE teammembers(
+CREATE TABLE eventteammembers(
   id int(11) NOT NULL,
   name varchar(100) NOT NULL,
   isPaidCost boolean NOT NULL DEFAULT FALSE,
@@ -197,15 +197,15 @@ CREATE TRIGGER event_members_de AFTER DELETE ON usereventswitch
     UPDATE events SET members = members - 1 WHERE id = OLD.event;
   END;
 
-CREATE TRIGGER team_members AFTER INSERT ON teammembers
+CREATE TRIGGER team_members AFTER INSERT ON eventteammembers
   FOR EACH ROW
   BEGIN
-    UPDATE teams SET members = members + 1 WHERE id = NEW.team;
+    UPDATE eventteams SET members = members + 1 WHERE id = NEW.team;
   END;
 
-CREATE TRIGGER team_members_de AFTER DELETE ON teammembers
+CREATE TRIGGER team_members_de AFTER DELETE ON eventteammembers
   FOR EACH ROW
   BEGIN
-    UPDATE teams SET members = members - 1 WHERE id = OLD.team;
+    UPDATE eventteams SET members = members - 1 WHERE id = OLD.team;
   END;
 
