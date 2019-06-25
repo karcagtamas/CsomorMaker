@@ -48,8 +48,8 @@ USE csomormaker;
   CREATE OR REPLACE PROCEDURE deleteUserFromEvent(_userId int(11), _eventId int(11))
     BEGIN
         DELETE FROM usereventswitch WHERE user = _userId AND event = _eventId;
-        DELETE FROM workertables WHERE worker = _userId AND event = _eventId;
-        DELETE FROM workworkerswitch WHERE worker = _userId;
+        DELETE FROM eventworkertables WHERE worker = _userId AND event = _eventId;
+        DELETE FROM eventworkworkerswitch WHERE worker = _userId;
      END;
 
   CREATE OR REPLACE PROCEDURE addUserToEvent(_userId int(11), _eventId int(11), _role int(11))
@@ -71,7 +71,7 @@ USE csomormaker;
       SELECT days, startHour, endHour  INTO _days, _startHour, _endHour FROM events WHERE id = _eventId;
 
       WHILE _days <> _currentDay OR _startHour <> _endHour DO 
-        INSERT INTO workertables (day, hour, worker, event)
+        INSERT INTO eventworkertables (day, hour, worker, event)
         VALUES (_currentDay, _startHour, _workerId, _eventId);
 
         SET _startHour = _startHour + 1;
@@ -81,7 +81,7 @@ USE csomormaker;
         END IF;
       END WHILE;
 
-     INSERT INTO workworkerswitch (work, worker)
+     INSERT INTO eventworkworkerswitch (work, worker)
        SELECT * FROM (
         SELECT works.id FROM works
         WHERE works.event = _eventId) AS T1
@@ -104,100 +104,100 @@ USE csomormaker;
 
   CREATE OR REPLACE PROCEDURE getPayOutTypes()
     BEGIN
-     SELECT * FROM payouttypes;
+     SELECT * FROM eventpayouttypes;
     END;
 
   CREATE OR REPLACE PROCEDURE getPayOutType(_id int(11))
     BEGIN
-     SELECT * FROM payouttypes WHERE id = _id;
+     SELECT * FROM eventpayouttypes WHERE id = _id;
     END;
 
   /* evetpayouts */
 
   CREATE OR REPLACE PROCEDURE getPayOuts(_eventId int(11))
     BEGIN
-     SELECT payouts.name, payouts.id, payouts.eventId, payouts.cost, payouts.type AS typeId, payouttypes.name AS type, payouttypes.isOut FROM payouts 
-     INNER JOIN payouttypes ON payouts.type = payouttypes.id
-     WHERE payouts.eventId = _eventId;
+     SELECT eventpayouts.name, eventpayouts.id, eventpayouts.eventId, eventpayouts.cost, eventpayouts.type AS typeId, eventpayouttypes.name AS type, eventpayouttypes.isOut FROM eventpayouts 
+     INNER JOIN eventpayouttypes ON eventpayouts.type = eventpayouttypes.id
+     WHERE eventpayouts.eventId = _eventId;
     END;
 
   CREATE OR REPLACE PROCEDURE getPayOut(_id int(11))
     BEGIN
-    SELECT  payouts.name, payouts.id, payouts.eventId, payouts.cost, payouts.type AS typeId, payouttypes.name AS type, payouttypes.isOu FROM payouts 
-     INNER JOIN payouttypes ON payouts.type = payouttypes.id
-     WHERE payouts.id = _id;
+    SELECT  eventpayouts.name, eventpayouts.id, eventpayouts.eventId, eventpayouts.cost, eventpayouts.type AS typeId, eventpayouttypes.name AS type, eventpayouttypes.isOu FROM eventpayouts 
+     INNER JOIN eventpayouttypes ON eventpayouts.type = eventpayouttypes.id
+     WHERE eventpayouts.id = _id;
     END;
 
   CREATE OR REPLACE PROCEDURE addPayOut(_name varchar(75), _eventId int(11), _type int(11), _cost decimal)
     BEGIN
-     INSERT INTO payouts (name, eventId, type, cost)
+     INSERT INTO eventpayouts (name, eventId, type, cost)
         VALUES (_name, _eventId, _type, _cost);
     END;
 
   CREATE OR REPLACE PROCEDURE deletePayOut(_id int(11))
     BEGIN
-     DELETE FROM payouts WHERE id = _id;
+     DELETE FROM eventpayouts WHERE id = _id;
     END;
 
   /* eventtodoes */
 
   CREATE OR REPLACE PROCEDURE getToDoes(_eventId int(11))
     BEGIN
-     SELECT * FROM todoes WHERE eventId = _eventId;
+     SELECT * FROM eventtodoes WHERE eventId = _eventId;
     END;
 
   CREATE OR REPLACE PROCEDURE getToDo(_id int(11))
     BEGIN
-     SELECT * FROM todoes WHERE id = _id;
+     SELECT * FROM eventtodoes WHERE id = _id;
     END;
 
   CREATE OR REPLACE PROCEDURE addToDo(_eventId int(11), _text longtext)
     BEGIN
-     INSERT INTO todoes (eventId, text)
+     INSERT INTO eventtodoes (eventId, text)
         VALUES (_eventId, _text);
     END;
 
   CREATE OR REPLACE PROCEDURE deleteToDo(_id int(11))
     BEGIN
-     DELETE FROM todoes WHERE id = _id;
+     DELETE FROM eventtodoes WHERE id = _id;
     END;
 
   /* Messages */
 
   CREATE OR REPLACE PROCEDURE getMessages(_eventId int(11))
     BEGIN
-     SELECT * FROM messages WHERE event = _eventId ORDER BY dateOfSent;
+     SELECT * FROM eventmessages WHERE event = _eventId ORDER BY dateOfSent;
     END;
 
   CREATE OR REPLACE PROCEDURE addMessage(_eventId int(11), _sender int(11), _message text)
     BEGIN
-     INSERT INTO messages (sender, event, message)
+     INSERT INTO eventmessages (sender, event, message)
        VALUES (_sender, _eventId, _message);
     END;
 
   CREATE OR REPLACE PROCEDURE deleteMessage(_id int(11))
     BEGIN
-     DELETE FROM messages WHERE id = _id;
+     DELETE FROM eventmessages WHERE id = _id;
     END;
 
-  /* Works */
+  /* eventworks */
 
   CREATE OR REPLACE PROCEDURE getWorks(_eventId int(11))
     BEGIN
-     SELECT * FROM works WHERE event = _eventId;
+     SELECT * FROM eventworks WHERE event = _eventId;
     END;
 
   CREATE OR REPLACE PROCEDURE getWork(_id int(11))
     BEGIN
-     SELECT * FROM works WHERE id = _id;
+     SELECT * FROM eventworks WHERE id = _id;
     END;
 
   CREATE OR REPLACE PROCEDURE deleteWork(_id int(11))
     BEGIN
     DECLARE _eventId int(11);
-    SELECT event INTO _eventId FROM works WHERE id = _id;
+    SELECT event INTO _eventId FROM eventworks WHERE id = _id;
    /* DELETE FROM worktables WHERE work = _id;*/
-    DELETE FROM works WHERE id = _id;
+    DELETE FROM eventworks WHERE id = _id;
     CALL setUnReadyEvent(_eventId);
     END;
 
@@ -209,7 +209,7 @@ USE csomormaker;
       DECLARE _endHour int(11);
       DECLARE _workId int(11);
 
-       INSERT INTO works (name, event)
+       INSERT INTO eventworks (name, event)
         VALUES (_name, _eventId);
 
       SET _workId = LAST_INSERT_ID();
@@ -217,7 +217,7 @@ USE csomormaker;
       SELECT days, startHour, endHour  INTO _days, _startHour, _endHour FROM events WHERE id = _eventId;
 
       WHILE _days <> _currentDay OR _startHour <> _endHour DO 
-        INSERT INTO worktables (day, hour, work)
+        INSERT INTO eventworktables (day, hour, work)
         VALUES (_currentDay, _startHour, _workId);
 
         SET _startHour = _startHour + 1;
@@ -227,7 +227,7 @@ USE csomormaker;
         END IF;
       END WHILE;
 
-    INSERT INTO workworkerswitch (worker, work)
+    INSERT INTO eventworkworkerswitch (worker, work)
        SELECT * FROM (
         SELECT users.id FROM users
         INNER JOIN usereventswitch ON users.id = usereventswitch.user
@@ -237,23 +237,23 @@ USE csomormaker;
     CALL setUnReadyEvent(_eventId);
     END;
 
-  /* Work Tables */
+  /* eventworktables */
 
   CREATE OR REPLACE PROCEDURE getWorkTablesWithWorkerNames(_id int(11))
     BEGIN
-     SELECT worktables.day, worktables.hour, worktables.work AS workId, works.name AS work, worktables.isActive, worktables.worker AS workerId, users.name AS worker FROM worktables
-      INNER JOIN works ON worktables.work = works.id
-      INNER JOIN users ON worktables.worker = users.id
-    WHERE worktables.work = _id
-    ORDER BY worktables.day, worktables.hour;
+     SELECT eventworktables.day, eventworktables.hour, eventworktables.work AS workId, eventworks.name AS work, eventworktables.isActive, eventworktables.worker AS workerId, users.name AS worker FROM eventworktables
+      INNER JOIN eventworks ON eventworktables.work = eventworks.id
+      INNER JOIN users ON eventworktables.worker = users.id
+    WHERE eventworktables.work = _id
+    ORDER BY eventworktables.day, eventworktables.hour;
     END;
 
     CREATE OR REPLACE PROCEDURE getWorkTablesWithoutWorkerNames(_id int(11))
     BEGIN
-     SELECT worktables.day, worktables.hour, worktables.work AS workId, works.name AS work, worktables.isActive, worktables.worker AS workerId, NULL AS worker FROM worktables
-      INNER JOIN works ON worktables.work = works.id
-    WHERE worktables.work = _id
-    ORDER BY worktables.day, worktables.hour;
+     SELECT eventworktables.day, eventworktables.hour, eventworktables.work AS workId, eventworks.name AS work, eventworktables.isActive, eventworktables.worker AS workerId, NULL AS worker FROM eventworktables
+      INNER JOIN eventworks ON eventworktables.work = eventworks.id
+    WHERE eventworktables.work = _id
+    ORDER BY eventworktables.day, eventworktables.hour;
     END;
 
     CREATE OR REPLACE PROCEDURE updateWorkTables(_workId int(11), _eventId int(11))
@@ -262,12 +262,12 @@ USE csomormaker;
       DECLARE _currentDay int(2) DEFAULT 0;
       DECLARE _startHour int(2);
       DECLARE _endHour int(11);
-      DELETE FROM worktables WHERE work = _workId;
+      DELETE FROM eventworktables WHERE work = _workId;
 
        SELECT days, startHour, endHour  INTO _days, _startHour, _endHour FROM events WHERE id = _eventId;
 
       WHILE _days <> _currentDay OR _startHour <> _endHour DO 
-        INSERT INTO worktables (day, hour, work)
+        INSERT INTO eventworktables (day, hour, work)
         VALUES (_currentDay, _startHour, _workId);
 
         SET _startHour = _startHour + 1;
@@ -280,15 +280,15 @@ USE csomormaker;
 
     CREATE OR REPLACE PROCEDURE updateWorkTable(_work int(11), _day int(2), _hour int(11), _worker int(11))
     BEGIN
-      UPDATE worktables SET worker = _worker WHERE work = _work AND day = _day AND hour = _hour;
+      UPDATE eventworktables SET worker = _worker WHERE work = _work AND day = _day AND hour = _hour;
     END;
 
     CREATE OR REPLACE PROCEDURE setWorkTableIsActive(_day int(2), _hour int(2), _work int(11))
     BEGIN
        DECLARE _eventId int(11);
      DECLARE _isActive boolean;
-      SELECT event INTO _eventId FROM works WHERE id = _work;
-     SELECT isActive INTO _isActive FROM worktables WHERE day = _day AND hour = _hour AND work = _work;
+      SELECT event INTO _eventId FROM eventworks WHERE id = _work;
+     SELECT isActive INTO _isActive FROM eventworktables WHERE day = _day AND hour = _hour AND work = _work;
 
      IF _isActive
       THEN
@@ -296,7 +296,7 @@ USE csomormaker;
       ELSE
         SET _isActive = TRUE;
       END IF;
-      UPDATE worktables SET isActive = _isActive WHERE day = _day AND hour = _hour AND work = _work;
+      UPDATE eventworktables SET isActive = _isActive WHERE day = _day AND hour = _hour AND work = _work;
       CALL setUnReadyEvent(_eventId);
     END;
 
