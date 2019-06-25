@@ -32,6 +32,8 @@ USE csomormaker;
       WHERE usereventswitch.event = _id;
     END;
 
+  CALL getEventMembers(2);
+
   CREATE OR REPLACE PROCEDURE getEventLowWorkers(_id int(11))
     BEGIN
      SELECT users.id, users.name, eventroles.id AS roleId, eventroles.accessLevel, eventroles.name AS role, usereventswitch.connectionDate, usereventswitch.event FROM users
@@ -39,6 +41,8 @@ USE csomormaker;
       INNER JOIN eventroles ON usereventswitch.role = eventroles.id
        WHERE usereventswitch.event = _id AND eventroles.accessLevel = 1;
     END;
+
+  CALL getEventLowWorkers(2);
 
   CREATE OR REPLACE PROCEDURE updateUserEvenetRole(_userId int(11), _eventId int(11), _roleId int(11))
     BEGIN 
@@ -304,19 +308,19 @@ USE csomormaker;
 
    CREATE OR REPLACE PROCEDURE getWorkerTablesWithWorkNames(_id int(11), _eventId int(11))
     BEGIN
-     SELECT workertables.day, workertables.hour, workertables.work AS workId, works.name AS work, workertables.isAvaiable, workertables.worker AS workerId, users.name AS worker FROM workertables
-      INNER JOIN works ON workertables.work = works.id
-      INNER JOIN users ON workertables.worker = users.id
-    WHERE workertables.worker = _id AND workertables.event = _eventId
-    ORDER BY workertables.day, workertables.hour;
+     SELECT eventworkertables.day, eventworkertables.hour, eventworkertables.work AS workId, eventworks.name AS work, eventworkertables.isAvaiable, eventworkertables.worker AS workerId, users.name AS worker FROM eventworkertables
+      INNER JOIN eventworks ON eventworkertables.work = eventworks.id
+      INNER JOIN users ON eventworkertables.worker = users.id
+    WHERE eventworkertables.worker = _id AND eventworkertables.event = _eventId
+    ORDER BY eventworkertables.day, eventworkertables.hour;
     END;
 
     CREATE OR REPLACE PROCEDURE getWorkerTablesWithoutWorkNames(_id int(11), _eventId int(11))
     BEGIN
-     SELECT workertables.day, workertables.hour, workertables.work AS workId, workertables.isAvaiable, workertables.worker AS workerId, users.name AS worker, NULL AS work FROM workertables
-      INNER JOIN users ON workertables.worker = users.id
-    WHERE workertables.worker = _id AND workertables.event = _eventId
-    ORDER BY workertables.day, workertables.hour;
+     SELECT eventworkertables.day, eventworkertables.hour, eventworkertables.work AS workId, eventworkertables.isAvaiable, eventworkertables.worker AS workerId, users.name AS worker, NULL AS work FROM eventworkertables
+      INNER JOIN users ON eventworkertables.worker = users.id
+    WHERE eventworkertables.worker = _id AND eventworkertables.event = _eventId
+    ORDER BY eventworkertables.day, eventworkertables.hour;
     END;
 
     CREATE OR REPLACE PROCEDURE updateWorkerTables(_workerId int(11), _eventId int(11))
@@ -325,12 +329,12 @@ USE csomormaker;
       DECLARE _currentDay int(2) DEFAULT 0;
       DECLARE _startHour int(2);
       DECLARE _endHour int(11);
-      DELETE FROM workertables WHERE worker = _workerId AND event = _eventId;
+      DELETE FROM eventworkertables WHERE worker = _workerId AND event = _eventId;
 
       SELECT days, startHour, endHour  INTO _days, _startHour, _endHour FROM events WHERE id = _eventId;
 
       WHILE _days <> _currentDay OR _startHour <> _endHour DO 
-        INSERT INTO workertables (day, hour, worker, event)
+        INSERT INTO eventworkertables (day, hour, worker, event)
         VALUES (_currentDay, _startHour, _workerId, _eventId);
 
         SET _startHour = _startHour + 1;
@@ -344,13 +348,13 @@ USE csomormaker;
 
     CREATE OR REPLACE PROCEDURE updateWorkerTable(_worker int(11), _event int(11), _day int(2), _hour int(11), _work int(11))
     BEGIN
-      UPDATE workertables SET work = _work WHERE worker = _worker AND event = _event AND day = _day AND hour = _hour;
+      UPDATE eventworkertables SET work = _work WHERE worker = _worker AND event = _event AND day = _day AND hour = _hour;
     END;
 
     CREATE OR REPLACE PROCEDURE setWorkerTableIsAvaiable(_day int(2), _hour int(2), _worker int(11), _eventId int(11))
     BEGIN
      DECLARE _isAvaiable boolean;
-     SELECT isAvaiable INTO _isAvaiable FROM workertables WHERE day = _day AND hour = _hour AND worker = _worker AND event = _eventId;
+     SELECT isAvaiable INTO _isAvaiable FROM eventworkertables WHERE day = _day AND hour = _hour AND worker = _worker AND event = _eventId;
 
      IF _isAvaiable
       THEN
@@ -358,7 +362,7 @@ USE csomormaker;
       ELSE
         SET _isAvaiable = TRUE;
       END IF;
-      UPDATE workertables SET isAvaiable = _isAvaiable WHERE day = _day AND hour = _hour AND worker = _worker AND event = _eventId;
+      UPDATE eventworkertables SET isAvaiable = _isAvaiable WHERE day = _day AND hour = _hour AND worker = _worker AND event = _eventId;
       CALL setUnReadyEvent(_eventId);
     END;
 
@@ -367,18 +371,18 @@ USE csomormaker;
 
 CREATE OR REPLACE PROCEDURE getWorkStatuses(_worker int(11), _event int(11))
     BEGIN
-    SELECT users.id AS workerId, users.name AS worker, works.id AS workId, works.name AS work, workworkerswitch.isValid FROM workworkerswitch
-      INNER JOIN users ON workworkerswitch.worker = users.id
-      INNER JOIN works ON workworkerswitch.work = works.id
-    WHERE workworkerswitch.worker = _worker AND works.event = _event;
+    SELECT users.id AS workerId, users.name AS worker, eventworks.id AS workId, eventworks.name AS work, eventworkworkerswitch.isValid FROM eventworkworkerswitch
+      INNER JOIN users ON eventworkworkerswitch.worker = users.id
+      INNER JOIN works ON eventworkworkerswitch.work = eventworks.id
+    WHERE eventworkworkerswitch.worker = _worker AND eventworks.event = _event;
     END;
 
 CREATE OR REPLACE PROCEDURE setIsValidWorkStatus(_work int(11), _worker int(11))
     BEGIN
       DECLARE _eventId int(11);
      DECLARE _isValid boolean;
-      SELECT event INTO _eventId FROM works WHERE id = _work;
-     SELECT isValid INTO _isValid FROM workworkerswitch WHERE work = _work AND worker = _worker;
+      SELECT event INTO _eventId FROM eventworks WHERE id = _work;
+     SELECT isValid INTO _isValid FROM eventworkworkerswitch WHERE work = _work AND worker = _worker;
 
      IF _isValid
       THEN
@@ -386,7 +390,7 @@ CREATE OR REPLACE PROCEDURE setIsValidWorkStatus(_work int(11), _worker int(11))
       ELSE
         SET _isValid = TRUE;
       END IF;
-      UPDATE workworkerswitch SET isValid = _isValid  WHERE work = _work AND worker = _worker;
+      UPDATE eventworkworkerswitch SET isValid = _isValid  WHERE work = _work AND worker = _worker;
   CALL setUnReadyEvent(_eventId);
   END;
 
@@ -394,20 +398,20 @@ CREATE OR REPLACE PROCEDURE setIsValidWorkStatus(_work int(11), _worker int(11))
 
 CREATE OR REPLACE PROCEDURE getEventTeams(_event int(11))
     BEGIN
-      SELECT * FROM teams
+      SELECT * FROM eventteams
       WHERE event = _event;
     END;
     
 CREATE OR REPLACE PROCEDURE getTeamMembers(_team int(11))
     BEGIN
-      SELECT * FROM teamsmembers
+      SELECT * FROM eventteammembers
       WHERE team = _team;
     END;
     
  CREATE OR REPLACE PROCEDURE setTeamMemberCostStatus(_member int(11))
     BEGIN
      DECLARE _isPaid boolean;
-     SELECT isPaidCost INTO _isPaid FROM teammembers WHERE id = _member;
+     SELECT isPaidCost INTO _isPaid FROM eventteammembers WHERE id = _member;
 
      IF _isPaid
       THEN
@@ -415,7 +419,7 @@ CREATE OR REPLACE PROCEDURE getTeamMembers(_team int(11))
       ELSE
         SET _isPaid = TRUE;
       END IF;
-      UPDATE teammembers SET isPaidCost = _isPaid WHERE id = _member;
+      UPDATE eventteammembers SET isPaidCost = _isPaid WHERE id = _member;
     END;
     
     CREATE OR REPLACE PROCEDURE setTeamMemberDepositStatus(_member int(11))

@@ -1,4 +1,4 @@
-
+USE csomormaker;
 CREATE OR REPLACE PROCEDURE getEvents()
     BEGIN
         SELECT *

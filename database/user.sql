@@ -1,3 +1,4 @@
+USE csomormaker;
 CREATE OR REPLACE PROCEDURE getHash(_username varchar(50))
     BEGIN
       SELECT password AS hash, id AS userId FROM users
