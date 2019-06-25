@@ -23,7 +23,18 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { EventService, UserService, LoginService, NotificationService, CommonService } from './services';
+import {
+  EventService,
+  UserService,
+  LoginService,
+  NotificationService,
+  CommonService,
+  EventGeneratorService,
+  EventMembersService,
+  EventPayOutsService,
+  EventTeamsService,
+  EventTodoesService
+} from './services';
 import {
   HomeComponent,
   NavigatorComponent,
@@ -145,7 +156,18 @@ import {
     MatSortModule,
     MatIconModule
   ],
-  providers: [EventService, UserService, LoginService, NotificationService, CommonService],
+  providers: [
+    EventService,
+    UserService,
+    LoginService,
+    NotificationService,
+    CommonService,
+    EventGeneratorService,
+    EventMembersService,
+    EventPayOutsService,
+    EventTeamsService,
+    EventTodoesService
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
     NewPayOutDialogComponent,

@@ -2,7 +2,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { User } from 'src/app/models';
-import { EventService } from 'src/app/services';
+import { EventMembersService } from 'src/app/services';
 
 @Component({
   selector: 'app-add-new-member-modal',
@@ -14,12 +14,12 @@ export class AddNewMemberModalComponent implements OnInit {
   nonMembers: User[] = [];
   constructor(
     public dialogRef: MatDialogRef<AddNewMemberModalComponent>,
-    private eventservice: EventService,
+    private eventmemberservice: EventMembersService,
     @Inject(MAT_DIALOG_DATA) public data: number
   ) {}
 
   ngOnInit() {
-    this.eventservice
+    this.eventmemberservice
       .getEventNonMembers(this.data)
       .then(res => {
         this.nonMembers = res;

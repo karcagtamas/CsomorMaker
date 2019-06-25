@@ -3,3 +3,8 @@ export { LoginService } from './login.service';
 export { UserService } from './user.service';
 export * from './notification.service';
 export * from './common.service';
+export * from './event-generator.service';
+export * from './event-members.service';
+export * from './event-teams.service';
+export * from './event-todoes.service';
+export * from './event-pay-outs.service';

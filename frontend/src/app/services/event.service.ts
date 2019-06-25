@@ -1,20 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import {
-  Event,
-  Response,
-  EventPayOut,
-  EventPayOutType,
-  EventWork,
-  EventWorker,
-  EventWorkStatus,
-  EventMember,
-  EventRole,
-  User
-} from '../models';
-import { EventWorkTable } from '../models/event.work.table.model';
-import { EventWorkerTable } from '../models/event.worker.table.model';
+import { Event, Response, EventMember, EventRole, User } from '../models';
 
 const URL = environment.api;
 
@@ -24,142 +11,50 @@ const HttpHeader = { withCredentials: true };
   providedIn: 'root'
 })
 export class EventService {
+  url = URL + '/event';
   constructor(public http: HttpClient) {}
 
   getEventAccessLevel(event: number): Promise<number> {
-    return this.http.post<number>(`${URL}/event/get-accesslevel`, { event }, HttpHeader).toPromise();
+    return this.http.get<number>(`${this.url}/accesslevel/${event}`, HttpHeader).toPromise();
   }
 
   getEvents(): Promise<Event[]> {
-    return this.http.get<Event[]>(`${URL}/event/get`, HttpHeader).toPromise();
+    return this.http.get<Event[]>(`${this.url}/get`, HttpHeader).toPromise();
   }
 
   addEvent(name: string): Promise<Response> {
-    return this.http.post<Response>(`${URL}/event/add`, { name }, HttpHeader).toPromise();
+    return this.http.post<Response>(`${this.url}/add`, { name }, HttpHeader).toPromise();
   }
 
   getEvent(id: number): Promise<Event> {
-    return this.http.post<Event>(`${URL}/event/get-one`, { id }, HttpHeader).toPromise();
+    return this.http.get<Event>(`${this.url}/get-one/${id}`, HttpHeader).toPromise();
   }
 
   updateEvent(event: Event): Promise<Response> {
-    return this.http.post<Response>(`${URL}/event/update`, { event }, HttpHeader).toPromise();
+    return this.http.post<Response>(`${this.url}/update`, { event }, HttpHeader).toPromise();
   }
 
   lockEvent(id: number): Promise<Response> {
-    return this.http.post<Response>(`${URL}/event/lock`, { id }, HttpHeader).toPromise();
+    return this.http.post<Response>(`${this.url}/lock/${id}`, HttpHeader).toPromise();
   }
 
   increaseVisitors(id: number): Promise<Response> {
-    return this.http.post<Response>(`${URL}/event/inc-visitors`, { id }, HttpHeader).toPromise();
+    return this.http.get<Response>(`${this.url}/visitors/inc/${id}`, HttpHeader).toPromise();
   }
 
   decreaseVisitors(id: number): Promise<Response> {
-    return this.http.post<Response>(`${URL}/event/dec-visitors`, { id }, HttpHeader).toPromise();
+    return this.http.get<Response>(`${this.url}/visitors/dec/${id}`, HttpHeader).toPromise();
   }
 
   increaseInjured(id: number): Promise<Response> {
-    return this.http.post<Response>(`${URL}/event/inc-injured`, { id }, HttpHeader).toPromise();
+    return this.http.get<Response>(`${URL}/injured/inc/${id}`, HttpHeader).toPromise();
   }
 
   decreaseInjured(id: number): Promise<Response> {
-    return this.http.post<Response>(`${URL}/event/dec-injured`, { id }, HttpHeader).toPromise();
-  }
-
-  getPayOuts(id: number): Promise<EventPayOut[]> {
-    return this.http.post<EventPayOut[]>(`${URL}/event/get-payouts`, { id }, HttpHeader).toPromise();
-  }
-
-  getPayOutTypes(): Promise<EventPayOutType[]> {
-    return this.http.get<EventPayOutType[]>(`${URL}/event/get-payouttypes`, HttpHeader).toPromise();
-  }
-
-  addPayout(payout: EventPayOut): Promise<Response> {
-    return this.http
-      .post<Response>(
-        `${URL}/event/add-payout`,
-        { name: payout.name, eventId: payout.eventId, cost: payout.cost, type: payout.typeId },
-        HttpHeader
-      )
-      .toPromise();
-  }
-
-  deletePayout(id: number): Promise<Response> {
-    return this.http.post<Response>(`${URL}/event/delete-payout`, { id }, HttpHeader).toPromise();
-  }
-
-  getWorks(id: number): Promise<EventWork[]> {
-    return this.http.post<EventWork[]>(`${URL}/event/get-works`, { id }, HttpHeader).toPromise();
-  }
-
-  deleteWork(id: number): Promise<Response> {
-    return this.http.post<Response>(`${URL}/event/delete-work`, { id }, HttpHeader).toPromise();
-  }
-
-  addWork(name: string, eventId: number): Promise<Response> {
-    return this.http.post<Response>(`${URL}/event/add-work`, { name, eventId }, HttpHeader).toPromise();
-  }
-
-  getWorkTablesWithoutWorkerNames(id: number): Promise<EventWorkTable[]> {
-    return this.http.post<EventWorkTable[]>(`${URL}/event/get-work-tables`, { id }, HttpHeader).toPromise();
-  }
-
-  setIsActiveWorkHour(day: number, hour: number, work: number): Promise<Response> {
-    return this.http.post<Response>(`${URL}/event/set-work-table-active`, { day, hour, work }, HttpHeader).toPromise();
-  }
-
-  getEventLowWorkers(id: number): Promise<EventWorker[]> {
-    return this.http.post<EventWorker[]>(`${URL}/event/get-low-workers`, { id }, HttpHeader).toPromise();
-  }
-
-  getWorkerTablesWithoutWorkNames(id: number, event: number): Promise<EventWorkerTable[]> {
-    return this.http.post<EventWorkerTable[]>(`${URL}/event/get-worker-tables`, { id, event }, HttpHeader).toPromise();
-  }
-
-  setIsAvaiableWorkerHour(day: number, hour: number, worker: number, event: number): Promise<Response> {
-    return this.http
-      .post<Response>(`${URL}/event/set-worker-table-avaiable`, { day, hour, worker, event }, HttpHeader)
-      .toPromise();
-  }
-
-  getWorkStatuses(worker: number, event: number): Promise<EventWorkStatus[]> {
-    return this.http
-      .post<EventWorkStatus[]>(`${URL}/event/get-work-statuses`, { worker, event }, HttpHeader)
-      .toPromise();
-  }
-
-  setIsValidWorkStatus(worker: number, work: number): Promise<Response> {
-    return this.http.post<Response>(`${URL}/event/set-work-status-valid`, { worker, work }, HttpHeader).toPromise();
-  }
-
-  generate(event: number): Promise<Response> {
-    return this.http.post<Response>(`${URL}/event/generate`, { event }, HttpHeader).toPromise();
-  }
-
-  getEventMembers(event: number): Promise<EventMember[]> {
-    return this.http.post<EventMember[]>(`${URL}/event/get-members`, { event }, HttpHeader).toPromise();
-  }
-
-  getEventNonMembers(event: number): Promise<User[]> {
-    return this.http.post<User[]>(`${URL}/event/get-non-members`, { event }, HttpHeader).toPromise();
-  }
-
-  addUserToEvent(user: number, event: number): Promise<Response> {
-    return this.http.post<Response>(`${URL}/event/add-user-to-event`, { event, user }, HttpHeader).toPromise();
-  }
-
-  deleteUserFromEvent(user: number, event: number): Promise<Response> {
-    return this.http.post<Response>(`${URL}/event/delete-user-from-event`, { event, user }, HttpHeader).toPromise();
-  }
-
-  updateEventUser(user: number, event: number, role: number): Promise<Response> {
-    console.log(event);
-    console.log(user);
-    console.log(role);
-    return this.http.post<Response>(`${URL}/event/update-event-user`, { event, user, role }, HttpHeader).toPromise();
+    return this.http.get<Response>(`${URL}/injured/dec/${id}`, HttpHeader).toPromise();
   }
 
   getEventRoles(): Promise<EventRole[]> {
-    return this.http.get<EventRole[]>(`${URL}/event/get-roles`, HttpHeader).toPromise();
+    return this.http.get<EventRole[]>(`${this.url}/roles/get`, HttpHeader).toPromise();
   }
 }

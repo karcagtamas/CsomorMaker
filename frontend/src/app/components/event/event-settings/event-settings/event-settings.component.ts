@@ -1,6 +1,6 @@
 import { Event } from 'src/app/models';
 import { Component, OnInit, Input, OnChanges, SimpleChanges, EventEmitter, Output } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { NotificationService } from 'src/app/services';
 
 @Component({

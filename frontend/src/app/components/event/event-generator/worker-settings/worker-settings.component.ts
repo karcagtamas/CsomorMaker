@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { EventWorker, EventWorkStatus } from 'src/app/models';
 import { EventWorkerTable } from 'src/app/models/event.worker.table.model';
-import { EventService } from 'src/app/services';
+import { EventGeneratorService } from 'src/app/services';
 
 @Component({
   selector: 'app-worker-settings',
@@ -16,7 +16,7 @@ export class WorkerSettingsComponent implements OnInit {
   workerTables: EventWorkerTable[] = [];
   workStatuses: EventWorkStatus[] = [];
 
-  constructor(private eventservice: EventService) {}
+  constructor(private eventgeneratorservice: EventGeneratorService) {}
 
   ngOnInit() {
     this.getWorkerTables();
@@ -24,7 +24,7 @@ export class WorkerSettingsComponent implements OnInit {
   }
 
   getWorkerTables() {
-    this.eventservice
+    this.eventgeneratorservice
       .getWorkerTablesWithoutWorkNames(this.worker.id, this.eventId)
       .then(res => {
         this.workerTables = res;
@@ -35,7 +35,7 @@ export class WorkerSettingsComponent implements OnInit {
   }
 
   getWorkStatuses() {
-    this.eventservice
+    this.eventgeneratorservice
       .getWorkStatuses(this.worker.id, this.eventId)
       .then(res => {
         this.workStatuses = res;

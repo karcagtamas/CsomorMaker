@@ -1,7 +1,7 @@
 import { AddNewMemberModalComponent } from './../add-new-member-modal/add-new-member-modal.component';
-import { Component, OnInit, ViewChild, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { EventMember, Event } from 'src/app/models';
-import { EventService, NotificationService, UserService } from 'src/app/services';
+import { NotificationService, UserService, EventMembersService } from 'src/app/services';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -17,7 +17,7 @@ export class EventMembersComponent implements OnInit, OnChanges {
   eventMembers: EventMember[];
 
   constructor(
-    private eventservice: EventService,
+    private eventmembersservice: EventMembersService,
     private notificationservice: NotificationService,
     public dialog: MatDialog,
     private userservice: UserService
@@ -40,7 +40,7 @@ export class EventMembersComponent implements OnInit, OnChanges {
   }
 
   getEventMembers() {
-    this.eventservice
+    this.eventmembersservice
       .getEventMembers(this.event.id)
       .then(res => {
         this.eventMembers = res;
@@ -51,7 +51,7 @@ export class EventMembersComponent implements OnInit, OnChanges {
   }
 
   deleteEventMember(event) {
-    this.eventservice
+    this.eventmembersservice
       .deleteUserFromEvent(event.id, this.event.id)
       .then(res => {
         if (res.response === 'delete-user-from-event-success') {
@@ -67,7 +67,7 @@ export class EventMembersComponent implements OnInit, OnChanges {
   }
 
   updateEventMember(event) {
-    this.eventservice
+    this.eventmembersservice
       .updateEventUser(event.data.id, this.event.id, event.data.roleId)
       .then(res => {
         if (res.response === 'update-event-user-success') {
@@ -89,7 +89,7 @@ export class EventMembersComponent implements OnInit, OnChanges {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.eventservice
+        this.eventmembersservice
           .addUserToEvent(result, this.event.id)
           .then(res => {
             if (res.response === 'add-user-to-event-success') {

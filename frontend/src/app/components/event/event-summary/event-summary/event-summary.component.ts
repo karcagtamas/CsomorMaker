@@ -1,7 +1,7 @@
 import { NewPayOutDialogComponent } from './../new-pay-out-dialog/new-pay-out-dialog.component';
-import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Event, EventPayOut, EventPayOutType } from 'src/app/models';
-import { EventService, NotificationService } from 'src/app/services';
+import { NotificationService, EventPayOutsService } from 'src/app/services';
 import { MatDialog } from '@angular/material/dialog';
 import { DeletePayOutDialogComponent } from '../delete-pay-out-dialog/delete-pay-out-dialog.component';
 
@@ -19,7 +19,7 @@ export class EventSummaryComponent implements OnInit, OnChanges {
   summary = 0;
 
   constructor(
-    private eventservice: EventService,
+    private eventpayoutservice: EventPayOutsService,
     public dialog: MatDialog,
     private notificationservice: NotificationService
   ) {}
@@ -41,7 +41,7 @@ export class EventSummaryComponent implements OnInit, OnChanges {
   }
 
   getPayOuts() {
-    this.eventservice
+    this.eventpayoutservice
       .getPayOuts(this.event.id)
       .then(res => {
         this.payOuts = res;
@@ -53,7 +53,7 @@ export class EventSummaryComponent implements OnInit, OnChanges {
   }
 
   getPayOutTypes() {
-    this.eventservice
+    this.eventpayoutservice
       .getPayOutTypes()
       .then(res => {
         this.payOutTypes = res;
@@ -90,7 +90,7 @@ export class EventSummaryComponent implements OnInit, OnChanges {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         result.eventId = this.event.id;
-        this.eventservice
+        this.eventpayoutservice
           .addPayout(result)
           .then(res => {
             if (res.response === 'add-payout-success') {
@@ -117,7 +117,7 @@ export class EventSummaryComponent implements OnInit, OnChanges {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && +result !== 0) {
-        this.eventservice
+        this.eventpayoutservice
           .deletePayout(+result)
           .then(res => {
             if (res.response === 'delete-payout-success') {

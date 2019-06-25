@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { EventWork } from 'src/app/models';
-import { EventService } from 'src/app/services';
+import { EventGeneratorService } from 'src/app/services';
 import { EventWorkTable } from 'src/app/models';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
@@ -16,14 +16,14 @@ export class WorkSettingsComponent implements OnInit {
   @Output() save = new EventEmitter();
   workTables: EventWorkTable[] = [];
 
-  constructor(private eventservice: EventService, public dialog: MatDialog) {}
+  constructor(private eventgeneratorservice: EventGeneratorService, public dialog: MatDialog) {}
 
   ngOnInit() {
     this.getWorkTables();
   }
 
   getWorkTables() {
-    this.eventservice
+    this.eventgeneratorservice
       .getWorkTablesWithoutWorkerNames(this.work.id)
       .then(res => {
         this.workTables = res;

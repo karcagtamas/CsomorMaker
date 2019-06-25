@@ -1,7 +1,7 @@
 import { MatDialog } from '@angular/material/dialog';
-import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Event, EventWork, EventWorker } from 'src/app/models';
-import { EventService, NotificationService } from 'src/app/services';
+import { NotificationService, EventGeneratorService } from 'src/app/services';
 import { AddNewWorkComponent } from '../add-new-work/add-new-work.component';
 
 @Component({
@@ -17,7 +17,7 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
   workerStep = -1;
 
   constructor(
-    private eventservice: EventService,
+    private eventgeneratorservice: EventGeneratorService,
     public dialog: MatDialog,
     private notificationservice: NotificationService
   ) {}
@@ -35,7 +35,7 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
   }
 
   getWorks() {
-    this.eventservice
+    this.eventgeneratorservice
       .getWorks(this.event.id)
       .then(res => {
         this.eventWorks = res;
@@ -46,7 +46,7 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
   }
 
   getWorkers() {
-    this.eventservice
+    this.eventgeneratorservice
       .getEventLowWorkers(this.event.id)
       .then(res => {
         this.eventWorkers = res;
@@ -81,7 +81,7 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
   }
 
   deleteWork(event) {
-    this.eventservice
+    this.eventgeneratorservice
       .deleteWork(event.id)
       .then(res => {
         if (res.response === 'delete-work-success') {
@@ -97,7 +97,7 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
   }
 
   saveWorkTable(event) {
-    this.eventservice
+    this.eventgeneratorservice
       .setIsActiveWorkHour(event.day, event.hour, event.work)
       .then(res => {
         if (res.response === 'set-work-table-is-active-success') {
@@ -112,7 +112,7 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
   }
 
   saveWorkStatus(event) {
-    this.eventservice
+    this.eventgeneratorservice
       .setIsValidWorkStatus(event.worker, event.work)
       .then(res => {
         if (res.response === 'set-work-status-is-valid-success') {
@@ -129,7 +129,7 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
   }
 
   saveWorkerTable(event) {
-    this.eventservice
+    this.eventgeneratorservice
       .setIsAvaiableWorkerHour(event.day, event.hour, event.worker, this.event.id)
       .then(res => {
         if (res.response === 'set-worker-table-is-avaiable-success') {
@@ -148,7 +148,7 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.eventservice
+        this.eventgeneratorservice
           .addWork(result.name, this.event.id)
           .then(res => {
             if (res.response === 'add-work-success') {
@@ -166,7 +166,7 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
   }
 
   generate() {
-    this.eventservice
+    this.eventgeneratorservice
       .generate(this.event.id)
       .then(res => {
         if (res.response === 'gen-success') {

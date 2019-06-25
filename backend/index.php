@@ -22,9 +22,9 @@
     }
     else{
         $group = $url[2];
-        $event = $url[3];
         switch ($group) {
             case 'user':
+                $event = $url[3];
                 require 'user.php';
                 switch ($event) {
                 case 'login':
@@ -58,8 +58,9 @@
                 break;
 
             case 'event':
+                $subgroup = $url[3];
                 require 'event.php';
-                switch ($event) {
+                switch ($subgroup) {
                     case 'get':
                         getEvents();
                         break;
@@ -69,7 +70,7 @@
                         break;
 
                     case 'get-one':
-                        getEvent($_POST['id']);
+                        getEvent($url[4]);
                         break;
 
                     case 'update':
@@ -77,115 +78,225 @@
                         break;
 
                     case 'lock':
-                        lock($_POST['id']);
-                        break;
-
-                    case 'inc-visitors':
-                        increaseVisitors($_POST['id']);
-                        break;
-
-                    case 'dec-visitors':
-                        decreaseVisitors($_POST['id']);
-                        break;
-
-                    case 'inc-injured':
-                        increaseInjured($_POST['id']);
-                        break;
-
-                    case 'dec-injured':
-                        decreaseInjured($_POST['id']);
-                        break;
-
-                    case 'get-payouts':
-                        getPayOuts($_POST['id']);
-                        break;
-
-                    case 'get-payouttypes':
-                        getPayOutTypes();
-                        break;
-
-                    case 'add-payout':
-                        addPayOut($_POST['name'], $_POST['eventId'], $_POST['type'], $_POST['cost']);
+                        lock($url[4]);
                         break;
                     
-                    case 'delete-payout':
-                        deletePayOut($_POST['id']);
+                    case 'visitors':
+                        $event = $url[4];
+                        switch ($event) {
+                            case 'inc':
+                                increaseVisitors($url[5]);
+                                break;
+
+                            case 'dec':
+                                decreaseVisitors($url[5]);
+                                break;
+                            
+                            default:
+                                echo '{"response" : "bad-event", "message" : "Bad request event!"}';
+                                break;
+                        }
                         break;
 
-                    case 'get-works':
-                        getWorks($_POST['id']);
-                        break;
+                    case 'injured':
+                        $event = $url[4];
+                        switch ($event) {
+                            case 'inc':
+                                increaseInjured($url[5]);
+                                break;
 
-                    case 'delete-work':
-                        deleteWork($_POST['id']);
-                        break;
-
-                    case 'add-work':
-                        addWork($_POST['name'], $_POST['eventId']);
-                        break;
-
-                    case 'get-work-tables':
-                        getWorkTablesWithoutWorkerNames($_POST['id']);
-                        break;
-
-                    case 'set-work-table-active':
-                        setWorkTableIsActive($_POST['day'], $_POST['hour'], $_POST['work']);
+                            case 'dec':
+                                decreaseInjured($url[5]);
+                                break;
+                            
+                            default:
+                                echo '{"response" : "bad-event", "message" : "Bad request event!"}';
+                                break;
+                        }
                         break;
                     
-                    case 'get-low-workers':
-                        getEventLowWorkers($_POST['id']);
+                    case 'works':
+                        $event = $url[4];
+                        switch ($event) {
+                            case 'get':
+                                getWorks($url[5]);
+                                break;
+                            
+                            case 'delete':
+                                deleteWork($url[5]);
+                                break;
+
+                            case 'add':
+                                addWork($_POST['name'], $_POST['eventId']);
+                                break;
+
+                            case 'tables':
+                                $subevent = $url[5];
+                                switch ($subevent) {
+                                    case 'get-without':
+                                        getWorkTablesWithoutWorkerNames($url[6]);
+                                        break;
+
+                                    case 'get-with':
+                                        getWorkTablesWithoutWorkerNames($url[6]);
+                                        break;
+                                    
+                                    case 'set':
+                                        setWorkTableIsActive($_POST['day'], $_POST['hour'], $_POST['work']);
+                                        break;
+                                    
+                                    default:
+                                        echo '{"response" : "bad-subevent", "message" : "Bad request subevent!"}';
+                                        break;
+                                }
+                                break;
+
+                            case 'statuses':
+                                $subevent = $url[5];
+                                switch ($subevent) {
+                                    case 'get':
+                                        getWorkStatuses($url[7], $url[6]);
+                                        break;
+
+                                    case 'set':
+                                        setIsValidWorkStatus($_POST['worker'], $_POST['work']);
+                                        break;
+                                    
+                                    default:
+                                        echo '{"response" : "bad-subevent", "message" : "Bad request subevent!"}';
+                                        break;
+                                }
+                            
+                            default:
+                                echo '{"response" : "bad-event", "message" : "Bad request event!"}';
+                                break;
+                        }
                         break;
 
-                    case 'get-worker-tables':
-                        getWorkerTablesWithoutWorkNames($_POST['id'], $_POST['event']);
-                        break;
+                    case 'workers':
+                        $event = $url[4];
+                        switch ($event) {
+                            case 'get':
+                                getEventLowWorkers($url[5]);
+                                break;
 
-                    case 'set-worker-table-avaiable':
-                        setWorkerTableIsAvaiable($_POST['day'], $_POST['hour'], $_POST['worker'], $_POST['event']);
-                        break;
+                            case 'tables':
+                                $subevent = $url[5];
+                                switch ($subevent) {
+                                    case 'get-without':
+                                        getWorkerTablesWithoutWorkNames($url[6], $url[7]);
+                                        break;
 
-                    case 'get-work-statuses':
-                        getWorkStatuses($_POST['worker'], $_POST['event']);
+                                    case 'set':
+                                        setWorkerTableIsAvaiable($_POST['day'], $_POST['hour'], $_POST['worker'], $_POST['event']);
+                                        break;
+                                    
+                                    default:
+                                        echo '{"response" : "bad-subevent", "message" : "Bad request subevent!"}';
+                                        break;
+                                }
+                                break;
+                            
+                            default:
+                                echo '{"response" : "bad-event", "message" : "Bad request event!"}';
+                                break;
+                        }
                         break;
-
-                    case 'set-work-status-valid':
-                        setIsValidWorkStatus($_POST['worker'], $_POST['work']);
-                        break;
-
+                    
                     case 'generate':
-                        generate($_POST['event']);
+                        generate($url[4]);
                         break;
 
-                    case 'get-members':
-                        getEventMembers($_POST['event']);
+                    case 'payouts':
+                        $event = $url[4];
+                        switch ($event) {
+                            case 'get':
+                                getPayOuts($url[5]);
+                                break;
+
+                            case 'add':
+                                addPayOut($_POST['name'], $_POST['eventId'], $_POST['type'], $_POST['cost']);
+                                break;
+
+                            case 'delete':
+                                deletePayOut($url[5]);
+                                break;
+
+                            case 'types':
+                                $subevent = $url[5];
+                                switch ($subevent) {
+                                    case 'get':
+                                        getPayOutTypes();
+                                        break;
+                                    
+                                    default:
+                                        echo '{"response" : "bad-subevent", "message" : "Bad request subevent!"}';
+                                        break;
+                                }
+                                break;
+                            
+                            default:
+                                echo '{"response" : "bad-event", "message" : "Bad request event!"}';
+                                break;
+                        }
+                        break;
+                        
+                    case 'members':
+                        $event = $url[4];
+                        switch ($event) {
+                            case 'get':
+                                $subevent = $url[5];
+                                switch ($subevent) {
+                                    case 'all':
+                                        getEventMembers($url[6]);
+                                        break;
+
+                                    case 'none':
+                                        getEventNonMembers($url[6]);
+                                        break;
+                                    
+                                    default:
+                                        echo '{"response" : "bad-subevent", "message" : "Bad request subevent!"}';
+                                        break;
+                                }
+                                break;
+
+                            case 'add':
+                                addUserToEvent($_POST['user'], $_POST['event']);
+                                break;
+
+                            case 'delete':
+                                deleteUserFromEvent($_POST['user'], $_POST['event']);
+                                break;
+
+                            case 'update':
+                                updateEventUser($_POST['user'], $_POST['event'],$_POST['role']);
+                                break;
+                            
+                            default:
+                                echo '{"response" : "bad-event", "message" : "Bad request event!"}';
+                                break;
+                        }
+
+                    case 'roles':
+                        $event = $url[4];
+                        switch ($event) {
+                            case 'get':
+                                getEventRoles();
+                                break;
+                            
+                            default:
+                                echo '{"response" : "bad-event", "message" : "Bad request event!"}';
+                                break;
+                        }
                         break;
 
-                    case 'get-non-members':
-                        getEventNonMembers($_POST['event']);
-                        break;
-
-                    case 'add-user-to-event':
-                        addUserToEvent($_POST['user'], $_POST['event']);
-                        break;
-
-                    case 'delete-user-from-event':
-                        deleteUserFromEvent($_POST['user'], $_POST['event']);
-                        break;
-
-                    case 'update-event-user':
-                        updateEventUser($_POST['user'], $_POST['event'],$_POST['role']);
-                        break;
-
-                    case 'get-roles':
-                        getEventRoles();
-                        break;
-
-                    case 'get-accesslevel':
-                        getEventAccessLevel($_POST['event']);
+                    case 'accesslevel':
+                        getEventAccessLevel($url[4]);
                         break;
                         
                     default:
-                        echo '{"response" : "bad-event", "message" : "Bad request event!"}';
+                        echo '{"response" : "bad-subgroup", "message" : "Bad request subgroup!"}';
                         break;
                 }
                 break;
