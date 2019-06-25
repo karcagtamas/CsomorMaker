@@ -11,6 +11,10 @@
     header('Content-Type: application/json');
     header('Access-Control-Allow-Credentials: true');
 
+    if ($_SERVER['REQUEST_METHOD'] == "OPTIONS"){
+        die();
+    }
+
     $isLoggedIn = isset($_SESSION['userId']);
     require 'connect.php';
     $_POST = json_decode(file_get_contents('php://input'), true);
@@ -78,7 +82,7 @@
                         break;
 
                     case 'lock':
-                        lock($url[4]);
+                        lock(intval($url[4]));
                         break;
                     
                     case 'visitors':
@@ -167,6 +171,7 @@
                                         echo '{"response" : "bad-subevent", "message" : "Bad request subevent!"}';
                                         break;
                                 }
+                                break;
                             
                             default:
                                 echo '{"response" : "bad-event", "message" : "Bad request event!"}';
@@ -281,6 +286,7 @@
                                 echo '{"response" : "bad-event", "message" : "Bad request event!"}';
                                 break;
                         }
+                        break;
 
                     case 'roles':
                         $event = $url[4];

@@ -47,11 +47,11 @@ export class EventService {
   }
 
   increaseInjured(id: number): Promise<Response> {
-    return this.http.get<Response>(`${URL}/injured/inc/${id}`, HttpHeader).toPromise();
+    return this.http.get<Response>(`${this.url}/injured/inc/${id}`, HttpHeader).toPromise();
   }
 
   decreaseInjured(id: number): Promise<Response> {
-    return this.http.get<Response>(`${URL}/injured/dec/${id}`, HttpHeader).toPromise();
+    return this.http.get<Response>(`${this.url}/injured/dec/${id}`, HttpHeader).toPromise();
   }
 
   getEventRoles(): Promise<EventRole[]> {

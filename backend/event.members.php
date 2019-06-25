@@ -1,4 +1,6 @@
 <?php
+    $db->set_charset('utf8');
+
     function getEventMembers($event){
         global $db;
 
@@ -12,7 +14,8 @@
         while($row = $result->fetch_assoc()){
             array_push($array, $row);
         }
-        echo json_encode($array);
+        // var_dump($array);
+        echo json_encode($array, JSON_UNESCAPED_UNICODE );
         $stmt->close();
     }
 

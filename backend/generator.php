@@ -1,4 +1,5 @@
 <?php 
+    $db->set_charset('utf8');
     function getEventForGen($eventId){
         global $db;
         $sql = "CALL getEvent(?)";
