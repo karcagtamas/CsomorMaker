@@ -117,6 +117,7 @@
                     
                     case 'works':
                         $event = $url[4];
+                        require 'event.generator.php';
                         switch ($event) {
                             case 'get':
                                 getWorks($url[5]);
@@ -175,6 +176,7 @@
 
                     case 'workers':
                         $event = $url[4];
+                        require 'event.generator.php';
                         switch ($event) {
                             case 'get':
                                 getEventLowWorkers($url[5]);
@@ -209,6 +211,7 @@
 
                     case 'payouts':
                         $event = $url[4];
+                        require 'event.payouts.php';
                         switch ($event) {
                             case 'get':
                                 getPayOuts($url[5]);
@@ -243,6 +246,7 @@
                         
                     case 'members':
                         $event = $url[4];
+                        require 'event.members.php';
                         switch ($event) {
                             case 'get':
                                 $subevent = $url[5];
