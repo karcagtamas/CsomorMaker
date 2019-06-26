@@ -59,10 +59,10 @@
 
     }
 
-    function getWorkTablesWithoutWorkerNames($id){
+    function getWorkTables($id){
         global $db;
 
-        $sql = "CALL getWorkTablesWithoutWorkerNames(?);";
+        $sql = "CALL getWorkTables(?);";
         $stmt = $db->prepare($sql);
         $stmt->bind_param("i", $id);
         $stmt->execute();
@@ -114,10 +114,10 @@
         $stmt->close();
     }
 
-    function getWorkerTablesWithoutWorkNames($id, $event){
+    function getWorkerTables($id, $event){
         global $db;
 
-        $sql = "CALL getWorkerTablesWithoutWorkNames(?, ?);";
+        $sql = "CALL getWorkerTables(?, ?);";
         $stmt = $db->prepare($sql);
         $stmt->bind_param("ii", $id, $event);
         $stmt->execute();

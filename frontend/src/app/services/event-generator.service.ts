@@ -29,7 +29,7 @@ export class EventGeneratorService {
   }
 
   getWorkTablesWithoutWorkerNames(id: number): Promise<EventWorkTable[]> {
-    return this.http.get<EventWorkTable[]>(`${this.workUrl}/tables/get-without/${id}`, HttpHeader).toPromise();
+    return this.http.get<EventWorkTable[]>(`${this.workUrl}/tables/get/${id}`, HttpHeader).toPromise();
   }
 
   setIsActiveWorkHour(day: number, hour: number, work: number): Promise<Response> {
@@ -42,7 +42,7 @@ export class EventGeneratorService {
 
   getWorkerTablesWithoutWorkNames(id: number, event: number): Promise<EventWorkerTable[]> {
     return this.http
-      .get<EventWorkerTable[]>(`${this.workerUrl}/tables/get-without/${id}/${event}`, HttpHeader)
+      .get<EventWorkerTable[]>(`${this.workerUrl}/tables/get/${id}/${event}`, HttpHeader)
       .toPromise();
   }
 

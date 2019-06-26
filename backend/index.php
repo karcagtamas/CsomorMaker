@@ -138,12 +138,8 @@
                             case 'tables':
                                 $subevent = $url[5];
                                 switch ($subevent) {
-                                    case 'get-without':
-                                        getWorkTablesWithoutWorkerNames($url[6]);
-                                        break;
-
-                                    case 'get-with':
-                                        getWorkTablesWithoutWorkerNames($url[6]);
+                                    case 'get':
+                                        getWorkTables($url[6]);
                                         break;
                                     
                                     case 'set':
@@ -190,8 +186,8 @@
                             case 'tables':
                                 $subevent = $url[5];
                                 switch ($subevent) {
-                                    case 'get-without':
-                                        getWorkerTablesWithoutWorkNames($url[6], $url[7]);
+                                    case 'get':
+                                        getWorkerTables($url[6], $url[7]);
                                         break;
 
                                     case 'set':
@@ -304,11 +300,64 @@
                     case 'accesslevel':
                         getEventAccessLevel($url[4]);
                         break;
+
+                    case 'disable':
+                        break;
+                    
+                    case 'teams':
+                        $event = $url[4];
+                        require 'event.teams.php';
+                        switch ($event) {
+                            case 'get':
+                                getEventTeams($url[5]);                               
+                                break;
+                            
+                            case 'delete':
+                                deleteEventTeam($url[5]);
+                                break;
+
+                            case 'update':
+                                updateEventTeam($_POST['team'], $_POST['name']);
+                                break;
+
+                            case 'members':
+                                $subevent = $url[5];
+                                switch ($subevent) {
+                                    case 'get':
+                                        getEventTeamMembers($url[6]);
+                                        break;
+
+                                    case 'delete':
+                                        deleteEventTeamMember($url[6]);
+                                        break;
+                                    
+                                    case 'deposit':
+                                        setEventTeamMemberDeposit($url[6]);
+                                        break;
+
+                                    case 'cost':
+                                        setEventTeamMemberCost($url[6]);
+                                        break;
+                                    
+                                    default:
+                                        echo '{"response" : "bad-subevent", "message" : "Bad request subevent!"}';
+                                        break;
+                                }
+                                break;
+                            
+                            default:
+                                echo '{"response" : "bad-event", "message" : "Bad request event!"}';
+                                break;
+                        }
+                        break;
                         
                     default:
                         echo '{"response" : "bad-subgroup", "message" : "Bad request subgroup!"}';
                         break;
                 }
+                break;
+            
+            case 'gt':
                 break;
                 
             default:

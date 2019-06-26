@@ -243,19 +243,11 @@ USE csomormaker;
 
   /* eventworktables */
 
-  CREATE OR REPLACE PROCEDURE getWorkTablesWithWorkerNames(_id int(11))
+  CREATE OR REPLACE PROCEDURE getWorkTables(_id int(11))
     BEGIN
      SELECT eventworktables.day, eventworktables.hour, eventworktables.work AS workId, eventworks.name AS work, eventworktables.isActive, eventworktables.worker AS workerId, users.name AS worker FROM eventworktables
       INNER JOIN eventworks ON eventworktables.work = eventworks.id
-      INNER JOIN users ON eventworktables.worker = users.id
-    WHERE eventworktables.work = _id
-    ORDER BY eventworktables.day, eventworktables.hour;
-    END;
-
-    CREATE OR REPLACE PROCEDURE getWorkTablesWithoutWorkerNames(_id int(11))
-    BEGIN
-     SELECT eventworktables.day, eventworktables.hour, eventworktables.work AS workId, eventworks.name AS work, eventworktables.isActive, eventworktables.worker AS workerId, NULL AS worker FROM eventworktables
-      INNER JOIN eventworks ON eventworktables.work = eventworks.id
+      LEFT JOIN users ON eventworktables.worker = users.id
     WHERE eventworktables.work = _id
     ORDER BY eventworktables.day, eventworktables.hour;
     END;
@@ -306,18 +298,10 @@ USE csomormaker;
 
     /* WorkerTables */
 
-   CREATE OR REPLACE PROCEDURE getWorkerTablesWithWorkNames(_id int(11), _eventId int(11))
+   CREATE OR REPLACE PROCEDURE getWorkerTables(_id int(11), _eventId int(11))
     BEGIN
      SELECT eventworkertables.day, eventworkertables.hour, eventworkertables.work AS workId, eventworks.name AS work, eventworkertables.isAvaiable, eventworkertables.worker AS workerId, users.name AS worker FROM eventworkertables
-      INNER JOIN eventworks ON eventworkertables.work = eventworks.id
-      INNER JOIN users ON eventworkertables.worker = users.id
-    WHERE eventworkertables.worker = _id AND eventworkertables.event = _eventId
-    ORDER BY eventworkertables.day, eventworkertables.hour;
-    END;
-
-    CREATE OR REPLACE PROCEDURE getWorkerTablesWithoutWorkNames(_id int(11), _eventId int(11))
-    BEGIN
-     SELECT eventworkertables.day, eventworkertables.hour, eventworkertables.work AS workId, eventworkertables.isAvaiable, eventworkertables.worker AS workerId, users.name AS worker, NULL AS work FROM eventworkertables
+      LEFT JOIN eventworks ON eventworkertables.work = eventworks.id
       INNER JOIN users ON eventworkertables.worker = users.id
     WHERE eventworkertables.worker = _id AND eventworkertables.event = _eventId
     ORDER BY eventworkertables.day, eventworkertables.hour;
@@ -401,17 +385,34 @@ CREATE OR REPLACE PROCEDURE getEventTeams(_event int(11))
       SELECT * FROM eventteams
       WHERE event = _event;
     END;
+
+CREATE OR REPLACE PROCEDURE deleteEventTeam(_teamId int(11))
+    BEGIN
+      DELETE FROM eventteams WHERE id = _teamId;
+    END;
+
+CREATE OR REPLACE PROCEDURE updateEventTeam(_teamId int(11), _name varchar(100))
+    BEGIN
+      UPDATE eventteams SET name = _name WHERE id = _teamId;
+    END;
+
+  
     
-CREATE OR REPLACE PROCEDURE getTeamMembers(_team int(11))
+CREATE OR REPLACE PROCEDURE getEventTeamMembers(_teamId int(11))
     BEGIN
       SELECT * FROM eventteammembers
-      WHERE team = _team;
+      WHERE team = _teamId;
+    END;
+
+CREATE OR REPLACE PROCEDURE deleteEventTeamMember(_teammemberId int(11))
+    BEGIN
+      DELETE FROM eventteammembers WHERE id = _teammemberId;
     END;
     
- CREATE OR REPLACE PROCEDURE setTeamMemberCostStatus(_member int(11))
+ CREATE OR REPLACE PROCEDURE setTeamMemberCostStatus(_teammemberId int(11))
     BEGIN
      DECLARE _isPaid boolean;
-     SELECT isPaidCost INTO _isPaid FROM eventteammembers WHERE id = _member;
+     SELECT isPaidCost INTO _isPaid FROM eventteammembers WHERE id = _teammemberId;
 
      IF _isPaid
       THEN
@@ -419,13 +420,13 @@ CREATE OR REPLACE PROCEDURE getTeamMembers(_team int(11))
       ELSE
         SET _isPaid = TRUE;
       END IF;
-      UPDATE eventteammembers SET isPaidCost = _isPaid WHERE id = _member;
+      UPDATE eventteammembers SET isPaidCost = _isPaid WHERE id = _teammemberId;
     END;
     
-    CREATE OR REPLACE PROCEDURE setTeamMemberDepositStatus(_member int(11))
+    CREATE OR REPLACE PROCEDURE setTeamMemberDepositStatus(_teammemberId int(11))
     BEGIN
      DECLARE _isPaid boolean;
-     SELECT isPaidDeposit INTO _isPaid FROM teammembers WHERE id = _member;
+     SELECT isPaidDeposit INTO _isPaid FROM teammembers WHERE id = _teammemberId;
 
      IF _isPaid
       THEN
@@ -433,7 +434,7 @@ CREATE OR REPLACE PROCEDURE getTeamMembers(_team int(11))
       ELSE
         SET _isPaid = TRUE;
       END IF;
-      UPDATE teammembers SET isPaidDeposit = _isPaid WHERE id = _member;
+      UPDATE teammembers SET isPaidDeposit = _isPaid WHERE id = _teammemberId;
     END;
     
 

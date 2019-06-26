@@ -167,6 +167,7 @@ CREATE TABLE eventteams(
   name varchar(100) NOT NULL,
   event int(11) NOT NULL,
   members int(11) NOT NULL DEFAULT 0,
+  creationDate datetime DEFAULT NOW()
   PRIMARY KEY (id),
   CONSTRAINT fk_event_events_teams FOREIGN KEY (event)
   REFERENCES events(id)
