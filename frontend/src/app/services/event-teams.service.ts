@@ -26,12 +26,20 @@ export class EventTeamsService {
     return this.http.post<Response>(`${this.url}/update`, { team, name }, HttpHeader).toPromise();
   }
 
+  addEventTeam(event: number, name: string): Promise<Response> {
+    return this.http.post<Response>(`${this.url}/add`, { event, name }, HttpHeader).toPromise();
+  }
+
   getEventTeamMembers(team: number): Promise<EventTeamMember[]> {
     return this.http.get<EventTeamMember[]>(`${this.url}/members/get/${team}`, HttpHeader).toPromise();
   }
 
   deleteEventTeamMember(member: number): Promise<Response> {
     return this.http.get<Response>(`${this.url}/members/delete/${member}`, HttpHeader).toPromise();
+  }
+
+  addEventTeamMember(team: number, name: string): Promise<Response> {
+    return this.http.post<Response>(`${this.url}/members/add`, { team, name }, HttpHeader).toPromise();
   }
 
   setDeposit(member: number): Promise<Response> {

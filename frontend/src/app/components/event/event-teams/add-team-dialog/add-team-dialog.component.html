@@ -1,3 +1,15 @@
-<p>
-  add-team-dialog works!
-</p>
+<div mat-dialog-content>
+  <div class="text-center panel-title border rounded">Új csapat</div>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Név</mat-label>
+    <input matInput type="text" placeholder="Név" [formControl]="nameControl" />
+    <mat-error *ngIf="nameControl.hasError('required')">A név megadása kötelező!</mat-error>
+    <mat-error *ngIf="nameControl.hasError('maxlength')">A név maximum hossza 100 karakter lehet!</mat-error>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="onNoClick()">Mégsem</button>
+  <button mat-raised-button color="primary" (click)="save()" cdkFocusInitial [disabled]="nameControl.invalid">
+    Mentés
+  </button>
+</div>

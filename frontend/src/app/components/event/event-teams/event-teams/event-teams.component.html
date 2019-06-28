@@ -1,3 +1,6 @@
-<p>
-  event-teams works!
-</p>
+<div class="text-center panel-title border rounded">Csapatok</div>
+<div class="teams" *ngIf="event">
+  <app-event-team *ngFor="let team of teams" [team]="team" [eventId]="event.id" (refresh)="getTeams()">
+  </app-event-team>
+  <button mat-raised-button color="primary" (click)="openAddTeamModal()">Új csapat</button>
+</div>

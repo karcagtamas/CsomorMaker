@@ -1,3 +1,26 @@
-<p>
-  team-deatils-dialog works!
-</p>
+<div mat-dialog-content>
+  <div class="text-center panel-title border rounded">{{ data.name }}</div>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Név</mat-label>
+    <input matInput type="text" placeholder="Név" [formControl]="nameControl" />
+    <mat-error *ngIf="nameControl.hasError('required')">A név megadása kötelező!</mat-error>
+    <mat-error *ngIf="nameControl.hasError('maxlength')">A név maximum hossza 100 karakter lehet!</mat-error>
+  </mat-form-field>
+  <div class="text-center panel-title border rounded">Tagok</div>
+  <div>Tagok</div>
+  <div *ngFor="let member of teamMembers" class="member border rounded">
+    <button mat-mini-fab color="warn" class="ml-1 float-right" (click)="openConfirmDeleteModal(member)">
+      &#10006;
+    </button>
+    <div>Név: {{ member.name }}</div>
+    <div>Előleg: <mat-checkbox [(ngModel)]="member.isPaidDeposit" (change)="setDeposit(member)"></mat-checkbox></div>
+    <div>Díj: <mat-checkbox [(ngModel)]="member.isPaidCost" (change)="setCost(member)"></mat-checkbox></div>
+  </div>
+  <button mat-raised-button color="primary" (click)="openAddTeamMemberModal()">Új tag</button>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="onNoClick()">Vissza</button>
+  <button mat-raised-button color="primary" (click)="save()" cdkFocusInitial [disabled]="nameControl.invalid">
+    Mentés
+  </button>
+</div>

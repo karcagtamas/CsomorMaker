@@ -58,6 +58,7 @@
           [event]="currentEvent"
           [accessLevel]="accessLevel"
         ></app-event-members>
+        <app-event-teams *ngSwitchCase="'teams'" [event]="currentEvent"></app-event-teams>
       </div>
     </mat-card>
   </div>

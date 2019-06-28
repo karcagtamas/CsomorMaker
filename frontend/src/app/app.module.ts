@@ -84,7 +84,8 @@ import {
   EventTeamsComponent,
   AddTeamDialogComponent,
   TeamDeatilsDialogComponent,
-  AddTeamMemberDialogComponent
+  AddTeamMemberDialogComponent,
+  EventTeamComponent
 } from './components/event/event-teams';
 
 @NgModule({
@@ -129,7 +130,8 @@ import {
     EventTeamsComponent,
     AddTeamDialogComponent,
     TeamDeatilsDialogComponent,
-    AddTeamMemberDialogComponent
+    AddTeamMemberDialogComponent,
+    EventTeamComponent
   ],
   imports: [
     BrowserModule,

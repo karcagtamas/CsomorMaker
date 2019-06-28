@@ -29,10 +29,10 @@
 
         if ($stmt->errno){
             $array['response'] =  'fail';
-            $array['message'] = 'Az csapat hozzáadása az eseményhez sikeretelen!';
+            $array['message'] = 'Az csapat törlése az eseményből sikeretelen!';
         }else{
             $array['response'] =  'success';
-            $array['message'] = 'Az csapat sikeresen hozzáadva az eseményhez!';
+            $array['message'] = 'Az csapat sikeresen törölve az eseményből!';
         }
         echo json_encode($array);
         $stmt->close();
@@ -52,7 +52,27 @@
             $array['message'] = 'Az csapat frissítése sikeretelen!';
         }else{
             $array['response'] =  'success';
-            $array['message'] = 'Az csapat sikeresen frissítve!';
+            $array['message'] = 'Az csapat frissítése sikeres!';
+        }
+        echo json_encode($array);
+        $stmt->close();
+    }
+
+    function addEventTeam($eventId, $name){
+        global $db;
+
+        $sql = "CALL addEventTeam(?, ?);";
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("is", $eventId, $name);
+        $stmt->execute();
+
+        if ($stmt->errno){
+            $array['response'] =  'fail';
+            $array['message'] = 'Az csapat hozzáadása sikeretelen!';
+        }else{
+            $array['response'] =  'success';
+            $array['message'] = 'Az csapat hozzáadása sikeres!';
         }
         echo json_encode($array);
         $stmt->close();
@@ -96,6 +116,27 @@
         echo json_encode($array);
         $stmt->close();
     }
+
+    function addEventTeamMember($teamId, $name){
+        global $db;
+
+        $sql = "CALL addEventTeamMember(?, ?);";
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("is", $teamId, $name);
+        $stmt->execute();
+
+        if ($stmt->errno){
+            $array['response'] =  'fail';
+            $array['message'] = 'Az csapat tag hozzáadása sikeretelen!';
+        }else{
+            $array['response'] =  'success';
+            $array['message'] = 'Az csapat tag hozzáadása sikeres!';
+        }
+        echo json_encode($array);
+        $stmt->close();
+    }
+
 
     function setEventTeamMemberDeposit($teamMemberId){
         global $db;

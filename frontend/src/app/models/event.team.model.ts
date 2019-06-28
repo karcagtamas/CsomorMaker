@@ -3,5 +3,5 @@ export class EventTeam {
   name: string;
   event: number;
   members: number;
-  creationData: Date;
+  creationDate: Date;
 }

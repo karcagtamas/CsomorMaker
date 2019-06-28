@@ -396,6 +396,12 @@ CREATE OR REPLACE PROCEDURE updateEventTeam(_teamId int(11), _name varchar(100))
       UPDATE eventteams SET name = _name WHERE id = _teamId;
     END;
 
+CREATE OR REPLACE PROCEDURE addEventTeam(_eventId int(11), _name varchar(100))
+    BEGIN
+      INSERT INTO eventteams (name, event)
+        VALUES (_name, _eventId);
+    END;
+
   
     
 CREATE OR REPLACE PROCEDURE getEventTeamMembers(_teamId int(11))
@@ -407,6 +413,12 @@ CREATE OR REPLACE PROCEDURE getEventTeamMembers(_teamId int(11))
 CREATE OR REPLACE PROCEDURE deleteEventTeamMember(_teammemberId int(11))
     BEGIN
       DELETE FROM eventteammembers WHERE id = _teammemberId;
+    END;
+
+CREATE OR REPLACE PROCEDURE addEventTeamMember(_teamId int(11), _name varchar(100))
+    BEGIN
+      INSERT INTO eventteammembers (name, team)
+  VALUES (_name, _teamId);
     END;
     
  CREATE OR REPLACE PROCEDURE setTeamMemberCostStatus(_teammemberId int(11))
@@ -421,12 +433,13 @@ CREATE OR REPLACE PROCEDURE deleteEventTeamMember(_teammemberId int(11))
         SET _isPaid = TRUE;
       END IF;
       UPDATE eventteammembers SET isPaidCost = _isPaid WHERE id = _teammemberId;
+      UPDATE eventteammembers SET isPaidDeposit = _isPaid WHERE id = _teammemberId;
     END;
     
     CREATE OR REPLACE PROCEDURE setTeamMemberDepositStatus(_teammemberId int(11))
     BEGIN
      DECLARE _isPaid boolean;
-     SELECT isPaidDeposit INTO _isPaid FROM teammembers WHERE id = _teammemberId;
+     SELECT isPaidDeposit INTO _isPaid FROM eventteammembers WHERE id = _teammemberId;
 
      IF _isPaid
       THEN
@@ -434,7 +447,7 @@ CREATE OR REPLACE PROCEDURE deleteEventTeamMember(_teammemberId int(11))
       ELSE
         SET _isPaid = TRUE;
       END IF;
-      UPDATE teammembers SET isPaidDeposit = _isPaid WHERE id = _teammemberId;
+      UPDATE eventteammembers SET isPaidDeposit = _isPaid WHERE id = _teammemberId;
     END;
     
 

@@ -320,6 +320,10 @@
                                 updateEventTeam($_POST['team'], $_POST['name']);
                                 break;
 
+                            case 'add':
+                                addEventTeam($_POST['event'], $_POST['name']);
+                                break;
+
                             case 'members':
                                 $subevent = $url[5];
                                 switch ($subevent) {
@@ -329,6 +333,10 @@
 
                                     case 'delete':
                                         deleteEventTeamMember($url[6]);
+                                        break;
+
+                                    case 'add':
+                                        addEventTeamMember($_POST['team'], $_POST['name']);
                                         break;
                                     
                                     case 'deposit':
