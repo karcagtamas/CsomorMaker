@@ -5,7 +5,7 @@
   <div><strong>Előleg:</strong> {{ countOfDeposit | personCount }} / {{ team.members | personCount }}</div>
   <div><strong>Díj:</strong> {{ countOfCost | personCount }} / {{ team.members | personCount }}</div>
   <div>
-    <button mat-raised-button color="primary" (click)="openTeamDetailsModal()">Szerkesztés</button>
-    <button mat-raised-button color="primary" (click)="openConfirmDeleteModal()">Törlés</button>
+    <button mat-raised-button color="accent" (click)="openTeamDetailsModal()">Szerkesztés</button>
+    <button mat-raised-button color="warn" (click)="openConfirmDeleteModal()">Törlés</button>
   </div>
 </div>
