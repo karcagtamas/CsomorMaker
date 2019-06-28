@@ -56,8 +56,16 @@ export class EventSettingsComponent implements OnInit, OnChanges {
   }
 
   reset() {
-    this.modifiedEvent = this.event;
+    this.modifiedEvent = { ...this.event };
     this.setValues();
+  }
+
+  changePlayerLimit() {
+    this.currentPlayersControl.setValidators(Validators.max(+this.playerLimitControl.value));
+  }
+
+  changeVisitorLimit() {
+    this.visitorsControl.setValidators(Validators.max(+this.visitorLimitControl.value));
   }
 
   save() {

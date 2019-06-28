@@ -11,11 +11,19 @@
     <input matInput type="number" placeholder="Jelenlegi játékos szám" [formControl]="currentPlayersControl" />
     <mat-error *ngIf="currentPlayersControl.hasError('required')">A játékos szám megadása kötelező!</mat-error>
     <mat-error *ngIf="currentPlayersControl.hasError('min')">A játékos szám minimuma 0!</mat-error>
-    <mat-error *ngIf="currentPlayersControl.hasError('max')">A játékos szám maximum {{ event.playerLimit }}!</mat-error>
+    <mat-error *ngIf="currentPlayersControl.hasError('max')"
+      >A játékos szám maximum {{ playerLimitControl.value }}!</mat-error
+    >
   </mat-form-field>
   <mat-form-field class="w-100" appearance="outline">
     <mat-label>Játékos limit</mat-label>
-    <input matInput type="number" placeholder="Játékos limit" [formControl]="playerLimitControl" />
+    <input
+      matInput
+      type="number"
+      placeholder="Játékos limit"
+      [formControl]="playerLimitControl"
+      (change)="changePlayerLimit()"
+    />
     <mat-error *ngIf="playerLimitControl.hasError('required')">A játékos limit megadása kötelező!</mat-error>
     <mat-error *ngIf="playerLimitControl.hasError('min')">A játékos limit minimuma 0!</mat-error>
   </mat-form-field>
@@ -24,11 +32,19 @@
     <input matInput type="number" placeholder="Látógatók" [formControl]="visitorsControl" />
     <mat-error *ngIf="visitorsControl.hasError('required')">A látógató szám megadása kötelező!</mat-error>
     <mat-error *ngIf="visitorsControl.hasError('min')">A látógató szám minimuma 0!</mat-error>
-    <mat-error *ngIf="visitorsControl.hasError('max')">A látógató szám maximum {{ event.visitorLimit }}!</mat-error>
+    <mat-error *ngIf="visitorsControl.hasError('max')"
+      >A látógató szám maximum {{ visitorLimitControl.value }}!</mat-error
+    >
   </mat-form-field>
   <mat-form-field class="w-100" appearance="outline">
     <mat-label>Látógató limit</mat-label>
-    <input matInput type="number" placeholder="Látógató limit" [formControl]="visitorLimitControl" />
+    <input
+      matInput
+      type="number"
+      placeholder="Látógató limit"
+      [formControl]="visitorLimitControl"
+      (change)="changeVisitorLimit()"
+    />
     <mat-error *ngIf="visitorLimitControl.hasError('required')">A látógató limit megadása kötelező!</mat-error>
     <mat-error *ngIf="visitorLimitControl.hasError('min')">A látógató limit minimuma 0!</mat-error>
   </mat-form-field>
