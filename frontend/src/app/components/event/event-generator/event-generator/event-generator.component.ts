@@ -154,6 +154,7 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
             if (res.response === 'add-work-success') {
               this.notificationservice.success('A poszt felvétele sikeres volt!');
               this.getWorks();
+              this.getWorkers();
             } else {
               this.notificationservice.error(res.message);
             }
