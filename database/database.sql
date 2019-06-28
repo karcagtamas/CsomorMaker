@@ -117,7 +117,7 @@ CREATE TABLE eventworks(
   name varchar(50) NOT NULL,
   event int(11) NOT NULL,
   PRIMARY KEY (id),
-  CONSTRAINT fk_event_events_works FOREIGN KEY (event)
+  CONSTRAINT fk_event_events_eventworks FOREIGN KEY (event)
   REFERENCES events(id)
 );
 
@@ -128,9 +128,9 @@ CREATE TABLE eventworktables(
    worker int(11),
    work int(11) NOT NULL,
    PRIMARY KEY(day, hour, work),
-   CONSTRAINT fk_work_eventworks_workTables FOREIGN KEY (work)
+   CONSTRAINT fk_work_eventworks_eventworkTables FOREIGN KEY (work)
    REFERENCES eventworks(id) ON DELETE CASCADE,
-   CONSTRAINT fk_worker_users_workTables FOREIGN KEY (worker)
+   CONSTRAINT fk_worker_users_eventworkTables FOREIGN KEY (worker)
    REFERENCES users(id)
  );
 
@@ -142,11 +142,11 @@ CREATE TABLE eventworkertables(
   worker int(11) NOT NULL,
   event int(11) NOT NULL,
   PRIMARY KEY(day, hour, worker, event),
-  CONSTRAINT fk_work_eventworks_workerTables FOREIGN KEY (work)
+  CONSTRAINT fk_work_eventworks_eventworkerTables FOREIGN KEY (work)
   REFERENCES eventworks(id) ON DELETE SET NULL,
-  CONSTRAINT fk_worker_users_workerTables FOREIGN KEY (worker)
+  CONSTRAINT fk_worker_users_eventworkerTables FOREIGN KEY (worker)
   REFERENCES users(id),
-  CONSTRAINT fk_event_events_workerTables FOREIGN KEY (event)
+  CONSTRAINT fk_event_events_eventworkerTables FOREIGN KEY (event)
   REFERENCES events(id)
 );
 
@@ -155,9 +155,9 @@ CREATE TABLE eventworkworkerswitch(
   work int(11) NOT NULL,
   isValid boolean NOT NULL DEFAULT TRUE,
   PRIMARY KEY(worker, work),
-  CONSTRAINT fk_worker_users_workworkerswitch FOREIGN KEY (worker)
+  CONSTRAINT fk_worker_users_eventworkworkerswitch FOREIGN KEY (worker)
   REFERENCES users(id),
-  CONSTRAINT fk_work_eventworks_workworkerswitch FOREIGN KEY (work)
+  CONSTRAINT fk_work_eventworks_eventworkworkerswitch FOREIGN KEY (work)
   REFERENCES eventworks(id) ON DELETE CASCADE
   );
 
@@ -168,7 +168,7 @@ CREATE TABLE eventteams(
   members int(11) NOT NULL DEFAULT 0,
   creationDate datetime DEFAULT NOW(),
   PRIMARY KEY (id),
-  CONSTRAINT fk_event_events_teams FOREIGN KEY (event)
+  CONSTRAINT fk_event_events_eventteams FOREIGN KEY (event)
   REFERENCES events(id)
 );
 
@@ -179,7 +179,7 @@ CREATE TABLE eventteammembers(
   isPaidDeposit boolean NOT NULL DEFAULT FALSE,
   team int(11) NOT NULL,
   PRIMARY KEY(id),
-  CONSTRAINT fk_team_eventteams_teammembers FOREIGN KEY (team)
+  CONSTRAINT fk_team_eventteams_eventteammembers FOREIGN KEY (team)
   REFERENCES eventteams(id)
   );
 
@@ -218,4 +218,103 @@ CREATE TRIGGER team_members_de AFTER DELETE ON eventteammembers
     UPDATE events set currentPlayers = currentPlayers - 1 WHERE id = _eventId;
     
   END;
+
+CREATE TABLE gts(
+  id int(11) NOT NULL AUTO_INCREMENT,
+  year int(4) UNIQUE NOT NULL,
+  tShirtColor varchar(50) NOT NULL DEFAULT 'Noone',
+  days int(2) NOT NULL DEFAULT 3,
+  members int(11) NOT NULL DEFAULT 0,
+  ready boolean NOT NULL DEFAULT FALSE,
+  creater int(11) NOT NULL,
+  isLocked boolean NOT NULL DEFAULT FALSE,
+  poke int(11) NOT NULL DEFAULT 0,
+  pokeCost decimal NOT NULL DEFAULT 10000,
+  PRIMARY KEY(id),
+  CONSTRAINT fk_creater_users_gts FOREIGN KEY (creater)
+  REFERENCES users(id)
+  );
+
+CREATE TABLE usergtswitch(
+  gt int(11) NOT NULL,
+  user int(11) NOT NULL,
+  role int(11) NOT NULL,
+  connectionDate datetime NOT NULL,
+  PRIMARY KEY(gt,user,role),
+  CONSTRAINT fk_gt_gts_usergtswitch FOREIGN KEY (gt)
+  REFERENCES gts(id),
+  CONSTRAINT fk_user_users_usergtswitch FOREIGN KEY (user)
+  REFERENCES users(id),
+  CONSTRAINT fk_role_eventroles_usergtswitch FOREIGN KEY (role)
+  REFERENCES eventroles(id)
+  );
+
+CREATE TABLE gtclasses(
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(5) NOT NULL,
+  tShirtColor varchar(50) NOT NULL DEFAULT 'Noone',
+  gt int(11) NOT NULL,
+  members int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_gt_gts_gtclasses FOREIGN KEY (gt)
+  REFERENCES gts(id)
+  );
+
+CREATE TABLE usersgtclassesswitch(
+  user int(11) NOT NULL,
+  gtclass int(11) NOT NULL,
+  PRIMARY KEY(user, gtclass),
+  CONSTRAINT fk_user_users_usersgtclassesswitch FOREIGN KEY (user)
+  REFERENCES users(id),
+  CONSTRAINT fK_gtclass_gtclasses_usersgtclassesswitch FOREIGN KEY(gtclass)
+  REFERENCES gtclasses(id)
+  );
+
+CREATE TABLE gtworks(
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(50) NOT NULL,
+  day int(2) NOT NULL,
+  startHour int(2) NOT NULL,
+  endHour int(2) NOT NULL,
+  workerCount int(3) NOT NULL,
+  gt int(11),
+  PRIMARY KEY(id),
+  CONSTRAINT fk_gt_gts_gtworks FOREIGN KEY (gt)
+  REFERENCES gts(id)
+ );
+
+CREATE TABLE gtworktables(
+  user int(11) NOT NULL,
+  work int(11) NOT NULL,
+  PRIMARY KEY(user, work),
+  CONSTRAINT fk_user_users_gtworktables FOREIGN KEY (user)
+  REFERENCES users (id),
+  CONSTRAINT fk_work_gtworks_gtworktables FOREIGN KEY (work)
+  REFERENCES gtworks(id)
+  );
+
+CREATE TABLE gtworkertables(
+  user int(11) NOT NULL,
+  day int(2) NOT NULL,
+  hour int(2) NOT NULL,
+  work int(11),
+  gt int(11) NOT NULL,
+  PRIMARY KEY(user, day, hour, gt),
+  CONSTRAINT fk_user_users_gtworkertables FOREIGN KEY (user)
+  REFERENCES users (id),
+  CONSTRAINT fk_gt_gts_gtworkertables FOREIGN KEY (gt)
+  REFERENCES gts(id)
+  );
+
+CREATE TABLE gtworkworkerswitch(
+  worker int(11) NOT NULL,
+  work int(11) NOT NULL,
+  isActive boolean NOT NULL DEFAULT TRUE,
+  isBoss boolean NOT NULL DEFAULT FALSE,
+  PRIMARY KEY(worker, work),
+  CONSTRAINT fk_worker_users_gtworkworkerswitch FOREIGN KEY (worker)
+  REFERENCES users (id),
+  CONSTRAINT fk_work_gtworks_gtworkworkerswitch FOREIGN KEY (work)
+  REFERENCES gtworks(id)
+  );
 
