@@ -14,6 +14,8 @@ export class EventTeamComponent implements OnInit {
   @Input() team: EventTeam;
   @Input() eventId: number;
   @Output() refresh = new EventEmitter();
+  countOfCost = 0;
+  countOfDeposit = 0;
 
   constructor(
     private eventteamsservice: EventTeamsService,
@@ -21,7 +23,18 @@ export class EventTeamComponent implements OnInit {
     private notificationservice: NotificationService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.eventteamsservice
+      .countOfCostAndDeposit(this.team.id)
+      .then(res => {
+        this.countOfCost = res.countOfCost;
+        this.countOfDeposit = res.countOfDeposit;
+      })
+      .catch(() => {
+        this.countOfCost = 0;
+        this.countOfDeposit = 0;
+      });
+  }
 
   openTeamDetailsModal() {
     const dialogRef = this.dialog.open(TeamDeatilsDialogComponent, {

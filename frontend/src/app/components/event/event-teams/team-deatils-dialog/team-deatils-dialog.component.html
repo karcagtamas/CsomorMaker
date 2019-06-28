@@ -16,11 +16,11 @@
     <div>Előleg: <mat-checkbox [(ngModel)]="member.isPaidDeposit" (change)="setDeposit(member)"></mat-checkbox></div>
     <div>Díj: <mat-checkbox [(ngModel)]="member.isPaidCost" (change)="setCost(member)"></mat-checkbox></div>
   </div>
-  <button mat-raised-button color="primary" (click)="openAddTeamMemberModal()">Új tag</button>
 </div>
 <div mat-dialog-actions>
-  <button mat-raised-button color="primary" (click)="onNoClick()">Vissza</button>
   <button mat-raised-button color="primary" (click)="save()" cdkFocusInitial [disabled]="nameControl.invalid">
     Mentés
   </button>
+  <button mat-raised-button color="primary" (click)="onNoClick()">Vissza</button>
+  <button mat-raised-button color="primary" (click)="openAddTeamMemberModal()">Új tag</button>
 </div>

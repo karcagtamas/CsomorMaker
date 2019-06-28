@@ -1,8 +1,9 @@
 <div class="team border rounded">
-  <div>Csapat név: {{ team.name }}</div>
-  <div>Csapat tagok: {{ team.members }}</div>
-  <div>Regisztráció: {{ team.creationDate | date: 'yyyy. MM. dd. HH:mm:ss' }}</div>
-  <div>Státusz:</div>
+  <div><strong>Csapat név:</strong> {{ team.name }}</div>
+  <div><strong>Csapat tagok:</strong> {{ team.members | personCount }}</div>
+  <div><strong>Regisztráció:</strong> {{ team.creationDate | date: 'yyyy. MM. dd. HH:mm:ss' }}</div>
+  <div><strong>Előleg:</strong> {{ countOfDeposit | personCount }} / {{ team.members | personCount }}</div>
+  <div><strong>Díj:</strong> {{ countOfCost | personCount }} / {{ team.members | personCount }}</div>
   <div>
     <button mat-raised-button color="primary" (click)="openTeamDetailsModal()">Szerkesztés</button>
     <button mat-raised-button color="primary" (click)="openConfirmDeleteModal()">Törlés</button>

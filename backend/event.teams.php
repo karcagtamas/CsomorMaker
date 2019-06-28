@@ -178,4 +178,20 @@
         $stmt->close();
     }
 
+    function countOfCostAndDeposit($teamId){
+        global $db;
+
+        $sql = "CALL countOfCostAndDeposit(?);";
+        
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $teamId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        
+        echo json_encode($row);
+        $stmt->close();
+    }
+
 ?>

@@ -450,6 +450,16 @@ CREATE OR REPLACE PROCEDURE addEventTeamMember(_teamId int(11), _name varchar(10
       UPDATE eventteammembers SET isPaidDeposit = _isPaid WHERE id = _teammemberId;
     END;
     
+   CREATE OR REPLACE PROCEDURE countOfCostAndDeposit(_teamId int(11))
+    BEGIN
+     DECLARE _paid int(10) DEFAULT 0;
+     DECLARE _deposit int(10) DEFAULT 0;
+
+     SELECT COUNT(id) INTO _paid FROM eventteammembers WHERE team = _teamId AND isPaidCost;
+     SELECT COUNT(id) INTO _deposit FROM eventteammembers WHERE team = _teamId AND isPaidDeposit;
+
+      SELECT _paid AS countOfCost, _deposit AS countOfDeposit;
+    END;
 
 
 

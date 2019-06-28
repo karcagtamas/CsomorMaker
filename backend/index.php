@@ -325,6 +325,10 @@
                                 addEventTeam($_POST['event'], $_POST['name']);
                                 break;
 
+                            case 'status':
+                                countOfCostAndDeposit($url[5]);
+                                break;
+
                             case 'members':
                                 $subevent = $url[5];
                                 switch ($subevent) {

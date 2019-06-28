@@ -7,6 +7,11 @@ const URL = environment.api;
 
 const HttpHeader = { withCredentials: true };
 
+interface Counts {
+  countOfDeposit: number;
+  countOfCost: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -48,5 +53,9 @@ export class EventTeamsService {
 
   setCost(member: number): Promise<Response> {
     return this.http.get<Response>(`${this.url}/members/cost/${member}`, HttpHeader).toPromise();
+  }
+
+  countOfCostAndDeposit(team: number): Promise<Counts> {
+    return this.http.get<Counts>(`${this.url}/status/${team}`, HttpHeader).toPromise();
   }
 }
