@@ -1,4 +1,10 @@
 USE csomormaker;
+
+CREATE OR REPLACE PROCEDURE disableEvent(_eventId int(11))
+    BEGIN
+        UPDATE events SET isDisabled = TRUE WHERE id = _eventId;
+    END;
+
 CREATE OR REPLACE PROCEDURE getEvents()
     BEGIN
         SELECT *
@@ -112,7 +118,8 @@ CREATE OR REPLACE PROCEDURE updateEvent(
     BEGIN
      SELECT eventroles.accessLevel FROM eventroles
       INNER JOIN usereventswitch ON usereventswitch.role = eventroles.id
-      WHERE usereventswitch.user = _user AND usereventswitch.event = _event;
+      INNER JOIN events ON usereventswitch.event = events.id
+      WHERE usereventswitch.user = _user AND usereventswitch.event = _event AND NOT EVENTS.isDisabled;
     END;
 
   CREATE OR REPLACE PROCEDURE disableEvent(_id int(11))

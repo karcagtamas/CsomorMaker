@@ -87,8 +87,8 @@ USE csomormaker;
 
      INSERT INTO eventworkworkerswitch (work, worker)
        SELECT * FROM (
-        SELECT works.id FROM works
-        WHERE works.event = _eventId) AS T1
+        SELECT eventworks.id FROM eventworks
+        WHERE eventworks.event = _eventId) AS T1
     CROSS JOIN (SELECT _workerId) AS T2;
 
     CALL setUnReadyEvent(_eventId);

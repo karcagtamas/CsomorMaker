@@ -57,4 +57,8 @@ export class EventService {
   getEventRoles(): Promise<EventRole[]> {
     return this.http.get<EventRole[]>(`${this.url}/roles/get`, HttpHeader).toPromise();
   }
+
+  disableEvent(event: number): Promise<Response> {
+    return this.http.get<Response>(`${this.url}/disable/${event}`, HttpHeader).toPromise();
+  }
 }

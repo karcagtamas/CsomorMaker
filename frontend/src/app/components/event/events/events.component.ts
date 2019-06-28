@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Event } from 'src/app/models';
 import { EventService, NotificationService } from 'src/app/services';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
 @Component({
   selector: 'app-events',
   templateUrl: './events.component.html',
@@ -30,7 +32,8 @@ export class EventsComponent implements OnInit {
     private eventservice: EventService,
     private route: ActivatedRoute,
     private router: Router,
-    private notificationservice: NotificationService
+    private notificationservice: NotificationService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -205,5 +208,30 @@ export class EventsComponent implements OnInit {
           false
         );
       });
+  }
+
+  disableEvent() {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: { title: 'Esemény deaktiválása', name: this.currentEvent.name }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.eventservice
+          .disableEvent(this.currentEvent.id)
+          .then(res => {
+            if (res.response === 'success') {
+              this.notificationservice.success(res.message);
+              this.getEvents();
+              this.router.navigateByUrl('/events');
+            } else {
+              this.notificationservice.error(res.message);
+            }
+          })
+          .catch(() => {
+            this.notificationservice.error('Az esemény deaktíválása közben hiba történt! Kérjük próbálja újra késöbb!');
+          });
+      }
+    });
   }
 }

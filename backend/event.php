@@ -46,6 +46,7 @@
         $stmt->bind_param("si",$name, $_SESSION['userId']);
         $stmt->execute();
 
+        var_dump($stmt);
         if ($stmt->errno){
             $array['response'] =  'add-event-failure';
             $array['message'] = 'Something went wrong!';
@@ -262,6 +263,26 @@
             array_push($array, $row);
         }
         echo json_encode($array);
+        $stmt->close();
+    }
+
+    function disableEvent($eventId){
+        global $db;
+
+        $sql = "CALL disableEvent(?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $eventId);
+        $stmt->execute();
+
+        if ($stmt->errno){
+            $array['response'] =  'fail';
+            $array['message'] = 'Az esemény deaktíválása sikertelen!';
+            echo json_encode($array);
+        }else{
+             $array['response'] =  'success';
+            $array['message'] = 'Az esemény deaktíválása sikeres!';
+            echo json_encode($array);
+        }
         $stmt->close();
     }
 

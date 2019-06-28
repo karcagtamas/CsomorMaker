@@ -48,6 +48,5 @@ export class EventGuard implements CanActivate {
           resolve(false);
         });
     });
-    return true;
   }
 }

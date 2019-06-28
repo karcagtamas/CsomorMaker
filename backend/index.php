@@ -302,6 +302,7 @@
                         break;
 
                     case 'disable':
+                        disableEvent($url[4]);
                         break;
                     
                     case 'teams':
