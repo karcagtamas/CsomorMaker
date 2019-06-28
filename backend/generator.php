@@ -26,7 +26,7 @@
         $stmt->close();
 
         for ($i=0; $i < count($workers); $i++) { 
-            $sql = "CALL getWorkerTablesWithoutWorkNames(?, ?);";
+            $sql = "CALL getWorkerTables(?, ?);";
             $stmt = $db->prepare($sql);
             $stmt->bind_param("ii",$workers[$i]['id'], $eventId);
             $stmt->execute();
@@ -68,7 +68,7 @@
         $stmt->close();
 
          for ($i=0; $i < count($works); $i++) { 
-            $sql = "CALL getWorkTablesWithoutWorkerNames(?);";
+            $sql = "CALL getWorkTables(?);";
             $stmt = $db->prepare($sql);
             $stmt->bind_param("i",$works[$i]['id']);
             $stmt->execute();

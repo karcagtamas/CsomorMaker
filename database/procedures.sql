@@ -357,7 +357,7 @@ CREATE OR REPLACE PROCEDURE getWorkStatuses(_worker int(11), _event int(11))
     BEGIN
     SELECT users.id AS workerId, users.name AS worker, eventworks.id AS workId, eventworks.name AS work, eventworkworkerswitch.isValid FROM eventworkworkerswitch
       INNER JOIN users ON eventworkworkerswitch.worker = users.id
-      INNER JOIN works ON eventworkworkerswitch.work = eventworks.id
+      INNER JOIN eventworks ON eventworkworkerswitch.work = eventworks.id
     WHERE eventworkworkerswitch.worker = _worker AND eventworks.event = _event;
     END;
 

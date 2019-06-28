@@ -28,7 +28,7 @@ export class EventGeneratorService {
     return this.http.post<Response>(`${this.workUrl}/add`, { name, eventId }, HttpHeader).toPromise();
   }
 
-  getWorkTablesWithoutWorkerNames(id: number): Promise<EventWorkTable[]> {
+  getWorkTables(id: number): Promise<EventWorkTable[]> {
     return this.http.get<EventWorkTable[]>(`${this.workUrl}/tables/get/${id}`, HttpHeader).toPromise();
   }
 
@@ -40,10 +40,8 @@ export class EventGeneratorService {
     return this.http.get<EventWorker[]>(`${this.workerUrl}/get/${id}`, HttpHeader).toPromise();
   }
 
-  getWorkerTablesWithoutWorkNames(id: number, event: number): Promise<EventWorkerTable[]> {
-    return this.http
-      .get<EventWorkerTable[]>(`${this.workerUrl}/tables/get/${id}/${event}`, HttpHeader)
-      .toPromise();
+  getWorkerTables(id: number, event: number): Promise<EventWorkerTable[]> {
+    return this.http.get<EventWorkerTable[]>(`${this.workerUrl}/tables/get/${id}/${event}`, HttpHeader).toPromise();
   }
 
   setIsAvaiableWorkerHour(day: number, hour: number, worker: number, event: number): Promise<Response> {

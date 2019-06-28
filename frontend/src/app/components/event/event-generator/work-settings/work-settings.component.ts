@@ -24,7 +24,7 @@ export class WorkSettingsComponent implements OnInit {
 
   getWorkTables() {
     this.eventgeneratorservice
-      .getWorkTablesWithoutWorkerNames(this.work.id)
+      .getWorkTables(this.work.id)
       .then(res => {
         this.workTables = res;
       })

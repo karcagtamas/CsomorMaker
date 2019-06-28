@@ -175,7 +175,10 @@ import {
     AddNewWorkComponent,
     ConfirmDialogComponent,
     ModifyEventMemberComponent,
-    AddNewMemberModalComponent
+    AddNewMemberModalComponent,
+    AddTeamDialogComponent,
+    TeamDeatilsDialogComponent,
+    AddTeamMemberDialogComponent
   ]
 })
 export class AppModule {}
