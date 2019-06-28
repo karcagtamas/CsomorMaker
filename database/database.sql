@@ -38,7 +38,6 @@ CREATE TABLE events(
     creater int(11) NOT NULL,
     creationDate datetime NOT NULL DEFAULT NOW(),
     currentPlayers int(11) NOT NULL DEFAULT 0,
-    playerLimit int(11) NOT NULL DEFAULT 0,
     injured int(11) NOT NULL DEFAULT 0,
     visitors int(11) NOT NULL DEFAULT 0,
     visitorLimit int(11) NOT NULL DEFAULT 0,
@@ -84,8 +83,8 @@ CREATE TABLE eventpayouts(
   type int(11) NOT NULL,
   cost decimal NOT NULL,
   PRIMARY KEY(id),
-  CONSTRAINT fk_type_payouttypes FOREIGN KEY (type)
-  REFERENCES payouttypes(id),
+  CONSTRAINT fk_type_eventpayouttypes FOREIGN KEY (type)
+  REFERENCES eventpayouttypes(id),
   CONSTRAINT fk_eventId_events FOREIGN KEY (eventId)
   REFERENCES events(id)
 );
@@ -129,8 +128,8 @@ CREATE TABLE eventworktables(
    worker int(11),
    work int(11) NOT NULL,
    PRIMARY KEY(day, hour, work),
-   CONSTRAINT fk_work_works_workTables FOREIGN KEY (work)
-   REFERENCES works(id) ON DELETE CASCADE,
+   CONSTRAINT fk_work_eventworks_workTables FOREIGN KEY (work)
+   REFERENCES eventworks(id) ON DELETE CASCADE,
    CONSTRAINT fk_worker_users_workTables FOREIGN KEY (worker)
    REFERENCES users(id)
  );
@@ -143,8 +142,8 @@ CREATE TABLE eventworkertables(
   worker int(11) NOT NULL,
   event int(11) NOT NULL,
   PRIMARY KEY(day, hour, worker, event),
-  CONSTRAINT fk_work_works_workerTables FOREIGN KEY (work)
-  REFERENCES works(id) ON DELETE SET NULL,
+  CONSTRAINT fk_work_eventworks_workerTables FOREIGN KEY (work)
+  REFERENCES eventworks(id) ON DELETE SET NULL,
   CONSTRAINT fk_worker_users_workerTables FOREIGN KEY (worker)
   REFERENCES users(id),
   CONSTRAINT fk_event_events_workerTables FOREIGN KEY (event)
@@ -158,8 +157,8 @@ CREATE TABLE eventworkworkerswitch(
   PRIMARY KEY(worker, work),
   CONSTRAINT fk_worker_users_workworkerswitch FOREIGN KEY (worker)
   REFERENCES users(id),
-  CONSTRAINT fk_work_works_workworkerswitch FOREIGN KEY (work)
-  REFERENCES works(id) ON DELETE CASCADE
+  CONSTRAINT fk_work_eventworks_workworkerswitch FOREIGN KEY (work)
+  REFERENCES eventworks(id) ON DELETE CASCADE
   );
 
 CREATE TABLE eventteams(
@@ -180,8 +179,8 @@ CREATE TABLE eventteammembers(
   isPaidDeposit boolean NOT NULL DEFAULT FALSE,
   team int(11) NOT NULL,
   PRIMARY KEY(id),
-  CONSTRAINT fk_team_teams_teammembers FOREIGN KEY (team)
-  REFERENCES teams(id)
+  CONSTRAINT fk_team_eventteams_teammembers FOREIGN KEY (team)
+  REFERENCES eventteams(id)
   );
 
 
@@ -201,12 +200,22 @@ CREATE TRIGGER event_members_de AFTER DELETE ON usereventswitch
 CREATE TRIGGER team_members AFTER INSERT ON eventteammembers
   FOR EACH ROW
   BEGIN
+    DECLARE _eventId int(11) DEFAULT 0;
     UPDATE eventteams SET members = members + 1 WHERE id = NEW.team;
+    SELECT event INTO _eventId FROM eventteams
+      WHERE id = NEW.team;
+    UPDATE events set currentPlayers = currentPlayers + 1 WHERE id = _eventId;
+    
   END;
 
 CREATE TRIGGER team_members_de AFTER DELETE ON eventteammembers
   FOR EACH ROW
   BEGIN
+    DECLARE _eventId int(11) DEFAULT 0;
     UPDATE eventteams SET members = members - 1 WHERE id = OLD.team;
+    SELECT event INTO _eventId FROM eventteams
+      WHERE id = OLD.team;
+    UPDATE events set currentPlayers = currentPlayers - 1 WHERE id = _eventId;
+    
   END;
 

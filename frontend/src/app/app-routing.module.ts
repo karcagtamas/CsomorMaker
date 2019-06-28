@@ -9,8 +9,8 @@ import { EventGuard } from './guards/event.guard';
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', pathMatch: 'full', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'login', pathMatch: 'full', component: LoginComponent, canActivate: [!AuthGuard] },
-  { path: 'registration', pathMatch: 'full', component: RegistrationComponent, canActivate: [!AuthGuard] },
+  { path: 'login', pathMatch: 'full', component: LoginComponent },
+  { path: 'registration', pathMatch: 'full', component: RegistrationComponent },
   { path: 'events', pathMatch: 'full', component: EventsComponent, canActivate: [AuthGuard] },
   { path: 'events/:id/:page', pathMatch: 'full', component: EventsComponent, canActivate: [AuthGuard, EventGuard] },
   { path: 'new-event', pathMatch: 'full', component: NewEventComponent, canActivate: [AuthGuard] },

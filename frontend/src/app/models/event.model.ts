@@ -7,7 +7,6 @@ export class Event {
   creater: string;
   creationDate: Date;
   currentPlayers: number;
-  playerLimit: number;
   injured: number;
   visitors: number;
   visitorLimit: number;

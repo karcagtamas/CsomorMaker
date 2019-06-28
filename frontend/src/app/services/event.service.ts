@@ -7,6 +7,11 @@ const URL = environment.api;
 
 const HttpHeader = { withCredentials: true };
 
+interface CountOfCost {
+  countOfCosts: number;
+  countOfDeposits: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -60,5 +65,9 @@ export class EventService {
 
   disableEvent(event: number): Promise<Response> {
     return this.http.get<Response>(`${this.url}/disable/${event}`, HttpHeader).toPromise();
+  }
+
+  countOfAllCost(event: number): Promise<CountOfCost> {
+    return this.http.get<CountOfCost>(`${this.url}/costs/${event}`, HttpHeader).toPromise();
   }
 }

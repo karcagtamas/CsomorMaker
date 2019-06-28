@@ -19,7 +19,6 @@ CREATE OR REPLACE PROCEDURE getEvent(_id int(11))
       events.isLocked, 
       events.isDisabled, 
       events.currentPlayers, 
-      events.playerLimit, 
       events.injured, 
       events.visitors, 
       events.visitorLimit, 
@@ -46,7 +45,6 @@ CREATE OR REPLACE PROCEDURE getUsersEvents(_userId int(11))
       events.isLocked, 
       events.isDisabled, 
       events.currentPlayers, 
-      events.playerLimit, 
       events.injured, 
       events.visitors, 
       events.visitorLimit, 
@@ -78,8 +76,6 @@ CREATE OR REPLACE PROCEDURE addEvent(_name varchar(50), _creater int(11))
 CREATE OR REPLACE PROCEDURE updateEvent(
     _id int(11),
     _name varchar(50),
-    _currentPlayers int(11),
-    _playerLimit int(11),
     _injured int(11),
     _visitors int(11),
     _visitorLimit int(11),
@@ -94,8 +90,6 @@ CREATE OR REPLACE PROCEDURE updateEvent(
     BEGIN
      UPDATE events SET 
       name = _name,
-      currentPlayers = _currentPlayers,
-      playerLimit = _playerLimit,
       injured = _injured,
       visitors = _visitors,
       visitorLimit = _visitorLimit,
@@ -121,6 +115,20 @@ CREATE OR REPLACE PROCEDURE updateEvent(
       INNER JOIN events ON usereventswitch.event = events.id
       WHERE usereventswitch.user = _user AND usereventswitch.event = _event AND NOT EVENTS.isDisabled;
     END;
+
+  CREATE OR REPLACE PROCEDURE countOfAllCost(_eventId int(11))
+    BEGIN
+     DECLARE _cost int(11) DEFAULT 0;
+     DECLARE _deposit int(11) DEFAULT 0;
+     SELECT COUNT(eventteammembers.id) INTO _cost FROM eventteammembers
+      INNER JOIN eventteams ON eventteams.id = eventteammembers.team
+      WHERE eventteams.event = _eventId AND eventteammembers.isPaidCost;
+     SELECT COUNT(eventteammembers.id) INTO _deposit FROM eventteammembers
+      INNER JOIN eventteams ON eventteams.id = eventteammembers.team
+      WHERE eventteams.event = _eventId AND NOT eventteammembers.isPaidCost AND eventteammembers.isPaidDeposit;
+     SELECT _cost AS countOfCosts, _deposit AS countOfDeposits;
+    END;
+
 
   CREATE OR REPLACE PROCEDURE disableEvent(_id int(11))
     BEGIN

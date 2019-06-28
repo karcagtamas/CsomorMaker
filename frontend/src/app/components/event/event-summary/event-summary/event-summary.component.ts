@@ -1,7 +1,7 @@
 import { NewPayOutDialogComponent } from './../new-pay-out-dialog/new-pay-out-dialog.component';
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Event, EventPayOut, EventPayOutType } from 'src/app/models';
-import { NotificationService, EventPayOutsService } from 'src/app/services';
+import { NotificationService, EventPayOutsService, EventService } from 'src/app/services';
 import { MatDialog } from '@angular/material/dialog';
 import { DeletePayOutDialogComponent } from '../delete-pay-out-dialog/delete-pay-out-dialog.component';
 
@@ -17,17 +17,20 @@ export class EventSummaryComponent implements OnInit, OnChanges {
   playerSummary = 0;
   visitorSumamry = 0;
   summary = 0;
+  countOfCosts = 0;
+  countOfDeposits = 0;
 
   constructor(
     private eventpayoutservice: EventPayOutsService,
     public dialog: MatDialog,
-    private notificationservice: NotificationService
+    private notificationservice: NotificationService,
+    private eventservice: EventService
   ) {}
 
   ngOnInit() {
     this.getPayOuts();
     this.getPayOutTypes();
-    this.setPlayerSummary();
+    this.getCountOfCost();
     this.setVisitorSummary();
     this.setSummary();
   }
@@ -35,7 +38,7 @@ export class EventSummaryComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     this.getPayOuts();
     this.getPayOutTypes();
-    this.setPlayerSummary();
+    this.getCountOfCost();
     this.setVisitorSummary();
     this.setSummary();
   }
@@ -63,8 +66,22 @@ export class EventSummaryComponent implements OnInit, OnChanges {
       });
   }
 
+  getCountOfCost() {
+    this.eventservice
+      .countOfAllCost(this.event.id)
+      .then(res => {
+        this.countOfCosts = res.countOfCosts;
+        this.countOfDeposits = res.countOfDeposits;
+        this.setPlayerSummary();
+      })
+      .catch(() => {
+        this.countOfCosts = 0;
+      });
+  }
+
   setPlayerSummary() {
-    this.playerSummary = this.event.currentPlayers * this.event.playerCost;
+    this.playerSummary = this.countOfCosts * this.event.playerCost + this.countOfDeposits * this.event.playerDeposit;
+    this.setSummary();
   }
 
   setVisitorSummary() {

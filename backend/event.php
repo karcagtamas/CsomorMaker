@@ -46,7 +46,6 @@
         $stmt->bind_param("si",$name, $_SESSION['userId']);
         $stmt->execute();
 
-        var_dump($stmt);
         if ($stmt->errno){
             $array['response'] =  'add-event-failure';
             $array['message'] = 'Something went wrong!';
@@ -88,13 +87,13 @@
         $oldLength = $row['length'];
         $stmt->close();
         
-        $sql = "CALL updateEvent(?, ?, ?,?, ?, ?, ? ,?, ?, ? ,? , ?, ?, ?);";
+        $sql = "CALL updateEvent(?, ?, ?, ?, ? ,?, ?, ? ,? , ?, ?, ?);";
         $stmt = $db->prepare($sql);
         $days = $event['days'];
         $start = $event['startHour'];
         $end = $event['endHour'];
         $length = $days * 24 - $start + $end;
-        $stmt->bind_param("isiiiiiiiiiiii", $event['id'], $event['name'], $event['currentPlayers'], $event['playerLimit'], $event['injured'],$event['visitors'],$event['visitorLimit'], $event['playerCost'], $event['visitorCost'], $event['playerDeposit'], $days, $start,$end, $length);
+        $stmt->bind_param("isiiiiiiiiiiii", $event['id'], $event['name'], $event['injured'],$event['visitors'],$event['visitorLimit'], $event['playerCost'], $event['visitorCost'], $event['playerDeposit'], $days, $start,$end, $length);
         $stmt->execute();
         if ($stmt->errno){
             $array['response'] =  'update-event-failure';
@@ -283,6 +282,22 @@
             $array['message'] = 'Az esemény deaktíválása sikeres!';
             echo json_encode($array);
         }
+        $stmt->close();
+    }
+
+    function countOfAllCost($eventId){
+        global $db;
+
+        $sql = "CALL countOfAllCost(?);";
+        
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $eventId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        
+        echo json_encode($row);
         $stmt->close();
     }
 

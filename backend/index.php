@@ -304,6 +304,10 @@
                     case 'disable':
                         disableEvent($url[4]);
                         break;
+
+                    case 'costs':
+                        countOfAllCost($url[4]);
+                        break;
                     
                     case 'teams':
                         $event = $url[4];

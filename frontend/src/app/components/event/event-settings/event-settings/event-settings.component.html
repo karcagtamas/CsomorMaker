@@ -7,27 +7,6 @@
     <mat-error *ngIf="nameControl.hasError('maxlength')">A név maximum hossza 50 karakter lehet!</mat-error>
   </mat-form-field>
   <mat-form-field class="w-100" appearance="outline">
-    <mat-label>Jelenlegi játékos szám</mat-label>
-    <input matInput type="number" placeholder="Jelenlegi játékos szám" [formControl]="currentPlayersControl" />
-    <mat-error *ngIf="currentPlayersControl.hasError('required')">A játékos szám megadása kötelező!</mat-error>
-    <mat-error *ngIf="currentPlayersControl.hasError('min')">A játékos szám minimuma 0!</mat-error>
-    <mat-error *ngIf="currentPlayersControl.hasError('max')"
-      >A játékos szám maximum {{ playerLimitControl.value }}!</mat-error
-    >
-  </mat-form-field>
-  <mat-form-field class="w-100" appearance="outline">
-    <mat-label>Játékos limit</mat-label>
-    <input
-      matInput
-      type="number"
-      placeholder="Játékos limit"
-      [formControl]="playerLimitControl"
-      (change)="changePlayerLimit()"
-    />
-    <mat-error *ngIf="playerLimitControl.hasError('required')">A játékos limit megadása kötelező!</mat-error>
-    <mat-error *ngIf="playerLimitControl.hasError('min')">A játékos limit minimuma 0!</mat-error>
-  </mat-form-field>
-  <mat-form-field class="w-100" appearance="outline">
     <mat-label>Látógatók</mat-label>
     <input matInput type="number" placeholder="Látógatók" [formControl]="visitorsControl" />
     <mat-error *ngIf="visitorsControl.hasError('required')">A látógató szám megadása kötelező!</mat-error>

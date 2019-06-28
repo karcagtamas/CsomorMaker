@@ -13,8 +13,6 @@ export class EventSettingsComponent implements OnInit, OnChanges {
   @Output() update = new EventEmitter();
   modifiedEvent: Event;
   nameControl = new FormControl('', [Validators.required, Validators.maxLength(50)]);
-  currentPlayersControl = new FormControl('', [Validators.required, Validators.min(0)]);
-  playerLimitControl = new FormControl('', [Validators.required, Validators.min(0)]);
   visitorsControl = new FormControl('', [Validators.required, Validators.min(0)]);
   visitorLimitControl = new FormControl('', [Validators.required, Validators.min(0)]);
   playerCostControl = new FormControl('', [Validators.required, Validators.min(0)]);
@@ -40,9 +38,6 @@ export class EventSettingsComponent implements OnInit, OnChanges {
   setValues() {
     const event = this.modifiedEvent;
     this.nameControl.setValue(event.name);
-    this.currentPlayersControl.setValue(event.currentPlayers);
-    this.currentPlayersControl.setValidators(Validators.max(event.playerLimit));
-    this.playerLimitControl.setValue(event.playerLimit);
     this.visitorsControl.setValue(event.visitors);
     this.visitorsControl.setValidators(Validators.max(event.visitorLimit));
     this.visitorLimitControl.setValue(event.visitorLimit);
@@ -60,10 +55,6 @@ export class EventSettingsComponent implements OnInit, OnChanges {
     this.setValues();
   }
 
-  changePlayerLimit() {
-    this.currentPlayersControl.setValidators(Validators.max(+this.playerLimitControl.value));
-  }
-
   changeVisitorLimit() {
     this.visitorsControl.setValidators(Validators.max(+this.visitorLimitControl.value));
   }
@@ -71,8 +62,6 @@ export class EventSettingsComponent implements OnInit, OnChanges {
   save() {
     if (
       this.nameControl.invalid ||
-      this.currentPlayersControl.invalid ||
-      this.playerLimitControl.invalid ||
       this.visitorsControl.invalid ||
       this.visitorLimitControl.invalid ||
       this.playerCostControl.invalid ||
@@ -87,8 +76,6 @@ export class EventSettingsComponent implements OnInit, OnChanges {
     } else {
       const event = this.modifiedEvent;
       event.name = this.nameControl.value;
-      event.currentPlayers = this.currentPlayersControl.value;
-      event.playerLimit = this.playerLimitControl.value;
       event.visitors = this.visitorsControl.value;
       event.visitorLimit = this.visitorLimitControl.value;
       event.playerCost = this.playerCostControl.value;
