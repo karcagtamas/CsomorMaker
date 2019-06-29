@@ -1,0 +1,3 @@
+export * from './gt-add-member-dialog/gt-add-member-dialog.component';
+export * from './gt-member-modify-dialog/gt-member-modify-dialog.component';
+export * from './gt-members/gt-members.component';

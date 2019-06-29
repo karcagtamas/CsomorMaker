@@ -87,6 +87,25 @@ import {
   AddTeamMemberDialogComponent,
   EventTeamComponent
 } from './components/event/event-teams';
+import { GtChatComponent } from './components/gt/gt-chat';
+import { GtClassesComponent, GtClassDialogComponent, GtClassMemberDialogComponent } from './components/gt/gt-classes';
+import { GtCsomorComponent, GtCsomorPersonalComponent, GtCsomorWorkComponent } from './components/gt/gt-csomor';
+import { GtDetailsComponent } from './components/gt/gt-details';
+import {
+  GtGeneratorComponent,
+  GtWorkerSettingsComponent,
+  GtWorkDetailsComponent,
+  GtWorkDialogComponent
+} from './components/gt/gt-generator';
+import {
+  GtMembersComponent,
+  GtAddMemberDialogComponent,
+  GtMemberModifyDialogComponent
+} from './components/gt/gt-members';
+import { GtSettingsComponent } from './components/gt/gt-settings';
+import { GtSummaryComponent, GtPayoutComponent } from './components/gt/gt-summary';
+import { GtTodoesComponent, GtTodoComponent } from './components/gt/gt-todo';
+import { GtsComponent, NewGtComponent } from './components/gt';
 
 @NgModule({
   declarations: [
@@ -131,7 +150,29 @@ import {
     AddTeamDialogComponent,
     TeamDeatilsDialogComponent,
     AddTeamMemberDialogComponent,
-    EventTeamComponent
+    EventTeamComponent,
+    GtChatComponent,
+    GtClassesComponent,
+    GtClassDialogComponent,
+    GtClassMemberDialogComponent,
+    GtCsomorComponent,
+    GtCsomorPersonalComponent,
+    GtCsomorWorkComponent,
+    GtDetailsComponent,
+    GtGeneratorComponent,
+    GtWorkerSettingsComponent,
+    GtWorkDetailsComponent,
+    GtWorkDialogComponent,
+    GtMembersComponent,
+    GtAddMemberDialogComponent,
+    GtMemberModifyDialogComponent,
+    GtSettingsComponent,
+    GtSummaryComponent,
+    GtPayoutComponent,
+    GtTodoesComponent,
+    GtTodoComponent,
+    GtsComponent,
+    NewGtComponent
   ],
   imports: [
     BrowserModule,

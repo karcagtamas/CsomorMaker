@@ -15,3 +15,4 @@ export * from './event.member.model';
 export * from './event.role.model';
 export * from './event.team.model';
 export * from './event.team.member.model';
+export * from './gt.model';

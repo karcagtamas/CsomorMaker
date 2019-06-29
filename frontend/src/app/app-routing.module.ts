@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent, LoginComponent, RegistrationComponent } from './components/main';
 import { AuthGuard } from './guards/auth.guard';
 import { EventGuard } from './guards/event.guard';
+import { NewGtComponent, GtsComponent } from './components/gt';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -14,6 +15,9 @@ const routes: Routes = [
   { path: 'events', pathMatch: 'full', component: EventsComponent, canActivate: [AuthGuard] },
   { path: 'events/:id/:page', pathMatch: 'full', component: EventsComponent, canActivate: [AuthGuard, EventGuard] },
   { path: 'new-event', pathMatch: 'full', component: NewEventComponent, canActivate: [AuthGuard] },
+  { path: 'gts', pathMatch: 'full', component: GtsComponent, canActivate: [AuthGuard] },
+  { path: 'gts/:id/:page', pathMatch: 'full', component: GtsComponent, canActivate: [AuthGuard] },
+  { path: 'new-gt', pathMatch: 'full', component: NewGtComponent, canActivate: [AuthGuard] },
   { path: '**', component: PageNotFoundComponent }
 ];
 

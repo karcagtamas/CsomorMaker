@@ -375,6 +375,171 @@
                 break;
             
             case 'gt':
+                $subgroup = $url[3];
+                switch ($subgroup) {
+                    case 'get':
+                        break;
+
+                    case 'update':
+                        break;
+
+                    case 'add':
+                        break;
+
+                    case 'members':
+                        $event = $url[4];
+                        switch ($event) {
+                            case 'get':
+                                break;
+
+                            case 'add':
+                                break;
+
+                            case 'delete':
+                                break;
+                            
+                            default:
+                                echo '{"response" : "bad-event", "message" : "Bad request event!"}';
+                                break;
+                        }
+                        break;
+
+                    case 'classes':
+                        $event = $url[4];
+                        switch ($event) {
+                            case 'get':
+                                break;
+
+                            case 'add':
+                                break;
+
+                            case 'update':
+                                break;
+
+                            case 'delete':
+                                break;
+
+                            case 'members':
+                                $subevent = $url[5];
+                                switch ($subevent) {
+                                    case 'get':
+                                        break;
+
+                                    case 'add':
+                                        break;
+
+                                    case 'delete':
+                                        break;
+                                    
+                                    default:
+                                        echo '{"response" : "bad-subevent", "message" : "Bad request subevent!"}';
+                                        break;
+                                }
+                                break;
+
+                            case 'bosses':
+                                $subevent = $url[5];
+                                switch ($subevent) {
+                                    case 'get':
+                                        break;
+
+                                    case 'add':
+                                        break;
+
+                                    case 'delete':
+                                        break;
+                                    
+                                    default:
+                                        echo '{"response" : "bad-subevent", "message" : "Bad request subevent!"}';
+                                        break;
+                                }
+                                break;
+                            
+                            default:
+                                echo '{"response" : "bad-event", "message" : "Bad request event!"}';
+                                break;
+                        }
+                        break;
+
+                    case 'works':
+                        $event = $url[4];
+                        switch ($event) {
+                            case 'get':
+                                break;
+
+                            case 'add':
+                                break;
+
+                            case 'delete':
+                                break;
+
+                            case 'tables':
+                                $subevent = $url[5];
+                                switch ($subevent) {
+                                    case 'get':
+                                        break;
+
+                                    case 'add':
+                                        break;
+                                    
+                                    default:
+                                        echo '{"response" : "bad-subevent", "message" : "Bad request subevent!"}';
+                                        break;
+                                }
+                                break;
+
+                            case 'statuses':
+                                $subevent = $url[5];
+                                switch ($subevent) {
+                                    case 'get':
+                                        break;
+
+                                    case 'set':
+                                        break;
+                                    
+                                    default:
+                                        echo '{"response" : "bad-subevent", "message" : "Bad request subevent!"}';
+                                        break;
+                                }
+                                break;
+                            
+                            default:
+                                echo '{"response" : "bad-event", "message" : "Bad request event!"}';
+                                break;
+                        }
+                        break;
+
+                    case 'workers':
+                        $event = $url[4];
+                        switch ($event) {
+                            case 'get':
+                                break;
+
+                            case 'tables':
+                                $subevent = $url[5];
+                                switch ($subevent) {
+                                    case 'get':
+                                        break;
+
+                                    case 'set':
+                                        break;
+                                    
+                                    default:
+                                        echo '{"response" : "bad-subevent", "message" : "Bad request subevent!"}';
+                                        break;
+                                }
+                                break;
+                            
+                            default:
+                                echo '{"response" : "bad-event", "message" : "Bad request event!"}';
+                                break;
+                        }
+                        break;
+                    
+                    default:
+                        echo '{"response" : "bad-subgroup", "message" : "Bad request subgroup!"}';
+                        break;
+                }
                 break;
                 
             default:

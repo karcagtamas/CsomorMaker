@@ -1,0 +1,45 @@
+<div class="col col-12 row panel">
+  <div class="col col-4 menu">
+    <div class="gts border rounded">
+      <div class="title text-center border rounded">Gólyatáboraid</div>
+      <div
+        *ngFor="let gt of gts"
+        class="gt rounded"
+        [routerLink]="['/gts', gt.id, currentPage]"
+        routerLinkActive="router-link-active"
+        [ngClass]="{ purple: gt.id === +currentGtId }"
+      >
+        {{ gt.year }}
+      </div>
+    </div>
+    <div class="menuitems border rounded">
+      <div class="title text-center border rounded">Menü</div>
+      <div *ngFor="let item of menuItems">
+        <div
+          class="item rounded"
+          [routerLink]="['/gts', currentGtId, item.link]"
+          routerLinkActive="router-link-active"
+          [ngClass]="{ purple: item.link === currentPage }"
+          *ngIf="item.accessLevel <= accessLevel"
+        >
+          {{ item.name }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col col-8 changer" *ngIf="currentGt">
+    <mat-card class="card">
+      <div [ngSwitch]="currentPage">
+        <app-gt-details *ngSwitchCase="'details'"></app-gt-details>
+        <app-gt-csomor *ngSwitchCase="'csomor'"></app-gt-csomor>
+        <app-gt-chat *ngSwitchCase="'chat'"></app-gt-chat>
+        <app-gt-generator *ngSwitchCase="'generator'"></app-gt-generator>
+        <app-gt-settings *ngSwitchCase="'settings'"> </app-gt-settings>
+        <app-gt-summary *ngSwitchCase="'summary'"></app-gt-summary>
+        <app-gt-todoes *ngSwitchCase="'todo'"></app-gt-todoes>
+        <app-gt-members *ngSwitchCase="'members'"> </app-gt-members>
+        <app-gt-classes *ngSwitchCase="'classes'"></app-gt-classes>
+      </div>
+    </mat-card>
+  </div>
+</div>

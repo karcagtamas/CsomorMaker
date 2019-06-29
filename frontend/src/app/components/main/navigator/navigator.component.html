@@ -21,8 +21,8 @@
 
     <button mat-button [matMenuTriggerFor]="menu2" *ngIf="isLoggedIn">Gólyatábor</button>
     <mat-menu #menu2="matMenu">
-      <button mat-menu-item [routerLink]="['/']" routerLinkActive="activeMenu">Valami 1</button>
-      <button mat-menu-item [routerLink]="['/']" routerLinkActive="activeMenu">Valami 2</button>
+      <button mat-menu-item [routerLink]="['/new-gt']" routerLinkActive="activeMenu">Új gólyatábor létrehozása</button>
+      <button mat-menu-item [routerLink]="['/gts']" routerLinkActive="activeMenu">Gólyatáborok</button>
     </mat-menu>
 
     <span class="spacer"></span>
