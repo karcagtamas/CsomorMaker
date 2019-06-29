@@ -32,8 +32,6 @@ USE csomormaker;
       WHERE usereventswitch.event = _id;
     END;
 
-  CALL getEventMembers(2);
-
   CREATE OR REPLACE PROCEDURE getEventLowWorkers(_id int(11))
     BEGIN
      SELECT users.id, users.name, eventroles.id AS roleId, eventroles.accessLevel, eventroles.name AS role, usereventswitch.connectionDate, usereventswitch.event FROM users
@@ -41,8 +39,6 @@ USE csomormaker;
       INNER JOIN eventroles ON usereventswitch.role = eventroles.id
        WHERE usereventswitch.event = _id AND eventroles.accessLevel = 1;
     END;
-
-  CALL getEventLowWorkers(2);
 
   CREATE OR REPLACE PROCEDURE updateUserEvenetRole(_userId int(11), _eventId int(11), _roleId int(11))
     BEGIN 

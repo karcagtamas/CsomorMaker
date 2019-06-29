@@ -24,7 +24,7 @@ CREATE OR REPLACE PROCEDURE getEvent(_id int(11))
       events.visitorLimit, 
       events.playerCost, 
       events.visitorCost, 
-      EVENTS.playerDeposit, 
+      events.playerDeposit, 
       events.days, 
       events.startHour, 
       events.endHour, 
@@ -113,7 +113,7 @@ CREATE OR REPLACE PROCEDURE updateEvent(
      SELECT eventroles.accessLevel FROM eventroles
       INNER JOIN usereventswitch ON usereventswitch.role = eventroles.id
       INNER JOIN events ON usereventswitch.event = events.id
-      WHERE usereventswitch.user = _user AND usereventswitch.event = _event AND NOT EVENTS.isDisabled;
+      WHERE usereventswitch.user = _user AND usereventswitch.event = _event AND NOT events.isDisabled;
     END;
 
   CREATE OR REPLACE PROCEDURE countOfAllCost(_eventId int(11))
