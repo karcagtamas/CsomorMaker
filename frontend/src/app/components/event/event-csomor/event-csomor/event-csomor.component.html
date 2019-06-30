@@ -1,3 +1,15 @@
-<p>
-  event-csomor works!
-</p>
+<div class="text-center panel-title border rounded">Csömör</div>
+<div class="csomor" *ngIf="event">
+  <div class="buttons">
+    <button mat-raised-button color="{{ selectedMode === 1 ? 'primary' : 'accent' }}" (click)="changeSelection(1)">
+      Személyes
+    </button>
+    <button mat-raised-button color="{{ selectedMode === 2 ? 'primary' : 'accent' }}" (click)="changeSelection(2)">
+      Poszt
+    </button>
+  </div>
+  <div [ngSwitch]="selectedMode">
+    <app-event-personal-csomor *ngSwitchCase="1" [eventWorkers]="eventWorkers"></app-event-personal-csomor>
+    <app-event-work-csomor *ngSwitchCase="2" [eventWorks]="eventWorks"></app-event-work-csomor>
+  </div>
+</div>

@@ -91,11 +91,14 @@ CREATE TABLE eventpayouts(
 
 CREATE TABLE eventtodoes(
   id int(11) AUTO_INCREMENT NOT NULL,
-  eventId int(11) NOT NULL,
+  event int(11) NOT NULL,
   date datetime DEFAULT CURRENT_TIMESTAMP,
   text longtext NOT NULL,
+  importance int(1) NOT NULL,
+  isSolved boolean DEFAULT FALSE,
+  expirationDate datetime DEFAULT FALSE,
   PRIMARY KEY(id),
-  CONSTRAINT fk_eventId_events_todo FOREIGN KEY (eventId)
+  CONSTRAINT fk_event_events_eventtodoes FOREIGN KEY (event)
   REFERENCES events(id)
 );
 
@@ -106,9 +109,9 @@ CREATE TABLE eventmessages(
   dateOfSent datetime DEFAULT CURRENT_TIMESTAMP,
   message text NOT NULL,
   PRIMARY KEY(id),
-  CONSTRAINT fk_sender_users_messages FOREIGN KEY (sender)
+  CONSTRAINT fk_sender_users_eventmessages FOREIGN KEY (sender)
   REFERENCES users(id),
-  CONSTRAINT fk_event_events_messages FOREIGN KEY (event)
+  CONSTRAINT fk_event_events_eventmessages FOREIGN KEY (event)
   REFERENCES events (id)
 );
 

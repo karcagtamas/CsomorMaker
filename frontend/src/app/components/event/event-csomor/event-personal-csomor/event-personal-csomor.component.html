@@ -1,0 +1,33 @@
+<div>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Szervező</mat-label>
+    <mat-select [(ngModel)]="selectedWorker" (selectionChange)="changeWorker()">
+      <mat-option [value]="i" *ngFor="let worker of eventWorkers; let i = index">{{ worker.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="buttons">
+    <button
+      mat-raised-button
+      color="warn"
+      *ngIf="selectedWorker > 0"
+      (click)="selectedWorker = selectedWorker - 1; getWorkerTables()"
+    >
+      Elöző
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      *ngIf="selectedWorker < eventWorkers.length - 1"
+      (click)="selectedWorker = selectedWorker + 1; getWorkerTables()"
+      class="float-right"
+    >
+      Következő
+    </button>
+  </div>
+  <div class="personal">
+    <div class="row col col-12 border rounded" [ngClass]="{ over: hoverValue === table.work }" *ngFor="let table of workerTables" (mouseover)="hoverValue = table.work" (mouseleave)="hoverValue = ''" >
+      <div class="col col-6 text-center">{{ table.hour | convertToHour }}</div>
+      <div class="col col-6 text-center">{{ table.work | exists }}</div>
+    </div>
+  </div>
+</div>

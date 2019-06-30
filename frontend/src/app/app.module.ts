@@ -106,6 +106,8 @@ import { GtSettingsComponent } from './components/gt/gt-settings';
 import { GtSummaryComponent, GtPayoutComponent } from './components/gt/gt-summary';
 import { GtTodoesComponent, GtTodoComponent } from './components/gt/gt-todo';
 import { GtsComponent, NewGtComponent } from './components/gt';
+import { EventPersonalCsomorComponent } from './components/event/event-csomor/event-personal-csomor/event-personal-csomor.component';
+import { EventWorkCsomorComponent } from './components/event/event-csomor/event-work-csomor/event-work-csomor.component';
 
 @NgModule({
   declarations: [
@@ -172,7 +174,9 @@ import { GtsComponent, NewGtComponent } from './components/gt';
     GtTodoesComponent,
     GtTodoComponent,
     GtsComponent,
-    NewGtComponent
+    NewGtComponent,
+    EventPersonalCsomorComponent,
+    EventWorkCsomorComponent
   ],
   imports: [
     BrowserModule,

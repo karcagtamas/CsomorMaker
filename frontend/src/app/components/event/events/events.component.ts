@@ -38,7 +38,6 @@ export class EventsComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(data => {
-      console.log(data);
       this.eventservice
         .getEvents()
         .then(res => {
@@ -55,7 +54,6 @@ export class EventsComponent implements OnInit {
               .catch(() => {
                 this.accessLevel = 0;
               });
-            console.log(this.currentEvent);
           } else {
             this.router.navigateByUrl(`/events/${this.events[0].id}/details`);
           }

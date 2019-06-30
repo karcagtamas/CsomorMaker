@@ -308,6 +308,50 @@
                     case 'costs':
                         countOfAllCost($url[4]);
                         break;
+
+                    case 'todoes':
+                        $event = $url[4];
+                        require 'event.todoes.php';
+                        switch ($event) {
+                            case 'get':
+                                getEventTodoes($url[5]);
+                                break;
+
+                            case 'update':
+                                updateEventTodo($_POST['todo'], $_POST['text'], $_POST['importance'], $_POST['expiration']);
+                                break;
+
+                            case 'set':
+                                setSolvedEventTodo($url[5]);
+                                break;
+
+                            case 'add':
+                                addEventTodo($_POST['event'], $_POST['text'], $_POST['importance'], $_POST['expiration']);
+                                break;
+                            
+                            default:
+                                echo '{"response" : "bad-event", "message" : "Bad request event!"}';
+                                break;
+                        }
+                        break;
+
+                    case 'messages':
+                        $event = $url[4];
+                        require 'event.messages.php';
+                        switch ($event) {
+                            case 'get':
+                                getEventMessages($url[5]);
+                                break;
+
+                            case 'add':
+                                addEventMessage($_POST['event'], $_POST['text'], $_POST['sender']);
+                                break;
+                            
+                            default:
+                                echo '{"response" : "bad-event", "message" : "Bad request event!"}';
+                                break;
+                        }
+                        break;
                     
                     case 'teams':
                         $event = $url[4];

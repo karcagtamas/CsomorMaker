@@ -4,9 +4,8 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'convertToHour'
 })
 export class ConvertToHourPipe implements PipeTransform {
-  transform(value: string, args?: any): any {
+  transform(value: number, args?: any): any {
     // tslint:disable-next-line: radix
-    const hour: number = parseInt(value.split('-')[1]);
-    return hour + ' óra - ' + (hour + 1) + ' óra';
+    return value + ' óra - ' + (value + 1) + ' óra';
   }
 }

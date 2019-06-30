@@ -180,3 +180,36 @@ CREATE OR REPLACE PROCEDURE updateEvent(
     BEGIN
       UPDATE events SET injured = injured - 1 WHERE id = _id;
     END;
+
+
+  CREATE OR REPLACE PROCEDURE addEventTodo(_eventId int(11), _text longtext, _importance int(1), _expDate datetime)
+    BEGIN
+      INSERT INTO eventtodoes (event, text, expirationDate, importance) VALUES (_eventId, _text, _expDate, _importance);
+    END;
+
+   CREATE OR REPLACE PROCEDURE getEventTodoes(_eventId int(11))
+    BEGIN
+      SELECT * FROM eventtodoes WHERE event = _eventId
+      ORDER BY isSolved, importance;
+    END;
+
+  CREATE OR REPLACE PROCEDURE updateEventTodo(_todoId int(11), _text longtext, _importance int(11), _expDate datetime)
+    BEGIN
+      UPDATE eventtodoes SET text = _text, importance = _importance, expirationDate = _expDate WHERE id = _todoId;
+    END;
+
+  CREATE OR REPLACE PROCEDURE setSolvedEventTodo(_todoId int(11))
+    BEGIN
+      UPDATE eventtodoes SET isSolved = TRUE WHERE id = _todoId;
+    END;
+
+   CREATE OR REPLACE PROCEDURE getEventMessages(_eventId int(11))
+    BEGIN
+      SELECT * FROM eventmessages WHERE event = _eventId
+      ORDER BY dateOfSent;
+    END;
+
+  CREATE OR REPLACE PROCEDURE addEventMessage(_eventId int(11), _text longtext, _sender int(11))
+    BEGIN
+      INSERT INTO eventmessages (event, message, sender) VALUES (_eventId, _text, _sender);
+    END;
