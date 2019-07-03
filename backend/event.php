@@ -92,7 +92,7 @@
         $start = $event['startHour'];
         $end = $event['endHour'];
         $length = $days * 24 - $start + $end;
-        $stmt->bind_param("isiiiiiiiiiiiis", $event['id'], $event['name'], $event['injured'],$event['visitors'],$event['visitorLimit'], $event['playerCost'], $event['visitorCost'], $event['playerDeposit'], $days, $start,$end, $length, $event['startDate']);
+        $stmt->bind_param("isiiiiiiiiiis", $event['id'], $event['name'], $event['injured'],$event['visitors'],$event['visitorLimit'], $event['playerCost'], $event['visitorCost'], $event['playerDeposit'], $days, $start,$end, $length, $event['startDate']);
         $stmt->execute();
         if ($stmt->errno){
             $array['response'] =  'fail';
