@@ -1,5 +1,5 @@
 <div class="text-center panel-title border rounded">Csömör</div>
-<div class="csomor" *ngIf="event">
+<div class="csomor" *ngIf="event && event.ready">
   <div class="buttons">
     <button mat-raised-button color="{{ selectedMode === 1 ? 'primary' : 'accent' }}" (click)="changeSelection(1)">
       Személyes
@@ -12,4 +12,7 @@
     <app-event-personal-csomor *ngSwitchCase="1" [eventWorkers]="eventWorkers"></app-event-personal-csomor>
     <app-event-work-csomor *ngSwitchCase="2" [eventWorks]="eventWorks"></app-event-work-csomor>
   </div>
+</div>
+<div *ngIf="event && !event.ready" class="text-center">
+  Sajnos az eseményhez nem tartozik naprakész csömör :(
 </div>

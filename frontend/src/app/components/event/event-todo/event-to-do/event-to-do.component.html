@@ -1,6 +1,6 @@
 <div class="text-center panel-title border rounded">Todo</div>
 <div>
-  <div class="todoes row col col-12">
+  <div class="todoes row col col-12" *ngIf="event && eventTodoes && eventTodoes.length > 0">
     <div *ngFor="let todo of eventTodoes" class="todo-frame col col-6">
       <div
         class="todo border rounded"
@@ -29,6 +29,9 @@
         </div>
       </div>
     </div>
+  </div>
+  <div *ngIf="eventTodoes && eventTodoes.length == 0" class="text-center">
+    Nincs még todod :(
   </div>
   <button mat-raised-button color="primary" (click)="openDialog()">Új Todo</button>
 </div>

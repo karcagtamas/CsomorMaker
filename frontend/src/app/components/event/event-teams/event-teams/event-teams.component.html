@@ -2,5 +2,8 @@
 <div class="teams" *ngIf="event">
   <app-event-team *ngFor="let team of teams" [team]="team" [eventId]="event.id" (refresh)="getTeams()">
   </app-event-team>
+  <div *ngIf="teams && teams.length === 0" class="text-center">
+    Nincs még csapatod :(
+  </div>
   <button mat-raised-button color="primary" (click)="openAddTeamModal()">Új csapat</button>
 </div>

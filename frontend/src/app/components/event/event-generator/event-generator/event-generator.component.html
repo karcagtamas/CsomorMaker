@@ -25,6 +25,9 @@
         </mat-action-row>
       </mat-expansion-panel>
     </mat-accordion>
+    <div *ngIf="!eventWorks || eventWorks.length === 0" class="text-center">
+      Nincs még posztod :(
+    </div>
     <button mat-raised-button color="primary" (click)="openAddNewWorkDialog()">Új poszt</button>
   </div>
   <div class="eventWorkers">
@@ -58,6 +61,9 @@
         </mat-action-row>
       </mat-expansion-panel>
     </mat-accordion>
+    <div *ngIf="!eventWorkers || eventWorkers.length === 0" class="text-center">
+      Nincs még humánod :(
+    </div>
   </div>
   <button mat-raised-button color="accent" (click)="generate()">Generálás</button>
 </div>
