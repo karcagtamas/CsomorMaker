@@ -1,4 +1,4 @@
-export class EvenMessage {
+export class EventMessage {
   id: number;
   senderId: number;
   sender: string;

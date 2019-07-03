@@ -80,8 +80,8 @@ export class EventsComponent implements OnInit {
     this.eventservice
       .updateEvent(event.event)
       .then(res => {
-        if (res.response === 'update-event-success') {
-          this.setAlert('Esemény frissítése sikeres!', true);
+        if (res.response === 'success') {
+          this.setAlert(res.message, true);
           const old = this.events.findIndex(x => x.id === +event.event.id);
           this.events[old] = event.event;
           this.currentEvent = this.events.find(x => x.id === +this.currentEventId);
@@ -110,8 +110,8 @@ export class EventsComponent implements OnInit {
     this.eventservice
       .lockEvent(event.id)
       .then(res => {
-        if (res.response === 'event-lock-success') {
-          this.setAlert('Az esemény zárolása/feloldása sikeres!', true);
+        if (res.response === 'success') {
+          this.setAlert(res.message, true);
           const old = this.events.findIndex(x => x.id === +event.id);
           this.events[old].isLocked = this.events[old].isLocked ? false : true;
           this.currentEvent = this.events.find(x => x.id === +this.currentEventId);
@@ -128,8 +128,8 @@ export class EventsComponent implements OnInit {
     this.eventservice
       .increaseVisitors(event.id)
       .then(res => {
-        if (res.response === 'visitor-increase-success') {
-          this.setAlert('Az esemény részvevőinek száma sikeresen növelve!', true);
+        if (res.response === 'success') {
+          this.setAlert(res.message, true);
           const old = this.events.findIndex(x => x.id === +event.id);
           this.events[old].visitors++;
           this.currentEvent = this.events.find(x => x.id === +this.currentEventId);
@@ -149,8 +149,8 @@ export class EventsComponent implements OnInit {
     this.eventservice
       .decreaseVisitors(event.id)
       .then(res => {
-        if (res.response === 'visitor-decrease-success') {
-          this.setAlert('Az esemény részvevőinek száma sikeresen csökkentve!', true);
+        if (res.response === 'success') {
+          this.setAlert(res.message, true);
           const old = this.events.findIndex(x => x.id === +event.id);
           this.events[old].visitors--;
           this.currentEvent = this.events.find(x => x.id === +this.currentEventId);
@@ -170,8 +170,8 @@ export class EventsComponent implements OnInit {
     this.eventservice
       .increaseInjured(event.id)
       .then(res => {
-        if (res.response === 'injured-increase-success') {
-          this.setAlert('Az esemény sérültjeinek száma sikeresen növelve!', true);
+        if (res.response === 'success') {
+          this.setAlert(res.message, true);
           const old = this.events.findIndex(x => x.id === +event.id);
           this.events[old].injured++;
           this.currentEvent = this.events.find(x => x.id === +this.currentEventId);
@@ -191,8 +191,8 @@ export class EventsComponent implements OnInit {
     this.eventservice
       .decreaseInjured(event.id)
       .then(res => {
-        if (res.response === 'injured-decrease-success') {
-          this.setAlert('Az esemény sérültjeinek száma sikeresen csökkentve!', true);
+        if (res.response === 'success') {
+          this.setAlert(res.message, true);
           const old = this.events.findIndex(x => x.id === +event.id);
           this.events[old].injured--;
           this.currentEvent = this.events.find(x => x.id === +this.currentEventId);

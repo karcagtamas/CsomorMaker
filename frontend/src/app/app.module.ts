@@ -20,6 +20,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -201,7 +202,8 @@ import { EventWorkCsomorComponent } from './components/event/event-csomor/event-
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatIconModule
+    MatIconModule,
+    MatDatepickerModule
   ],
   providers: [
     EventService,

@@ -14,7 +14,6 @@
         while($row = $result->fetch_assoc()){
             array_push($array, $row);
         }
-        // var_dump($array);
         echo json_encode($array, JSON_UNESCAPED_UNICODE );
         $stmt->close();
     }
@@ -27,15 +26,14 @@
         $role = 3;
         $stmt->bind_param("iii", $user, $event, $role);
         $stmt->execute();
-       if ($stmt->errno){
-            $array['response'] =  'add-user-to-event-failure';
-            $array['message'] = 'Something went wrong!';
-            echo json_encode($array);
+        if ($stmt->errno){
+            $array['response'] =  'fail';
+            $array['message'] = 'A felhasználó hozzáadása az eseményhez sikertelen!';
         }else{
-             $array['response'] =  'add-user-to-event-success';
-            $array['message'] = 'The user adding to event was success!!';
-            echo json_encode($array);
+            $array['response'] =  'success';
+            $array['message'] = 'A felhasználó hozzáadása az eseményhez sikeres!';
         }
+        echo json_encode($array);
         $stmt->close();
 
     }
@@ -47,15 +45,14 @@
         $stmt = $db->prepare($sql);
         $stmt->bind_param("ii", $user, $event);
         $stmt->execute();
-       if ($stmt->errno){
-            $array['response'] =  'delete-user-from-event-failure';
-            $array['message'] = 'Something went wrong!';
-            echo json_encode($array);
+        if ($stmt->errno){
+            $array['response'] =  'fail';
+            $array['message'] = 'A felhasnáló törlése az eseményből sikertelen!';
         }else{
-             $array['response'] =  'delete-user-from-event-success';
-            $array['message'] = 'The user deleting to event was success!!';
-            echo json_encode($array);
+            $array['response'] =  'success';
+            $array['message'] = 'A felhasnáló törlése az eseményből sikeres!';
         }
+        echo json_encode($array);
         $stmt->close();
 
     }
@@ -67,15 +64,14 @@
         $stmt = $db->prepare($sql);
         $stmt->bind_param("iii", $user, $event, $role);
         $stmt->execute();
-       if ($stmt->errno){
-            $array['response'] =  'update-event-user-failure';
-            $array['message'] = 'Something went wrong!';
-            echo json_encode($array);
+        if ($stmt->errno){
+            $array['response'] =  'fail';
+            $array['message'] = 'Az esemény tagjának adatainak frissítése sikertelen!';
         }else{
-             $array['response'] =  'update-event-user-success';
-            $array['message'] = 'The event user updating was success!!';
-            echo json_encode($array);
+            $array['response'] =  'success';
+            $array['message'] = 'Az esemény tagjának adatainak frissítése sikeres!';
         }
+        echo json_encode($array);
         $stmt->close();
 
     }

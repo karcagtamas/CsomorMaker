@@ -110,12 +110,12 @@ export class EventSummaryComponent implements OnInit, OnChanges {
         this.eventpayoutservice
           .addPayout(result)
           .then(res => {
-            if (res.response === 'add-payout-success') {
-              this.notificationservice.success('A kiadás/bevétel hozzáadása sikeres volt!');
+            if (res.response === 'success') {
+              this.notificationservice.success(res.message);
               this.payOuts.push(result);
               this.setSummary();
             } else {
-              this.notificationservice.error('A kiadás / bevétel hozzáadása sikertelen volt!');
+              this.notificationservice.error(res.message);
             }
           })
           .catch(() => {
@@ -137,12 +137,12 @@ export class EventSummaryComponent implements OnInit, OnChanges {
         this.eventpayoutservice
           .deletePayout(+result)
           .then(res => {
-            if (res.response === 'delete-payout-success') {
-              this.notificationservice.success('A kiadás/bevétel törlése sikeres volt!');
+            if (res.response === 'success') {
+              this.notificationservice.success(res.message);
               this.payOuts = this.payOuts.filter(x => x.id !== +result);
               this.setSummary();
             } else {
-              this.notificationservice.error('A kiadás/bevétel törlése sikertelen volt!');
+              this.notificationservice.error(res.message);
             }
           })
           .catch(() => {

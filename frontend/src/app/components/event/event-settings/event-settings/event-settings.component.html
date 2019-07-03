@@ -71,6 +71,13 @@
     <mat-error *ngIf="injuredControl.hasError('required')">A sérültek megadása kötelező!</mat-error>
     <mat-error *ngIf="injuredControl.hasError('min')">A sérültek minimuma 0!</mat-error>
   </mat-form-field>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Kezdeti dátum</mat-label>
+    <input matInput [matDatepicker]="picker" placeholder="Kezdeti dátum" [formControl]="startDateControl" />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="startDateControl.hasError('required')">A dátum megadása kötelező!</mat-error>
+  </mat-form-field>
   <button mat-raised-button color="primary" (click)="save()">Mentés</button>
   <button mat-raised-button color="accent" (click)="reset()">Visszaállítás</button>
 </div>

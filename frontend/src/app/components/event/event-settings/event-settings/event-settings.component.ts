@@ -22,6 +22,7 @@ export class EventSettingsComponent implements OnInit, OnChanges {
   startHourControl = new FormControl('', [Validators.required, Validators.min(0), Validators.max(23)]);
   endHourControl = new FormControl('', [Validators.required, Validators.min(0), Validators.max(23)]);
   injuredControl = new FormControl('', [Validators.required, Validators.min(0)]);
+  startDateControl = new FormControl('', [Validators.required]);
 
   constructor(private notificationservice: NotificationService) {}
 
@@ -48,6 +49,7 @@ export class EventSettingsComponent implements OnInit, OnChanges {
     this.startHourControl.setValue(event.startHour);
     this.endHourControl.setValue(event.endHour);
     this.injuredControl.setValue(event.injured);
+    this.startDateControl.setValue(event.startDate);
   }
 
   reset() {
@@ -70,7 +72,8 @@ export class EventSettingsComponent implements OnInit, OnChanges {
       this.daysControl.invalid ||
       this.startHourControl.invalid ||
       this.endHourControl.invalid ||
-      this.injuredControl.invalid
+      this.injuredControl.invalid ||
+      this.startDateControl.invalid
     ) {
       this.notificationservice.error('Nem megfelelő adatok!');
     } else {
@@ -85,6 +88,7 @@ export class EventSettingsComponent implements OnInit, OnChanges {
       event.startHour = this.startHourControl.value;
       event.endHour = this.endHourControl.value;
       event.injured = this.injuredControl.value;
+      event.startDate = this.startDateControl.value;
       this.update.emit({ event });
     }
   }

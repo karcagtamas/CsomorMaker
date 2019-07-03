@@ -23,7 +23,7 @@ export class EventPersonalCsomorComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnChanges(){
+  ngOnChanges() {
     if (this.eventWorkers.length > 0) {
       this.selectedWorker = 0;
       this.getWorkerTables();

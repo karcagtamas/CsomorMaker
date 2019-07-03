@@ -47,14 +47,13 @@
         $stmt->execute();
 
         if ($stmt->errno){
-            $array['response'] =  'add-event-failure';
-            $array['message'] = 'Something went wrong!';
-            echo json_encode($array);
+            $array['response'] =  'fail';
+            $array['message'] = 'Az esemény létrehozása sikertelen!';
         }else{
-             $array['response'] =  'add-event-success';
-            $array['message'] = 'The event adding was success!!';
-            echo json_encode($array);
+            $array['response'] =  'success';
+            $array['message'] = 'Az esemény létrehozása sikeres!';
         }
+        echo json_encode($array);
         $stmt->close();
 
     }
@@ -87,23 +86,22 @@
         $oldLength = $row['length'];
         $stmt->close();
         
-        $sql = "CALL updateEvent(?, ?, ?, ?, ? ,?, ?, ? ,? , ?, ?, ?);";
+        $sql = "CALL updateEvent(?, ?, ?, ?, ? ,?, ?, ? ,? , ?, ?, ?, ?);";
         $stmt = $db->prepare($sql);
         $days = $event['days'];
         $start = $event['startHour'];
         $end = $event['endHour'];
         $length = $days * 24 - $start + $end;
-        $stmt->bind_param("isiiiiiiiiiiii", $event['id'], $event['name'], $event['injured'],$event['visitors'],$event['visitorLimit'], $event['playerCost'], $event['visitorCost'], $event['playerDeposit'], $days, $start,$end, $length);
+        $stmt->bind_param("isiiiiiiiiiiiis", $event['id'], $event['name'], $event['injured'],$event['visitors'],$event['visitorLimit'], $event['playerCost'], $event['visitorCost'], $event['playerDeposit'], $days, $start,$end, $length, $event['startDate']);
         $stmt->execute();
         if ($stmt->errno){
-            $array['response'] =  'update-event-failure';
-            $array['message'] = 'Something went wrong!';
-            echo json_encode($array);
+            $array['response'] =  'fail';
+            $array['message'] = 'Az esemény frissítése sikertelen!';
         }else{
-             $array['response'] =  'update-event-success';
-            $array['message'] = 'The event update was success!!';
-            echo json_encode($array);
+            $array['response'] =  'success';
+            $array['message'] = 'Az esemény frissítése sikeres!';
         }
+        echo json_encode($array);
         $stmt->close();
 
         if ($oldLength != $length){
@@ -157,14 +155,13 @@
         $stmt->bind_param("i", $id);
         $stmt->execute();
         if ($stmt->errno){
-            $array['response'] =  'event-lock-failure';
-            $array['message'] = 'Something went wrong!';
-            echo json_encode($array);
+            $array['response'] =  'fail';
+            $array['message'] = 'Az esemény zárolása zárolása/zárolás bontása sikertelen!';
         }else{
-             $array['response'] =  'event-lock-success';
-            $array['message'] = 'The event lock was success!!';
-            echo json_encode($array);
+            $array['response'] =  'success';
+            $array['message'] = 'Az esemény zárolása zárolása/zárolás bontása sikeres!';
         }
+        echo json_encode($array);
         $stmt->close();
 
     }
@@ -177,14 +174,13 @@
         $stmt->bind_param("i", $id);
         $stmt->execute();
         if ($stmt->errno){
-            $array['response'] =  'visitor-increase-failure';
-            $array['message'] = 'Something went wrong!';
-            echo json_encode($array);
+            $array['response'] =  'fail';
+            $array['message'] = 'A résztvevők számának növelése sikertelen!';
         }else{
-             $array['response'] =  'visitor-increase-success';
-            $array['message'] = 'The visitor increase was success!!';
-            echo json_encode($array);
+            $array['response'] =  'success';
+            $array['message'] = 'A résztvevők számának növelése sikeres!';
         }
+        echo json_encode($array);
         $stmt->close();
 
     }
@@ -197,14 +193,13 @@
         $stmt->bind_param("i", $id);
         $stmt->execute();
         if ($stmt->errno){
-            $array['response'] =  'visitor-decrease-failure';
-            $array['message'] = 'Something went wrong!';
-            echo json_encode($array);
+            $array['response'] =  'fail';
+            $array['message'] = 'A résztvevők számának csökkentése sikertelen!';
         }else{
-             $array['response'] =  'visitor-decrease-success';
-            $array['message'] = 'The visitor decrease was success!!';
-            echo json_encode($array);
+            $array['response'] =  'success';
+            $array['message'] = 'A résztvevők számának csökkentése sikeres!';
         }
+        echo json_encode($array);
         $stmt->close();
 
     }
@@ -217,14 +212,13 @@
         $stmt->bind_param("i", $id);
         $stmt->execute();
         if ($stmt->errno){
-            $array['response'] =  'injured-increase-failure';
-            $array['message'] = 'Something went wrong!';
-            echo json_encode($array);
+            $array['response'] =  'fail';
+            $array['message'] = 'A sérültek számának növelése sikertelen!';
         }else{
-             $array['response'] =  'injured-increase-success';
-            $array['message'] = 'The injured increase was success!!';
-            echo json_encode($array);
+            $array['response'] =  'success';
+            $array['message'] = 'A sérültek számának növelése sikeres!';
         }
+        echo json_encode($array);
         $stmt->close();
 
     }
@@ -237,14 +231,13 @@
         $stmt->bind_param("i", $id);
         $stmt->execute();
         if ($stmt->errno){
-            $array['response'] =  'injured-decrease-failure';
-            $array['message'] = 'Something went wrong!';
-            echo json_encode($array);
+            $array['response'] =  'fail';
+            $array['message'] = 'A sérültek számának csökkentése sikertelen!';
         }else{
-             $array['response'] =  'injured-decrease-success';
-            $array['message'] = 'The injured decrease was success!!';
-            echo json_encode($array);
+            $array['response'] =  'success';
+            $array['message'] = 'A sérültek számának csökkentése sikeres!';
         }
+        echo json_encode($array);
         $stmt->close();
 
     }
@@ -276,12 +269,11 @@
         if ($stmt->errno){
             $array['response'] =  'fail';
             $array['message'] = 'Az esemény deaktíválása sikertelen!';
-            echo json_encode($array);
         }else{
-             $array['response'] =  'success';
+            $array['response'] =  'success';
             $array['message'] = 'Az esemény deaktíválása sikeres!';
-            echo json_encode($array);
         }
+        echo json_encode($array);
         $stmt->close();
     }
 
@@ -388,16 +380,15 @@
             }
 
             if (!$stop){
-                 $res['response'] = 'gen-fail';
-                $res['message']= 'The generate was unsuccess! Sorry :/';
-                echo json_encode($res);
+                $res['response'] = 'fail';
+                $res['message']= 'A generálás sikertelen volt! Sorry :/';
             }
             else{
                 save($event, $works, $workers);
-                $res['response'] = 'gen-success';
-                $res['message']= 'Yee!';
-                echo json_encode($res);
+                $res['response'] = 'success';
+                $res['message']= 'A generálás sikeres volt! Yee!';
             }
+            echo json_encode($res);
         }
     }
 ?>

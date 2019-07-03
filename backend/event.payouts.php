@@ -42,15 +42,14 @@
         $stmt->bind_param("siii", $name, $eventId, $type, $cost);
         $stmt->execute();
 
-       if ($stmt->errno){
-            $array['response'] =  'add-payout-failure';
-            $array['message'] = 'Something went wrong!';
-            echo json_encode($array);
+        if ($stmt->errno){
+            $array['response'] =  'fail';
+            $array['message'] = 'A kifizetés/befizetés hozzáadása sikertelen!';
         }else{
-             $array['response'] =  'add-payout-success';
-            $array['message'] = 'The payout adding was success!!';
-            echo json_encode($array);
+            $array['response'] =  'success';
+            $array['message'] = 'A kifizetés/befizetés hozzáadása sikeres!';
         }
+        echo json_encode($array);
         $stmt->close();
 
     }
@@ -63,15 +62,14 @@
         $stmt->bind_param("i", $id);
         $stmt->execute();
 
-       if ($stmt->errno){
-            $array['response'] =  'delete-payout-failure';
-            $array['message'] = 'Something went wrong!';
-            echo json_encode($array);
+        if ($stmt->errno){
+            $array['response'] =  'fail';
+            $array['message'] = 'A kifizetés/befizetés törlése sikertelen!';
         }else{
-             $array['response'] =  'delete-payout-success';
-            $array['message'] = 'The payout deleting was success!!';
-            echo json_encode($array);
+            $array['response'] =  'success';
+            $array['message'] = 'A kifizetés/befizetés törlése sikeres!';
         }
+        echo json_encode($array);
         $stmt->close();
 
     }

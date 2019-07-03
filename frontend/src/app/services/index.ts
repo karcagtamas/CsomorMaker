@@ -9,3 +9,4 @@ export * from './event-teams.service';
 export * from './event-todoes.service';
 export * from './event-pay-outs.service';
 export * from './gt.service';
+export * from './event-messages.service';

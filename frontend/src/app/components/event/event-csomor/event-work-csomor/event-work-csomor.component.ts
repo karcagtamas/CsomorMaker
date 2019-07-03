@@ -11,7 +11,7 @@ export class EventWorkCsomorComponent implements OnInit, OnChanges {
   @Input() eventWorks: EventWork[];
   selectedWork = 0;
   workTables: EventWorkTable[] = [];
-  hoverValue = '-'
+  hoverValue = '-';
 
   constructor(private eventgeneratorservice: EventGeneratorService) {}
 
@@ -22,7 +22,7 @@ export class EventWorkCsomorComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnChanges(){
+  ngOnChanges() {
     if (this.eventWorks.length > 0) {
       this.selectedWork = 0;
       this.getWorkTables();

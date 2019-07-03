@@ -23,14 +23,14 @@ export class NewEventComponent implements OnInit {
       this.eventservice
         .addEvent(this.nameControl.value)
         .then(res => {
-          if (res.response === 'add-event-success') {
-            this.setAlert('Az esemény létrehozása siekres!', true);
+          if (res.response === 'success') {
+            this.setAlert(res.message, true);
           } else {
-            this.setAlert('Az esemény hozzáadása sikertelen!', false);
+            this.setAlert(res.message, false);
           }
         })
         .catch(() => {
-          this.setAlert('Az esemény hozzáadása sikertelen!', false);
+          this.setAlert('Az esemény hozzáadása sikertelen! Kérjük próbálja újra késöbb!', false);
         });
     }
   }

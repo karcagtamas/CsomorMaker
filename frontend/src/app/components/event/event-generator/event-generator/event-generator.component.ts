@@ -84,8 +84,8 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
     this.eventgeneratorservice
       .deleteWork(event.id)
       .then(res => {
-        if (res.response === 'delete-work-success') {
-          this.notificationservice.success('Sikeresen törölte a posztot!');
+        if (res.response === 'success') {
+          this.notificationservice.success(res.message);
           this.eventWorks = this.eventWorks.filter(x => x.id !== event.id);
         } else {
           this.notificationservice.error(res.message);
@@ -100,8 +100,8 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
     this.eventgeneratorservice
       .setIsActiveWorkHour(event.day, event.hour, event.work)
       .then(res => {
-        if (res.response === 'set-work-table-is-active-success') {
-          this.notificationservice.success('Sikeresen állította a tábla elemet!');
+        if (res.response === 'success') {
+          this.notificationservice.success(res.message);
         } else {
           this.notificationservice.error(res.message);
         }
@@ -115,8 +115,8 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
     this.eventgeneratorservice
       .setIsValidWorkStatus(event.worker, event.work)
       .then(res => {
-        if (res.response === 'set-work-status-is-valid-success') {
-          this.notificationservice.success('Sikeresen állította a poszt és humán kapcsolatát!');
+        if (res.response === 'success') {
+          this.notificationservice.success(res.message);
         } else {
           this.notificationservice.error(res.message);
         }
@@ -132,8 +132,8 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
     this.eventgeneratorservice
       .setIsAvaiableWorkerHour(event.day, event.hour, event.worker, this.event.id)
       .then(res => {
-        if (res.response === 'set-worker-table-is-avaiable-success') {
-          this.notificationservice.success('Sikeresen állította a tábla elemet!');
+        if (res.response === 'success') {
+          this.notificationservice.success(res.message);
         } else {
           this.notificationservice.error(res.message);
         }
@@ -151,8 +151,8 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
         this.eventgeneratorservice
           .addWork(result.name, this.event.id)
           .then(res => {
-            if (res.response === 'add-work-success') {
-              this.notificationservice.success('A poszt felvétele sikeres volt!');
+            if (res.response === 'success') {
+              this.notificationservice.success(res.message);
               this.getWorks();
               this.getWorkers();
             } else {
@@ -170,8 +170,8 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
     this.eventgeneratorservice
       .generate(this.event.id)
       .then(res => {
-        if (res.response === 'gen-success') {
-          this.notificationservice.success('A generálás sikeres!');
+        if (res.response === 'success') {
+          this.notificationservice.success(res.message);
         } else {
           this.notificationservice.error(res.message);
         }

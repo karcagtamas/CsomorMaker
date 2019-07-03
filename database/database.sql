@@ -50,6 +50,7 @@ CREATE TABLE events(
     length int(4) DEFAULT 24,
     ready boolean NOT NULL DEFAULT FALSE,
     members int(11) NOT NULL DEFAULT 0,
+    startDate date,
     PRIMARY KEY(id),
     CONSTRAINT fk_creater_users FOREIGN KEY (creater)
     REFERENCES users(id) 

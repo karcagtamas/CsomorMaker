@@ -19,4 +19,5 @@ export class Event {
   length: number;
   ready: boolean;
   members: number;
+  startDate: Date;
 }

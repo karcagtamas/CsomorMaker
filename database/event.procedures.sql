@@ -33,7 +33,8 @@ CREATE OR REPLACE PROCEDURE getEvent(_id int(11))
       events.creationDate,
       events.members,
       events.creater AS createId, 
-      users.name AS creater FROM events
+      users.name AS creater, 
+      events.startDate FROM events
       INNER JOIN users ON events.creater = users.id
       WHERE NOT events.isDisabled AND events.id = _id;
     END;
@@ -59,7 +60,8 @@ CREATE OR REPLACE PROCEDURE getUsersEvents(_userId int(11))
       events.creationDate,
       events.members,
       events.creater AS createId, 
-      users.name AS creater FROM events
+      users.name AS creater, 
+      events.startDate FROM events
       INNER JOIN usereventswitch ON events.id = usereventswitch.event
       INNER JOIN users ON events.creater = users.id
       WHERE NOT events.isDisabled AND user = _userId;
@@ -85,7 +87,8 @@ CREATE OR REPLACE PROCEDURE updateEvent(
     _days int(2),
     _startHour int(2),
     _endHour int(2),
-    _length int(4)
+    _length int(4),
+    _startDate date
     )
     BEGIN
      UPDATE events SET 
@@ -99,7 +102,8 @@ CREATE OR REPLACE PROCEDURE updateEvent(
       days = _days,
       startHour = _startHour,
       endHour = _endHour,
-      length = _length
+      length = _length,
+      startDate = _startDate
      WHERE id = _id;
     END;
 

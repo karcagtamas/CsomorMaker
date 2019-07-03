@@ -54,9 +54,9 @@ export class EventMembersComponent implements OnInit, OnChanges {
     this.eventmembersservice
       .deleteUserFromEvent(event.id, this.event.id)
       .then(res => {
-        if (res.response === 'delete-user-from-event-success') {
+        if (res.response === 'success') {
           this.getEventMembers();
-          this.notificationservice.success('A tag törlése az eseményből sikeres volt');
+          this.notificationservice.success(res.message);
         } else {
           this.notificationservice.error(res.message);
         }
@@ -70,9 +70,9 @@ export class EventMembersComponent implements OnInit, OnChanges {
     this.eventmembersservice
       .updateEventUser(event.data.id, this.event.id, event.data.roleId)
       .then(res => {
-        if (res.response === 'update-event-user-success') {
+        if (res.response === 'success') {
           this.getEventMembers();
-          this.notificationservice.success('A tag rangjának frissítése sikeres volt');
+          this.notificationservice.success(res.message);
         } else {
           this.notificationservice.error(res.message);
         }
@@ -92,9 +92,9 @@ export class EventMembersComponent implements OnInit, OnChanges {
         this.eventmembersservice
           .addUserToEvent(result, this.event.id)
           .then(res => {
-            if (res.response === 'add-user-to-event-success') {
+            if (res.response === 'success') {
               this.getEventMembers();
-              this.notificationservice.success('A tag hozzáadása sikeres!');
+              this.notificationservice.success(res.message);
             } else {
               this.notificationservice.error(res.response);
             }
