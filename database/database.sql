@@ -97,7 +97,7 @@ CREATE TABLE eventtodoes(
   text longtext NOT NULL,
   importance int(1) NOT NULL,
   isSolved boolean DEFAULT FALSE,
-  expirationDate datetime DEFAULT FALSE,
+  expirationDate datetime NOT NULL,
   PRIMARY KEY(id),
   CONSTRAINT fk_event_events_eventtodoes FOREIGN KEY (event)
   REFERENCES events(id)
