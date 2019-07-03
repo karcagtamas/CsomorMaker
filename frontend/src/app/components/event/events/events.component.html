@@ -55,7 +55,7 @@
           (update)="updateEvent($event)"
         ></app-event-settings>
         <app-event-summary *ngSwitchCase="'summary'" [event]="currentEvent"></app-event-summary>
-        <app-event-to-do *ngSwitchCase="'todo'"></app-event-to-do>
+        <app-event-to-do *ngSwitchCase="'todo'" [event]="currentEvent"></app-event-to-do>
         <app-event-members
           *ngSwitchCase="'members'"
           [event]="currentEvent"

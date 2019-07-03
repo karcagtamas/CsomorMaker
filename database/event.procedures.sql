@@ -186,7 +186,7 @@ CREATE OR REPLACE PROCEDURE updateEvent(
     END;
 
 
-  CREATE OR REPLACE PROCEDURE addEventTodo(_eventId int(11), _text longtext, _importance int(1), _expDate datetime)
+  CREATE OR REPLACE PROCEDURE addEventTodo(_eventId int(11), _text longtext, _importance int(1), _expDate date)
     BEGIN
       INSERT INTO eventtodoes (event, text, expirationDate, importance) VALUES (_eventId, _text, _expDate, _importance);
     END;
@@ -197,7 +197,7 @@ CREATE OR REPLACE PROCEDURE updateEvent(
       ORDER BY isSolved, importance;
     END;
 
-  CREATE OR REPLACE PROCEDURE updateEventTodo(_todoId int(11), _text longtext, _importance int(11), _expDate datetime)
+  CREATE OR REPLACE PROCEDURE updateEventTodo(_todoId int(11), _text longtext, _importance int(11), _expDate date)
     BEGIN
       UPDATE eventtodoes SET text = _text, importance = _importance, expirationDate = _expDate WHERE id = _todoId;
     END;

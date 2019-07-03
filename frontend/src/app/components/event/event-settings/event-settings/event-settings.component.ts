@@ -92,8 +92,4 @@ export class EventSettingsComponent implements OnInit, OnChanges {
       this.update.emit({ event });
     }
   }
-
-  test() {
-    console.log(this.startDateControl.value);
-  }
 }

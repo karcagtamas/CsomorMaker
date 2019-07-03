@@ -77,7 +77,7 @@ import {
   NewPayOutDialogComponent,
   DeletePayOutDialogComponent
 } from './components/event/event-summary';
-import { EventToDoComponent } from './components/event/event-todo';
+import { EventToDoComponent, TodoDialogComponent } from './components/event/event-todo';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import {
   EventMembersComponent,
@@ -115,7 +115,6 @@ import { EventPersonalCsomorComponent } from './components/event/event-csomor/ev
 import { EventWorkCsomorComponent } from './components/event/event-csomor/event-work-csomor/event-work-csomor.component';
 import { LoaderComponent } from './components/main/loader/loader.component';
 import { MatNativeDateModule } from '@angular/material/core';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -184,7 +183,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     NewGtComponent,
     EventPersonalCsomorComponent,
     EventWorkCsomorComponent,
-    LoaderComponent
+    LoaderComponent,
+    TodoDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -239,7 +239,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     AddNewMemberModalComponent,
     AddTeamDialogComponent,
     TeamDeatilsDialogComponent,
-    AddTeamMemberDialogComponent
+    AddTeamMemberDialogComponent,
+    TodoDialogComponent
   ]
 })
 export class AppModule {}

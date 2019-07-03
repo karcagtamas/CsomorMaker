@@ -1,0 +1,30 @@
+.todoes {
+  padding: 0.2rem;
+  margin: 0;
+  .todo-frame {
+    padding: 0.2rem;
+    .todo {
+      padding: 0.2rem;
+    }
+
+    .imp1 {
+      background-color: rgba(235, 109, 109, 0.75);
+    }
+
+    .imp2 {
+      background-color: rgba(235, 159, 109, 0.75);
+    }
+
+    .imp3 {
+      background-color: rgba(235, 223, 109, 0.75);
+    }
+
+    .solved {
+      background-color: rgba(156, 133, 133, 0.75);
+    }
+
+    .exp {
+      border: 5px solid rgba(255, 0, 0, 0.75) !important;
+    }
+  }
+}
