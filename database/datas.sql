@@ -27,6 +27,6 @@ INSERT INTO eventpayouts (name, eventId, type, cost)
   VALUES ('Torta', 1, 1, 2000);
 
 
-INSERT INTO eventtodoes (eventId, text)
+INSERT INTO eventtodoes (event, text)
   VALUES (1, 'Tortát venni!');
 

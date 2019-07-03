@@ -11,8 +11,11 @@
       >
         {{ event.name }}
       </div>
+      <div class="event rounded" *ngIf="!currentEvent.id">
+        Nincs eseményed :(
+      </div>
     </div>
-    <div class="menuitems border rounded">
+    <div class="menuitems border rounded" *ngIf="currentEvent.id">
       <div class="title text-center border rounded">Menü</div>
       <div *ngFor="let item of menuItems">
         <div
@@ -30,7 +33,7 @@
       </div>
     </div>
   </div>
-  <div class="col col-8 changer" *ngIf="currentEvent">
+  <div class="col col-8 changer" *ngIf="currentEvent.id">
     <mat-card class="card">
       <div [ngSwitch]="currentPage">
         <app-event-details
