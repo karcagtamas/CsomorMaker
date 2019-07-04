@@ -413,14 +413,26 @@
                 
                 case 'gt':
                     $subgroup = $url[3];
+                    require 'gt.php';
                     switch ($subgroup) {
                         case 'get':
+                            getGts($url[4]);
                             break;
 
                         case 'update':
+                            updateGt($_POST['gt']);
                             break;
 
                         case 'add':
+                            addGt($_POST['year']);
+                            break;
+
+                        case 'lock':
+                            lockGt($url[4]);
+                            break;
+
+                        case 'accesslevel':
+                            gtAccessLevel($url[4]);
                             break;
 
                         case 'members':

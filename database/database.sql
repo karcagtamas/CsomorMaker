@@ -232,8 +232,8 @@ CREATE TABLE gts(
   ready boolean NOT NULL DEFAULT FALSE,
   creater int(11) NOT NULL,
   isLocked boolean NOT NULL DEFAULT FALSE,
-  poke int(11) NOT NULL DEFAULT 0,
-  pokeCost decimal NOT NULL DEFAULT 10000,
+  greeny int(11) NOT NULL DEFAULT 0,
+  greenyCost decimal NOT NULL DEFAULT 10000,
   PRIMARY KEY(id),
   CONSTRAINT fk_creater_users_gts FOREIGN KEY (creater)
   REFERENCES users(id)
@@ -294,7 +294,7 @@ CREATE TABLE gtworktables(
   CONSTRAINT fk_user_users_gtworktables FOREIGN KEY (user)
   REFERENCES users (id),
   CONSTRAINT fk_work_gtworks_gtworktables FOREIGN KEY (work)
-  REFERENCES gtworks(id)
+  REFERENCES gtworks(id) ON DELETE CASCADE
   );
 
 CREATE TABLE gtworkertables(
@@ -306,6 +306,8 @@ CREATE TABLE gtworkertables(
   PRIMARY KEY(user, day, hour, gt),
   CONSTRAINT fk_user_users_gtworkertables FOREIGN KEY (user)
   REFERENCES users (id),
+  CONSTRAINT fk_work_gtworks_gtworkertables FOREIGN KEY (work)
+  REFERENCES gtworks (id) ON DELETE SET NULL,
   CONSTRAINT fk_gt_gts_gtworkertables FOREIGN KEY (gt)
   REFERENCES gts(id)
   );
@@ -319,6 +321,18 @@ CREATE TABLE gtworkworkerswitch(
   CONSTRAINT fk_worker_users_gtworkworkerswitch FOREIGN KEY (worker)
   REFERENCES users (id),
   CONSTRAINT fk_work_gtworks_gtworkworkerswitch FOREIGN KEY (work)
-  REFERENCES gtworks(id)
+  REFERENCES gtworks(id) ON DELETE CASCADE
   );
+
+CREATE TRIGGER gt_members AFTER INSERT ON usergtswitch
+  FOR EACH ROW
+  BEGIN
+    UPDATE gts SET members = members + 1 WHERE id = NEW.gt;
+  END;
+
+CREATE TRIGGER gt_members_de AFTER DELETE ON usergtswitch
+  FOR EACH ROW
+  BEGIN
+    UPDATE gts SET members = members - 1 WHERE id = OLD.gt;
+  END;
 

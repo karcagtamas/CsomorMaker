@@ -8,8 +8,8 @@ export class Gt {
   createrId: number;
   creater: string;
   isLocked: boolean;
-  poke: number;
-  pokeCost: number;
+  greeny: number;
+  greenyCost: number;
 }
 
 export class GtMember {
