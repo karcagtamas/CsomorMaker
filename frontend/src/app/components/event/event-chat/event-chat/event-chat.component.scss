@@ -1,0 +1,21 @@
+.chat {
+  padding: 0.2rem;
+  .body {
+    padding: 0.2rem;
+    margin-bottom: 0.2rem;
+    max-height: 60vh;
+  }
+
+  .footer {
+    padding: 0.2rem;
+
+    .input {
+      padding: 0.2rem;
+    }
+
+    .button {
+      padding: 0.2rem;
+      display: block;
+    }
+  }
+}

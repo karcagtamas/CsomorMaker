@@ -337,7 +337,7 @@
                                     break;
 
                                 case 'add':
-                                    addEventMessage($_POST['event'], $_POST['text'], $_POST['sender']);
+                                    addEventMessage($_POST['event'], $_POST['text'], $_SESSION['userId']);
                                     break;
                                 
                                 default:

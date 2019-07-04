@@ -1,3 +1,21 @@
-<p>
-  event-chat works!
-</p>
+<div class="text-center panel-title border rounded">Chat</div>
+<div class="chat">
+  <div class="body border rounded">
+    <div *ngFor="let message of eventMessages">
+      {{ message.message }}
+    </div>
+  </div>
+  <div class="footer border rounded">
+    <div class="row frame col col-12">
+      <div class="input col col-8">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Üzenet</mat-label>
+          <input matInput type="text" placeholder="Üzenet" [(ngModel)]="message" />
+        </mat-form-field>
+      </div>
+      <div class="button col-4">
+        <button mat-raised-button color="primary" (click)="sendMessage()">Küldés</button>
+      </div>
+    </div>
+  </div>
+</div>

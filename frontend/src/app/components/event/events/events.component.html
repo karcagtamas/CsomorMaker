@@ -47,7 +47,7 @@
           (decreaseInjured)="decreaseInjured($event)"
         ></app-event-details>
         <app-event-csomor *ngSwitchCase="'csomor'" [event]="currentEvent"></app-event-csomor>
-        <app-event-chat *ngSwitchCase="'chat'"></app-event-chat>
+        <app-event-chat *ngSwitchCase="'chat'" [event]="currentEvent"></app-event-chat>
         <app-event-generator *ngSwitchCase="'generator'" [event]="currentEvent"></app-event-generator>
         <app-event-settings
           *ngSwitchCase="'settings'"

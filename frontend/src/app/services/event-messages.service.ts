@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { EventMessage } from 'src/app/models';
+import { EventMessage, Response } from 'src/app/models';
 
 const URL = environment.api;
 
@@ -19,7 +19,7 @@ export class EventMessagesService {
     return this.http.get<EventMessage[]>(`${this.url}/get/${event}`, HttpHeader).toPromise();
   }
 
-  addEventMessage(event: number, text: string, sender: number): Promise<Response> {
-    return this.http.post<Response>(`${this.url}/add`, { event, text, sender }, HttpHeader).toPromise();
+  addEventMessage(event: number, text: string): Promise<Response> {
+    return this.http.post<Response>(`${this.url}/add`, { event, text }, HttpHeader).toPromise();
   }
 }
