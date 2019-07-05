@@ -19,6 +19,7 @@ export class GtMember {
   user: string;
   roleId: number;
   role: string;
+  accessLevel: number;
   conncetionDate: Date;
 }
 
@@ -48,9 +49,16 @@ export class GtWork {
   gt: number;
 }
 
-export class GtWorkTable {
-  userId: number;
-  user: string;
+export class GtWorker {
+  id: number;
+  name: string;
+  username: string;
+  gt: number;
+}
+
+export class GtWorkerTable {
+  workerId: number;
+  worker: string;
   username: string;
   day: number;
   hour: number;
@@ -59,9 +67,19 @@ export class GtWorkTable {
   gt: number;
 }
 
+export class GtWorkTable {
+  workerId: number;
+  worker: string;
+  username: string;
+  workId: number;
+  work: string;
+  gt: number;
+}
+
 export class GtWorkStatus {
   workerId: number;
   worker: string;
+  username: string;
   workId: number;
   work: string;
   isActive: boolean;

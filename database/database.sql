@@ -288,23 +288,23 @@ CREATE TABLE gtworks(
  );
 
 CREATE TABLE gtworktables(
-  user int(11) NOT NULL,
+  worker int(11) NOT NULL,
   work int(11) NOT NULL,
   PRIMARY KEY(user, work),
-  CONSTRAINT fk_user_users_gtworktables FOREIGN KEY (user)
+  CONSTRAINT fk_user_users_gtworktables FOREIGN KEY (worker)
   REFERENCES users (id),
   CONSTRAINT fk_work_gtworks_gtworktables FOREIGN KEY (work)
   REFERENCES gtworks(id) ON DELETE CASCADE
   );
 
 CREATE TABLE gtworkertables(
-  user int(11) NOT NULL,
+  worker int(11) NOT NULL,
   day int(2) NOT NULL,
   hour int(2) NOT NULL,
   work int(11),
   gt int(11) NOT NULL,
   PRIMARY KEY(user, day, hour, gt),
-  CONSTRAINT fk_user_users_gtworkertables FOREIGN KEY (user)
+  CONSTRAINT fk_user_users_gtworkertables FOREIGN KEY (worker)
   REFERENCES users (id),
   CONSTRAINT fk_work_gtworks_gtworkertables FOREIGN KEY (work)
   REFERENCES gtworks (id) ON DELETE SET NULL,

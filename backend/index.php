@@ -437,14 +437,35 @@
 
                         case 'members':
                             $event = $url[4];
+                            require 'gt.members.php';
                             switch ($event) {
                                 case 'get':
+                                    $subevent = $url[5];
+                                    switch ($subevent) {
+                                        case 'all':
+                                            getGtMembers($url[6]);
+                                            break;
+
+                                        case 'none':
+                                            getNonGtMembers($url[6]);
+                                            break;
+                                        
+                                        default:
+                                            echo '{"response" : "bad-subevent", "message" : "Bad request subevent!"}';
+                                            break;
+                                    }
                                     break;
 
                                 case 'add':
+                                    addGtMember($_POST['gt'], $_POST['user']);
                                     break;
 
                                 case 'delete':
+                                    deleteGtMember($_POST['gt'], $_POST['user']);
+                                    break;
+
+                                case 'update':
+                                    updateGtMember($_POST['gt'], $_POST['user'], $_POST['role']);
                                     break;
                                 
                                 default:
@@ -472,6 +493,7 @@
                                     $subevent = $url[5];
                                     switch ($subevent) {
                                         case 'get':
+
                                             break;
 
                                         case 'add':
@@ -490,9 +512,11 @@
                                     $subevent = $url[5];
                                     switch ($subevent) {
                                         case 'get':
+                                            
                                             break;
 
                                         case 'add':
+
                                             break;
 
                                         case 'delete':
@@ -512,23 +536,29 @@
 
                         case 'works':
                             $event = $url[4];
+                            require 'gt.generator.php';
                             switch ($event) {
                                 case 'get':
+                                    getGtWorks($url[5]);
                                     break;
 
                                 case 'add':
+                                    addGtWork($_POST['gt'], $_POST['name'], $_POST['day'], $_POST['start'], $_POST['end']);
+                                    break;
+
+                                case 'update':
+                                    updateGtWork($_POST['work'], $_POST['name'], $_POST['day'], $_POST['start'], $_POST['end']);
                                     break;
 
                                 case 'delete':
+                                    deleteGtWork($url[5]);
                                     break;
 
                                 case 'tables':
                                     $subevent = $url[5];
                                     switch ($subevent) {
                                         case 'get':
-                                            break;
-
-                                        case 'add':
+                                            getGtWorkTables($url[6]);
                                             break;
                                         
                                         default:
@@ -541,9 +571,24 @@
                                     $subevent = $url[5];
                                     switch ($subevent) {
                                         case 'get':
+                                            getGtWorkStatuses($url[6]);
                                             break;
 
                                         case 'set':
+                                            $subsubevent = $url[6];
+                                            switch ($subsubevent) {
+                                                case 'boss':
+                                                    setGtWorkStatusIsBoss($url[7], $url[8]);
+                                                    break;
+
+                                                case 'active':
+                                                    setGtWorkStatusIsActive($url[7], $url[8]);
+                                                    break;
+                                                
+                                                default:
+                                                    echo '{"response" : "bad-subsubevent", "message" : "Bad request subsubevent!"}';
+                                                    break;
+                                            }
                                             break;
                                         
                                         default:
@@ -562,15 +607,14 @@
                             $event = $url[4];
                             switch ($event) {
                                 case 'get':
+                                    getLowGtWorkers($url[5]);
                                     break;
 
                                 case 'tables':
                                     $subevent = $url[5];
                                     switch ($subevent) {
                                         case 'get':
-                                            break;
-
-                                        case 'set':
+                                            getGtWorkerTables($url[6]);
                                             break;
                                         
                                         default:
