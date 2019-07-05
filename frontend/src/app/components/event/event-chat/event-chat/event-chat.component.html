@@ -1,8 +1,11 @@
 <div class="text-center panel-title border rounded">Chat</div>
 <div class="chat">
   <div class="body border rounded">
-    <div *ngFor="let message of eventMessages">
-      {{ message.message }}
+    <div *ngFor="let message of eventMessages" class="message">
+      {{ message.sender }}
+      <div class="border rounded" [ngClass]="{ me: message.senderId == userId, other: message.senderId != userId }">
+        {{ message.message }}
+      </div>
     </div>
   </div>
   <div class="footer border rounded">

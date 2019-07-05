@@ -1,3 +1,5 @@
+DROP DATABASE IF EXISTS csomormaker;
+
 CREATE DATABASE IF NOT EXISTS csomormaker
 CHARACTER SET utf8
 COLLATE utf8_hungarian_ci;
@@ -290,7 +292,7 @@ CREATE TABLE gtworks(
 CREATE TABLE gtworktables(
   worker int(11) NOT NULL,
   work int(11) NOT NULL,
-  PRIMARY KEY(user, work),
+  PRIMARY KEY(worker, work),
   CONSTRAINT fk_user_users_gtworktables FOREIGN KEY (worker)
   REFERENCES users (id),
   CONSTRAINT fk_work_gtworks_gtworktables FOREIGN KEY (work)
@@ -303,7 +305,7 @@ CREATE TABLE gtworkertables(
   hour int(2) NOT NULL,
   work int(11),
   gt int(11) NOT NULL,
-  PRIMARY KEY(user, day, hour, gt),
+  PRIMARY KEY(worker, day, hour, gt),
   CONSTRAINT fk_user_users_gtworkertables FOREIGN KEY (worker)
   REFERENCES users (id),
   CONSTRAINT fk_work_gtworks_gtworkertables FOREIGN KEY (work)

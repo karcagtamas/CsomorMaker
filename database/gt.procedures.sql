@@ -1,3 +1,4 @@
+USE csomormaker;
 /* Gts */
 
 CREATE OR REPLACE PROCEDURE getGts(_userId int(11))
@@ -5,7 +6,7 @@ CREATE OR REPLACE PROCEDURE getGts(_userId int(11))
         SELECT gts.id, gts.year, gts.tShirtColor, gts.days, gts.members, gts.ready, gts.creater AS createrId, gts.isLocked, gts.greeny, gts.greenyCost, users.name AS creater FROM gts 
         INNER JOIN usergtswitch ON gts.id = usergtswitch.gt
         INNER JOIN users ON gts.creater = users.id
-        WHERE usergtswitch.gt = _userId;
+        WHERE usergtswitch.user = _userId;
     END;
 
 CREATE OR REPLACE PROCEDURE updateGt(_gtId int(11), _year int(4), _tShirtColor varchar(50), _days int(2))
@@ -16,6 +17,7 @@ CREATE OR REPLACE PROCEDURE updateGt(_gtId int(11), _year int(4), _tShirtColor v
 CREATE OR REPLACE PROCEDURE addGt(_year int(4), _creater int(11))
     BEGIN
         INSERT INTO gts(year, creater) VALUES (_year, _creater);
+        CALL addGtMember(LAST_INSERT_ID(), _creater, 1);
     END;
 
 CREATE OR REPLACE PROCEDURE lockGt(_gtId int(11))
@@ -60,9 +62,9 @@ CREATE OR REPLACE PROCEDURE getNonGtMembers(_gtId int(11))
       );
     END;
 
-CREATE OR REPLACE PROCEDURE addGtMember(_gtId int(11), _userId int(11))
+CREATE OR REPLACE PROCEDURE addGtMember(_gtId int(11), _userId int(11), _roleId int(11))
     BEGIN
-      INSERT INTO usergtswitch(gt, user) VALUES(_gtId, _userId);
+      INSERT INTO usergtswitch(gt, user, role) VALUES(_gtId, _userId, _roleId);
     END;
 
 CREATE OR REPLACE PROCEDURE deleteGtMember(_gtId int(11), _userId int(11))

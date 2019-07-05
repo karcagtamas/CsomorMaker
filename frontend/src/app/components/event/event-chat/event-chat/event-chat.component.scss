@@ -4,6 +4,18 @@
     padding: 0.2rem;
     margin-bottom: 0.2rem;
     max-height: 60vh;
+
+    .message {
+      padding: 0.5rem;
+    }
+
+    .other {
+      background-color: rgba(128, 0, 128, 0.75);
+    }
+
+    .me {
+      background-color: rgba(0, 0, 255, 0.75);
+    }
   }
 
   .footer {

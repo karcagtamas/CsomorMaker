@@ -82,7 +82,7 @@
         $stmt->close();
     }
 
-    function getEventAccessLevel($gtId){
+    function gtAccessLevel($gtId){
         global $db;
 
         $sql = "CALL gtAccessLevel(?, ?);";

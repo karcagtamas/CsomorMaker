@@ -416,7 +416,7 @@
                     require 'gt.php';
                     switch ($subgroup) {
                         case 'get':
-                            getGts($url[4]);
+                            getGts();
                             break;
 
                         case 'update':

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { EventMessage, Event } from 'src/app/models';
-import { EventMessagesService, NotificationService } from 'src/app/services';
+import { EventMessagesService, NotificationService, UserService } from 'src/app/services';
 
 @Component({
   selector: 'app-event-chat',
@@ -11,11 +11,24 @@ export class EventChatComponent implements OnInit {
   @Input() event: Event;
   eventMessages: EventMessage[] = [];
   message = '';
+  userId = 0;
 
-  constructor(private eventmessagesservice: EventMessagesService, private notificationservice: NotificationService) {}
+  constructor(
+    private eventmessagesservice: EventMessagesService,
+    private userservice: UserService,
+    private notificationservice: NotificationService
+  ) {}
 
   ngOnInit() {
     this.getEventMessages();
+    this.userservice
+      .getId()
+      .then(res => {
+        this.userId = res;
+      })
+      .catch(() => {
+        this.userId = 0;
+      });
   }
 
   getEventMessages() {

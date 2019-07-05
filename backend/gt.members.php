@@ -40,11 +40,12 @@
     function addGtMember($gtId, $userId){
         global $db;
 
-        $sql = "CALL addGtMember(?, ?);";
+        $sql = "CALL addGtMember(?, ?, ?);";
         
 
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("ii", $gtId, $userId);
+        $role = 3;
+        $stmt->bind_param("iii", $gtId, $userId, $role);
         $stmt->execute();
 
         if ($stmt->errno){

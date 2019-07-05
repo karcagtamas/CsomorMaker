@@ -21,7 +21,7 @@
 
         $sql = "CALL addEventMessage(?, ?, ?);";
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("isis", $eventId, $text, $sender);
+        $stmt->bind_param("isi", $eventId, $text, $sender);
         $stmt->execute();
         if ($stmt->errno){
             $array['response'] =  'fail';

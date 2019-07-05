@@ -209,7 +209,9 @@ CREATE OR REPLACE PROCEDURE updateEvent(
 
    CREATE OR REPLACE PROCEDURE getEventMessages(_eventId int(11))
     BEGIN
-      SELECT * FROM eventmessages WHERE event = _eventId
+      SELECT eventmessages.id, eventmessages.sender AS senderId, eventmessages.event AS eventId, eventmessages.dateOfSent, eventmessages.message, users.name AS sender FROM eventmessages 
+        INNER JOIN users ON eventmessages.sender = users.id
+        WHERE event = _eventId
       ORDER BY dateOfSent;
     END;
 

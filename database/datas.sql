@@ -27,6 +27,8 @@ INSERT INTO eventpayouts (name, eventId, type, cost)
   VALUES ('Torta', 1, 1, 2000);
 
 
-INSERT INTO eventtodoes (event, text)
-  VALUES (1, 'Tortát venni!');
+INSERT INTO eventtodoes (event, text, importance)
+  VALUES (1, 'Tortát venni!', 3);
+
+CALL addGt(2019, 1);
 
