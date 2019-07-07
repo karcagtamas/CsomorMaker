@@ -57,7 +57,7 @@ export class GtsComponent implements OnInit {
               });
             console.log(this.currentGtId);
           } else {
-            this.router.navigateByUrl(`/events/${this.gts[0].id}/details`);
+            this.router.navigateByUrl(`/gts/${this.gts[0].id}/details`);
           }
         })
         .catch(() => {

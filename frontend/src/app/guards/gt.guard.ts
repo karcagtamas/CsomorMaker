@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { EventService } from '../services';
+import { GtService } from '../services';
 
 const MENUITEMS = [
   { name: 'Adatok', link: 'details', accessLevel: 1 },
@@ -12,39 +12,39 @@ const MENUITEMS = [
   { name: 'ToDo', link: 'todo', accessLevel: 2 },
   { name: 'Chat', link: 'chat', accessLevel: 1 },
   { name: 'Tagok', link: 'members', accessLevel: 1 },
-  { name: 'Csapatok', link: 'teams', accessLevel: 2 }
+  { name: 'Osztályok', link: 'classes', accessLevel: 2 }
 ];
 
 @Injectable({
   providedIn: 'root'
 })
-export class EventGuard implements CanActivate {
-  constructor(private eventservice: EventService, private router: Router) {}
+export class GtGuard implements CanActivate {
+  constructor(private gtservice: GtService, private router: Router) {}
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const eventId = +next.paramMap.get('id');
+    const gtId = +next.paramMap.get('id');
     const page = next.paramMap.get('page');
     return new Promise(resolve => {
-      this.eventservice
-        .getEventAccessLevel(eventId)
+      this.gtservice
+        .getAccessLevel(gtId)
         .then(res => {
           const item = MENUITEMS.find(x => x.link === page);
           if (item && res) {
             if (item.accessLevel <= res) {
               resolve(true);
             } else {
-              this.router.navigateByUrl(`/events/${eventId}/details`);
+              this.router.navigateByUrl(`/gts/${gtId}/details`);
               resolve(false);
             }
           } else {
-            this.router.navigateByUrl('/events');
+            this.router.navigateByUrl('/gts');
             resolve(false);
           }
         })
         .catch(err => {
-          this.router.navigateByUrl('/events');
+          this.router.navigateByUrl('/gts');
           resolve(false);
         });
     });

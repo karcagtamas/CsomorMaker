@@ -6,6 +6,7 @@ import { HomeComponent, LoginComponent, RegistrationComponent } from './componen
 import { AuthGuard } from './guards/auth.guard';
 import { EventGuard } from './guards/event.guard';
 import { NewGtComponent, GtsComponent } from './components/gt';
+import { GtGuard } from './guards/gt.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -16,7 +17,7 @@ const routes: Routes = [
   { path: 'events/:id/:page', pathMatch: 'full', component: EventsComponent, canActivate: [AuthGuard, EventGuard] },
   { path: 'new-event', pathMatch: 'full', component: NewEventComponent, canActivate: [AuthGuard] },
   { path: 'gts', pathMatch: 'full', component: GtsComponent, canActivate: [AuthGuard] },
-  { path: 'gts/:id/:page', pathMatch: 'full', component: GtsComponent, canActivate: [AuthGuard] },
+  { path: 'gts/:id/:page', pathMatch: 'full', component: GtsComponent, canActivate: [AuthGuard, GtGuard] },
   { path: 'new-gt', pathMatch: 'full', component: NewGtComponent, canActivate: [AuthGuard] },
   { path: '**', component: PageNotFoundComponent }
 ];
