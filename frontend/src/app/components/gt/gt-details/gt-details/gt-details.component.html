@@ -1,3 +1,21 @@
-<p>
-  gt-details works!
-</p>
+<div class="text-center panel-title border rounded">Adatok</div>
+<div class="details" *ngIf="gt">
+  <div class="element"><span class="name">Év:</span> {{ gt.year }}</div>
+  <div class="element"><span class="name">Zárolási állapot:</span> {{ gt.isLocked | isLocked }}</div>
+  <div class="element"><span class="name">Létrehozó:</span> {{ gt.creater }}</div>
+  <div class="element"><span class="name">Napok:</span> {{ gt.days }}</div>
+  <div class="element"><span class="name">Poló szín:</span> {{ gt.tShirtColor }}</div>
+  <div class="element"><span class="name">Tagok:</span> {{ gt.members }}</div>
+  <div class="element"><span class="name">Gyólyák:</span> {{ gt.greeny }}</div>
+  <div class="element"><span class="name">Gyólyák:</span> {{ gt.greeny }}</div>
+  <div class="element"><span class="name">Tábor díj:</span> {{ gt.greenyCost }}</div>
+
+  <div class="text-center">
+    <button mat-raised-button color="accent" *ngIf="!event.isLocked && accessLevel >= 3" (click)="lockGt()">
+      Zárolás
+    </button>
+    <button mat-raised-button color="accent" *ngIf="gt.isLocked && accessLevel >= 3" (click)="lockGt()">
+      Zárolás bontása
+    </button>
+  </div>
+</div>

@@ -11,6 +11,9 @@
       >
         {{ gt.year }}
       </div>
+      <div class="event rounded" *ngIf="!currentGt.id">
+        Nincs gólyatáborod :(
+      </div>
     </div>
     <div class="menuitems border rounded">
       <div class="title text-center border rounded">Menü</div>
