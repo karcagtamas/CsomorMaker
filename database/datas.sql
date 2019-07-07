@@ -32,3 +32,5 @@ INSERT INTO eventtodoes (event, text, importance)
 
 CALL addGt(2019, 1);
 
+CALL gtAccessLevel(4, 1);
+
