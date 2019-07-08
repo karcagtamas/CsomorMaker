@@ -1,3 +1,26 @@
-<p>
-  gt-settings works!
-</p>
+<div class="text-center panel-title border rounded">Beállítások</div>
+<div class="settings" *ngIf="gt">
+  <mat-form-field class="w-100" appearance="outline" [formGroup]="form">
+    <mat-label>Poló szín</mat-label>
+    <input matInput type="text" placeholder="Poló szín" [formControlName]="tShirtColor" />
+    <mat-error *ngIf="form.get('tShirtColor').hasError('required')">A poló szín megadása kötelező!</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Napok</mat-label>
+    <input matInput type="number" placeholder="Napok" [formControlName]="days" />
+    <mat-error *ngIf="form.get('days').hasError('required')">A napok megadása kötelező!</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Tábor díj</mat-label>
+    <input matInput type="number" placeholder="Tábor díj" [formControlName]="greenyCost" />
+    <mat-error *ngIf="form.get('greenyCost').hasError('required')">A tábor díj megadása kötelező!</mat-error>
+  </mat-form-field>
+  <!--  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Kezdeti dátum</mat-label>
+    <input matInput [matDatepicker]="picker" placeholder="Kezdeti dátum" [formControl]="startDateControl" />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field> -->
+  <button mat-raised-button color="primary" (click)="save()">Mentés</button>
+  <button mat-raised-button color="accent" (click)="reset()">Visszaállítás</button>
+</div>
