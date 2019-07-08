@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, SimpleChanges, OnChanges } from '@angular/core';
 import { NotificationService, GtService } from 'src/app/services';
 import { Gt } from 'src/app/models';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-gt-settings',
@@ -11,15 +11,22 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class GtSettingsComponent implements OnInit, OnChanges {
   @Input() gt: Gt;
   modifiedGt: Gt;
-  form = new FormGroup({
-    tShirtColor: new FormControl('', [Validators.required]),
-    days: new FormControl('', [Validators.required]),
-    greenyCost: new FormControl('', [Validators.required])
-  });
+  form: FormGroup;
 
-  constructor(private notificationservice: NotificationService, private gtservice: GtService) {}
+  constructor(
+    private fb: FormBuilder,
+    private notificationservice: NotificationService,
+    private gtservice: GtService
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.form = this.fb.group({
+      tShirtColor: ['', Validators.required],
+      days: ['', Validators.required],
+      greenyCost: ['', Validators.required]
+    });
+    this.setValues();
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     this.modifiedGt = { ...this.gt };
@@ -45,7 +52,18 @@ export class GtSettingsComponent implements OnInit, OnChanges {
       gt.days = +this.form.get('days').value;
       gt.greenyCost = +this.form.get('greenyCost').value;
 
-      this.gtservice.updateGt(gt);
+      this.gtservice
+        .updateGt(gt)
+        .then(res => {
+          if (res.response === 'success') {
+            this.notificationservice.success(res.message);
+          } else {
+            this.notificationservice.error(res.message);
+          }
+        })
+        .catch(() => {
+          this.notificationservice.error('A gólyatábor frissítése közben hiba történt! Kérjük próbálja újra késöbb!');
+        });
     }
   }
 }

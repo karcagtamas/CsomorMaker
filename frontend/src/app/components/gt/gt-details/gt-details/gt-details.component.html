@@ -5,10 +5,9 @@
   <div class="element"><span class="name">Létrehozó:</span> {{ gt.creater }}</div>
   <div class="element"><span class="name">Napok:</span> {{ gt.days }}</div>
   <div class="element"><span class="name">Poló szín:</span> {{ gt.tShirtColor }}</div>
-  <div class="element"><span class="name">Tagok:</span> {{ gt.members }}</div>
-  <div class="element"><span class="name">Gyólyák:</span> {{ gt.greeny }}</div>
-  <div class="element"><span class="name">Gyólyák:</span> {{ gt.greeny }}</div>
-  <div class="element"><span class="name">Tábor díj:</span> {{ gt.greenyCost }}</div>
+  <div class="element"><span class="name">Tagok:</span> {{ gt.members | personCount }}</div>
+  <div class="element"><span class="name">Gyólyák:</span> {{ gt.greeny | personCount }}</div>
+  <div class="element"><span class="name">Tábor díj:</span> {{ gt.greenyCost | forint }}</div>
 
   <div class="text-center">
     <button mat-raised-button color="accent" *ngIf="!gt.isLocked && accessLevel >= 3" (click)="lockGt()">
