@@ -67,6 +67,26 @@ export class GtsComponent implements OnInit {
     this.getGts();
   }
 
+  lockGt(event) {
+    this.gtservice
+      .lockGt(event.id)
+      .then(res => {
+        if (res.response === 'success') {
+          this.notificationservice.success(res.message);
+          const old = this.gts.findIndex(x => x.id === +event.id);
+          this.gts[old].isLocked = this.gts[old].isLocked ? false : true;
+          this.currentGt = this.gts.find(x => x.id === +this.currentGtId);
+        } else {
+          this.notificationservice.error(res.message);
+        }
+      })
+      .catch(() => {
+        this.notificationservice.error(
+          'Az esemény zárolása/feloldása közben hiba történt! Kérjük próbálja újra késöbb!'
+        );
+      });
+  }
+
   getGts() {
     this.gtservice
       .getGts()

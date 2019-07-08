@@ -33,7 +33,12 @@
   <div class="col col-8 changer" *ngIf="currentGt">
     <mat-card class="card">
       <div [ngSwitch]="currentPage">
-        <app-gt-details *ngSwitchCase="'details'"></app-gt-details>
+        <app-gt-details
+          *ngSwitchCase="'details'"
+          [gt]="currentGt"
+          [accessLevel]="accessLevel"
+          (lock)="lockGt($event)"
+        ></app-gt-details>
         <app-gt-csomor *ngSwitchCase="'csomor'"></app-gt-csomor>
         <app-gt-chat *ngSwitchCase="'chat'"></app-gt-chat>
         <app-gt-generator *ngSwitchCase="'generator'"></app-gt-generator>

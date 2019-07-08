@@ -11,7 +11,7 @@
   <div class="element"><span class="name">Tábor díj:</span> {{ gt.greenyCost }}</div>
 
   <div class="text-center">
-    <button mat-raised-button color="accent" *ngIf="!event.isLocked && accessLevel >= 3" (click)="lockGt()">
+    <button mat-raised-button color="accent" *ngIf="!gt.isLocked && accessLevel >= 3" (click)="lockGt()">
       Zárolás
     </button>
     <button mat-raised-button color="accent" *ngIf="gt.isLocked && accessLevel >= 3" (click)="lockGt()">
