@@ -16,7 +16,7 @@ export class NewGtComponent implements OnInit {
 
   addGt() {
     if (this.yearControl.invalid) {
-      this.notificationservice.warning('Nem megfelelő évszém!');
+      this.notificationservice.warning('Nem megfelelő évszám!');
     } else {
       this.gtservice
         .addGt(+this.yearControl.value)

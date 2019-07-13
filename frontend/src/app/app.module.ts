@@ -240,7 +240,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     AddTeamDialogComponent,
     TeamDeatilsDialogComponent,
     AddTeamMemberDialogComponent,
-    TodoDialogComponent
+    TodoDialogComponent,
+    GtWorkDialogComponent
   ]
 })
 export class AppModule {}

@@ -1,3 +1,30 @@
-<p>
-  gt-work-dialog works!
-</p>
+<form mat-dialog-content [formGroup]="form">
+  <div class="text-center panel-title border rounded">Új poszt</div>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Név</mat-label>
+    <input matInput type="text" placeholder="Név" formControlName="name" />
+    <mat-error *ngIf="form.get('name').hasError('required')">A név megadása kötelező!</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Nap</mat-label>
+    <input matInput type="text" placeholder="Név" formControlName="name" />
+    <mat-error *ngIf="form.get('name').hasError('required')">A név megadása kötelező!</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Név</mat-label>
+    <input matInput type="text" placeholder="Név" formControlName="name" />
+    <mat-error *ngIf="form.get('name').hasError('required')">A név megadása kötelező!</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Név</mat-label>
+    <input matInput type="text" placeholder="Név" formControlName="name" />
+    <mat-error *ngIf="form.get('name').hasError('required')">A név megadása kötelező!</mat-error>
+  </mat-form-field>
+</form>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="save()">
+    Mentés
+  </button>
+  <button mat-raised-button color="accent" (click)="onNoClick()">Mégsem</button>
+</div>

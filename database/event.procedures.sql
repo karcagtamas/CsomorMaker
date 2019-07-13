@@ -134,12 +134,6 @@ CREATE OR REPLACE PROCEDURE updateEvent(
     END;
 
 
-  CREATE OR REPLACE PROCEDURE disableEvent(_id int(11))
-    BEGIN
-     UPDATE events SET isDisabled = TRUE WHERE id = _id;
-    END;
-
-
 
   CREATE OR REPLACE PROCEDURE setUnReadyEvent(_id int(11))
     BEGIN

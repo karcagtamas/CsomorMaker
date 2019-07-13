@@ -3,6 +3,7 @@ import { Gt, GtWork, GtWorker } from 'src/app/models';
 import { GtGeneratorService } from 'src/app/services/gt-generator.service';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificationService } from 'src/app/services';
+import { GtWorkDialogComponent } from '../gt-work-dialog/gt-work-dialog.component';
 
 @Component({
   selector: 'app-gt-generator',
@@ -94,5 +95,45 @@ export class GtGeneratorComponent implements OnInit, OnChanges {
       .catch(() => {
         this.notificationservice.error('A poszt törlése közben hiba történt! Kérjük pórbálja újra késöbb!');
       });
+  }
+
+  openAddNewWorkDialog() {
+    const dialogRef = this.dialog.open(GtWorkDialogComponent, {
+      data: { work: null, days: this.gt.days }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.gtgeneratorservice
+          .addGtWork(this.gt.id, result.name, result.day, result.start, result.end)
+          .then(res => {
+            if (res.response === 'success') {
+              this.notificationservice.success(res.message);
+              this.getWorks();
+              this.getWorkers();
+            } else {
+              this.notificationservice.error(res.message);
+            }
+          })
+          .catch(() => {
+            this.notificationservice.error('A poszt felvétele közben hiba történt! Kérjük próbálja újra késöbb!');
+          });
+      }
+    });
+  }
+
+  generate() {
+    /* this.gtgeneratorservice
+      .generate(this.gt.id)
+      .then(res => {
+        if (res.response === 'success') {
+          this.notificationservice.success(res.message);
+        } else {
+          this.notificationservice.error(res.message);
+        }
+      })
+      .catch(() => {
+        this.notificationservice.error('A generálás során valami hiba történt! Kérjük próbálja meg újra késöbb!');
+      }); */
   }
 }

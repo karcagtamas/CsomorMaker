@@ -1,10 +1,10 @@
 <div class="panel col col-12 col-sm-6 offset-sm-3 col-lg-4 offset-lg-4 border rounded">
   <div class="text-center p-1 border rounded title">
-    Új gólxatábor felvétele
+    Új gólyatábor felvétele
   </div>
 
   <mat-form-field class="w-100" appearance="outline">
-    <mat-label>Esemény éve</mat-label>
+    <mat-label>Gólyatábor éve</mat-label>
     <input matInput placeholder="Év" [formControl]="yearControl" [type]="'number'" />
     <mat-error *ngIf="yearControl.hasError('required')">A év megadás kötelező</mat-error>
   </mat-form-field>
