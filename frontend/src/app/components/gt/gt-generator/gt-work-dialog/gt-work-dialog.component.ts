@@ -12,6 +12,10 @@ import { GtWork } from 'src/app/models';
 export class GtWorkDialogComponent implements OnInit {
   form: FormGroup;
   isEdit = false;
+  hours: number[] = [];
+  startHours: number[] = [];
+  endHours: number[] = [];
+  days: number[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<GtWorkDialogComponent>,
@@ -27,10 +31,18 @@ export class GtWorkDialogComponent implements OnInit {
       start: ['', Validators.required],
       end: ['', Validators.required]
     });
-    this.isEdit = this.data ? true : false;
+    this.isEdit = this.data.work ? true : false;
     if (this.isEdit) {
       this.setValues();
     }
+    for (let i = 0; i < 24; i++) {
+      this.hours.push(i);
+    }
+    for (let i = 1; i <= this.data.days; i++) {
+      this.days.push(i);
+    }
+    this.startHours = this.hours;
+    this.endHours = this.hours;
   }
 
   onNoClick() {
@@ -44,6 +56,8 @@ export class GtWorkDialogComponent implements OnInit {
       start: this.data.work.startHour,
       end: this.data.work.endHour
     });
+    this.startHours = this.hours.filter(x => x < this.data.work.endHour);
+    this.endHours = this.hours.filter(x => x > this.data.work.startHour);
   }
 
   save() {
@@ -57,5 +71,13 @@ export class GtWorkDialogComponent implements OnInit {
         end: this.form.get('end').value
       });
     }
+  }
+
+  startChange() {
+    this.endHours = this.hours.filter(x => x > this.form.get('start').value);
+  }
+
+  endChange() {
+    this.startHours = this.hours.filter(x => x < this.form.get('end').value);
   }
 }

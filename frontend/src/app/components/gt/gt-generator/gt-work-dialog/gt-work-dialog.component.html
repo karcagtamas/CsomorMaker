@@ -7,19 +7,24 @@
   </mat-form-field>
   <mat-form-field class="w-100" appearance="outline">
     <mat-label>Nap</mat-label>
-    <input matInput type="text" placeholder="Név" formControlName="name" />
-    <mat-error *ngIf="form.get('name').hasError('required')">A név megadása kötelező!</mat-error>
+    <mat-select matInput formControlName="day">
+      <mat-option *ngFor="let day of days" [value]="day">{{ day }}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('day').hasError('required')">A nap megadása kötelező!</mat-error>
   </mat-form-field>
   <mat-form-field class="w-100" appearance="outline">
-    <mat-label>Név</mat-label>
-    <input matInput type="text" placeholder="Név" formControlName="name" />
-    <mat-error *ngIf="form.get('name').hasError('required')">A név megadása kötelező!</mat-error>
+    <mat-label>Kezdet</mat-label>
+    <mat-select matInput formControlName="start" (selectionChange)="startChange()">
+      <mat-option *ngFor="let start of startHours" [value]="start">{{ start }}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('start').hasError('required')">A kezdet megadása kötelező!</mat-error>
   </mat-form-field>
-
   <mat-form-field class="w-100" appearance="outline">
-    <mat-label>Név</mat-label>
-    <input matInput type="text" placeholder="Név" formControlName="name" />
-    <mat-error *ngIf="form.get('name').hasError('required')">A név megadása kötelező!</mat-error>
+    <mat-label>Vége</mat-label>
+    <mat-select matInput formControlName="end" (selectionChange)="endChange()">
+      <mat-option *ngFor="let end of endHours" [value]="end">{{ end }}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('end').hasError('required')">A vége megadása kötelező!</mat-error>
   </mat-form-field>
 </form>
 <div mat-dialog-actions>

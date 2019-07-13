@@ -2,7 +2,7 @@
     function getGtWorks($gtId){
         global $db;
 
-        $sql = "CALL getGts(?);";
+        $sql = "CALL getGtWorks(?);";
         
 
         $stmt = $db->prepare($sql);
@@ -164,5 +164,43 @@
         echo json_encode($array);
         $stmt->close();
 
+    }
+
+    function getLowGtWorkers($gtId){
+        global $db;
+
+        $sql = "CALL getLowGtWorkers(?);";
+        
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $gtId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $array = [];
+        while($row = $result->fetch_assoc()){
+            array_push($array, $row);
+        }
+        echo json_encode($array);
+        $stmt->close();
+    }
+
+    function getGtWorkerTables($workerId){
+        global $db;
+
+        $sql = "CALL getGtWorkerTables(?);";
+        
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $workerId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $array = [];
+        while($row = $result->fetch_assoc()){
+            array_push($array, $row);
+        }
+        echo json_encode($array);
+        $stmt->close();
     }
 ?>

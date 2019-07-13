@@ -605,6 +605,7 @@
 
                         case 'workers':
                             $event = $url[4];
+                            require 'gt.generator.php';
                             switch ($event) {
                                 case 'get':
                                     getLowGtWorkers($url[5]);
