@@ -97,27 +97,43 @@ export class GtGeneratorComponent implements OnInit, OnChanges {
       });
   }
 
-  openAddNewWorkDialog() {
+  openAddNewWorkDialog(event) {
     const dialogRef = this.dialog.open(GtWorkDialogComponent, {
-      data: { work: null, days: this.gt.days }
+      data: { work: event.work ? event.work : null, days: this.gt.days }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.gtgeneratorservice
-          .addGtWork(this.gt.id, result.name, result.day, result.start, result.end, result.workers)
-          .then(res => {
-            if (res.response === 'success') {
-              this.notificationservice.success(res.message);
-              this.getWorks();
-              this.getWorkers();
-            } else {
-              this.notificationservice.error(res.message);
-            }
-          })
-          .catch(() => {
-            this.notificationservice.error('A poszt felvétele közben hiba történt! Kérjük próbálja újra késöbb!');
-          });
+        if (event.work) {
+          this.gtgeneratorservice
+            .updateGtWork(event.work.id, result.name, result.day, result.start, result.end, result.workers)
+            .then(res => {
+              if (res.response === 'success') {
+                this.notificationservice.success(res.message);
+                this.getWorks();
+              } else {
+                this.notificationservice.error(res.message);
+              }
+            })
+            .catch(() => {
+              this.notificationservice.error('A poszt frissítése közben hiba történt! Kérjül próbálja újra késöbb');
+            });
+        } else {
+          this.gtgeneratorservice
+            .addGtWork(this.gt.id, result.name, result.day, result.start, result.end, result.workers)
+            .then(res => {
+              if (res.response === 'success') {
+                this.notificationservice.success(res.message);
+                this.getWorks();
+                this.getWorkers();
+              } else {
+                this.notificationservice.error(res.message);
+              }
+            })
+            .catch(() => {
+              this.notificationservice.error('A poszt felvétele közben hiba történt! Kérjük próbálja újra késöbb!');
+            });
+        }
       }
     });
   }
