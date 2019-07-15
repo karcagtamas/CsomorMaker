@@ -25,7 +25,7 @@
         
 
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("isiii", $gtId, $name, $day, $start, $end, $workers);
+        $stmt->bind_param("isiiii", $gtId, $name, $day, $start, $end, $workers);
         $stmt->execute();
 
         if ($stmt->errno){
@@ -47,7 +47,7 @@
         
 
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("isiii", $workId, $name, $day, $start, $end, $workers);
+        $stmt->bind_param("isiiii", $workId, $name, $day, $start, $end, $workers);
         $stmt->execute();
 
         if ($stmt->errno){

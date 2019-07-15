@@ -12,6 +12,7 @@ import { GtWork } from 'src/app/models';
 export class GtWorkDialogComponent implements OnInit {
   form: FormGroup;
   isEdit = false;
+  title = '';
   hours: number[] = [];
   startHours: number[] = [];
   endHours: number[] = [];
@@ -44,6 +45,7 @@ export class GtWorkDialogComponent implements OnInit {
     }
     this.startHours = this.hours;
     this.endHours = this.hours;
+    this.title = this.isEdit ? 'Poszt frissítése' : 'Új poszt';
   }
 
   onNoClick() {

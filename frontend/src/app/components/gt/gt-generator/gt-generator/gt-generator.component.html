@@ -15,7 +15,7 @@
         <app-gt-work-details
           [work]="work"
           (delete)="deleteWork($event)"
-          (save)="openAddNewWorkDialog($event)"
+          (update)="openAddNewWorkDialog($event)"
         ></app-gt-work-details>
         <mat-action-row>
           <button mat-raised-button color="warn" (click)="prevWorkStep()" *ngIf="workStep !== 0">Elöző</button>
