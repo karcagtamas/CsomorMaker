@@ -45,7 +45,7 @@
         <app-gt-settings *ngSwitchCase="'settings'" [gt]="currentGt"> </app-gt-settings>
         <app-gt-summary *ngSwitchCase="'summary'"></app-gt-summary>
         <app-gt-todoes *ngSwitchCase="'todo'"></app-gt-todoes>
-        <app-gt-members *ngSwitchCase="'members'"> </app-gt-members>
+        <app-gt-members *ngSwitchCase="'members'" [gt]="currentGt" [accessLevel]="accessLevel"> </app-gt-members>
         <app-gt-classes *ngSwitchCase="'classes'"></app-gt-classes>
       </div>
     </mat-card>

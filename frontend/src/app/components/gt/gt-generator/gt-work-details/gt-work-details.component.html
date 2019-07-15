@@ -1,9 +1,9 @@
 <div class="details">
   <div><span class="title">Név: </span>{{ work.name }}</div>
-  <div><span class="title">Nap: </span>{{ work.day }}</div>
-  <div><span class="title">Kezdet: </span>{{ work.startHour }}</div>
-  <div><span class="title">Vége: </span>{{ work.endHour }}</div>
-  <div><span class="title">Humán igény: </span>{{ work.workerCount }}</div>
+  <div><span class="title">Nap: </span>{{ work.day }}.</div>
+  <div><span class="title">Kezdet: </span>{{ work.startHour | hours }}</div>
+  <div><span class="title">Vége: </span>{{ work.endHour | hours }}</div>
+  <div><span class="title">Humán igény: </span>{{ work.workerCount | personCount }}</div>
   <div class="buttons">
     <button mat-raised-button color="accent" (click)="updateWork()">Szerkesztés</button>
     <button mat-raised-button color="warn" (click)="deleteWork()">Törlés</button>

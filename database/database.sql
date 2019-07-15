@@ -245,7 +245,7 @@ CREATE TABLE usergtswitch(
   gt int(11) NOT NULL,
   user int(11) NOT NULL,
   role int(11) NOT NULL,
-  connectionDate datetime NOT NULL,
+  connectionDate datetime NOT NULL DEFAULT NOW(),
   PRIMARY KEY(gt,user,role),
   CONSTRAINT fk_gt_gts_usergtswitch FOREIGN KEY (gt)
   REFERENCES gts(id),
@@ -330,11 +330,37 @@ CREATE TRIGGER gt_members AFTER INSERT ON usergtswitch
   FOR EACH ROW
   BEGIN
     UPDATE gts SET members = members + 1 WHERE id = NEW.gt;
+    INSERT INTO gtworkworkerswitch (work, worker)
+       SELECT * FROM (
+        SELECT gtworks.id FROM gtworks
+        WHERE gtworks.gt = NEW.gt) AS T1
+    CROSS JOIN (SELECT NEW.user) AS T2;
   END;
 
 CREATE TRIGGER gt_members_de AFTER DELETE ON usergtswitch
   FOR EACH ROW
   BEGIN
     UPDATE gts SET members = members - 1 WHERE id = OLD.gt;
+    DELETE FROM gtworkworkerswitch WHERE worker = OLD.user;
+    DELETE FROM gtworkertables WHERE worker = OLD.user;
   END;
+
+CREATE TRIGGER adding_work AFTER INSERT ON gtworks
+  FOR EACH ROW
+  BEGIN
+    INSERT INTO gtworkworkerswitch (worker, work)
+       SELECT * FROM (
+        SELECT users.id FROM users
+        INNER JOIN usergtswitch ON users.id = usergtswitch.user
+        WHERE usergtswitch.gt = NEW.gt) AS T1
+    CROSS JOIN (SELECT NEW.id) AS T2;
+  END;
+
+CREATE TRIGGER deleting_work AFTER DELETE ON gtworks
+  FOR EACH ROW
+  BEGIN
+    DELETE FROM gtworkworkerswitch WHERE work = OLD.id;
+    DELETE FROM gtworktables WHERE work = OLD.id;
+  END;
+
 

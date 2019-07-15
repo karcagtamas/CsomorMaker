@@ -2,12 +2,17 @@
   <div><span class="title">Név: </span>{{ worker.name }}</div>
   <div><span class="title">Felhasználó név: </span>{{ worker.username }}</div>
   <div class="statuses">
-    <div class="status" *ngFor="let status of workStatuses">
-      <div>{{ status.work }}</div>
-      <mat-checkbox [(ngModel)]="status.isActive" (change)="setWorkStatusActive(status.workId)">Aktív?</mat-checkbox>
-      <mat-checkbox [(ngModel)]="status.isBoss" (change)="setWorkStatusBoss(status.workId)"
-        >Posztfőszervező?</mat-checkbox
-      >
+    <div class="title">Posztok:</div>
+    <div class="status border rounded" *ngFor="let status of workStatuses">
+      <div class="title">{{ status.work }}</div>
+      <div>
+        <mat-checkbox [(ngModel)]="status.isActive" (change)="setWorkStatusActive(status.workId)">Aktív?</mat-checkbox>
+      </div>
+      <div>
+        <mat-checkbox [(ngModel)]="status.isBoss" (change)="setWorkStatusBoss(status.workId)">
+          Posztfőszervező?
+        </mat-checkbox>
+      </div>
     </div>
   </div>
 </div>

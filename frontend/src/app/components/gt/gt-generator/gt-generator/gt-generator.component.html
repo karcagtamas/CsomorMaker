@@ -42,7 +42,7 @@
         <mat-expansion-panel-header>
           {{ worker.name }}
         </mat-expansion-panel-header>
-        <app-worker-settings [worker]="worker"></app-worker-settings>
+        <app-gt-worker-settings [worker]="worker"></app-gt-worker-settings>
         <mat-action-row>
           <button mat-raised-button color="warn" (click)="prevWorkerStep()" *ngIf="workerStep !== 0">Elöző</button>
           <button

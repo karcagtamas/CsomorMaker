@@ -148,7 +148,7 @@ CREATE OR REPLACE PROCEDURE setGtWorkStatusIsBoss(_workerId int(11), _workId int
 
 CREATE OR REPLACE PROCEDURE getLowGtWorkers(_gtId int(11))
     BEGIN
-      SELECT * FROM usergtswitch
+      SELECT usergtswitch.gt, users.id AS id, users.username, users.name FROM usergtswitch
       INNER JOIN users ON users.id = usergtswitch.user
       INNER JOIN eventroles ON eventroles.id = usergtswitch.role 
       WHERE usergtswitch.gt = _gtId AND eventroles.accessLevel = 1;

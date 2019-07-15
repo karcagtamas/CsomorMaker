@@ -12,7 +12,7 @@ import { GtAddMemberDialogComponent } from '../gt-add-member-dialog/gt-add-membe
 })
 export class GtMembersComponent implements OnInit, OnChanges {
   @Input() gt: Gt;
-  @Input() accessLevel: number;
+  @Input() accessLevel = 0;
   userId = 0;
   filterValue = '';
   gtMembers: GtMember[] = [];

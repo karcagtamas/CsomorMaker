@@ -3,8 +3,16 @@
     font-weight: bold;
   }
   .statuses {
+    margin-top: 0.85rem;
+    max-height: 150px;
+    overflow: auto;
+
     .status {
       margin: 0.1rem;
+      padding: 0.3rem;
+      .title {
+        margin-bottom: 0.5rem;
+      }
     }
   }
 }

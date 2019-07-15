@@ -147,7 +147,7 @@
     function setGtWorkStatusIsActive($workerId, $workId){
         global $db;
 
-        $sql = "CALL setGtWorkStatusIsActive(?);";
+        $sql = "CALL setGtWorkStatusIsActive(?, ?);";
         
 
         $stmt = $db->prepare($sql);
