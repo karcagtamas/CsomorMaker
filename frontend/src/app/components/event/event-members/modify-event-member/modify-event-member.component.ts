@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EventMember, EventRole } from 'src/app/models';
 import { FormControl, Validators } from '@angular/forms';
-import { EventService } from 'src/app/services';
+import { EventService, NotificationService } from 'src/app/services';
 
 @Component({
   selector: 'app-modify-event-member',
@@ -16,7 +16,8 @@ export class ModifyEventMemberComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ModifyEventMemberComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { eventMember: EventMember; accessLevel: number; userId: number },
-    private eventservice: EventService
+    private eventservice: EventService,
+    private notificationservice: NotificationService
   ) {}
 
   ngOnInit() {
@@ -39,6 +40,8 @@ export class ModifyEventMemberComponent implements OnInit {
     if (!this.roleControl.invalid) {
       this.data.eventMember.roleId = this.roleControl.value;
       this.dialogRef.close({ data: this.data.eventMember });
+    } else {
+      this.notificationservice.warning('A megadott rang érvénytelen!');
     }
   }
 }

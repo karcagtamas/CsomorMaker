@@ -2,7 +2,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { User } from 'src/app/models';
-import { EventMembersService } from 'src/app/services';
+import { EventMembersService, NotificationService } from 'src/app/services';
 
 @Component({
   selector: 'app-add-new-member-modal',
@@ -15,7 +15,8 @@ export class AddNewMemberModalComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<AddNewMemberModalComponent>,
     private eventmemberservice: EventMembersService,
-    @Inject(MAT_DIALOG_DATA) public data: number
+    @Inject(MAT_DIALOG_DATA) public data: number,
+    private notificationservice: NotificationService
   ) {}
 
   ngOnInit() {
@@ -32,6 +33,8 @@ export class AddNewMemberModalComponent implements OnInit {
   add() {
     if (!this.userControl.invalid) {
       this.dialogRef.close(+this.userControl.value);
+    } else {
+      this.notificationservice.warning('A megadott felhasználó érvénytelen!');
     }
   }
 }

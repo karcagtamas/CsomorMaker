@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { GtMember, Response } from '../models';
+import { GtMember, Response, User } from '../models';
 
 const URL = environment.api;
 
@@ -19,8 +19,8 @@ export class GtMembersService {
     return this.http.get<GtMember[]>(`${this.url}/get/all/${gt}`, HttpHeader).toPromise();
   }
 
-  getNonGtMembers(gt: number): Promise<GtMember[]> {
-    return this.http.get<GtMember[]>(`${this.url}/get/none/${gt}`, HttpHeader).toPromise();
+  getNonGtMembers(gt: number): Promise<User[]> {
+    return this.http.get<User[]>(`${this.url}/get/none/${gt}`, HttpHeader).toPromise();
   }
 
   addGtMember(gt: number, user: number): Promise<Response> {

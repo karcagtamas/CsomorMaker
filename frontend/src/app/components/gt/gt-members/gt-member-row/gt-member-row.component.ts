@@ -27,7 +27,7 @@ export class GtMemberRowComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.update.emit({ user: result.data.user, role: result.data.role });
+        this.update.emit({ user: result.data.userId, role: result.data.roleId });
       }
     });
   }
