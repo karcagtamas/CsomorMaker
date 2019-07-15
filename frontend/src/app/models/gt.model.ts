@@ -20,7 +20,7 @@ export class GtMember {
   roleId: number;
   role: string;
   accessLevel: number;
-  conncetionDate: Date;
+  connectionDate: Date;
 }
 
 export class GtClass {

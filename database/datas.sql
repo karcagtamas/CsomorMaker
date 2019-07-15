@@ -7,7 +7,7 @@ INSERT INTO roles (id, name, accessLevel)
 
 INSERT INTO eventroles (name, accessLevel)
   VALUES ('Fõszervezõ', 3),
-          ('Porszfõszervezõ', 2),
+          ('Posztfõszervezõ', 2),
           ('Humán', 1);
 
 INSERT INTO users (username, email, password, name, role)

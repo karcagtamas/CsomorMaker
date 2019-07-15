@@ -1,3 +1,19 @@
-<p>
-  gt-member-modify-dialog works!
-</p>
+<div mat-dialog-content>
+  <div class="text-center panel-title border rounded">{{ data.gtMember.user }}</div>
+  Név: {{ data.gtMember.user }} <br />
+  Felhasználónév: {{ data.gtMember.username }} <br />
+  Csatlakozás: {{ data.gtMember.connectionDate }}
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Rang</mat-label>
+    <mat-select [formControl]="roleControl">
+      <mat-option [value]="role.id" *ngFor="let role of eventRoles">{{ role.name }}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="roleControl.hasError('required')">A rang megadása kötelező!</mat-error>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="save()" [disabled]="roleControl.invalid">
+    Mentés
+  </button>
+  <button mat-raised-button color="accent" (click)="onNoClick()">Mégsem</button>
+</div>

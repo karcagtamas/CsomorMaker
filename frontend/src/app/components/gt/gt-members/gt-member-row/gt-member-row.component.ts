@@ -22,7 +22,7 @@ export class GtMemberRowComponent implements OnInit {
 
   openModifyDialog() {
     const dialogRef = this.dialog.open(GtMemberModifyDialogComponent, {
-      data: { eventMember: this.gtMember, accessLevel: this.accessLevel, userId: this.userId }
+      data: { gtMember: this.gtMember, accessLevel: this.accessLevel, userId: this.userId }
     });
 
     dialogRef.afterClosed().subscribe(result => {

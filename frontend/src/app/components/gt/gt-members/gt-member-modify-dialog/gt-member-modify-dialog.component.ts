@@ -15,7 +15,7 @@ export class GtMemberModifyDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<GtMemberModifyDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { eventMember: GtMember; accessLevel: number; userId: number },
+    @Inject(MAT_DIALOG_DATA) public data: { gtMember: GtMember; accessLevel: number; userId: number },
     private eventservice: EventService,
     private notificationservice: NotificationService
   ) {}
@@ -25,7 +25,7 @@ export class GtMemberModifyDialogComponent implements OnInit {
       .getEventRoles()
       .then(res => {
         this.eventRoles = res;
-        this.roleControl.setValue(this.data.eventMember.roleId);
+        this.roleControl.setValue(this.data.gtMember.roleId);
       })
       .catch(() => {
         this.eventRoles = [];
@@ -38,8 +38,8 @@ export class GtMemberModifyDialogComponent implements OnInit {
 
   save() {
     if (!this.roleControl.invalid) {
-      this.data.eventMember.roleId = this.roleControl.value;
-      this.dialogRef.close({ data: this.data.eventMember });
+      this.data.gtMember.roleId = this.roleControl.value;
+      this.dialogRef.close({ data: this.data.gtMember });
     } else {
       this.notificationservice.warning('A megadott rang érvénytelen!');
     }
