@@ -97,7 +97,7 @@ export class GtGeneratorComponent implements OnInit, OnChanges {
       });
   }
 
-  openAddNewWorkDialog(event) {
+  openAddNewWorkDialog(event?) {
     const dialogRef = this.dialog.open(GtWorkDialogComponent, {
       data: { work: event.work ? event.work : null, days: this.gt.days }
     });
