@@ -18,14 +18,14 @@
         $stmt->close();
     }
 
-    function addGtWork($gtId, $name, $day, $start, $end){
+    function addGtWork($gtId, $name, $day, $start, $end, $workers){
         global $db;
 
-        $sql = "CALL addGtWork(?, ?, ?, ?, ?);";
+        $sql = "CALL addGtWork(?, ?, ?, ?, ?, ?);";
         
 
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("isiii", $gtId, $name, $day, $start, $end);
+        $stmt->bind_param("isiii", $gtId, $name, $day, $start, $end, $workers);
         $stmt->execute();
 
         if ($stmt->errno){
@@ -40,14 +40,14 @@
 
     }
 
-    function updateGtWork($workId, $name, $day, $start, $end){
+    function updateGtWork($workId, $name, $day, $start, $end, $workers){
         global $db;
 
-        $sql = "CALL updateGtWork(?, ?, ?, ?, ?);";
+        $sql = "CALL updateGtWork(?, ?, ?, ?, ?, ?);";
         
 
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("isiii", $workId, $name, $day, $start, $end);
+        $stmt->bind_param("isiii", $workId, $name, $day, $start, $end, $workers);
         $stmt->execute();
 
         if ($stmt->errno){

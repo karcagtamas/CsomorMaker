@@ -105,7 +105,7 @@ export class GtGeneratorComponent implements OnInit, OnChanges {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.gtgeneratorservice
-          .addGtWork(this.gt.id, result.name, result.day, result.start, result.end)
+          .addGtWork(this.gt.id, result.name, result.day, result.start, result.end, result.workers)
           .then(res => {
             if (res.response === 'success') {
               this.notificationservice.success(res.message);

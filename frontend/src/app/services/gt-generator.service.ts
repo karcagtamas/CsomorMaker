@@ -20,12 +20,23 @@ export class GtGeneratorService {
     return this.http.get<GtWork[]>(`${this.workUrl}/get/${gt}`, HttpHeader).toPromise();
   }
 
-  addGtWork(gt: number, name: string, day: number, start: number, end: number): Promise<Response> {
-    return this.http.post<Response>(`${this.workUrl}/add`, { gt, name, day, start, end }, HttpHeader).toPromise();
+  addGtWork(gt: number, name: string, day: number, start: number, end: number, workers: number): Promise<Response> {
+    return this.http
+      .post<Response>(`${this.workUrl}/add`, { gt, name, day, start, end, workers }, HttpHeader)
+      .toPromise();
   }
 
-  updateGtWork(work: number, name: string, day: number, start: number, end: number): Promise<Response> {
-    return this.http.post<Response>(`${this.workUrl}/update`, { work, name, day, start, end }, HttpHeader).toPromise();
+  updateGtWork(
+    work: number,
+    name: string,
+    day: number,
+    start: number,
+    end: number,
+    workers: number
+  ): Promise<Response> {
+    return this.http
+      .post<Response>(`${this.workUrl}/update`, { work, name, day, start, end, workers }, HttpHeader)
+      .toPromise();
   }
 
   deleteGtWork(work: number): Promise<Response> {

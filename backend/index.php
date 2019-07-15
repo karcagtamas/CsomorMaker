@@ -543,11 +543,11 @@
                                     break;
 
                                 case 'add':
-                                    addGtWork($_POST['gt'], $_POST['name'], $_POST['day'], $_POST['start'], $_POST['end']);
+                                    addGtWork($_POST['gt'], $_POST['name'], $_POST['day'], $_POST['start'], $_POST['end'], $_POST['workers']);
                                     break;
 
                                 case 'update':
-                                    updateGtWork($_POST['work'], $_POST['name'], $_POST['day'], $_POST['start'], $_POST['end']);
+                                    updateGtWork($_POST['work'], $_POST['name'], $_POST['day'], $_POST['start'], $_POST['end'], $_POST['workers']);
                                     break;
 
                                 case 'delete':

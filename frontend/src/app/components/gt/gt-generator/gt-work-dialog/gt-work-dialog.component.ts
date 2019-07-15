@@ -29,7 +29,8 @@ export class GtWorkDialogComponent implements OnInit {
       name: ['', Validators.required],
       day: ['', Validators.required],
       start: ['', Validators.required],
-      end: ['', Validators.required]
+      end: ['', Validators.required],
+      workers: ['', Validators.required]
     });
     this.isEdit = this.data.work ? true : false;
     if (this.isEdit) {
@@ -54,7 +55,8 @@ export class GtWorkDialogComponent implements OnInit {
       name: this.data.work.name,
       day: this.data.work.day,
       start: this.data.work.startHour,
-      end: this.data.work.endHour
+      end: this.data.work.endHour,
+      workers: this.data.work.workerCount
     });
     this.startHours = this.hours.filter(x => x < this.data.work.endHour);
     this.endHours = this.hours.filter(x => x > this.data.work.startHour);
@@ -68,7 +70,8 @@ export class GtWorkDialogComponent implements OnInit {
         name: this.form.get('name').value,
         day: this.form.get('day').value,
         start: this.form.get('start').value,
-        end: this.form.get('end').value
+        end: this.form.get('end').value,
+        workers: this.form.get('workers').value
       });
     }
   }

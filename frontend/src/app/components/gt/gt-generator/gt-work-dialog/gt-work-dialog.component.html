@@ -26,6 +26,11 @@
     </mat-select>
     <mat-error *ngIf="form.get('end').hasError('required')">A vége megadása kötelező!</mat-error>
   </mat-form-field>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Humán igény</mat-label>
+    <input matInput type="number" placeholder="Humán igény" formControlName="workers" min="0" />
+    <mat-error *ngIf="form.get('workers').hasError('required')">A név megadása kötelező!</mat-error>
+  </mat-form-field>
 </form>
 <div mat-dialog-actions>
   <button mat-raised-button color="primary" (click)="save()">

@@ -85,15 +85,15 @@ CREATE OR REPLACE PROCEDURE getGtWorks(_gtId int(11))
       WHERE gt = _gtId;
     END;
 
-CREATE OR REPLACE PROCEDURE addGtWork(_gtId int(11), _name varchar(100), _day int(2), _start int(2), _end int(2))
+CREATE OR REPLACE PROCEDURE addGtWork(_gtId int(11), _name varchar(100), _day int(2), _start int(2), _end int(2), _workers int(3))
     BEGIN
-      INSERT INTO gtworks(name, day, startHour, endHour, gt)
-      VALUES (_name, _day, _start, _end, _gtId);
+      INSERT INTO gtworks(name, day, startHour, endHour, gt, workerCount)
+      VALUES (_name, _day, _start, _end, _gtId, _workers);
     END;
 
-CREATE OR REPLACE PROCEDURE updateGtWork(_workId int(11), _name varchar(100), _day int(2), _start int(2), _end int(2))
+CREATE OR REPLACE PROCEDURE updateGtWork(_workId int(11), _name varchar(100), _day int(2), _start int(2), _end int(2), _workers int(3))
     BEGIN
-      UPDATE gtworks SET name = _name, day = _day, startHour = _start, endHour = _end
+      UPDATE gtworks SET name = _name, day = _day, startHour = _start, endHour = _end, workerCount = _workers
       WHERE id = _workId;
     END;
 
