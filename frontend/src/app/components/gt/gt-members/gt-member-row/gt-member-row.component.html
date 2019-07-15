@@ -1,19 +1,19 @@
 <div
   class="col col-12 row item border rounded"
   [ngClass]="{
-    level1: eventMember.accessLevel === 1,
-    level2: eventMember.accessLevel === 2,
-    level3: eventMember.accessLevel === 3
+    level1: gtMember.accessLevel === 1,
+    level2: gtMember.accessLevel === 2,
+    level3: gtMember.accessLevel === 3
   }"
 >
   <div class="col col-4">
-    {{ eventMember.name }}
+    {{ gtMember.user }}
   </div>
   <div class="col col-2 text-center">
-    {{ eventMember.role }}
+    {{ gtMember.role }}
   </div>
   <div class="col col-4 text-center">
-    {{ eventMember.connectionDate | date: 'yyyy. MM. dd. HH:mm:ss' }}
+    {{ gtMember.conncetionDate | date: 'yyyy. MM. dd. HH:mm:ss' }}
   </div>
   <div class="col col-2 text-center">
     <button
@@ -21,7 +21,7 @@
       color="accent"
       class="mr-1"
       (click)="openModifyDialog()"
-      *ngIf="accessLevel >= 3 && eventMember.id !== userId"
+      *ngIf="accessLevel >= 3 && gtMember.userId !== userId"
     >
       &#9998;
     </button>
@@ -30,7 +30,7 @@
       color="warn"
       class="ml-1"
       (click)="openDeleteConfirmDialog()"
-      *ngIf="accessLevel >= 3 && eventMember.id !== userId"
+      *ngIf="accessLevel >= 3 && gtMember.userId !== userId"
     >
       &#10006;
     </button>

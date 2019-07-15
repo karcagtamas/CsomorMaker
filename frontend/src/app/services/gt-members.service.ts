@@ -15,11 +15,11 @@ export class GtMembersService {
 
   constructor(private http: HttpClient) {}
 
-  getGtMember(gt: number): Promise<GtMember[]> {
+  getGtMembers(gt: number): Promise<GtMember[]> {
     return this.http.get<GtMember[]>(`${this.url}/get/all/${gt}`, HttpHeader).toPromise();
   }
 
-  getNonGtMember(gt: number): Promise<GtMember[]> {
+  getNonGtMembers(gt: number): Promise<GtMember[]> {
     return this.http.get<GtMember[]>(`${this.url}/get/none/${gt}`, HttpHeader).toPromise();
   }
 

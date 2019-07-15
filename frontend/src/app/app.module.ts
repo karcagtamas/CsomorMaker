@@ -115,6 +115,7 @@ import { EventPersonalCsomorComponent } from './components/event/event-csomor/ev
 import { EventWorkCsomorComponent } from './components/event/event-csomor/event-work-csomor/event-work-csomor.component';
 import { LoaderComponent } from './components/main/loader/loader.component';
 import { MatNativeDateModule } from '@angular/material/core';
+import { GtMemberRowComponent } from './components/gt/gt-members/gt-member-row/gt-member-row.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -184,7 +185,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     EventPersonalCsomorComponent,
     EventWorkCsomorComponent,
     LoaderComponent,
-    TodoDialogComponent
+    TodoDialogComponent,
+    GtMemberRowComponent
   ],
   imports: [
     BrowserModule,
@@ -241,7 +243,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     TeamDeatilsDialogComponent,
     AddTeamMemberDialogComponent,
     TodoDialogComponent,
-    GtWorkDialogComponent
+    GtWorkDialogComponent,
+    GtAddMemberDialogComponent,
+    GtMemberModifyDialogComponent
   ]
 })
 export class AppModule {}
