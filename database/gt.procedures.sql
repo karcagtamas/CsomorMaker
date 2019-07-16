@@ -117,6 +117,18 @@ CREATE OR REPLACE PROCEDURE getGtWorkTables(_workId int(11))
       WHERE gtworktables.work = _workId;
     END;
 
+CREATE OR REPLACE PROCEDURE clearGtWorkTable(_workId int(11))
+    BEGIN
+      DELETE FROM gtworktables WHERE work = _workId;
+    END;
+
+CREATE OR REPLACE PROCEDURE updateGtWorkTable(_workId int(11), _workerId int(11))
+    BEGIN
+      INSERT INTO gtworktables(work, worker)
+        VALUES (_workId, _workerId);
+    END;
+
+
 CREATE OR REPLACE PROCEDURE getGtWorkStatuses(_workerId int(11), _gtId int(11))
     BEGIN
       SELECT users.id AS workerId, users.name AS worker, users.username, gtworks.id AS workId, gtworks.name as work, gtworkworkerswitch.isActive, gtworkworkerswitch.isBoss from gtworkworkerswitch
@@ -167,5 +179,10 @@ CREATE OR REPLACE PROCEDURE getGtWorkerTables(_workerId int(11), _gtId int(11))
       LEFT JOIN users ON users.id = gtworkertables.worker
       INNER JOIN gtworks ON gtworks.id = gtworkertables.work
       WHERE gtworkertables.work = _workerId AND gtworks.gt = _gtId;
+    END;
+
+CREATE OR REPLACE PROCEDURE updateGtWorkerTable(_gtId int(11), _workerId int(11), _day int(2), _hour int(2), _workId int(11))
+    BEGIN
+      UPDATE gtworkertables SET work = _workId WHERE gt = _gtId AND worker = _workerId AND day = _day AND hour = _hour;
     END;
 

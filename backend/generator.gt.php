@@ -237,7 +237,36 @@
     }
 
     function save($gt, $works, $workers){
-        var_dump($workers);
+        global $db;
+
+        $sql = "CALL updateGtWorkerTable(?, ?, ?, ?, ?);";
+
+        foreach ($workers as $worker) {
+            foreach ($worker['tables'] as $table) {
+                $stmt = $db->prepare($sql);
+                $stmt->bind_param("iiiii", $gt['id'], $worker['id'], $table['day'], $table['hour'], $table['workId']);
+                $stmt->execute();
+                $stmt->close();
+            }
+        }
+
+        $sql = "CALL clearGtWorkTable(?);";
+
+        foreach ($works as $work) {
+            $stmt = $db->prepare($sql);
+            $stmt->bind_param("i", $work['id']);
+            $stmt->execute();
+            $stmt->close();
+
+            $sql = "CALL updateGtWorkTable(?, ?);";
+
+            foreach ($work['workers'] as $workerId) {
+                $stmt = $db->prepare($sql);
+                $stmt->bind_param("ii", $work['id'], $workerId);
+                $stmt->execute();
+                $stmt->close();
+            }
+        }
     }
 
 ?>
