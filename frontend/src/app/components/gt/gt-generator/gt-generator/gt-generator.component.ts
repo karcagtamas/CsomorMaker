@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Gt, GtWork, GtWorker } from 'src/app/models';
 import { GtGeneratorService } from 'src/app/services/gt-generator.service';
 import { MatDialog } from '@angular/material/dialog';
-import { NotificationService } from 'src/app/services';
+import { NotificationService, GtService } from 'src/app/services';
 import { GtWorkDialogComponent } from '../gt-work-dialog/gt-work-dialog.component';
 
 @Component({
@@ -19,6 +19,7 @@ export class GtGeneratorComponent implements OnInit, OnChanges {
 
   constructor(
     private gtgeneratorservice: GtGeneratorService,
+    private gtservice: GtService,
     public dialog: MatDialog,
     private notificationservice: NotificationService
   ) {}
@@ -139,7 +140,7 @@ export class GtGeneratorComponent implements OnInit, OnChanges {
   }
 
   generate() {
-    /* this.gtgeneratorservice
+    this.gtservice
       .generate(this.gt.id)
       .then(res => {
         if (res.response === 'success') {
@@ -150,6 +151,6 @@ export class GtGeneratorComponent implements OnInit, OnChanges {
       })
       .catch(() => {
         this.notificationservice.error('A generálás során valami hiba történt! Kérjük próbálja meg újra késöbb!');
-      }); */
+      });
   }
 }

@@ -122,7 +122,7 @@ CREATE OR REPLACE PROCEDURE getGtWorkStatuses(_workerId int(11), _gtId int(11))
       SELECT users.id AS workerId, users.name AS worker, users.username, gtworks.id AS workId, gtworks.name as work, gtworkworkerswitch.isActive, gtworkworkerswitch.isBoss from gtworkworkerswitch
       INNER JOIN users ON users.id = gtworkworkerswitch.worker
       INNER JOIN gtworks ON gtworks.id = gtworkworkerswitch.work
-      WHERE gtworkworkerswitch.worker = _workerId gtworks.gt = _gtId;
+      WHERE gtworkworkerswitch.worker = _workerId AND gtworks.gt = _gtId;
     END;
 
 CREATE OR REPLACE PROCEDURE setGtWorkStatusIsActive(_workerId int(11), _workId int(11))

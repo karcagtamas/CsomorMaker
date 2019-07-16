@@ -47,8 +47,8 @@ export class GtGeneratorService {
     return this.http.get<GtWorkTable[]>(`${this.workUrl}/tables/get/${work}`, HttpHeader).toPromise();
   }
 
-  getGtWorkStatuses(worker: number): Promise<GtWorkStatus[]> {
-    return this.http.get<GtWorkStatus[]>(`${this.workUrl}/statuses/get/${worker}`, HttpHeader).toPromise();
+  getGtWorkStatuses(worker: number, gt: number): Promise<GtWorkStatus[]> {
+    return this.http.get<GtWorkStatus[]>(`${this.workUrl}/statuses/get/${worker}/${gt}`, HttpHeader).toPromise();
   }
 
   setGtWorkStatusIsBoss(worker: number, work: number): Promise<Response> {

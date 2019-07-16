@@ -20,7 +20,7 @@ export class GtWorkerSettingsComponent implements OnInit {
 
   getWorkStatuses() {
     this.gtgeneratorservice
-      .getGtWorkStatuses(this.worker.id)
+      .getGtWorkStatuses(this.worker.id, this.worker.gt)
       .then(res => {
         this.workStatuses = res;
       })

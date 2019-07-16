@@ -13,10 +13,11 @@
 
     function getGtWorkersForGen($gtId){
         global $db;
-        $sql = "CALL getGtLowWorkers(?);";
+        $sql = "CALL getLowGtWorkers(?);";
         $stmt = $db->prepare($sql);
         $stmt->bind_param("i", $gt);
         $stmt->execute();
+        // var_dump($stmt);
         $result = $stmt->get_result();
         $workers = [];
         while($row = $result->fetch_assoc()){
@@ -153,13 +154,32 @@
     }
 
     function checkGen($gt, $works, $workers){
+        if (isLocked($gt)){
+            $res['response'] = 'fail';
+            $res['message']= 'A gólyatábor zárolva van!';
+            echo json_encode($res);
+            return false;
+        }
         if (!checkWorkNeeded($gt, $works, $workers)){
+            $res['response'] = 'fail';
+            $res['message']= 'Valamely poszthoz nincs elég humánunk!';
+            echo json_encode($res);
             return false;
         }
         if (!checkOverlaps($gt, $works, $workers)){
+            $res['response'] = 'fail';
+            $res['message']= 'Vannak egymás metsző események. amik kizárják egymást!';
+            echo json_encode($res);
             return false;
         }
         return true;
+    }
+
+    function isLocked($gt){
+        if ($gt['isLocked']){
+            return true;
+        }
+        return false;
     }
 
     function checkWorkNeeded($gt, $works, $workers){

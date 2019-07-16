@@ -34,4 +34,8 @@ export class GtService {
   lockGt(gt: number): Promise<Response> {
     return this.http.get<Response>(`${this.url}/lock/${gt}`, HttpHeader).toPromise();
   }
+
+  generate(gt: number): Promise<Response> {
+    return this.http.get<Response>(`${this.url}/generate/${gt}`, HttpHeader).toPromise();
+  }
 }

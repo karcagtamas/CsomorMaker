@@ -435,6 +435,10 @@
                             gtAccessLevel($url[4]);
                             break;
 
+                        case 'generate':
+                            generate($url[4]);
+                            break;
+
                         case 'members':
                             $event = $url[4];
                             require 'gt.members.php';
@@ -571,7 +575,7 @@
                                     $subevent = $url[5];
                                     switch ($subevent) {
                                         case 'get':
-                                            getGtWorkStatuses($url[6]);
+                                            getGtWorkStatuses($url[6], $url[7]);
                                             break;
 
                                         case 'set':

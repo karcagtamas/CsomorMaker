@@ -88,7 +88,7 @@
         $res = [];
         if (isLocked($event)){
             $res['response'] = 'fail';
-            $res['message']= 'Event is locked!';
+            $res['message']= 'Az esemény zárolva van!';
             echo json_encode($res);
             return false;
         }
@@ -102,28 +102,28 @@
 
         if (checkEmptyWorkPersons($workers)){
             $res['response'] = 'fail';
-            $res['message']= 'There are some people who has zero valid works!';
+            $res['message']= 'Vannak olyan emberek, akiket sehova nem lehet beosztani!';
             echo json_encode($res);
             return false;
         }
 
         if (checkEmptyWorks($works)){
             $res['response'] = 'fail';
-            $res['message']= 'There are some work who has zero active hours!';
+            $res['message']= 'Vannak olyan posztok, amik egyik órában sem aktívak!';
             echo json_encode($res);
             return false;
         }
 
         if (checkHours($event, $works, $workers)){
             $res['response'] = 'fail';
-            $res['message']= 'In some hour, we have fewer workers than works!';
+            $res['message']= 'Valamely órákban nincs elég szabad humán!';
             echo json_encode($res);
             return false;
         }
 
         if (checkSum($event, $works, $workers)){
             $res['response'] = 'fail';
-            $res['message']= 'We have too few workers!';
+            $res['message']= 'Túlságosan is kevés humánunk van!';
             echo json_encode($res);
             return false;
         }

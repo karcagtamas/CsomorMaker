@@ -103,14 +103,14 @@
         $stmt->close();
     }
 
-    function getGtWorkStatuses($workerId){
+    function getGtWorkStatuses($workerId, $gtId){
         global $db;
 
-        $sql = "CALL getGtWorkStatuses(?);";
+        $sql = "CALL getGtWorkStatuses(?, ?);";
         
 
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("i", $workerId);
+        $stmt->bind_param("ii", $workerId, $gtId);
         $stmt->execute();
         $result = $stmt->get_result();
         
