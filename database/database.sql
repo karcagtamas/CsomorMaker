@@ -348,7 +348,7 @@ CREATE TRIGGER gt_members AFTER INSERT ON usergtswitch
 
       SELECT days INTO _days FROM gts WHERE id = NEW.gt;
 
-      WHILE _days <> _currentDay + 1 DO
+      WHILE _days + 1 <> _currentDay DO
         SET _x = 0;
         WHILE _x <> 24 DO
             INSERT INTO gtworkertables (worker, day, hour, gt)
@@ -382,7 +382,7 @@ CREATE TRIGGER gt_update AFTER UPDATE ON gts
 
       SELECT days INTO _days FROM gts WHERE id = NEW.id;
 
-      WHILE _days <> _currentDay + 1 DO
+      WHILE _days + 1 <> _currentDay DO
         SET _x = 0;
         WHILE _x <> 24 DO
             INSERT INTO gtworkertables (worker, day, hour, gt)

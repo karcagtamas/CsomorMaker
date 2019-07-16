@@ -112,7 +112,7 @@ CREATE OR REPLACE PROCEDURE deleteGtWork(_workId int(11))
 CREATE OR REPLACE PROCEDURE getGtWorkTables(_workId int(11))
     BEGIN
       SELECT users.id AS workerId, users.name AS worker, users.username, gtworks.id AS workId, gtworks.name as work, gtworks.gt from gtworktables
-      LEFT JOIN users ON users.id = gtworktables.worker
+      INNER JOIN users ON users.id = gtworktables.worker
       INNER JOIN gtworks ON gtworks.id = gtworktables.work
       WHERE gtworktables.work = _workId;
     END;
@@ -176,13 +176,13 @@ CREATE OR REPLACE PROCEDURE getLowGtWorkers(_gtId int(11))
 CREATE OR REPLACE PROCEDURE getGtWorkerTables(_workerId int(11), _gtId int(11))
     BEGIN
       SELECT users.id AS workerId, users.name AS worker, users.username, gtworkertables.day, gtworkertables.hour, gtworks.id AS workId, gtworks.name as work, gtworkertables.gt from gtworkertables
-      LEFT JOIN users ON users.id = gtworkertables.worker
-      INNER JOIN gtworks ON gtworks.id = gtworkertables.work
-      WHERE gtworkertables.work = _workerId AND gtworks.gt = _gtId;
+      INNER JOIN users ON users.id = gtworkertables.worker
+      LEFT JOIN gtworks ON gtworks.id = gtworkertables.work
+      INNER JOIN usergtswitch ON users.id = usergtswitch.user 
+      WHERE gtworkertables.worker = _workerId AND usergtswitch.gt = _gtId;
     END;
 
 CREATE OR REPLACE PROCEDURE updateGtWorkerTable(_gtId int(11), _workerId int(11), _day int(2), _hour int(2), _workId int(11))
     BEGIN
       UPDATE gtworkertables SET work = _workId WHERE gt = _gtId AND worker = _workerId AND day = _day AND hour = _hour;
     END;
-
