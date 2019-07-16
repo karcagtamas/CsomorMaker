@@ -15,9 +15,8 @@
         global $db;
         $sql = "CALL getLowGtWorkers(?);";
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("i", $gt);
+        $stmt->bind_param("i", $gtId);
         $stmt->execute();
-        // var_dump($stmt);
         $result = $stmt->get_result();
         $workers = [];
         while($row = $result->fetch_assoc()){
@@ -195,8 +194,10 @@
     function getCountOfWorkers($work, $workers){
         $count = 0;
         foreach ($workers as $worker) {
-            if (in_array($worker['id'], $work['workers'])){
-                $count++;
+            foreach ($worker['statuses'] as $status) {
+                if ($status['workId'] == $work['id'] && $status['isActive']){
+                    $count++;
+                }
             }
         }
         return $count;
@@ -235,8 +236,8 @@
         }
     }
 
-    function save($event, $works, $workers){
-
+    function save($gt, $works, $workers){
+        var_dump($workers);
     }
 
 ?>

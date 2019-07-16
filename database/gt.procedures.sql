@@ -166,6 +166,6 @@ CREATE OR REPLACE PROCEDURE getGtWorkerTables(_workerId int(11), _gtId int(11))
       SELECT users.id AS workerId, users.name AS worker, users.username, gtworkertables.day, gtworkertables.hour, gtworks.id AS workId, gtworks.name as work, gtworkertables.gt from gtworkertables
       LEFT JOIN users ON users.id = gtworkertables.worker
       INNER JOIN gtworks ON gtworks.id = gtworkertables.work
-      WHERE gtworkertables.work = _workerId AND gtworktables.gt = _gtId;
+      WHERE gtworkertables.work = _workerId AND gtworks.gt = _gtId;
     END;
 

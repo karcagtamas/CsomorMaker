@@ -149,7 +149,7 @@
             }
             if ($tries < 1000){
                 // TODO SAVE
-                save($event, $works, $workers);
+                save($gt, $works, $workers);
                 $res['response'] = 'success';
                 $res['message']= 'A generálás sikeres volt! Yee!';
             }else{
