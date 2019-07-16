@@ -9,6 +9,13 @@ CREATE OR REPLACE PROCEDURE getGts(_userId int(11))
         WHERE usergtswitch.user = _userId;
     END;
 
+CREATE OR REPLACE PROCEDURE getGt(_gtId int(11))
+    BEGIN
+        SELECT gts.id, gts.year, gts.tShirtColor, gts.days, gts.members, gts.ready, gts.creater AS createrId, gts.isLocked, gts.greeny, gts.greenyCost, users.name AS creater FROM gts 
+        INNER JOIN users ON gts.creater = users.id
+        WHERE gts.id = _gtId;
+    END;
+
 CREATE OR REPLACE PROCEDURE updateGt(_gtId int(11), _year int(4), _tShirtColor varchar(50), _days int(2))
     BEGIN
         UPDATE gts SET year = _year, tShirtColor = _tShirtColor, days = _days WHERE id = _gtId;
@@ -110,12 +117,12 @@ CREATE OR REPLACE PROCEDURE getGtWorkTables(_workId int(11))
       WHERE gtworktables.work = _workId;
     END;
 
-CREATE OR REPLACE PROCEDURE getGtWorkStatuses(_workerId int(11))
+CREATE OR REPLACE PROCEDURE getGtWorkStatuses(_workerId int(11), _gtId int(11))
     BEGIN
       SELECT users.id AS workerId, users.name AS worker, users.username, gtworks.id AS workId, gtworks.name as work, gtworkworkerswitch.isActive, gtworkworkerswitch.isBoss from gtworkworkerswitch
       INNER JOIN users ON users.id = gtworkworkerswitch.worker
       INNER JOIN gtworks ON gtworks.id = gtworkworkerswitch.work
-      WHERE gtworkworkerswitch.worker = _workerId;
+      WHERE gtworkworkerswitch.worker = _workerId gtworks.gt = _gtId;
     END;
 
 CREATE OR REPLACE PROCEDURE setGtWorkStatusIsActive(_workerId int(11), _workId int(11))
@@ -154,11 +161,11 @@ CREATE OR REPLACE PROCEDURE getLowGtWorkers(_gtId int(11))
       WHERE usergtswitch.gt = _gtId AND eventroles.accessLevel = 1;
     END;
 
-CREATE OR REPLACE PROCEDURE getGtWorkerTables(_workerId int(11))
+CREATE OR REPLACE PROCEDURE getGtWorkerTables(_workerId int(11), _gtId int(11))
     BEGIN
       SELECT users.id AS workerId, users.name AS worker, users.username, gtworkertables.day, gtworkertables.hour, gtworks.id AS workId, gtworks.name as work, gtworkertables.gt from gtworkertables
       LEFT JOIN users ON users.id = gtworkertables.worker
       INNER JOIN gtworks ON gtworks.id = gtworkertables.work
-      WHERE gtworkertables.work = _workerId;
+      WHERE gtworkertables.work = _workerId AND gtworktables.gt = _gtId;
     END;
 
