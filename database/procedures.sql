@@ -139,29 +139,6 @@ USE csomormaker;
      DELETE FROM eventpayouts WHERE id = _id;
     END;
 
-  /* eventtodoes */
-
-  CREATE OR REPLACE PROCEDURE getToDoes(_eventId int(11))
-    BEGIN
-     SELECT * FROM eventtodoes WHERE eventId = _eventId;
-    END;
-
-  CREATE OR REPLACE PROCEDURE getToDo(_id int(11))
-    BEGIN
-     SELECT * FROM eventtodoes WHERE id = _id;
-    END;
-
-  CREATE OR REPLACE PROCEDURE addToDo(_eventId int(11), _text longtext)
-    BEGIN
-     INSERT INTO eventtodoes (eventId, text)
-        VALUES (_eventId, _text);
-    END;
-
-  CREATE OR REPLACE PROCEDURE deleteToDo(_id int(11))
-    BEGIN
-     DELETE FROM eventtodoes WHERE id = _id;
-    END;
-
   /* Messages */
 
   CREATE OR REPLACE PROCEDURE getMessages(_eventId int(11))

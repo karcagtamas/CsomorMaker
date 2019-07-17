@@ -180,7 +180,7 @@ CREATE OR REPLACE PROCEDURE updateEvent(
     END;
 
 
-  CREATE OR REPLACE PROCEDURE addEventTodo(_eventId int(11), _text longtext, _importance int(1), _expDate date)
+  CREATE OR REPLACE PROCEDURE addEventTodo(_eventId int(11), _text longtext, _importance int(1), _expDate datetime)
     BEGIN
       INSERT INTO eventtodoes (event, text, expirationDate, importance) VALUES (_eventId, _text, _expDate, _importance);
     END;

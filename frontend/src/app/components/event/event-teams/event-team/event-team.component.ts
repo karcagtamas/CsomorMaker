@@ -39,7 +39,7 @@ export class EventTeamComponent implements OnInit {
   openTeamDetailsModal() {
     const dialogRef = this.dialog.open(TeamDeatilsDialogComponent, {
       data: this.team,
-      width: '50%'
+      width: '75%'
     });
 
     dialogRef.afterClosed().subscribe(result => {

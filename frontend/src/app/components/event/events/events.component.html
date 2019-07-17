@@ -1,5 +1,5 @@
 <div class="col col-12 row panel">
-  <div class="col col-4 menu">
+  <div class="col col-12 col-sm-4 col-lg-2 menu">
     <div class="events border rounded">
       <div class="title text-center border rounded">Eseményeid</div>
       <div
@@ -33,7 +33,7 @@
       </div>
     </div>
   </div>
-  <div class="col col-8 changer" *ngIf="currentEvent.id">
+  <div class="col col-12 col-sm-8 col-lg-10 changer" *ngIf="currentEvent.id">
     <mat-card class="card">
       <div [ngSwitch]="currentPage">
         <app-event-details

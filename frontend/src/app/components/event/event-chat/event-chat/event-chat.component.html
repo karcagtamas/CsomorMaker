@@ -10,7 +10,7 @@
         {{ message.message }}
       </div>
     </div>
-    <div class="text-center">
+    <div class="text-center" *ngIf="!eventMessages || eventMessages.length === 0">
       Nincs megjeleníthető üzenet :(
     </div>
   </div>
