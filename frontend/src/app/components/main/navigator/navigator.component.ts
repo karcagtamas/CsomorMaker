@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class NavigatorComponent implements OnInit {
   isLoggedIn = false;
-  interval;
+  isMobielView = window.innerWidth < 650;
   constructor(private loginservice: LoginService, private router: Router, private commonservice: CommonService) {}
 
   ngOnInit() {

@@ -1,15 +1,42 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { GtWork, GtWorkTable } from 'src/app/models';
+import { GtGeneratorService } from 'src/app/services';
 
 @Component({
   selector: 'app-gt-csomor-work',
   templateUrl: './gt-csomor-work.component.html',
   styleUrls: ['./gt-csomor-work.component.scss']
 })
-export class GtCsomorWorkComponent implements OnInit {
+export class GtCsomorWorkComponent implements OnInit, OnChanges {
+  @Input() gtWorks: GtWork[];
+  selectedWork = 0;
+  workTables: GtWorkTable[] = [];
 
-  constructor() { }
+  constructor(private gtgeneratorservice: GtGeneratorService) {}
 
   ngOnInit() {
+    if (this.gtWorks.length > 0) {
+      this.selectedWork = 0;
+      this.getWorkTables();
+    }
   }
 
+  ngOnChanges() {
+    if (this.gtWorks.length > 0) {
+      this.selectedWork = 0;
+      this.getWorkTables();
+    }
+  }
+
+  getWorkTables() {
+    const work = this.gtWorks[this.selectedWork];
+    this.gtgeneratorservice
+      .getGtWorkTables(work.id)
+      .then(res => (this.workTables = res))
+      .catch(() => (this.workTables = []));
+  }
+
+  changeWork() {
+    this.getWorkTables();
+  }
 }
