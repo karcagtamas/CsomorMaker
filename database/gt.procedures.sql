@@ -6,7 +6,8 @@ CREATE OR REPLACE PROCEDURE getGts(_userId int(11))
         SELECT gts.id, gts.year, gts.tShirtColor, gts.days, gts.members, gts.ready, gts.creater AS createrId, gts.isLocked, gts.greeny, gts.greenyCost, users.name AS creater FROM gts 
         INNER JOIN usergtswitch ON gts.id = usergtswitch.gt
         INNER JOIN users ON gts.creater = users.id
-        WHERE usergtswitch.user = _userId;
+        WHERE usergtswitch.user = _userId
+        ORDER BY gts.year;
     END;
 
 CREATE OR REPLACE PROCEDURE getGt(_gtId int(11))
@@ -63,7 +64,8 @@ CREATE OR REPLACE PROCEDURE getGtMembers(_gtId int(11))
       SELECT usergtswitch.gt, users.name AS user, users.username AS username, users.id AS userId, usergtswitch.role AS roleId, usergtswitch.connectionDate, eventroles.name AS role, eventroles.accessLevel FROM usergtswitch
       INNER JOIN users ON users.id = usergtswitch.user
       INNER JOIN eventroles ON eventroles.id = usergtswitch.role
-      WHERE usergtswitch.gt = _gtId;
+      WHERE usergtswitch.gt = _gtId
+      ORDER BY eventroles.accessLevel, users.name;
     END;
 
 CREATE OR REPLACE PROCEDURE getNonGtMembers(_gtId int(11))
@@ -73,7 +75,7 @@ CREATE OR REPLACE PROCEDURE getNonGtMembers(_gtId int(11))
       WHERE users.id NOT IN (
       SELECT user as id FROM usergtswitch
       WHERE gt = _gtId
-      );
+      ) ORDER BY users.name;
     END;
 
 CREATE OR REPLACE PROCEDURE addGtMember(_gtId int(11), _userId int(11), _roleId int(11))
@@ -96,7 +98,8 @@ CREATE OR REPLACE PROCEDURE updateGtMember(_gtId int(11), _userId int(11), _role
 CREATE OR REPLACE PROCEDURE getGtWorks(_gtId int(11))
     BEGIN
       SELECT * from gtworks
-      WHERE gt = _gtId;
+      WHERE gt = _gtId
+      ORDER BY name;
     END;
 
 CREATE OR REPLACE PROCEDURE addGtWork(_gtId int(11), _name varchar(100), _day int(2), _start int(2), _end int(2), _workers int(3))
@@ -177,7 +180,8 @@ CREATE OR REPLACE PROCEDURE getLowGtWorkers(_gtId int(11))
       SELECT usergtswitch.gt, users.id AS id, users.username, users.name FROM usergtswitch
       INNER JOIN users ON users.id = usergtswitch.user
       INNER JOIN eventroles ON eventroles.id = usergtswitch.role 
-      WHERE usergtswitch.gt = _gtId AND eventroles.accessLevel = 1;
+      WHERE usergtswitch.gt = _gtId AND eventroles.accessLevel = 1
+      ORDER BY users.name;
     END;
 
 CREATE OR REPLACE PROCEDURE getGtWorkerTables(_workerId int(11), _gtId int(11))
@@ -186,7 +190,8 @@ CREATE OR REPLACE PROCEDURE getGtWorkerTables(_workerId int(11), _gtId int(11))
       INNER JOIN users ON users.id = gtworkertables.worker
       LEFT JOIN gtworks ON gtworks.id = gtworkertables.work
       INNER JOIN usergtswitch ON users.id = usergtswitch.user 
-      WHERE gtworkertables.worker = _workerId AND usergtswitch.gt = _gtId;
+      WHERE gtworkertables.worker = _workerId AND usergtswitch.gt = _gtId
+      ORDER BY day, hour;
     END;
 
 CREATE OR REPLACE PROCEDURE updateGtWorkerTable(_gtId int(11), _workerId int(11), _day int(2), _hour int(2), _workId int(11))

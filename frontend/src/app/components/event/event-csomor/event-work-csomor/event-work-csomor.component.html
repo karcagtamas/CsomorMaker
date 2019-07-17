@@ -25,7 +25,13 @@
     </button>
   </div>
   <div class="work">
-    <div class="row col col-12 border rounded" [ngClass]="{ over: hoverValue === table.worker }" *ngFor="let table of workTables" (mouseover)="hoverValue = table.worker" (mouseleave)="hoverValue = ''" >
+    <div
+      class="row col col-12 border rounded"
+      [ngClass]="{ over: hoverValue === table.worker }"
+      *ngFor="let table of workTables"
+      (mouseover)="hoverValue = table.worker"
+      (mouseleave)="hoverValue = ''"
+    >
       <div class="col col-6 text-center">{{ table.hour | convertToHour }}</div>
       <div class="col col-6 text-center">{{ table.worker | exists }}</div>
     </div>

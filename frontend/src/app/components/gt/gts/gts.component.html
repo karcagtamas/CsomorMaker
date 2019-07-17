@@ -39,7 +39,7 @@
           [accessLevel]="accessLevel"
           (lock)="lockGt($event)"
         ></app-gt-details>
-        <app-gt-csomor *ngSwitchCase="'csomor'"></app-gt-csomor>
+        <app-gt-csomor *ngSwitchCase="'csomor'" [gt]="currentGt"></app-gt-csomor>
         <app-gt-chat *ngSwitchCase="'chat'"></app-gt-chat>
         <app-gt-generator *ngSwitchCase="'generator'" [gt]="currentGt"></app-gt-generator>
         <app-gt-settings *ngSwitchCase="'settings'" [gt]="currentGt"> </app-gt-settings>

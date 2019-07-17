@@ -1,0 +1,19 @@
+.buttons {
+  margin-bottom: 0.5rem;
+}
+
+.work {
+  margin: 0;
+  margin-bottom: 0.3rem;
+  margin-top: 0.3rem;
+  padding: 0.2rem;
+
+  .block {
+    padding: 0.2rem;
+    &:hover {
+      background-color: #9a68f1af;
+
+      transition-duration: 0.5s;
+    }
+  }
+}

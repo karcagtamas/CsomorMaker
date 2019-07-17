@@ -1,3 +1,32 @@
-<p>
-  gt-csomor-work works!
-</p>
+<div>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Poszt</mat-label>
+    <mat-select [(ngModel)]="selectedWork" (selectionChange)="changeWork()">
+      <mat-option [value]="i" *ngFor="let work of gtWorks; let i = index">{{ work.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="buttons">
+    <button
+      mat-raised-button
+      color="warn"
+      *ngIf="selectedWork > 0"
+      (click)="selectedWork = selectedWork - 1; getWorkTables()"
+    >
+      Elöző
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      *ngIf="selectedWork < gtWorks.length - 1"
+      (click)="selectedWork = selectedWork + 1; getWorkTables()"
+      class="float-right"
+    >
+      Következő
+    </button>
+  </div>
+  <div class="work row col-12">
+    <div class="col-3 border rounded block" *ngFor="let table of workTables">
+      <div class="text-center">{{ table.worker }}</div>
+    </div>
+  </div>
+</div>

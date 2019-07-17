@@ -185,14 +185,14 @@
         $stmt->close();
     }
 
-    function getGtWorkerTables($workerId){
+    function getGtWorkerTables($workerId, $gtId){
         global $db;
 
-        $sql = "CALL getGtWorkerTables(?);";
+        $sql = "CALL getGtWorkerTables(?, ?);";
         
 
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("i", $workerId);
+        $stmt->bind_param("ii", $workerId, $gtId);
         $stmt->execute();
         $result = $stmt->get_result();
         

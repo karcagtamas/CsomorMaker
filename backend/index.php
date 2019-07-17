@@ -619,7 +619,7 @@
                                     $subevent = $url[5];
                                     switch ($subevent) {
                                         case 'get':
-                                            getGtWorkerTables($url[6]);
+                                            getGtWorkerTables($url[6], $url[7]);
                                             break;
                                         
                                         default:

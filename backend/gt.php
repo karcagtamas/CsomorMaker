@@ -138,7 +138,7 @@
                     } while (isValidWorkerIndex($index, $work, $workers) && $tries < 1000);
                     $worker = $workers[$index];
 
-
+                    if ($tries < 1000){
                         array_push($works[$i]['workers'], $worker['id']);
                         $count++;
                         if ($work['workerCount'] > 6){
@@ -146,15 +146,15 @@
                         }else{
                             $workers[$index]['countOfSmallWorks']--;
                         }
-
+                        
                         for ($k=0; $k < count($workers[$index]['tables']); $k++) {
                             $table = $workers[$index]['tables'][$k];
                             if ($table['day'] == $work['day'] && $table['hour'] >= $work['startHour'] && $table['hour'] <= $work['endHour']){
                                 $workers[$index]['tables'][$k]['workId'] = $work['id'];
                                 $workers[$index]['tables'][$k]['work'] = $work['name'];
                             }
-                        }
-                        
+                        }   
+                    }
                     
                     // $tries++;
                 } while ($count < $work['workerCount'] && $tries < 1000);

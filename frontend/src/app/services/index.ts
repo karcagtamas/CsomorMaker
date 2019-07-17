@@ -11,3 +11,5 @@ export * from './event-pay-outs.service';
 export * from './gt.service';
 export * from './event-messages.service';
 export * from './loader.service';
+export * from './gt-generator.service';
+export * from './gt-members.service';
