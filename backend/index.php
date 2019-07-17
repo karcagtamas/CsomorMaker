@@ -657,11 +657,11 @@
                                     break;
 
                                 case 'add':
-                                    addGtTodo($_POST['gt'], $_POST['text'], $_POST['importance'], $_POST['exp'])
+                                    addGtTodo($_POST['gt'], $_POST['text'], $_POST['importance'], $_POST['exp']);
                                     break;
 
                                 case 'update':
-                                    addGtTodo($_POST['todo'], $_POST['text'], $_POST['importance'], $_POST['exp'])
+                                    addGtTodo($_POST['todo'], $_POST['text'], $_POST['importance'], $_POST['exp']);
                                     break;
 
                                 case 'delete':
@@ -705,7 +705,7 @@
                                     break;
                                 
                                 case 'update':
-                                    updateGtPayout($_POST['payout'], $_POST['name'], $_POST['type'], $_POST['cost'])
+                                    updateGtPayout($_POST['payout'], $_POST['name'], $_POST['type'], $_POST['cost']);
                                     break;
 
                                 case 'delete':
