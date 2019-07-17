@@ -13,6 +13,9 @@ INSERT INTO eventroles (name, accessLevel)
 INSERT INTO users (username, email, password, name, role)
   VALUES ('karcagtamas', 'karcagtamas@gmail.com', '$2y$10$H/hBwhyOF8pfqTwugvkCreTRVP7olOOPTLr2ACkH6OescL0FLc2/S', 'Karcag', 1);
 
+INSERT INTO users (username, email, password, name, role)
+  VALUES ('karcagtamas2', 'karcagtamas@gmail.cm', '$2y$10$H/hBwhyOF8pfqTwugvkCreTRVP7olOOPTLr2ACkH6OescL0FLc2/S', 'Karcag', 1);
+
 INSERT INTO events (name, isLocked, isDisabled, creater, injured, visitors, visitorLimit, playerCost, visitorCost, playerDeposit, days, startHour, endHour, length, ready)
   VALUES ('24 órás röplabda', FALSE, FALSE, 1, 1, 10, 50, 1500, 500, 500, 1, 12, 12, 24, TRUE);
 

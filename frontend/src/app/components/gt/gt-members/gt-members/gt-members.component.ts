@@ -101,7 +101,7 @@ export class GtMembersComponent implements OnInit, OnChanges {
               this.getGtMembers();
               this.notificationservice.success(res.message);
             } else {
-              this.notificationservice.error(res.response);
+              this.notificationservice.error(res.message);
             }
           })
           .catch(() => {

@@ -99,6 +99,18 @@
         $stmt->close();
     }
 
+    function setGtReadyStatus($gtId, $value){
+        global $db;
+
+        $sql = "CALL setGtReadyStatus(?, ?);";
+        
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("is", $gtId, $value);
+        $stmt->execute();
+        $stmt->close();
+    }
+
     function generate($gtId){
         global $db;
         require 'generator.gt.php';

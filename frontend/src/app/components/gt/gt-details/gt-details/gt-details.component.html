@@ -8,6 +8,9 @@
   <div class="element"><span class="name">Tagok:</span> {{ gt.members | personCount }}</div>
   <div class="element"><span class="name">Gyólyák:</span> {{ gt.greeny | personCount }}</div>
   <div class="element"><span class="name">Tábor díj:</span> {{ gt.greenyCost | forint }}</div>
+  <div class="element" [ngClass]="{ ready: gt.ready, unready: !gt.ready }">
+    <span class="name">Generálási állapot:</span> {{ gt.ready | isReady }}
+  </div>
 
   <div class="text-center">
     <button mat-raised-button color="accent" *ngIf="!gt.isLocked && accessLevel >= 3" (click)="lockGt()">

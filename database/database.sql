@@ -337,13 +337,14 @@ CREATE TRIGGER gt_members AFTER INSERT ON usergtswitch
     DECLARE _x int(2) DEFAULT 0;
 
     UPDATE gts SET members = members + 1 WHERE id = NEW.gt;
-    INSERT INTO gtworkworkerswitch (work, worker)
+    INSERT INTO gtworkworkerswitch (work, worker, gt)
        SELECT * FROM (
         SELECT gtworks.id FROM gtworks
         WHERE gtworks.gt = NEW.gt) AS T1
-    CROSS JOIN (SELECT NEW.user) AS T2;
+    CROSS JOIN (SELECT NEW.user) AS T2
+    CROSS JOIN (SELECT NEW.gt) AS T3;
 
-
+      CALL setGtReadyStatus(NEW.gt, FALSE);
       DELETE FROM gtworkertables WHERE worker = NEW.user AND gt = NEW.gt;
 
       SELECT days INTO _days FROM gts WHERE id = NEW.gt;
@@ -366,6 +367,7 @@ CREATE TRIGGER gt_members_de AFTER DELETE ON usergtswitch
     DELETE FROM gtworkworkerswitch
     WHERE worker = OLD.user AND gtworkworkerswitch.gt = OLD.gt;
     DELETE FROM gtworkertables WHERE worker = OLD.user AND gtworkertables.gt = OLD.gt;
+    CALL setGtReadyStatus(OLD.gt, FALSE);
   END;
 
 CREATE TRIGGER gt_update AFTER UPDATE ON gts
@@ -409,6 +411,7 @@ CREATE TRIGGER adding_work AFTER INSERT ON gtworks
         INNER JOIN usergtswitch ON users.id = usergtswitch.user
         WHERE usergtswitch.gt = NEW.gt) AS T1
     CROSS JOIN (SELECT NEW.id) AS T2 CROSS JOIN (SELECT NEW.gt) AS T3;
+    CALL setGtReadyStatus(NEW.id, FALSE);
   END;
 
 CREATE TRIGGER deleting_work AFTER DELETE ON gtworks
@@ -416,6 +419,7 @@ CREATE TRIGGER deleting_work AFTER DELETE ON gtworks
   BEGIN
     DELETE FROM gtworkworkerswitch WHERE work = OLD.id;
     DELETE FROM gtworktables WHERE work = OLD.id;
+    CALL setGtReadyStatus(NEW.id, FALSE);
   END;
 
 

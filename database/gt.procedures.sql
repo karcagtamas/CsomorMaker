@@ -49,6 +49,13 @@ CREATE OR REPLACE PROCEDURE gtAccessLevel(_gtId int(11), _userId int(11))
       WHERE usergtswitch.user = _userId AND usergtswitch.gt = _gtId;
     END;
 
+CREATE OR REPLACE PROCEDURE setGtReadyStatus(_gtId int(11), _value boolean)
+    BEGIN
+      UPDATE gts SET ready = _value WHERE id = _gtId;
+    END;
+
+
+
 /* Members */
 
 CREATE OR REPLACE PROCEDURE getGtMembers(_gtId int(11))

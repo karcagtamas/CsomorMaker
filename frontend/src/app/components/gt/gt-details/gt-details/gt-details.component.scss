@@ -4,6 +4,17 @@
       font-weight: bold;
     }
   }
+
+  .unready {
+    color: red;
+    font-weight: bold;
+  }
+
+  .ready {
+    color: green;
+    font-weight: bold;
+  }
+
   button {
     margin: 0.2rem;
   }

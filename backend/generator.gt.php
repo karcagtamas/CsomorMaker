@@ -242,7 +242,6 @@
         $sql = "CALL updateGtWorkerTable(?, ?, ?, ?, ?);";
 
         foreach ($workers as $worker) {
-            var_dump($workers);
             foreach ($worker['tables'] as $table) {
                 $stmt = $db->prepare($sql);
                 $stmt->bind_param("iiiii", $gt['id'], $worker['id'], $table['day'], $table['hour'], $table['workId']);
@@ -268,6 +267,8 @@
                 $stmt->close();
             }
         }
+
+        setGtReadyStatus($gt['id'], true);
     }
 
 ?>
