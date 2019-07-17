@@ -32,11 +32,12 @@ export class GtClass {
 }
 
 export class GtClassMember {
-  userId: number;
-  user: string;
-  username: string;
+  id: number;
+  name: string;
+  isPaid: boolean;
   classId: number;
   class: string;
+  description: string;
 }
 
 export class GtWork {

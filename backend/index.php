@@ -482,28 +482,42 @@
                             $event = $url[4];
                             switch ($event) {
                                 case 'get':
+                                    getGtClasses($url[5]);
                                     break;
 
                                 case 'add':
+                                    addGtClass($_POST['gt'], $_POST['name']);
                                     break;
 
                                 case 'update':
+                                    updateGtClass($_POST['class'], $_POST['name'], $_POST['tShirtColor']);
                                     break;
 
                                 case 'delete':
+                                    deleteGtClass($url[5]);
                                     break;
 
                                 case 'members':
                                     $subevent = $url[5];
                                     switch ($subevent) {
                                         case 'get':
+                                            getGtClassMembers($url[6]);
+                                            break;
 
+                                        case 'update':
+                                            updateGtClassMember($_POST['member'], $_POST['name'], $_POST['description']);
                                             break;
 
                                         case 'add':
+                                            addGtClassMember($_POST['class'], $_POST['name'], $_POST['description']);
                                             break;
 
                                         case 'delete':
+                                            deleteGtClassMember($url[6]);
+                                            break;
+
+                                        case 'set':
+                                            setGtClassMemberPaidStatus($url[6]);
                                             break;
                                         
                                         default:

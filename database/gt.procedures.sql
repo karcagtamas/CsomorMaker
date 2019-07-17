@@ -265,3 +265,68 @@ CREATE OR REPLACE PROCEDURE deleteGtTodo(_todoId int(11))
   BEGIN
     DELETE FROM gttodoes WHERE id = _todoId;
   END;
+
+/* Gt Classes */
+
+CREATE OR REPLACE PROCEDURE getGtClasses(_gtId int(11))
+  BEGIN
+    SELECT * FROM gtclasses
+      WHERE gt = _gtId
+      ORDER BY name;
+  END;
+
+CREATE OR REPLACE PROCEDURE addGtClass(_gtId int(11), _name varchar(5))
+  BEGIN
+    INSERT INTO gtclasses (name, gt)
+      VALUES(_name, _gtId);
+  END;
+
+CREATE OR REPLACE PROCEDURE updateGtClass(_classId int(11), _name varchar(5),_tShirtColor varchar(50))
+  BEGIN
+    UPDATE gtclasses SET name = _name, tShirtColor = _tShirtColor WHERE id = _classId;
+  END;
+
+CREATE OR REPLACE PROCEDURE deleteGtClass(_classId int(11))
+  BEGIN
+    DELETE FROM gtclasses WHERE id = _classId;
+  END;
+
+/* Gt classmembers */
+
+CREATE OR REPLACE PROCEDURE getGtClassMembers(_classId int(11))
+  BEGIN
+    SELECT gtclassmembers.id, gtclassmembers.class AS classId, gtclassmembers.name, gtclassmembers.isPaid, gtclassmembers.description, gtclasses.name AS class FROM gtclassmembers
+      INNER JOIN gtclasses ON gtclasses.id = gtclassmembers.class
+      WHERE gtclassmember.class = _classId
+      ORDER BY name;
+  END;
+
+CREATE OR REPLACE PROCEDURE addGtClassMember(_classId int(11), _name varchar(100), _description text)
+  BEGIN
+    INSERT INTO gtclassmembers (name, description, class)
+      VALUES(_name,_description, _classId);
+  END;
+
+CREATE OR REPLACE PROCEDURE updateGtClassMember(_memberId int(11), _name varchar(100),_description text)
+  BEGIN
+    UPDATE gtclassmembers SET name = _name, desription = _description WHERE id = _memberId;
+  END;
+
+CREATE OR REPLACE PROCEDURE deleteGtClassMember(_memberId int(11))
+  BEGIN
+    DELETE FROM gtclassmembers WHERE id = _memberId;
+  END;
+
+CREATE OR REPLACE PROCEDURE setGtClassMemberPaidStatus(_memberId int(11))
+  BEGIN
+    DECLARE _paid boolean;
+     SELECT isPaid INTO _paid FROM gtclassmembers WHERE id = _memberId;
+
+     IF _paid
+      THEN
+        SET _paid = FALSE;
+      ELSE
+        SET _paid = TRUE;
+      END IF;
+      UPDATE gtclassmembers SET isPaid = _paid WHERE id = _memberId;
+  END;

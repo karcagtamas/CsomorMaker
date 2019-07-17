@@ -266,14 +266,25 @@ CREATE TABLE gtclasses(
   REFERENCES gts(id)
   );
 
+CREATE TABLE gtclassmembers(
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(100) NOT NULL,
+  class int(11) NOT NULL,
+  isPaid boolean DEFAULT FALSE,
+  description text,
+  PRIMARY KEY(id),
+  CONSTRAION fk_class_gtclasses_gtclassmembers FOREIGN KEY(class)
+  REFERENCES gtclasses(id) ON DELETE CASCADE
+  );
+
 CREATE TABLE usersgtclassesswitch(
   user int(11) NOT NULL,
   gtclass int(11) NOT NULL,
   PRIMARY KEY(user, gtclass),
   CONSTRAINT fk_user_users_usersgtclassesswitch FOREIGN KEY (user)
-  REFERENCES users(id),
+  REFERENCES users(id) ON DELETE CASCADE,
   CONSTRAINT fK_gtclass_gtclasses_usersgtclassesswitch FOREIGN KEY(gtclass)
-  REFERENCES gtclasses(id)
+  REFERENCES gtclasses(id) ON DELETE CASCADE
   );
 
 CREATE TABLE gtworks(
