@@ -329,6 +329,45 @@ CREATE TABLE gtworkworkerswitch(
   REFERENCES gts(id) ON DELETE CASCADE
   );
 
+CREATE TABLE gttodoes(
+  id int(11) AUTO_INCREMENT NOT NULL,
+  gt int(11) NOT NULL,
+  date datetime DEFAULT CURRENT_TIMESTAMP,
+  text longtext NOT NULL,
+  importance int(1) NOT NULL DEFAULT 3,
+  isSolved boolean DEFAULT FALSE,
+  expirationDate datetime NOT NULL,
+  PRIMARY KEY(id),
+  CONSTRAINT fk_gt_gts_gttodoes FOREIGN KEY (gt)
+  REFERENCES gts(id)
+  );
+
+CREATE TABLE gtmessages(
+  id int(11) AUTO_INCREMENT NOT NULL,
+  sender int(11) NOT NULL,
+  gt int(11) NOT NULL,
+  dateOfSent datetime DEFAULT CURRENT_TIMESTAMP,
+  message text NOT NULL,
+  PRIMARY KEY(id),
+  CONSTRAINT fk_sender_users_gtmessages FOREIGN KEY (sender)
+  REFERENCES users(id),
+  CONSTRAINT fk_gt_gts_gtmessages FOREIGN KEY (gt)
+  REFERENCES gts (id)
+);
+
+CREATE TABLE gtpayouts(
+  id int(11) AUTO_INCREMENT NOT NULL,
+  name varchar(75) NOT NULL,
+  gt int(11) NOT NULL,
+  type int(11) NOT NULL,
+  cost decimal NOT NULL,
+  PRIMARY KEY(id),
+  CONSTRAINT fk_type_gtpayouttypes_gtpayouts FOREIGN KEY (type)
+  REFERENCES eventpayouttypes(id),
+  CONSTRAINT fk_gt_gts_gtpayouts FOREIGN KEY (gt)
+  REFERENCES gts(id)
+);
+
 CREATE TRIGGER gt_members AFTER INSERT ON usergtswitch
   FOR EACH ROW
   BEGIN

@@ -198,3 +198,70 @@ CREATE OR REPLACE PROCEDURE updateGtWorkerTable(_gtId int(11), _workerId int(11)
     BEGIN
       UPDATE gtworkertables SET work = _workId WHERE gt = _gtId AND worker = _workerId AND day = _day AND hour = _hour;
     END;
+
+/* Gt Payouts */
+
+CREATE OR REPLACE PROCEDURE getGtPayouts(_gtId int(11))
+  BEGIN
+    SELECT gtpayouts.id, gtpayouts.name, gtpayouts.gt, gtpayouts.type AS typeId, gtpayouts.cost, eventpayouttypes.name AS type, eventpayouttypes.isOut FROM gtpayouts
+    INNER JOIN eventpayouttypes ON eventpayouttypes.id = gtpayouts.type
+    WHERE gtpayouts.gt = _gtId
+    ORDER BY gtpayouts.type;
+  END;
+
+CREATE OR REPLACE PROCEDURE addGtPayout(_gtId int(11), _name varchar(75), _type int(11), _cost decimal)
+  BEGIN
+    INSERT INTO gtpayouts(name, gt, type, cost)
+      VALUES(_name, _gtId, _type, _cost);
+  END;
+
+CREATE OR REPLACE PROCEDURE deleteGtPayout(_payoutId int(11))
+  BEGIN
+    DELETE FROM gtpayouts WHERE id = _payoutId;
+  END;
+
+CREATE OR REPLACE PROCEDURE updateGtPayout(_payoutId int(11), _name varchar(75), _type int(11), _cost decimal)
+  BEGIN
+    UPDATE gtpayouts SET name = _name, type = _type, cost = _cost WHERE id = _payoutId;
+  END;
+
+/* Gt Messages */
+
+CREATE OR REPLACE PROCEDURE getGtMessages(_gtId int(11))
+  BEGIN
+    SELECT gtmessages.id, gtmessages.sender AS senderId, gtmessages.gt, gtmessages.dateOfSent, gtmessages.message, users.name AS sender FROM gtmessages
+      INNER JOIN users ON users.id = gtmessages.sender
+      WHERE gtmessage.gt = _gtId
+    ORDER BY gtmessages.dateOfSent;
+  END;
+
+CREATE OR REPLACE PROCEDURE addGtMessage(_gtId int(11), _sender int(11), _message text)
+  BEGIN
+    INSERT INTO gtmessages(gt, sender, message)
+      VALUES(_gtId, _sender, _message);
+  END;
+
+/* Gt todoes */
+
+CREATE OR REPLACE PROCEDURE getGtTodoes(_gtId int(11))
+  BEGIN
+    SELECT * FROM gttodoes
+      WHERE gt = _gtId
+    ORDER BY isSolved, importance, date DESC;
+  END;
+
+CREATE OR REPLACE PROCEDURE addGtTodo(_gtId int(11), _text longtext, _importance int(1), _expirationDate datetime)
+  BEGIN
+    INSERT INTO gttodoes(gt, text, importance, expirationDate)
+      VALUES(_gtId, _text, _importance, _expirationDate);
+  END;
+
+CREATE OR REPLACE PROCEDURE updateGtTodo(_todoId int(11), _text longtext, _importance int(1), _expirationDate datetime)
+  BEGIN
+    UPDATE gttodoes SET text = _text, importance = _importance, expirationDate = _expirationDate WHERE id = _todoId;
+  END;
+
+CREATE OR REPLACE PROCEDURE deleteGtTodo(_todoId int(11))
+  BEGIN
+    DELETE FROM gttodoes WHERE id = _todoId;
+  END;

@@ -85,3 +85,32 @@ export class GtWorkStatus {
   isActive: boolean;
   isBoss: boolean;
 }
+
+export class GtPayout {
+  id: number;
+  name: string;
+  gt: number;
+  typeId: number;
+  type: string;
+  isOut: boolean;
+  cost: number;
+}
+
+export class GtMessage {
+  id: number;
+  senderId: number;
+  sender: string;
+  gt: number;
+  dateOfSent: Date;
+  message: string;
+}
+
+export class GtTodo {
+  id: number;
+  gt: number;
+  date: Date;
+  text: number;
+  importance: number;
+  isSolved: boolean;
+  expirationDate: Date;
+}

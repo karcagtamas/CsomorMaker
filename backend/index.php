@@ -634,9 +634,80 @@
                             }
                             break;
                         
+                        case 'todoes':
+                            $event = $url[4];
+                            require 'gt.todoes.php';
+                            switch ($event) {
+                                case 'get':
+                                    getGtTodoes($url[5]);
+                                    break;
+
+                                case 'add':
+                                    addGtTodo($_POST['gt'], $_POST['text'], $_POST['importance'], $_POST['exp'])
+                                    break;
+
+                                case 'update':
+                                    addGtTodo($_POST['todo'], $_POST['text'], $_POST['importance'], $_POST['exp'])
+                                    break;
+
+                                case 'delete':
+                                    deleteGtTodo($url[5]);
+                                    break;
+                                
+                                default:
+                                    echo '{"response" : "bad-event", "message" : "Bad request event!"}';
+                                    break;
+                            }
+                            break;
+
+                        case 'messages':
+                            $event = $url[4];
+                            require 'gt.messages.php';
+                            switch ($event) {
+                                case 'get':
+                                    getGtMessages($url[5]);
+                                    break;
+
+                                case 'add':
+                                    addGtMessage($_POST['gt'], $_POST['message']);
+                                    break;
+                                
+                                default:
+                                    echo '{"response" : "bad-event", "message" : "Bad request event!"}';
+                                    break;
+                            }
+                            break;
+
+                        case 'payouts':
+                            $event = $url[4];
+                            require 'gt.messages.php';
+                            switch ($event) {
+                                case 'get':
+                                    getGtPayouts($url[5]);
+                                    break;
+
+                                case 'add':
+                                    addGtPayout($_POST['gt'], $_POST['name'], $_POST['type'], $_POST['cost']);
+                                    break;
+                                
+                                case 'update':
+                                    updateGtPayout($_POST['payout'], $_POST['name'], $_POST['type'], $_POST['cost'])
+                                    break;
+
+                                case 'delete':
+                                    deleteGtPayput($url[5]);
+                                    break;
+                                
+                                default:
+                                    echo '{"response" : "bad-event", "message" : "Bad request event!"}';
+                                    break;
+                            }
+                            break;
+                        
                         default:
                             echo '{"response" : "bad-subgroup", "message" : "Bad request subgroup!"}';
                             break;
+
                     }
                     break;
                     
