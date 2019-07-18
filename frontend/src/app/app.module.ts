@@ -105,17 +105,17 @@ import {
 import {
   GtMembersComponent,
   GtAddMemberDialogComponent,
-  GtMemberModifyDialogComponent
+  GtMemberModifyDialogComponent,
+  GtMemberRowComponent
 } from './components/gt/gt-members';
 import { GtSettingsComponent } from './components/gt/gt-settings';
 import { GtSummaryComponent, GtPayoutComponent } from './components/gt/gt-summary';
-import { GtTodoesComponent, GtTodoComponent } from './components/gt/gt-todo';
+import { GtTodoesComponent, GtTodoComponent, GtTodoDialogComponent } from './components/gt/gt-todo';
 import { GtsComponent, NewGtComponent } from './components/gt';
 import { EventPersonalCsomorComponent } from './components/event/event-csomor/event-personal-csomor/event-personal-csomor.component';
 import { EventWorkCsomorComponent } from './components/event/event-csomor/event-work-csomor/event-work-csomor.component';
 import { LoaderComponent } from './components/main/loader/loader.component';
 import { MatNativeDateModule } from '@angular/material/core';
-import { GtMemberRowComponent } from './components/gt/gt-members/gt-member-row/gt-member-row.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -186,7 +186,8 @@ import { GtMemberRowComponent } from './components/gt/gt-members/gt-member-row/g
     EventWorkCsomorComponent,
     LoaderComponent,
     TodoDialogComponent,
-    GtMemberRowComponent
+    GtMemberRowComponent,
+    GtTodoDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -245,7 +246,8 @@ import { GtMemberRowComponent } from './components/gt/gt-members/gt-member-row/g
     TodoDialogComponent,
     GtWorkDialogComponent,
     GtAddMemberDialogComponent,
-    GtMemberModifyDialogComponent
+    GtMemberModifyDialogComponent,
+    GtTodoDialogComponent
   ]
 })
 export class AppModule {}

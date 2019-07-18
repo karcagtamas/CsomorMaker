@@ -30,4 +30,8 @@ export class GtTodoesService {
   updateGtTodo(todo: number, text: string, importance: number, exp: Date): Promise<Response> {
     return this.http.post<Response>(`${this.url}/update`, { todo, text, importance, exp }, HttpHeader).toPromise();
   }
+
+  setSolvedGtTodo(todo: number): Promise<Response> {
+    return this.http.get<Response>(`${this.url}/set/${todo}`, HttpHeader).toPromise();
+  }
 }

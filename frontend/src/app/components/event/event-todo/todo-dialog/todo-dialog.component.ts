@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EventToDo } from 'src/app/models';
 import { Validators, FormControl } from '@angular/forms';
+import { NotificationService } from 'src/app/services';
 
 @Component({
   selector: 'app-todo-dialog',
@@ -16,7 +17,11 @@ export class TodoDialogComponent implements OnInit {
   importanceControl = new FormControl('', [Validators.required]);
   dateControl = new FormControl('', [Validators.required]);
 
-  constructor(public dialogRef: MatDialogRef<TodoDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: EventToDo) {}
+  constructor(
+    private notificationservice: NotificationService,
+    public dialogRef: MatDialogRef<TodoDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: EventToDo
+  ) {}
 
   ngOnInit() {
     this.isEdit = this.data ? true : false;
@@ -44,6 +49,8 @@ export class TodoDialogComponent implements OnInit {
       todo.expirationDate.setHours(10);
       todo.importance = +this.importanceControl.value;
       this.dialogRef.close(todo);
+    } else {
+      this.notificationservice.warning('Nem megfelelő adatok!');
     }
   }
 }

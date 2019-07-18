@@ -1,3 +1,28 @@
-<p>
-  gt-todo works!
-</p>
+<div class="todo-frame">
+  <div
+    class="todo border rounded"
+    [ngClass]="{
+      imp1: todo.importance === 1 && !todo.isSolved,
+      imp2: todo.importance === 2 && !todo.isSolved,
+      imp3: todo.importance === 3 && !todo.isSolved,
+      solved: todo.isSolved,
+      exp: isNow && !todo.isSolved
+    }"
+  >
+    <div>{{ todo.text }}</div>
+    <div>Határidő: {{ todo.expirationDate | date: 'yyyy. MM. dd.' }}</div>
+    <div class="buttons" *ngIf="!todo.isSolved">
+      <button mat-mini-fab color="primary" class="mr-1" (click)="setToSolved()">
+        &#10004;
+      </button>
+      <button mat-mini-fab color="accent" class="ml-1" (click)="openDialog()">
+        &#9998;
+      </button>
+    </div>
+    <div *ngIf="todo.isSolved">
+      <strong>
+        Megoldott
+      </strong>
+    </div>
+  </div>
+</div>

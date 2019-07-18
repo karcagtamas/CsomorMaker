@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Event, EventToDo } from 'src/app/models';
 import { EventTodoesService, NotificationService } from 'src/app/services';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,7 +9,7 @@ import { TodoDialogComponent } from '../todo-dialog/todo-dialog.component';
   templateUrl: './event-to-do.component.html',
   styleUrls: ['./event-to-do.component.scss']
 })
-export class EventToDoComponent implements OnInit {
+export class EventToDoComponent implements OnInit, OnChanges {
   @Input() event: Event;
   eventTodoes: EventToDo[] = [];
   now = {
@@ -25,6 +25,10 @@ export class EventToDoComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.getEventTodoes();
+  }
+
+  ngOnChanges() {
     this.getEventTodoes();
   }
 

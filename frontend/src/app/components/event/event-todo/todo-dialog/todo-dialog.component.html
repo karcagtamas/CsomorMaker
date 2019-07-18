@@ -1,13 +1,13 @@
 <div mat-dialog-content>
   <div class="text-center panel-title border rounded">{{ title }}</div>
   <mat-form-field class="w-100" appearance="outline">
-    <mat-label>Todo</mat-label>
-    <input matInput type="text" placeholder="Todo" [formControl]="textControl" />
+    <mat-label>Teendő</mat-label>
+    <input matInput type="text" placeholder="Teendő" [formControl]="textControl" />
     <mat-error *ngIf="textControl.hasError('required')">A szöveg megadása kötelező!</mat-error>
   </mat-form-field>
   <mat-form-field class="w-100" appearance="outline">
-    <mat-label>Todo</mat-label>
-    <mat-select [formControl]="importanceControl" placeholder="Fontoság">
+    <mat-label>Prioritás</mat-label>
+    <mat-select [formControl]="importanceControl" placeholder="Prioritás">
       <mat-option [value]="1">Prio 1</mat-option>
       <mat-option [value]="2">Prio 2</mat-option>
       <mat-option [value]="3">Prio 3</mat-option>
@@ -19,6 +19,7 @@
     <input matInput [matDatepicker]="picker" placeholder="Határidő" [formControl]="dateControl" />
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="dateControl.hasError('required')">A határidő megadása kötelező!</mat-error>
   </mat-form-field>
 </div>
 <div mat-dialog-actions>

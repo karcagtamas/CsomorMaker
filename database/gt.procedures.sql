@@ -266,6 +266,11 @@ CREATE OR REPLACE PROCEDURE deleteGtTodo(_todoId int(11))
     DELETE FROM gttodoes WHERE id = _todoId;
   END;
 
+CREATE OR REPLACE PROCEDURE setSolvedGtTodo(_todoId int(11))
+  BEGIN
+    UPDATE gttodoes SET isSolved = TRUE WHERE id = _todoId;
+  END;
+
 /* Gt Classes */
 
 CREATE OR REPLACE PROCEDURE getGtClasses(_gtId int(11))

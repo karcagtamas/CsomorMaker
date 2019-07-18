@@ -39,7 +39,7 @@
 
         $sql = "CALL deleteGtTodo(?);";
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("i", $gtId);
+        $stmt->bind_param("i", $todoId);
         $stmt->execute();
         if ($stmt->errno){
             $array['response'] =  'fail';
@@ -65,6 +65,24 @@
         }else{
             $array['response'] =  'success';
             $array['message'] = 'A teendő frissítése sikeres!';
+        }
+        echo json_encode($array);
+        $stmt->close();
+    }
+
+    function setSolvedGtTodo($todoId){
+        global $db;
+
+        $sql = "CALL setSolvedGtTodo(?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $todoId);
+        $stmt->execute();
+        if ($stmt->errno){
+            $array['response'] =  'fail';
+            $array['message'] = 'Az teendő állapotának frissítése sikertelen!';
+        }else{
+            $array['response'] =  'success';
+            $array['message'] = 'A teendő állapotának frissítése sikeres!';
         }
         echo json_encode($array);
         $stmt->close();

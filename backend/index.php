@@ -667,6 +667,10 @@
                                 case 'delete':
                                     deleteGtTodo($url[5]);
                                     break;
+
+                                case 'set':
+                                    setSolvedGtTodo($url[5]);
+                                    break;
                                 
                                 default:
                                     echo '{"response" : "bad-event", "message" : "Bad request event!"}';

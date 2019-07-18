@@ -1,3 +1,20 @@
-<p>
-  gt-todoes works!
-</p>
+<div class="text-center panel-title border rounded">Todo</div>
+<div>
+  <div class="todoes row col col-12" *ngIf="gt">
+    <app-gt-todo
+      [todo]="todo"
+      [now]="now"
+      (update)="openTodoDialog($event)"
+      (refresh)="getGtTodoes()"
+      *ngFor="let todo of gtTodoes"
+      class="col col-12 col-md-6 col-lg-4 col-xl-3"
+    ></app-gt-todo>
+  </div>
+
+  <div *ngIf="gtTodoes && gtTodoes.length == 0" class="text-center">
+    Nincs még todod :(
+  </div>
+  <div>
+    <button mat-raised-button color="primary" (click)="openTodoDialog()">Új Todo</button>
+  </div>
+</div>

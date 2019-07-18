@@ -1,0 +1,30 @@
+<form mat-dialog-content [formGroup]="form">
+  <div class="text-center panel-title border rounded">{{ title }}</div>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Teendő</mat-label>
+    <input matInput type="text" placeholder="Teendő" formControlName="text" />
+    <mat-error *ngIf="form.get('text').hasError('required')">A szöveg megadása kötelező!</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Todo</mat-label>
+    <mat-select formControlName="importance" placeholder="Fontoság">
+      <mat-option [value]="1">Prio 1</mat-option>
+      <mat-option [value]="2">Prio 2</mat-option>
+      <mat-option [value]="3">Prio 3</mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('importance').hasError('required')">A szint megadása kötelező!</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Határidő</mat-label>
+    <input matInput [matDatepicker]="picker" placeholder="Határidő" formControlName="date" />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="form.get('date').hasError('required')">A határidő megadása kötelező!</mat-error>
+  </mat-form-field>
+</form>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="save()" [disabled]="form.invalid">
+    Mentés
+  </button>
+  <button mat-raised-button color="accent" (click)="onNoClick()">Mégsem</button>
+</div>
