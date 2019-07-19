@@ -8,12 +8,15 @@
   margin-top: 0.3rem;
   padding: 0.2rem;
 
-  .block {
+  .worker-frame {
     padding: 0.2rem;
-    &:hover {
-      background-color: #9a68f1af;
+    .block {
+      padding: 0.2rem;
+      &:hover {
+        background-color: #9a68f1af;
 
-      transition-duration: 0.5s;
+        transition-duration: 0.5s;
+      }
     }
   }
 }

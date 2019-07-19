@@ -48,5 +48,5 @@ CREATE OR REPLACE PROCEDURE getHash(_username varchar(50))
   CREATE OR REPLACE PROCEDURE addUser(_username varchar(100), _email varchar(255), _password varchar(100))
     BEGIN
      INSERT INTO users(username, email, name, password)
-      VALUES(_username, _email, _email, _password);
+      VALUES(_username, _email, _username, _password);
     END;
