@@ -99,7 +99,7 @@ CREATE TABLE eventtodoes(
   text longtext NOT NULL,
   importance int(1) NOT NULL DEFAULT 3,
   isSolved boolean DEFAULT FALSE,
-  expirationDate datetime NOT NULL,
+  expirationDate date NOT NULL,
   PRIMARY KEY(id),
   CONSTRAINT fk_event_events_eventtodoes FOREIGN KEY (event)
   REFERENCES events(id)
@@ -273,7 +273,7 @@ CREATE TABLE gtclassmembers(
   isPaid boolean DEFAULT FALSE,
   description text,
   PRIMARY KEY(id),
-  CONSTRAION fk_class_gtclasses_gtclassmembers FOREIGN KEY(class)
+  CONSTRAINT fk_class_gtclasses_gtclassmembers FOREIGN KEY(class)
   REFERENCES gtclasses(id) ON DELETE CASCADE
   );
 
@@ -347,7 +347,7 @@ CREATE TABLE gttodoes(
   text longtext NOT NULL,
   importance int(1) NOT NULL DEFAULT 3,
   isSolved boolean DEFAULT FALSE,
-  expirationDate datetime NOT NULL,
+  expirationDate date NOT NULL,
   PRIMARY KEY(id),
   CONSTRAINT fk_gt_gts_gttodoes FOREIGN KEY (gt)
   REFERENCES gts(id)

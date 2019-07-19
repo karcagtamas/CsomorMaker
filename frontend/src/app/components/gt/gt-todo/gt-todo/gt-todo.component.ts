@@ -32,7 +32,7 @@ export class GtTodoComponent implements OnInit {
         }
       })
       .catch(() => {
-        this.notificationservice.error('A todo megoldottál állítása közbe hiba történt. Kérjük próbálja újra késöbb!');
+        this.notificationservice.error('A todo megoldottá állítása közbe hiba történt. Kérjük próbálja újra késöbb!');
       });
   }
 

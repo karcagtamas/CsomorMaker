@@ -661,7 +661,7 @@
                                     break;
 
                                 case 'update':
-                                    addGtTodo($_POST['todo'], $_POST['text'], $_POST['importance'], $_POST['exp']);
+                                    updateGtTodo($_POST['todo'], $_POST['text'], $_POST['importance'], $_POST['exp']);
                                     break;
 
                                 case 'delete':

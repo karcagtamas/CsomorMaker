@@ -49,6 +49,7 @@ export class GtTodoesComponent implements OnInit, OnChanges {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
       if (result) {
         if (event) {
           this.gttodoeservice
@@ -66,7 +67,7 @@ export class GtTodoesComponent implements OnInit, OnChanges {
             });
         } else {
           this.gttodoeservice
-            .addGtTodo(this.gt.id, result.text, result.importance, result.epirationDate)
+            .addGtTodo(this.gt.id, result.text, result.importance, result.expirationDate)
             .then(res => {
               if (res.response === 'success') {
                 this.notficationserivce.success(res.message);
