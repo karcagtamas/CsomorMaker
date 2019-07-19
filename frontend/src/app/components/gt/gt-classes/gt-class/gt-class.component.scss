@@ -1,0 +1,16 @@
+.class {
+  padding: 0.2rem;
+  .title {
+    font-weight: bold;
+  }
+  .members {
+    .member {
+      margin: 0.2rem;
+    }
+  }
+  .buttons {
+    button {
+      margin: 0.2rem;
+    }
+  }
+}

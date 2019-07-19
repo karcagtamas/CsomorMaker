@@ -38,7 +38,14 @@ import {
   EventTeamsService,
   EventTodoesService,
   LoaderService,
-  EventMessagesService
+  EventMessagesService,
+  GtService,
+  GtTodoesService,
+  GtMessagesService,
+  GtPayoutsService,
+  GtGeneratorService,
+  GtMembersService,
+  GtClassesService
 } from './services';
 import {
   HomeComponent,
@@ -64,7 +71,11 @@ import {
 } from './pipes';
 import { EventSettingsComponent } from './components/event/event-settings';
 import { EventChatComponent } from './components/event/event-chat';
-import { EventCsomorComponent } from './components/event/event-csomor';
+import {
+  EventCsomorComponent,
+  EventWorkCsomorComponent,
+  EventPersonalCsomorComponent
+} from './components/event/event-csomor';
 import { EventDetailsComponent } from './components/event/event-details';
 import {
   EventGeneratorComponent,
@@ -93,7 +104,13 @@ import {
   EventTeamComponent
 } from './components/event/event-teams';
 import { GtChatComponent } from './components/gt/gt-chat';
-import { GtClassesComponent, GtClassDialogComponent, GtClassMemberDialogComponent } from './components/gt/gt-classes';
+import {
+  GtClassesComponent,
+  GtClassDialogComponent,
+  GtClassMemberDialogComponent,
+  GtClassMemberComponent,
+  GtClassComponent
+} from './components/gt/gt-classes';
 import { GtCsomorComponent, GtCsomorPersonalComponent, GtCsomorWorkComponent } from './components/gt/gt-csomor';
 import { GtDetailsComponent } from './components/gt/gt-details';
 import {
@@ -112,8 +129,6 @@ import { GtSettingsComponent } from './components/gt/gt-settings';
 import { GtSummaryComponent, GtPayoutComponent } from './components/gt/gt-summary';
 import { GtTodoesComponent, GtTodoComponent, GtTodoDialogComponent } from './components/gt/gt-todo';
 import { GtsComponent, NewGtComponent } from './components/gt';
-import { EventPersonalCsomorComponent } from './components/event/event-csomor/event-personal-csomor/event-personal-csomor.component';
-import { EventWorkCsomorComponent } from './components/event/event-csomor/event-work-csomor/event-work-csomor.component';
 import { LoaderComponent } from './components/main/loader/loader.component';
 import { MatNativeDateModule } from '@angular/material/core';
 @NgModule({
@@ -187,7 +202,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     LoaderComponent,
     TodoDialogComponent,
     GtMemberRowComponent,
-    GtTodoDialogComponent
+    GtTodoDialogComponent,
+    GtClassComponent,
+    GtClassMemberComponent
   ],
   imports: [
     BrowserModule,
@@ -230,6 +247,13 @@ import { MatNativeDateModule } from '@angular/material/core';
     EventTodoesService,
     LoaderService,
     EventMessagesService,
+    GtService,
+    GtTodoesService,
+    GtMessagesService,
+    GtPayoutsService,
+    GtGeneratorService,
+    GtClassesService,
+    GtMembersService,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
@@ -247,7 +271,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     GtWorkDialogComponent,
     GtAddMemberDialogComponent,
     GtMemberModifyDialogComponent,
-    GtTodoDialogComponent
+    GtTodoDialogComponent,
+    GtClassDialogComponent,
+    GtClassMemberDialogComponent
   ]
 })
 export class AppModule {}

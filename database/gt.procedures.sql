@@ -302,7 +302,7 @@ CREATE OR REPLACE PROCEDURE getGtClassMembers(_classId int(11))
   BEGIN
     SELECT gtclassmembers.id, gtclassmembers.class AS classId, gtclassmembers.name, gtclassmembers.isPaid, gtclassmembers.description, gtclasses.name AS class FROM gtclassmembers
       INNER JOIN gtclasses ON gtclasses.id = gtclassmembers.class
-      WHERE gtclassmember.class = _classId
+      WHERE gtclassmembers.class = _classId
       ORDER BY name;
   END;
 

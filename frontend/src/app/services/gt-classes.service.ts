@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Response, GtClass } from '../models';
+import { Response, GtClass, GtClassMember } from '../models';
 
 const URL = environment.api;
 
@@ -32,8 +32,8 @@ export class GtClassesService {
     return this.http.post<Response>(`${this.url}/update`, { claass, name, tShirtColor }, HttpHeader).toPromise();
   }
 
-  getGtClassMembers(claass: number): Promise<GtClass[]> {
-    return this.http.get<GtClass[]>(`${this.memberUrl}/get/${claass}`, HttpHeader).toPromise();
+  getGtClassMembers(claass: number): Promise<GtClassMember[]> {
+    return this.http.get<GtClassMember[]>(`${this.memberUrl}/get/${claass}`, HttpHeader).toPromise();
   }
 
   addGtClassMember(claass: number, name: string, description: string): Promise<Response> {

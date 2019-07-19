@@ -1,0 +1,19 @@
+<div class="class">
+  <div><span class="title">Név: </span>{{ gtClass.name }}</div>
+  <div><span class="title">Polószín: </span>{{ gtClass.tShirtColor }}</div>
+  <div><span class="title">Létszám: </span>{{ gtClass.members | personCount }}</div>
+  <hr />
+  <div class="title">Személyek:</div>
+  <div class="members">
+    <div class="member border rounded" *ngFor="let member of gtClassMembers">
+      <app-gt-class-member [gtClassMember]="member"></app-gt-class-member>
+    </div>
+    <div *ngIf="gtClassMembers.length === 0" class="text-center">
+      Nincs még semmilyen osztály tagod :(
+    </div>
+  </div>
+  <div class="buttons">
+    <button mat-raised-button color="accent">Szerkesztés</button>
+    <button mat-raised-button color="warn">Törlés</button>
+  </div>
+</div>

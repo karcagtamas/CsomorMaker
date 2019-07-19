@@ -480,6 +480,7 @@
 
                         case 'classes':
                             $event = $url[4];
+                            require 'gt.classes.php';
                             switch ($event) {
                                 case 'get':
                                     getGtClasses($url[5]);

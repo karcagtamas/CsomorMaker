@@ -472,4 +472,14 @@ CREATE TRIGGER deleting_work AFTER DELETE ON gtworks
     CALL setGtReadyStatus(NEW.id, FALSE);
   END;
 
+CREATE TRIGGER class_member AFTER INSERT ON gtclassmembers
+  FOR EACH ROW
+  BEGIN
+    UPDATE gtclasses set members = members + 1 WHERE id = NEW.class;
+  END;
 
+CREATE TRIGGER class_member_de AFTER DELETE ON gtclassmembers
+  FOR EACH ROW
+  BEGIN
+    UPDATE gtclasses set members = members - 1 WHERE id = OLD.class;
+  END;
