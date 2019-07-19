@@ -1,13 +1,13 @@
 <div class="text-center panel-title border rounded">Osztályok</div>
 <div class="classes" *ngIf="gt">
   <div class="class border rounded" *ngFor="let claass of gtClasses">
-    <app-gt-class [gtClass]="claass"></app-gt-class>
+    <app-gt-class [gtClass]="claass" (update)="openClassDialog($event)" (refresh)="getClasses()"></app-gt-class>
   </div>
   <div class="text-center" *ngIf="gtClasses.length === 0">
     Nincs még semmilyen osztályod :(
   </div>
   <div class="buttons">
-    <button mat-raised-button color="primary">Új osztály</button>
+    <button mat-raised-button color="primary" (click)="openClassDialog()">Új osztály</button>
     <button mat-raised-button color="accent" [disabled]="true">Importálás</button>
   </div>
 </div>

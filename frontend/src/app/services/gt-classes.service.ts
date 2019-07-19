@@ -29,7 +29,7 @@ export class GtClassesService {
   }
 
   updateGtClass(claass: number, name: string, tShirtColor: string): Promise<Response> {
-    return this.http.post<Response>(`${this.url}/update`, { claass, name, tShirtColor }, HttpHeader).toPromise();
+    return this.http.post<Response>(`${this.url}/update`, { class: claass, name, tShirtColor }, HttpHeader).toPromise();
   }
 
   getGtClassMembers(claass: number): Promise<GtClassMember[]> {
@@ -37,7 +37,9 @@ export class GtClassesService {
   }
 
   addGtClassMember(claass: number, name: string, description: string): Promise<Response> {
-    return this.http.post<Response>(`${this.memberUrl}/add`, { claass, name, description }, HttpHeader).toPromise();
+    return this.http
+      .post<Response>(`${this.memberUrl}/add`, { class: claass, name, description }, HttpHeader)
+      .toPromise();
   }
 
   deleteGtClassMember(member: number): Promise<Response> {

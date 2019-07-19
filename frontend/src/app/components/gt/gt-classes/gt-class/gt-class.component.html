@@ -1,5 +1,5 @@
 <div class="class">
-  <div><span class="title">Név: </span>{{ gtClass.name }}</div>
+  <div class="name"><span class="title">Név: </span>{{ gtClass.name }}</div>
   <div><span class="title">Polószín: </span>{{ gtClass.tShirtColor }}</div>
   <div><span class="title">Létszám: </span>{{ gtClass.members | personCount }}</div>
   <hr />
@@ -13,7 +13,7 @@
     </div>
   </div>
   <div class="buttons">
-    <button mat-raised-button color="accent">Szerkesztés</button>
-    <button mat-raised-button color="warn">Törlés</button>
+    <button mat-raised-button color="accent" (click)="updateClass()">Szerkesztés</button>
+    <button mat-raised-button color="warn" (click)="deleteClass()">Törlés</button>
   </div>
 </div>
