@@ -99,6 +99,23 @@
         $stmt->close();
     }
 
+    function countOfAllPaid($gtId){
+        global $db;
+
+        $sql = "CALL countOfAllPaid(?);";
+        
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $gtId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $row = $result->fetch_assoc();
+
+        echo json_encode($row);
+        $stmt->close();
+    }
+
     function setGtReadyStatus($gtId, $value){
         global $db;
 

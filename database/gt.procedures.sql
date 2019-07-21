@@ -335,3 +335,12 @@ CREATE OR REPLACE PROCEDURE setGtClassMemberPaidStatus(_memberId int(11))
       END IF;
       UPDATE gtclassmembers SET isPaid = _paid WHERE id = _memberId;
   END;
+
+CREATE OR REPLACE PROCEDURE countOfAllPaid(_gtId int(11))
+    BEGIN
+     SELECT COUNT(gtclassmembers.id) AS countOfCosts  FROM gtclassmembers
+      INNER JOIN gtclasses ON gtclassmembers.class = gtclasses.id
+    WHERE gtclasses.gt = _gtId AND gtclassmembers.isPaid;
+    END;
+
+CALL countOfAllPaid(4);

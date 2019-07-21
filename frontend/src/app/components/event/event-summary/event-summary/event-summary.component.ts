@@ -37,7 +37,6 @@ export class EventSummaryComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     this.getPayOuts();
-    this.getPayOutTypes();
     this.getCountOfCost();
     this.setVisitorSummary();
     this.setSummary();
@@ -89,14 +88,15 @@ export class EventSummaryComponent implements OnInit, OnChanges {
   }
 
   setSummary() {
-    this.summary = this.playerSummary + this.visitorSumamry;
+    let summary = this.playerSummary + this.visitorSumamry;
     for (const i of this.payOuts) {
       if (i.isOut) {
-        this.summary -= i.cost;
+        summary -= i.cost;
       } else {
-        this.summary += +i.cost;
+        summary += +i.cost;
       }
     }
+    this.summary = summary;
   }
 
   openNewPayOutDialog() {

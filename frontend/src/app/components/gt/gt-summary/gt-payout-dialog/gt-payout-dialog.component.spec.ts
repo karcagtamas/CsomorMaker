@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GtPayoutComponent } from './gt-payout.component';
+import { GtPayoutDialogComponent } from './gt-payout-dialog.component';
 
-describe('GtPayoutComponent', () => {
-  let component: GtPayoutComponent;
-  let fixture: ComponentFixture<GtPayoutComponent>;
+describe('GtPayoutDialogComponent', () => {
+  let component: GtPayoutDialogComponent;
+  let fixture: ComponentFixture<GtPayoutDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GtPayoutComponent ]
+      declarations: [ GtPayoutDialogComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GtPayoutComponent);
+    fixture = TestBed.createComponent(GtPayoutDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

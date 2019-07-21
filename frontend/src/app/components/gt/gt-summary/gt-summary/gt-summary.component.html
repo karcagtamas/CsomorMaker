@@ -1,3 +1,29 @@
-<p>
-  gt-summary works!
-</p>
+<div class="text-center panel-title border rounded">Áttekintés</div>
+<div class="summary" *ngIf="gt">
+  <div class="element input col-12 row border rounded">
+    <div class="col-6 text-left">
+      Gólyák
+    </div>
+    <div class="col-6 text-right">{{ greenySummary | forint }}</div>
+  </div>
+  <div
+    class="element col-12 row border rounded clickable"
+    *ngFor="let payout of payOuts"
+    [ngClass]="{ input: !payout.isOut, output: payout.isOut }"
+    (click)="openPayOutDialog(payout)"
+  >
+    <div class="col-6 text-left">
+      {{ payout.name }}
+    </div>
+    <div class="col-6 text-right">{{ payout.cost | forint }}</div>
+  </div>
+  <div class="element summary col-12 row border rounded">
+    <div class="col-6 text-left">
+      Végösszeg
+    </div>
+    <div class="col-6 text-right">{{ summary | forint }}</div>
+  </div>
+  <div>
+    <button mat-raised-button color="primary" (click)="openPayOutDialog()">Új kifizetés/befizetés</button>
+  </div>
+</div>

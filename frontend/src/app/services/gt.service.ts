@@ -38,4 +38,8 @@ export class GtService {
   generate(gt: number): Promise<Response> {
     return this.http.get<Response>(`${this.url}/generate/${gt}`, HttpHeader).toPromise();
   }
+
+  countOfAllPaid(gt: number): Promise<{ countOfCosts: number }> {
+    return this.http.get<{ countOfCosts: number }>(`${this.url}/costs/${gt}`, HttpHeader).toPromise();
+  }
 }

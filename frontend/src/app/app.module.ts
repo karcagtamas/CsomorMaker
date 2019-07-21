@@ -126,7 +126,7 @@ import {
   GtMemberRowComponent
 } from './components/gt/gt-members';
 import { GtSettingsComponent } from './components/gt/gt-settings';
-import { GtSummaryComponent, GtPayoutComponent } from './components/gt/gt-summary';
+import { GtSummaryComponent, GtPayoutDialogComponent } from './components/gt/gt-summary';
 import { GtTodoesComponent, GtTodoComponent, GtTodoDialogComponent } from './components/gt/gt-todo';
 import { GtsComponent, NewGtComponent } from './components/gt';
 import { LoaderComponent } from './components/main/loader/loader.component';
@@ -192,7 +192,6 @@ import { MatNativeDateModule } from '@angular/material/core';
     GtMemberModifyDialogComponent,
     GtSettingsComponent,
     GtSummaryComponent,
-    GtPayoutComponent,
     GtTodoesComponent,
     GtTodoComponent,
     GtsComponent,
@@ -204,7 +203,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     GtMemberRowComponent,
     GtTodoDialogComponent,
     GtClassComponent,
-    GtClassMemberComponent
+    GtClassMemberComponent,
+    GtPayoutDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -273,7 +273,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     GtMemberModifyDialogComponent,
     GtTodoDialogComponent,
     GtClassDialogComponent,
-    GtClassMemberDialogComponent
+    GtClassMemberDialogComponent,
+    GtPayoutDialogComponent
   ]
 })
 export class AppModule {}

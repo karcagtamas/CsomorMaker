@@ -439,6 +439,10 @@
                             generate($url[4]);
                             break;
 
+                        case 'costs':
+                            countOfAllPaid($url[4]);
+                            break;
+
                         case 'members':
                             $event = $url[4];
                             require 'gt.members.php';
@@ -699,7 +703,7 @@
 
                         case 'payouts':
                             $event = $url[4];
-                            require 'gt.messages.php';
+                            require 'gt.payouts.php';
                             switch ($event) {
                                 case 'get':
                                     getGtPayouts($url[5]);
@@ -714,7 +718,7 @@
                                     break;
 
                                 case 'delete':
-                                    deleteGtPayput($url[5]);
+                                    deleteGtPayout($url[5]);
                                     break;
                                 
                                 default:

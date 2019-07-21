@@ -34,10 +34,10 @@
         $stmt->close();
     }
 
-    function deleteGtPayput($payoutId){
+    function deleteGtPayout($payoutId){
         global $db;
 
-        $sql = "CALL deleteGtPayput(?);";
+        $sql = "CALL deleteGtPayout(?);";
         $stmt = $db->prepare($sql);
         $stmt->bind_param("i", $payoutId);
         $stmt->execute();
