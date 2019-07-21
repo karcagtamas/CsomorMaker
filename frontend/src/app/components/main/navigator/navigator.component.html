@@ -18,7 +18,7 @@
             Profil
           </button>
           <mat-menu #mobileprofilemenu="matMenu">
-            <button mat-menu-item [routerLink]="['/']" routerLinkActive="activeMenu">Beállítások</button>
+            <button mat-menu-item [routerLink]="['/my-profile']" routerLinkActive="activeMenu">Profilom</button>
             <button mat-menu-item [routerLink]="['/']" routerLinkActive="activeMenu">Jelszó csere</button>
           </mat-menu>
 
@@ -59,7 +59,7 @@
 
         <button mat-button [matMenuTriggerFor]="menu" *ngIf="isLoggedIn">Profil</button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item [routerLink]="['/']" routerLinkActive="activeMenu">Beállítások</button>
+          <button mat-menu-item [routerLink]="['/my-profile']" routerLinkActive="activeMenu">Profilom</button>
           <button mat-menu-item [routerLink]="['/']" routerLinkActive="activeMenu">Jelszó csere</button>
         </mat-menu>
 
