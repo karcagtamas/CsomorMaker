@@ -11,7 +11,7 @@ const HttpHeader = { withCredentials: true };
   providedIn: 'root'
 })
 export class GtMessagesService {
-  url = URL + 'gt/messages';
+  url = URL + '/gt/messages';
 
   constructor(private http: HttpClient) {}
 

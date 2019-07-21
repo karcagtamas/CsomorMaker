@@ -231,7 +231,7 @@ CREATE OR REPLACE PROCEDURE getGtMessages(_gtId int(11))
   BEGIN
     SELECT gtmessages.id, gtmessages.sender AS senderId, gtmessages.gt, gtmessages.dateOfSent, gtmessages.message, users.name AS sender FROM gtmessages
       INNER JOIN users ON users.id = gtmessages.sender
-      WHERE gtmessage.gt = _gtId
+      WHERE gtmessages.gt = _gtId
     ORDER BY gtmessages.dateOfSent;
   END;
 

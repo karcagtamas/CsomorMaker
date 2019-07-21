@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { EventMessage, Event } from 'src/app/models';
 import { EventMessagesService, NotificationService, UserService } from 'src/app/services';
 
@@ -7,7 +7,7 @@ import { EventMessagesService, NotificationService, UserService } from 'src/app/
   templateUrl: './event-chat.component.html',
   styleUrls: ['./event-chat.component.scss']
 })
-export class EventChatComponent implements OnInit {
+export class EventChatComponent implements OnInit, OnChanges {
   @Input() event: Event;
   eventMessages: EventMessage[] = [];
   message = '';
@@ -29,6 +29,10 @@ export class EventChatComponent implements OnInit {
       .catch(() => {
         this.userId = 0;
       });
+  }
+
+  ngOnChanges() {
+    this.getEventMessages();
   }
 
   getEventMessages() {
@@ -58,6 +62,8 @@ export class EventChatComponent implements OnInit {
         .catch(() => {
           this.notificationservice.error('Az üzenet küldése sikertelen! Kérjük próbálja újra késöbb!');
         });
+    } else {
+      this.notificationservice.warning('Nem megfelelő üzenet formátum!');
     }
   }
 }

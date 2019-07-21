@@ -40,7 +40,7 @@
           (lock)="lockGt($event)"
         ></app-gt-details>
         <app-gt-csomor *ngSwitchCase="'csomor'" [gt]="currentGt"></app-gt-csomor>
-        <app-gt-chat *ngSwitchCase="'chat'"></app-gt-chat>
+        <app-gt-chat *ngSwitchCase="'chat'" [gt]="currentGt"></app-gt-chat>
         <app-gt-generator *ngSwitchCase="'generator'" [gt]="currentGt"></app-gt-generator>
         <app-gt-settings *ngSwitchCase="'settings'" [gt]="currentGt"> </app-gt-settings>
         <app-gt-summary *ngSwitchCase="'summary'"></app-gt-summary>

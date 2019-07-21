@@ -1,0 +1,42 @@
+.chat {
+  padding: 0.2rem;
+  .body {
+    padding: 0.2rem;
+    margin-bottom: 0.2rem;
+    max-height: 55vh;
+    overflow: auto;
+
+    .message {
+      padding: 0.5rem;
+
+      .message-body {
+        padding: 0.3rem;
+        padding-right: 0.6rem;
+        padding-left: 0.6rem;
+        width: max-content;
+        border-radius: 25px !important;
+      }
+      .other {
+        background-color: rgba(128, 0, 128, 0.75);
+      }
+
+      .me {
+        background-color: rgba(52, 52, 231, 0.75);
+      }
+    }
+  }
+
+  .footer {
+    padding: 0.2rem;
+    margin: 0;
+
+    .input {
+      padding: 0.2rem;
+    }
+
+    .button {
+      padding: 0.2rem;
+      text-align: center;
+    }
+  }
+}
