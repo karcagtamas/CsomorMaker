@@ -342,5 +342,3 @@ CREATE OR REPLACE PROCEDURE countOfAllPaid(_gtId int(11))
       INNER JOIN gtclasses ON gtclassmembers.class = gtclasses.id
     WHERE gtclasses.gt = _gtId AND gtclassmembers.isPaid;
     END;
-
-CALL countOfAllPaid(4);
