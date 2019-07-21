@@ -34,12 +34,12 @@ export class NavigatorComponent implements OnInit {
     this.loginservice
       .logout()
       .then(res => {
-        if (res.response === 'logout-success') {
-          window.alert('Sikeres kijelentkezés!');
+        if (res.response === 'success') {
+          window.alert(res.message);
           this.router.navigateByUrl('/login');
           this.getIsLoggedIn();
         } else {
-          window.alert('Sikertelen kijelentkezés!');
+          window.alert(res.message);
         }
       })
       .catch(() => {

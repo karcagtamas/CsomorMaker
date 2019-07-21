@@ -132,6 +132,7 @@ import { GtsComponent, NewGtComponent } from './components/gt';
 import { LoaderComponent } from './components/main/loader/loader.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ProfileComponent } from './components/user/profile/profile.component';
+import { MyProfileComponent } from './components/user/my-profile/my-profile.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -206,7 +207,8 @@ import { ProfileComponent } from './components/user/profile/profile.component';
     GtClassComponent,
     GtClassMemberComponent,
     GtPayoutDialogComponent,
-    ProfileComponent
+    ProfileComponent,
+    MyProfileComponent
   ],
   imports: [
     BrowserModule,
