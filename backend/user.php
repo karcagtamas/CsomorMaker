@@ -12,14 +12,14 @@
 
         if ($row = $result->fetch_assoc()){
             if (password_verify($password, $row['hash'])){
-                echo '{"response" : "valid-login", "message" : "The login is success!"}';
+                echo '{"response" : "success", "message" : "A belépés sikeres!"}';
                 $_SESSION['userId'] = $row['userId'];
             }else{
-                echo '{"response" : "invalid-password", "message" : "The gave password is invalid"}';
+                echo '{"response" : "fail", "message" : "A jelszó nem megfelelő!"}';
             }
         }
         else{
-            echo '{"response" : "invalid-username", "message" : "The gave username is invalid!"}';
+            echo '{"response" : "fail", "message" : "A felhasználónév nem megfelelő!"}';
         }
     }
 

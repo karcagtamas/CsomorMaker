@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService, CommonService } from 'src/app/services';
-import { FormControl, Validators } from '@angular/forms';
+import { LoginService, CommonService, NotificationService } from 'src/app/services';
+import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,38 +9,40 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  alert = '';
-  usernameControl = new FormControl('', [Validators.required]);
-  passwordControl = new FormControl('', [Validators.required]);
+  form: FormGroup;
 
-  constructor(private loginservice: LoginService, private router: Router, private commonservice: CommonService) {}
-  ngOnInit() {}
+  constructor(
+    private loginservice: LoginService,
+    private router: Router,
+    private commonservice: CommonService,
+    private fb: FormBuilder,
+    private notificationservice: NotificationService
+  ) {}
+
+  ngOnInit() {
+    this.form = this.fb.group({ username: ['', Validators.required], password: ['', Validators.required] });
+  }
 
   login() {
-    if (!this.passwordControl.invalid && !this.usernameControl.invalid) {
+    if (!this.form.invalid) {
       this.loginservice
-        .login(this.usernameControl.value, this.passwordControl.value)
+        .login(this.form.get('username').value, this.form.get('password').value)
         .then(res => {
-          if (res.response === 'valid-login') {
+          if (res.response === 'success') {
             this.commonservice.emitChange(true);
             this.router.navigateByUrl('/home');
           } else {
-            this.setAlert(res.message, false);
+            this.notificationservice.error(res.message);
           }
         })
         .catch(err => {
           console.log(err);
-          this.setAlert('Nem megfelelő adatok!', false);
+          this.notificationservice.error(
+            'Valamilyen hiba lépett fel a kommunikáció során, kérem próbálja újra később!'
+          );
         });
     } else {
-      this.setAlert('Valamilyen hiba lépett fel a kommunikáció során, kérem próbálja újra kéőbb!', false);
+      this.notificationservice.warning('Nem megfelelő adatok!');
     }
-  }
-
-  setAlert(value: string, isSuccess: boolean) {
-    this.alert = value;
-    setTimeout(() => {
-      this.alert = '';
-    }, 3000);
   }
 }
