@@ -65,7 +65,7 @@ CREATE OR REPLACE PROCEDURE getGtMembers(_gtId int(11))
       INNER JOIN users ON users.id = usergtswitch.user
       INNER JOIN eventroles ON eventroles.id = usergtswitch.role
       WHERE usergtswitch.gt = _gtId
-      ORDER BY eventroles.accessLevel, users.name;
+      ORDER BY eventroles.accessLevel DESC, users.name;
     END;
 
 CREATE OR REPLACE PROCEDURE getNonGtMembers(_gtId int(11))
