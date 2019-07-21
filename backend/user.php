@@ -34,16 +34,16 @@
         $stmt->execute();
 
         if ($stmt->errno){
-            echo '{"response" : "user-exist", "message" : "We have user with this username or email!"}';
+            echo '{"response" : "fail", "message" : "Már létezik felhasználó ezzel az e-mail címmel!"}';
 
         }else{
-            echo '{"response" : "reg-success", "message" : "The registration was success!"}';
+            echo '{"response" : "success", "message" : "A regisztráció sikeres!"}';
         }
     }
 
     function logout(){
         session_destroy();
-            echo '{"response" : "logout-success", "message" : "The log out was success!"}';
+        echo '{"response" : "success", "message" : "A kijelentkezés sikeres!"}';
 
     }
 
