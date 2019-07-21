@@ -2,7 +2,6 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GtClass } from 'src/app/models';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { GtWorkDialogComponent } from '../../gt-generator';
 import { NotificationService } from 'src/app/services';
 
 @Component({
@@ -16,7 +15,7 @@ export class GtClassDialogComponent implements OnInit {
   title = '';
 
   constructor(
-    public dialogRef: MatDialogRef<GtWorkDialogComponent>,
+    public dialogRef: MatDialogRef<GtClassDialogComponent>,
     private fb: FormBuilder,
     private notificatinservice: NotificationService,
     @Inject(MAT_DIALOG_DATA) public data: GtClass

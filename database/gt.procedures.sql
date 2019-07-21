@@ -314,7 +314,7 @@ CREATE OR REPLACE PROCEDURE addGtClassMember(_classId int(11), _name varchar(100
 
 CREATE OR REPLACE PROCEDURE updateGtClassMember(_memberId int(11), _name varchar(100),_description text)
   BEGIN
-    UPDATE gtclassmembers SET name = _name, desription = _description WHERE id = _memberId;
+    UPDATE gtclassmembers SET name = _name, description = _description WHERE id = _memberId;
   END;
 
 CREATE OR REPLACE PROCEDURE deleteGtClassMember(_memberId int(11))

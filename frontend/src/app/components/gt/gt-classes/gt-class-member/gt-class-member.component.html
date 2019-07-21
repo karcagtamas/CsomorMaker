@@ -1,12 +1,11 @@
 <div class="member">
-  <button mat-mini-fab color="warn" class="ml-1 float-right">
+  <button mat-mini-fab color="warn" class="ml-1 float-right" (click)="deleteMember()">
     &#10006;
   </button>
-  <button mat-mini-fab color="accent" class="mr-1 float-right">
+  <button mat-mini-fab color="accent" class="mr-1 float-right" (click)="updateMember()">
     &#9998;
   </button>
   <div><span class="title">Név: </span>{{ gtClassMember.name }}</div>
   <div><span class="title">Megjegyzés: </span><br />{{ gtClassMember.description }}</div>
-  <mat-checkbox [(ngModel)]="gtClassMember.isPaid">Díj</mat-checkbox>
-  <div class="buttons"></div>
+  <mat-checkbox [(ngModel)]="gtClassMember.isPaid" (change)="setIsPaid()">Díj</mat-checkbox>
 </div>

@@ -6,13 +6,14 @@
   <div class="title">Személyek:</div>
   <div class="members">
     <div class="member border rounded" *ngFor="let member of gtClassMembers">
-      <app-gt-class-member [gtClassMember]="member"></app-gt-class-member>
+      <app-gt-class-member [gtClassMember]="member" (update)="openMemberDialog($event)"></app-gt-class-member>
     </div>
     <div *ngIf="gtClassMembers.length === 0" class="text-center">
       Nincs még semmilyen osztály tagod :(
     </div>
   </div>
   <div class="buttons">
+    <button mat-raised-button color="primary" (click)="openMemberDialog()">Új tag</button>
     <button mat-raised-button color="accent" (click)="updateClass()">Szerkesztés</button>
     <button mat-raised-button color="warn" (click)="deleteClass()">Törlés</button>
   </div>
