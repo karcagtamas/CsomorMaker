@@ -298,13 +298,18 @@
                $workers[$i]['tables'][$j]['workId'] = null;
             }
         }
+        return $workers;
+    }
+
+    function setWorkersHours($event, $workers, $works){
         $hours = 0;
         foreach ($works as $work) {
             $hours += getCountOfWorkActiveHours($work);
         }
         $index = 0;
+        $availableHours = getCountOfWorkerAvaiableHours($workers[$index]);
         do {
-            if ($workers[$index]['workerHours'] < getCountOfWorkerAvaiableHours($workers[$index])){
+            if ($workers[$index]['workerHours'] < $availableHours){
                 $workers[$index]['workerHours']++;
                 $hours--;
             }
@@ -313,8 +318,7 @@
                 $index = 0;
             }
         } while ($hours > 0);
-
-        return $workers;
+        return $wrokers;
     }
 
     function save($event, $works, $workers){

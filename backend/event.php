@@ -313,6 +313,7 @@
         
 
         if (checkInput($event, $workers, $works)){
+            $workers = setWorkersHours($event, $workers, $works);
             $stop = true; // Leállító segéd változó
             $limit = 500; // Ciklus periódus limit
             $index = 0;
