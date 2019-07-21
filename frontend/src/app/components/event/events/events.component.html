@@ -11,7 +11,7 @@
       >
         {{ event.name }}
       </div>
-      <div class="event rounded" *ngIf="!currentEvent.id">
+      <div class="event rounded" *ngIf="!currentEvent.id" [routerLink]="['/new-event']">
         Nincs eseményed :(
       </div>
     </div>
