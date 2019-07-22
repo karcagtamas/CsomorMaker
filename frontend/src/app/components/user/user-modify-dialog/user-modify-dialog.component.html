@@ -1,0 +1,15 @@
+<form mat-dialog-content [formGroup]="form">
+  <div class="text-center panel-title border rounded">{{ data.username }} adatinak frissítése</div>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Megjelenítendő név</mat-label>
+    <input matInput type="text" placeholder="Megjelenítendő név" formControlName="name" />
+    <mat-error *ngIf="form.get('name').hasError('required')">A név megadása kötelező!</mat-error>
+    <mat-error *ngIf="form.get('name').hasError('maxlength')">A név hossza maximum 100 karakter lehet!</mat-error>
+  </mat-form-field>
+</form>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="save()">
+    Mentés
+  </button>
+  <button mat-raised-button color="accent" (click)="onNoClick()">Mégsem</button>
+</div>

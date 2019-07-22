@@ -70,4 +70,78 @@
 
     }
 
+    function getUser($userId){
+        global $db;
+
+        $sql = "CALL getUser(?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+
+        $row = $result->fetch_assoc();
+
+        echo json_encode($row);
+        $stmt->close();
+    }
+
+    function updateUser($userId, $name){
+        global $db;
+
+        $sql = "CALL updateUser(?, ?);";
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("is", $userId, $name);
+        $stmt->execute();
+
+        if ($stmt->errno){
+            echo '{"response" : "fail", "message" : "A felhasználó frissítése sikertelen!"}';
+
+        }else{
+            echo '{"response" : "success", "message" : "A felhasználó frissítése sikeres!"}';
+        }
+    }
+
+    function checkPassword($userId, $password){
+        global $db;
+
+        $sql = "CALL getHashById(?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        if ($row = $result->fetch_assoc()){
+            if (password_verify($password, $row['hash'])){
+                echo '{"response" : "success", "message" : "A régi jelszó helyes!"}';
+                
+            }else{
+                echo '{"response" : "fail", "message" : "A régi jelszó helytelen!"}';
+            }
+        }
+        else{
+            echo '{"response" : "fail", "message" : "A felhasználó id nem létezik!"}';
+        }
+    }
+
+    function changePassword($userId, $password){
+        global $db;
+
+        $sql = "CALL changePassword(?, ?);";
+
+        $stmt = $db->prepare($sql);
+        $hash = password_hash($password, PASSWORD_BCRYPT);
+        $stmt->bind_param("is", $userId, $hash);
+        $stmt->execute();
+
+        if ($stmt->errno){
+            echo '{"response" : "fail", "message" : "A felhasználó jelszó cseréje sikertelen!"}';
+
+        }else{
+            echo '{"response" : "success", "message" : "A felhasználó jelszó cseréje sikeres!"}';
+        }
+    }
+
 ?>

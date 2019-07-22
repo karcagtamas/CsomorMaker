@@ -1,3 +1,13 @@
-<p>
-  Munkálatok alatt!
-</p>
+<mat-card class="card">
+  <div class="text-center panel-title border rounded">Saját Profil</div>
+  <div *ngIf="user" class="details">
+    <div><strong>Felhasználónév: </strong>{{ user.username }}</div>
+    <div><strong>Megjelenítendő név: </strong>{{ user.name }}</div>
+    <div><strong>E-mail cím: </strong>{{ user.email }}</div>
+    <div><strong>Rang: </strong>{{ user.role }}</div>
+    <div class="buttons">
+      <button mat-raised-button color="accent" (click)="openModifyDialog()">Szerkesztés</button>
+      <button mat-raised-button color="warn" (click)="changePassword()">Jelszó csere</button>
+    </div>
+  </div>
+</mat-card>

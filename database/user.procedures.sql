@@ -1,8 +1,14 @@
 USE csomormaker;
-CREATE OR REPLACE PROCEDURE getHash(_username varchar(50))
+  CREATE OR REPLACE PROCEDURE getHash(_username varchar(50))
     BEGIN
       SELECT password AS hash, id AS userId FROM users
         WHERE username = _username;
+    END;
+
+  CREATE OR REPLACE PROCEDURE getHashById(_userId varchar(50))
+    BEGIN
+      SELECT password AS hash FROM users
+        WHERE id = _userId;
     END;
   
   CREATE OR REPLACE PROCEDURE isAdmin(_userId int(11))
@@ -26,12 +32,15 @@ CREATE OR REPLACE PROCEDURE getHash(_username varchar(50))
 
   CREATE OR REPLACE PROCEDURE getUsers()
     BEGIN
-     SELECT * FROM users;
+     SELECT users.id, users.name, users.username, users.email, users.role AS roleId, roles.name AS role FROM users 
+     INNER JOIN roles ON users.role = roles.id;
     END;
 
   CREATE OR REPLACE PROCEDURE getUser(_id int(11))
     BEGIN
-     SELECT * FROM users WHERE id = _id;
+     SELECT users.id, users.name, users.username, users.email, users.role AS roleId, roles.name AS role FROM users 
+     INNER JOIN roles ON users.role = roles.id
+     WHERE users.id = _id;
     END;
 
 
@@ -49,4 +58,9 @@ CREATE OR REPLACE PROCEDURE getHash(_username varchar(50))
     BEGIN
      INSERT INTO users(username, email, name, password)
       VALUES(_username, _email, _username, _password);
+    END;
+
+  CREATE OR REPLACE PROCEDURE changePassword(_id int(11), _password varchar(100))
+    BEGIN
+     UPDATE users SET password = _password WHERE id = _id;
     END;

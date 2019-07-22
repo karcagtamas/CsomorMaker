@@ -131,8 +131,13 @@ import { GtTodoesComponent, GtTodoComponent, GtTodoDialogComponent } from './com
 import { GtsComponent, NewGtComponent } from './components/gt';
 import { LoaderComponent } from './components/main/loader/loader.component';
 import { MatNativeDateModule } from '@angular/material/core';
-import { ProfileComponent } from './components/user/profile/profile.component';
-import { MyProfileComponent } from './components/user/my-profile/my-profile.component';
+import {
+  ProfileComponent,
+  MyProfileComponent,
+  ChangePasswordDialogComponent,
+  UserModifyDialogComponent
+} from './components/user';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -208,7 +213,9 @@ import { MyProfileComponent } from './components/user/my-profile/my-profile.comp
     GtClassMemberComponent,
     GtPayoutDialogComponent,
     ProfileComponent,
-    MyProfileComponent
+    MyProfileComponent,
+    UserModifyDialogComponent,
+    ChangePasswordDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -278,7 +285,9 @@ import { MyProfileComponent } from './components/user/my-profile/my-profile.comp
     GtTodoDialogComponent,
     GtClassDialogComponent,
     GtClassMemberDialogComponent,
-    GtPayoutDialogComponent
+    GtPayoutDialogComponent,
+    UserModifyDialogComponent,
+    ChangePasswordDialogComponent
   ]
 })
 export class AppModule {}

@@ -1,0 +1,14 @@
+.card {
+  margin: 1rem;
+  max-height: 85vh;
+  overflow: auto;
+
+  .details {
+    padding: 0.2rem;
+    .buttons {
+      button {
+        margin: 0.2rem;
+      }
+    }
+  }
+}

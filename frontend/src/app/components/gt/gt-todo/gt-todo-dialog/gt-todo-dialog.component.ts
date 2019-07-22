@@ -52,7 +52,6 @@ export class GtTodoDialogComponent implements OnInit {
       todo.expirationDate = new Date(this.form.get('date').value);
       todo.expirationDate.setHours(10);
       todo.importance = +this.form.get('importance').value;
-      console.log(this.form.get('date'));
       this.dialogRef.close(todo);
     }
   }

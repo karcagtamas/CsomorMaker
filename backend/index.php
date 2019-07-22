@@ -47,6 +47,31 @@
                         case 'get-id':
                             echo $_SESSION['userId'];
                             break;
+
+                        case 'get':
+                            getUser($url[4]);
+                            break;
+
+                        case 'update':
+                            updateUser($_POST['user'], $_POST['name']);
+                            break;
+
+                        case 'password':
+                            $subevent = $url[4];
+                            switch ($subevent) {
+                                case 'check':
+                                    checkPassword($_POST['user'], $_POST['password']);
+                                    break;
+
+                                case 'change':
+                                    changePassword($_POST['user'], $_POST['password']);
+                                    break;
+                                
+                                default:
+                                    echo '{"response" : "bad-subevent", "message" : "Bad request event!"}';
+                                    break;
+                            }
+                            break;
                         
                         default:
                             echo '{"response" : "bad-event", "message" : "Bad request event!"}';
