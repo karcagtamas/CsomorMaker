@@ -40,7 +40,7 @@ export class EventService {
   }
 
   lockEvent(id: number): Promise<Response> {
-    return this.http.post<Response>(`${this.url}/lock/${id}`, HttpHeader).toPromise();
+    return this.http.get<Response>(`${this.url}/lock/${id}`, HttpHeader).toPromise();
   }
 
   increaseVisitors(id: number): Promise<Response> {
