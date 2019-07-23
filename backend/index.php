@@ -735,11 +735,11 @@
                                     break;
 
                                 case 'add':
-                                    addGtPayout($_POST['gt'], $_POST['name'], $_POST['type'], $_POST['cost']);
+                                    addGtPayout($_POST['gt'], $_POST['name'], $_POST['type'], $_POST['cost'], $_POST['from'], $_POST['to']);
                                     break;
                                 
                                 case 'update':
-                                    updateGtPayout($_POST['payout'], $_POST['name'], $_POST['type'], $_POST['cost']);
+                                    updateGtPayout($_POST['payout'], $_POST['name'], $_POST['type'], $_POST['cost'], $_POST['from'], $_POST['to']);
                                     break;
 
                                 case 'delete':

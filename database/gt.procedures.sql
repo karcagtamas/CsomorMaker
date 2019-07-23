@@ -203,16 +203,16 @@ CREATE OR REPLACE PROCEDURE updateGtWorkerTable(_gtId int(11), _workerId int(11)
 
 CREATE OR REPLACE PROCEDURE getGtPayouts(_gtId int(11))
   BEGIN
-    SELECT gtpayouts.id, gtpayouts.name, gtpayouts.gt, gtpayouts.type AS typeId, gtpayouts.cost, eventpayouttypes.name AS type, eventpayouttypes.isOut FROM gtpayouts
+    SELECT gtpayouts.id, gtpayouts.name, gtpayouts.gt, gtpayouts.type AS typeId, gtpayouts.cost, eventpayouttypes.name AS type, eventpayouttypes.isOut, gtpayouts.source AS `from`, gtpayouts.destination AS `to` FROM gtpayouts
     INNER JOIN eventpayouttypes ON eventpayouttypes.id = gtpayouts.type
     WHERE gtpayouts.gt = _gtId
     ORDER BY gtpayouts.type;
   END;
 
-CREATE OR REPLACE PROCEDURE addGtPayout(_gtId int(11), _name varchar(75), _type int(11), _cost decimal)
+CREATE OR REPLACE PROCEDURE addGtPayout(_gtId int(11), _name varchar(75), _type int(11), _cost decimal, _from varchar(50), _to varchar(50))
   BEGIN
-    INSERT INTO gtpayouts(name, gt, type, cost)
-      VALUES(_name, _gtId, _type, _cost);
+    INSERT INTO gtpayouts(name, gt, type, cost, source, destination)
+      VALUES(_name, _gtId, _type, _cost, _from, _to);
   END;
 
 CREATE OR REPLACE PROCEDURE deleteGtPayout(_payoutId int(11))
@@ -220,9 +220,9 @@ CREATE OR REPLACE PROCEDURE deleteGtPayout(_payoutId int(11))
     DELETE FROM gtpayouts WHERE id = _payoutId;
   END;
 
-CREATE OR REPLACE PROCEDURE updateGtPayout(_payoutId int(11), _name varchar(75), _type int(11), _cost decimal)
+CREATE OR REPLACE PROCEDURE updateGtPayout(_payoutId int(11), _name varchar(75), _type int(11), _cost decimal, _from varchar(50), _to varchar(50))
   BEGIN
-    UPDATE gtpayouts SET name = _name, type = _type, cost = _cost WHERE id = _payoutId;
+    UPDATE gtpayouts SET name = _name, type = _type, cost = _cost, source = _from, destination = _to WHERE id = _payoutId;
   END;
 
 /* Gt Messages */

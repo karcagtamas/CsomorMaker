@@ -95,6 +95,8 @@ export class GtPayout {
   type: string;
   isOut: boolean;
   cost: number;
+  from: string;
+  to: string;
 }
 
 export class GtMessage {

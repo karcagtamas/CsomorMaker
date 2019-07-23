@@ -16,12 +16,12 @@
         $stmt->close();
     }
 
-    function addGtPayout($gtId, $name, $type, $cost){
+    function addGtPayout($gtId, $name, $type, $cost, $from, $to){
         global $db;
 
-        $sql = "CALL addGtPayout(?, ?, ?, ?);";
+        $sql = "CALL addGtPayout(?, ?, ?, ?, ?, ?);";
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("isis", $gtId, $name, $type, $cost);
+        $stmt->bind_param("isiiss", $gtId, $name, $type, $cost, $from, $to);
         $stmt->execute();
         if ($stmt->errno){
             $array['response'] =  'fail';
@@ -52,12 +52,12 @@
         $stmt->close();
     }
 
-    function updateGtPayout($payoutId, $name, $type, $cost){
+    function updateGtPayout($payoutId, $name, $type, $cost, $from, $to){
         global $db;
 
-        $sql = "CALL updateGtPayout(?, ?, ?, ?);";
+        $sql = "CALL updateGtPayout(?, ?, ?, ?, ?, ?);";
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("isis", $payoutId, $name, $type, $cost);
+        $stmt->bind_param("isiiss", $payoutId, $name, $type, $cost, $from, $to);
         $stmt->execute();
         if ($stmt->errno){
             $array['response'] =  'fail';

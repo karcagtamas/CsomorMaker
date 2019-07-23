@@ -11,6 +11,8 @@
     *ngFor="let payout of payOuts"
     [ngClass]="{ input: !payout.isOut, output: payout.isOut }"
     (click)="openPayOutDialog(payout)"
+    matTooltip="{{ payout.from }} => {{ payout.to }}"
+    matTooltipPosition="above"
   >
     <div class="col-6 text-left">
       {{ payout.name }}

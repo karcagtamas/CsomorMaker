@@ -102,7 +102,7 @@ export class GtSummaryComponent implements OnInit, OnChanges {
         if (!result.refresh) {
           if (payout) {
             this.gtpayoutsservice
-              .updateGtPayout(payout.id, result.name, result.type, result.cost)
+              .updateGtPayout(payout.id, result.name, result.type, result.cost, result.from, result.to)
               .then(res => {
                 if (res.response === 'success') {
                   this.notificationservice.success(res.message);
@@ -118,7 +118,7 @@ export class GtSummaryComponent implements OnInit, OnChanges {
               });
           } else {
             this.gtpayoutsservice
-              .addGtPayout(this.gt.id, result.name, result.type, result.cost)
+              .addGtPayout(this.gt.id, result.name, result.type, result.cost, result.from, result.to)
               .then(res => {
                 if (res.response === 'success') {
                   this.notificationservice.success(res.message);

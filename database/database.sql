@@ -372,6 +372,8 @@ CREATE TABLE gtpayouts(
   gt int(11) NOT NULL,
   type int(11) NOT NULL,
   cost decimal NOT NULL,
+  source varchar(50) NOT NULL,
+  destination varchar(50) NOT NULL,
   PRIMARY KEY(id),
   CONSTRAINT fk_type_gtpayouttypes_gtpayouts FOREIGN KEY (type)
   REFERENCES eventpayouttypes(id),

@@ -19,15 +19,24 @@ export class GtPayoutsService {
     return this.http.get<GtPayout[]>(`${this.url}/get/${gt}`, HttpHeader).toPromise();
   }
 
-  addGtPayout(gt: number, name: string, type: number, cost: number): Promise<Response> {
-    return this.http.post<Response>(`${this.url}/add`, { gt, name, type, cost }, HttpHeader).toPromise();
+  addGtPayout(gt: number, name: string, type: number, cost: number, from: string, to: string): Promise<Response> {
+    return this.http.post<Response>(`${this.url}/add`, { gt, name, type, cost, from, to }, HttpHeader).toPromise();
   }
 
   deleteGtPayout(payout: number): Promise<Response> {
     return this.http.get<Response>(`${this.url}/delete/${payout}`, HttpHeader).toPromise();
   }
 
-  updateGtPayout(payout: number, name: string, type: number, cost: number): Promise<Response> {
-    return this.http.post<Response>(`${this.url}/update`, { payout, name, type, cost }, HttpHeader).toPromise();
+  updateGtPayout(
+    payout: number,
+    name: string,
+    type: number,
+    cost: number,
+    from: string,
+    to: string
+  ): Promise<Response> {
+    return this.http
+      .post<Response>(`${this.url}/update`, { payout, name, type, cost, from, to }, HttpHeader)
+      .toPromise();
   }
 }

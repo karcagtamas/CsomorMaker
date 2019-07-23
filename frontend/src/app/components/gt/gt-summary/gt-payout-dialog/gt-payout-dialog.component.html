@@ -4,12 +4,14 @@
     <mat-label>Név</mat-label>
     <input matInput type="text" placeholder="Név" formControlName="name" />
     <mat-error *ngIf="form.get('name').hasError('required')">A név megadása kötelező!</mat-error>
+    <mat-error *ngIf="form.get('name').hasError('maxlength')">A név hossza maximum 75 karakter lehet!</mat-error>
   </mat-form-field>
 
   <mat-form-field class="w-100" appearance="outline">
     <mat-label>Összeg</mat-label>
     <input matInput type="number" placeholder="Összeg" formControlName="cost" />
     <mat-error *ngIf="form.get('cost').hasError('required')">A összeg megadása kötelező!</mat-error>
+    <mat-error *ngIf="form.get('cost').hasError('min')">A összeg minimum 0 kell, hogy legyen!</mat-error>
   </mat-form-field>
 
   <mat-form-field class="w-100" appearance="outline">
@@ -20,6 +22,24 @@
       </mat-option>
     </mat-select>
     <mat-error *ngIf="form.get('type').hasError('required')">A típus megadása kötelező!</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Kitől</mat-label>
+    <input matInput type="text" placeholder="Kitől" formControlName="from" />
+    <mat-error *ngIf="form.get('from').hasError('required')">Az összeg forrásának megadása kötelező!</mat-error>
+    <mat-error *ngIf="form.get('from').hasError('maxlength')"
+      >Az összeg forrásának hossza maximum 50 karakter lehet!</mat-error
+    >
+  </mat-form-field>
+
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Kinek</mat-label>
+    <input matInput type="text" placeholder="Kinek" formControlName="to" />
+    <mat-error *ngIf="form.get('to').hasError('required')">Az összeg céljának megadása kötelező!</mat-error>
+    <mat-error *ngIf="form.get('to').hasError('maxlength')"
+      >Az összeg céljának hossza maximum 50 karakter lehet!</mat-error
+    >
   </mat-form-field>
 </form>
 <div mat-dialog-actions>

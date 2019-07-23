@@ -26,9 +26,11 @@ export class GtPayoutDialogComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      name: ['', Validators.required],
-      cost: ['', Validators.required],
-      type: ['', Validators.required]
+      name: ['', [Validators.required, Validators.maxLength(75)]],
+      cost: ['', [Validators.required, Validators.min(0)]],
+      type: ['', [Validators.required]],
+      from: ['', [Validators.required, Validators.maxLength(50)]],
+      to: ['', [Validators.required, Validators.maxLength(50)]]
     });
     this.isEdit = this.data.payOut ? true : false;
     if (this.isEdit) {
@@ -38,7 +40,8 @@ export class GtPayoutDialogComponent implements OnInit {
   }
 
   setValues() {
-    this.form.setValue({ name: this.data.payOut.name, type: this.data.payOut.typeId, cost: this.data.payOut.cost });
+    const payout = this.data.payOut;
+    this.form.setValue({ name: payout.name, type: payout.typeId, cost: payout.cost, from: payout.from, to: payout.to });
   }
 
   onNoClick() {
@@ -53,7 +56,9 @@ export class GtPayoutDialogComponent implements OnInit {
       let payout = {
         name: this.form.get('name').value,
         cost: +this.form.get('cost').value,
-        type: +this.form.get('type').value
+        type: +this.form.get('type').value,
+        from: this.form.get('from').value,
+        to: this.form.get('to').value
       };
 
       this.dialogRef.close(payout);
