@@ -138,6 +138,7 @@ import {
   ChangePasswordDialogComponent,
   UserModifyDialogComponent
 } from './components/user';
+import { ResetPasswordComponent } from './components/main/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -216,7 +217,8 @@ import {
     ProfileComponent,
     MyProfileComponent,
     UserModifyDialogComponent,
-    ChangePasswordDialogComponent
+    ChangePasswordDialogComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

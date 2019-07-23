@@ -1,7 +1,13 @@
 import { EventsComponent, NewEventComponent } from './components/event';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent, LoginComponent, RegistrationComponent, PageNotFoundComponent } from './components/main';
+import {
+  HomeComponent,
+  LoginComponent,
+  RegistrationComponent,
+  PageNotFoundComponent,
+  ResetPasswordComponent
+} from './components/main';
 import { AuthGuard } from './guards/auth.guard';
 import { EventGuard } from './guards/event.guard';
 import { NewGtComponent, GtsComponent } from './components/gt';
@@ -13,6 +19,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', pathMatch: 'full', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'login', pathMatch: 'full', component: LoginComponent, canActivate: [NoAuthGuard] },
+  { path: 'reset-password', pathMatch: 'full', component: ResetPasswordComponent, canActivate: [NoAuthGuard] },
   { path: 'registration', pathMatch: 'full', component: RegistrationComponent, canActivate: [NoAuthGuard] },
   { path: 'events', pathMatch: 'full', component: EventsComponent, canActivate: [AuthGuard] },
   { path: 'events/:id/:page', pathMatch: 'full', component: EventsComponent, canActivate: [AuthGuard, EventGuard] },

@@ -28,4 +28,8 @@ export class LoginService {
   logout(): Promise<Response> {
     return this.http.get<Response>(`${URL}/user/logout`, HttpHeader).toPromise();
   }
+
+  checkResetDetails(username: string, email: string): Promise<Response> {
+    return this.http.post<Response>(`${URL}/reset`, { username, email }, HttpHeader).toPromise();
+  }
 }

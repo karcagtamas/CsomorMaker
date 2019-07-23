@@ -53,6 +53,7 @@
         if (isset($_SESSION['userId'])){
             $sql = "CALL isAdmin(?);";
             $stmt = $db->prepare($sql);
+            $stmt->bind_param("i", $_SESSION['userId']);
             $stmt->execute();
             $result = $stmt->get_result();
             $row = $result->fetch_assoc();
@@ -141,6 +142,26 @@
 
         }else{
             echo '{"response" : "success", "message" : "A felhasználó jelszó cseréje sikeres!"}';
+        }
+    }
+
+    function resetPassword($username, $email){
+        global $db;
+
+
+        $sql = "CALL isValidUsernameAndEmail(?, ?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("ii", $username, $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+
+        if ($row['isValid']){
+            echo '{"response" : "success", "message" : "A jelszó visszaállítás sikeres! Elküldtük az e-mailt a megadott e-mail címre!"}';
+            // TODO e-mail küldés
+        }
+        else{
+            echo '{"response" : "fails", "message" : "A jelszó visszaállítás sikertelen! Rossz adatokat adtál meg!"}';     
         }
     }
 

@@ -1,36 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService, CommonService, NotificationService } from 'src/app/services';
-import { Validators, FormGroup, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
+import { LoginService, NotificationService } from 'src/app/services';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-reset-password',
+  templateUrl: './reset-password.component.html',
+  styleUrls: ['./reset-password.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class ResetPasswordComponent implements OnInit {
   form: FormGroup;
 
   constructor(
     private loginservice: LoginService,
-    private router: Router,
-    private commonservice: CommonService,
     private fb: FormBuilder,
     private notificationservice: NotificationService
   ) {}
 
   ngOnInit() {
-    this.form = this.fb.group({ username: ['', Validators.required], password: ['', Validators.required] });
+    this.form = this.fb.group({
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]]
+    });
   }
 
-  login() {
+  reset() {
     if (!this.form.invalid) {
       this.loginservice
-        .login(this.form.get('username').value, this.form.get('password').value)
+        .checkResetDetails(this.form.get('username').value, this.form.get('email').value)
         .then(res => {
           if (res.response === 'success') {
-            this.commonservice.emitChange(true);
-            this.router.navigateByUrl('/home');
+            this.notificationservice.success(res.message);
           } else {
             this.notificationservice.error(res.message);
           }
