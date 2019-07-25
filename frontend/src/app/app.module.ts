@@ -225,7 +225,6 @@ import { ResetPasswordComponent } from './components/main/reset-password/reset-p
     AppRoutingModule,
     NgbModule,
     BrowserAnimationsModule,
-    NoopAnimationsModule,
     MatMenuModule,
     MatButtonModule,
     MatToolbarModule,
