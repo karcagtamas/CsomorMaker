@@ -318,7 +318,7 @@
                 $index = 0;
             }
         } while ($hours > 0);
-        return $wrokers;
+        return $workers;
     }
 
     function save($event, $works, $workers){
