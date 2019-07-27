@@ -58,4 +58,19 @@ export class GtWorkerSettingsComponent implements OnInit {
         this.notificationservice.error('A státusz állítása közben hiba történt! Kérjük próbálja újra késöbb!');
       });
   }
+
+  setWorkStatusFixed(workId: number) {
+    this.gtgeneratorservice
+      .setGtWorkStatusIsFixed(this.worker.id, workId)
+      .then(res => {
+        if (res.response === 'success') {
+          this.notificationservice.success(res.message);
+        } else {
+          this.notificationservice.error(res.message);
+        }
+      })
+      .catch(() => {
+        this.notificationservice.error('A státusz állítása közben hiba történt! Kérjük próbálja újra késöbb!');
+      });
+  }
 }

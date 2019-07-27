@@ -271,4 +271,15 @@
         setGtReadyStatus($gt['id'], true);
     }
 
+    function getFixedWorkers($work, $workers){
+        $fixedWorkers = [];
+        foreach ($workers as $worker) {
+            $statusKey = array_search($work['id'], array_column($worker['statuses'], 'workId'));
+            if ($worker['statuses'][$statusKey]['isFixed']){
+                array_push($fixedWorkers, $worker);
+            }
+        }
+        return $fixedWorkers;
+    }
+
 ?>

@@ -633,6 +633,10 @@
                                                 case 'active':
                                                     setGtWorkStatusIsActive($url[7], $url[8]);
                                                     break;
+
+                                                case 'fixed':
+                                                    setGtWorkStatusIsFixed($url[7], $url[8]);
+                                                    break;
                                                 
                                                 default:
                                                     echo '{"response" : "bad-subsubevent", "message" : "Bad request subsubevent!"}';

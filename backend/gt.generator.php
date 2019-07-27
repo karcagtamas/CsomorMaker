@@ -166,6 +166,28 @@
 
     }
 
+    function setGtWorkStatusIsFixed($workerId, $workId){
+        global $db;
+
+        $sql = "CALL setGtWorkStatusIsFixed(?, ?);";
+        
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("ii", $workerId, $workId);
+        $stmt->execute();
+
+        if ($stmt->errno){
+            $array['response'] =  'fail';
+            $array['message'] = 'A humán fixálása a poszthoz sikertelen!';
+        }else{
+            $array['response'] =  'success';
+            $array['message'] = 'A humán fixálása a poszthoz sikeres!';
+        }
+        echo json_encode($array);
+        $stmt->close();
+
+    }
+
     function getLowGtWorkers($gtId){
         global $db;
 

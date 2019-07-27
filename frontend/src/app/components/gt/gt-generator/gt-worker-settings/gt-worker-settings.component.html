@@ -13,6 +13,11 @@
           Posztfőszervező?
         </mat-checkbox>
       </div>
+      <div>
+        <mat-checkbox [(ngModel)]="status.isFixed" (change)="setWorkStatusFixed(status.workId)">
+          Fixálva?
+        </mat-checkbox>
+      </div>
     </div>
   </div>
 </div>

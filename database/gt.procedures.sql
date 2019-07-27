@@ -141,7 +141,7 @@ CREATE OR REPLACE PROCEDURE updateGtWorkTable(_workId int(11), _workerId int(11)
 
 CREATE OR REPLACE PROCEDURE getGtWorkStatuses(_workerId int(11), _gtId int(11))
     BEGIN
-      SELECT users.id AS workerId, users.name AS worker, users.username, gtworks.id AS workId, gtworks.name as work, gtworkworkerswitch.isActive, gtworkworkerswitch.isBoss from gtworkworkerswitch
+      SELECT users.id AS workerId, users.name AS worker, users.username, gtworks.id AS workId, gtworks.name as work, gtworkworkerswitch.isActive, gtworkworkerswitch.isBoss, gtworkworkerswitch.isFixed from gtworkworkerswitch
       INNER JOIN users ON users.id = gtworkworkerswitch.worker
       INNER JOIN gtworks ON gtworks.id = gtworkworkerswitch.work
       WHERE gtworkworkerswitch.worker = _workerId AND gtworks.gt = _gtId;
@@ -173,6 +173,20 @@ CREATE OR REPLACE PROCEDURE setGtWorkStatusIsBoss(_workerId int(11), _workId int
             SET _boss = TRUE;
         END IF;
         UPDATE gtworkworkerswitch SET isBoss = _boss WHERE worker = _workerId AND work = _workId;
+    END;
+
+CREATE OR REPLACE PROCEDURE setGtWorkStatusIsFixed(_workerId int(11), _workId int(11))
+    BEGIN
+      DECLARE _fix boolean;
+        SELECT isFixed INTO _fix FROM gtworkworkerswitch WHERE worker = _workerId AND work = _workId;
+
+        IF _fix
+        THEN
+            SET _fix = FALSE;
+        ELSE
+            SET _fix = TRUE;
+        END IF;
+        UPDATE gtworkworkerswitch SET isFixed = _fix WHERE worker = _workerId AND work = _workId;
     END;
 
 CREATE OR REPLACE PROCEDURE getLowGtWorkers(_gtId int(11))

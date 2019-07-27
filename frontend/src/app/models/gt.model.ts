@@ -85,6 +85,7 @@ export class GtWorkStatus {
   work: string;
   isActive: boolean;
   isBoss: boolean;
+  isFixed: boolean;
 }
 
 export class GtPayout {

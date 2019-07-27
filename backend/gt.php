@@ -143,16 +143,22 @@
             
             $works = setWorks($gt, $works, $workers);
 
+
             for ($i=0; $i < count($works); $i++) { 
                 $work = $works[$i];
+                $fixedWorkers = getFixedWorkers($work, $workers);
                 $count = 0;
                 $tries = 0;
                 do {
                     $index;
-                    do {
-                        $index = rand(0, count($workers) - 1);
-                        $tries++;
-                    } while (isValidWorkerIndex($index, $work, $workers) && $tries < 1000);
+                    if (isset($fixedWorkers[$count])){
+                        $index = array_search($fixedWorkers[$count]['id'], array_column($workers, 'id'));
+                    }else{
+                        do {
+                            $index = rand(0, count($workers) - 1);
+                            $tries++;
+                        } while (isValidWorkerIndex($index, $work, $workers) && $tries < 1000);
+                    }
                     $worker = $workers[$index];
 
                     if ($tries < 1000){
@@ -172,12 +178,9 @@
                             }
                         }   
                     }
-                    
-                    // $tries++;
                 } while ($count < $work['workerCount'] && $tries < 1000);
             }
             if ($tries < 1000){
-                // TODO SAVE
                 save($gt, $works, $workers);
                 $res['response'] = 'success';
                 $res['message']= 'A generálás sikeres volt! Yee!';

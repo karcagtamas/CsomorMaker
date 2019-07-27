@@ -59,6 +59,10 @@ export class GtGeneratorService {
     return this.http.get<Response>(`${this.workUrl}/statuses/set/active/${worker}/${work}`, HttpHeader).toPromise();
   }
 
+  setGtWorkStatusIsFixed(worker: number, work: number): Promise<Response> {
+    return this.http.get<Response>(`${this.workUrl}/statuses/set/fixed/${worker}/${work}`, HttpHeader).toPromise();
+  }
+
   getLowGtWorkers(gt: number): Promise<GtWorker[]> {
     return this.http.get<GtWorker[]>(`${this.workerUrl}/get/${gt}`, HttpHeader).toPromise();
   }

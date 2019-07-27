@@ -331,6 +331,7 @@ CREATE TABLE gtworkworkerswitch(
   gt int(11) NOT NULL,
   isActive boolean NOT NULL DEFAULT TRUE,
   isBoss boolean NOT NULL DEFAULT FALSE,
+  isFixed boolean NOT NULL DEFAULT FALSE,
   PRIMARY KEY(worker, work),
   CONSTRAINT fk_worker_users_gtworkworkerswitch FOREIGN KEY (worker)
   REFERENCES users (id),
