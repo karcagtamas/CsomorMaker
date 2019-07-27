@@ -155,7 +155,11 @@
         $stmt->execute();
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
+        var_dump($row);
+        var_dump($username);
+        var_dump($email);
 
+        mail("karcagtamas@gmail.com", "Teszt", "Asdfasdf asd fsad fasd as");
         if ($row['isValid']){
             echo '{"response" : "success", "message" : "A jelszó visszaállítás sikeres! Elküldtük az e-mailt a megadott e-mail címre!"}';
             // TODO e-mail küldés

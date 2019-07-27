@@ -25,9 +25,9 @@ USE csomormaker;
 
   CREATE OR REPLACE PROCEDURE isValidUsernameAndEmail(_username varchar(100), _email varchar(255))
     BEGIN
-      DECLARE count int(11) DEFAULT 0;
-      SELECT COUNT(*) INTO count FROM users WHERE username LIKE _username AND email LIKE _email;
-    IF count = 1
+      DECLARE countOf int(11) DEFAULT 0;
+      SELECT COUNT(*) INTO countOf FROM users WHERE username = _username AND email = _email;
+    IF countOf = 1
       THEN SELECT TRUE AS isValid;
       ELSE SELECT FALSE AS isValid;
       END IF;

@@ -17,6 +17,7 @@
 
     $isLoggedIn = isset($_SESSION['userId']);
     require 'connect.php';
+    require 'mail.php';
     $_POST = json_decode(file_get_contents('php://input'), true);
         
     $url = explode("/", $_SERVER['REQUEST_URI']);
@@ -780,6 +781,10 @@
 
                         case 'isloggedin':
                             echo $isLoggedIn;
+                            break;
+
+                        case 'reset':
+                            resetPassword($_POST['username'], $_POST['email']);
                             break;
                         
                         default:

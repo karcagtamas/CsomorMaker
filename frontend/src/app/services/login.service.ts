@@ -30,6 +30,6 @@ export class LoginService {
   }
 
   checkResetDetails(username: string, email: string): Promise<Response> {
-    return this.http.post<Response>(`${URL}/reset`, { username, email }, HttpHeader).toPromise();
+    return this.http.post<Response>(`${URL}/user/reset`, { username, email }, HttpHeader).toPromise();
   }
 }
