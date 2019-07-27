@@ -207,6 +207,15 @@ CREATE OR REPLACE PROCEDURE getGtWorkers(_gtId int(11))
       ORDER BY users.name;
     END;
 
+CREATE OR REPLACE PROCEDURE getGtHigherWorkers(_gtId int(11))
+    BEGIN
+      SELECT usergtswitch.gt, users.id AS id, users.username, users.name, eventroles.accessLevel FROM usergtswitch
+      INNER JOIN users ON users.id = usergtswitch.user
+      INNER JOIN eventroles ON eventroles.id = usergtswitch.role 
+      WHERE usergtswitch.gt = _gtId AND eventroles.accessLevel = 2
+      ORDER BY users.name;
+    END;
+
 CREATE OR REPLACE PROCEDURE getGtWorkerTables(_workerId int(11), _gtId int(11))
     BEGIN
       SELECT users.id AS workerId, users.name AS worker, users.username, gtworkertables.day, gtworkertables.hour, gtworks.id AS workId, gtworks.name as work, gtworkertables.gt from gtworkertables

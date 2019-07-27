@@ -32,7 +32,7 @@ export class GtCsomorComponent implements OnInit, OnChanges {
 
   getGtWorkers() {
     this.gtgeneratorserivce
-      .getLowGtWorkers(this.gt.id)
+      .getGtWorkers(this.gt.id)
       .then(res => {
         this.gtWorkers = res;
       })

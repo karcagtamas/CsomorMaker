@@ -53,6 +53,48 @@
         return $workers;
     }
 
+    function getGtHigherWorkersForGen($gtId){
+        global $db;
+        $sql = "CALL getGtHigherWorkers(?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $gtId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $workers = [];
+        while($row = $result->fetch_assoc()){
+            array_push($workers, $row);
+        }
+        $stmt->close();
+
+        for ($i=0; $i < count($workers); $i++) { 
+            $sql = "CALL getGtWorkerTables(?, ?);";
+            $stmt = $db->prepare($sql);
+            $stmt->bind_param("ii", $workers[$i]['id'], $gtId);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $tables = [];
+            while($row = $result->fetch_assoc()){
+                array_push($tables, $row);
+            }
+            $stmt->close();
+            $workers[$i]['tables'] = $tables;
+
+            $sql = "CALL getGtWorkStatuses(?, ?);";
+            $stmt = $db->prepare($sql);
+            $stmt->bind_param("ii", $workers[$i]['id'], $gtId);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $statuses = [];
+            while($row = $result->fetch_assoc()){
+                array_push($statuses, $row);
+            }
+            $stmt->close();
+            $workers[$i]['statuses'] = $statuses;
+        }
+
+        return $workers;
+    }
+
     function getGtWorksForGen($gtId){
         global $db;
         $sql = "CALL getGtWorks(?);";
@@ -269,6 +311,7 @@
         }
 
         setGtReadyStatus($gt['id'], true);
+        setHigherWorkerTables($gt, $works);
     }
 
     function getFixedWorkers($work, $workers){
@@ -280,6 +323,38 @@
             }
         }
         return $fixedWorkers;
+    }
+
+    function setHigherWorkerTables($gt, $works){
+        global $db;
+        $workers = getGtHigherWorkersForGen($gt['id']);
+        
+        for ($i = 0; $i < count($workers); $i++) {
+            foreach ($workers[$i]['statuses'] as $status) {
+                if ($status['isBoss']){
+                    $work = $works[array_search($status['workId'], array_column($works, 'id'))];
+                    for ($k=0; $k < count($workers[$i]['tables']); $k++) {
+                        $table = $workers[$i]['tables'][$k];
+                        if ($table['day'] == $work['day'] && $table['hour'] >= $work['startHour'] && $table['hour'] <= $work['endHour']){
+                                $workers[$i]['tables'][$k]['workId'] = $work['id'];
+                                $workers[$i]['tables'][$k]['work'] = $work['name'];
+                            }
+                        }   
+                }
+            }
+        }
+
+        $sql = "CALL updateGtWorkerTable(?, ?, ?, ?, ?);";
+
+        foreach ($workers as $worker) {
+            foreach ($worker['tables'] as $table) {
+                $stmt = $db->prepare($sql);
+                $stmt->bind_param("iiiii", $gt['id'], $worker['id'], $table['day'], $table['hour'], $table['workId']);
+                $stmt->execute();
+                $stmt->close();
+            }
+        }
+
     }
 
 ?>

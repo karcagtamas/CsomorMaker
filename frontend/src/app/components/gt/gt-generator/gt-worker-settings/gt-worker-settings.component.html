@@ -25,12 +25,12 @@
               Fixálva?
             </mat-checkbox>
           </div>
-          <div *ngSwitchCase="2">
-            <div>
-              <mat-checkbox [(ngModel)]="status.isBoss" (change)="setWorkStatusBoss(status.workId)">
-                Posztfőszervező?
-              </mat-checkbox>
-            </div>
+        </div>
+        <div *ngSwitchCase="2">
+          <div>
+            <mat-checkbox [(ngModel)]="status.isBoss" (change)="setWorkStatusBoss(status.workId)">
+              Posztfőszervező?
+            </mat-checkbox>
           </div>
         </div>
       </div>
