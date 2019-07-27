@@ -191,10 +191,19 @@ CREATE OR REPLACE PROCEDURE setGtWorkStatusIsFixed(_workerId int(11), _workId in
 
 CREATE OR REPLACE PROCEDURE getLowGtWorkers(_gtId int(11))
     BEGIN
-      SELECT usergtswitch.gt, users.id AS id, users.username, users.name FROM usergtswitch
+      SELECT usergtswitch.gt, users.id AS id, users.username, users.name, eventroles.accessLevel FROM usergtswitch
       INNER JOIN users ON users.id = usergtswitch.user
       INNER JOIN eventroles ON eventroles.id = usergtswitch.role 
       WHERE usergtswitch.gt = _gtId AND eventroles.accessLevel = 1
+      ORDER BY users.name;
+    END;
+
+CREATE OR REPLACE PROCEDURE getGtWorkers(_gtId int(11))
+    BEGIN
+      SELECT usergtswitch.gt, users.id AS id, users.username, users.name, eventroles.accessLevel FROM usergtswitch
+      INNER JOIN users ON users.id = usergtswitch.user
+      INNER JOIN eventroles ON eventroles.id = usergtswitch.role 
+      WHERE usergtswitch.gt = _gtId AND eventroles.accessLevel <= 2
       ORDER BY users.name;
     END;
 

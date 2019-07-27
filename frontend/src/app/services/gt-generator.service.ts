@@ -64,7 +64,11 @@ export class GtGeneratorService {
   }
 
   getLowGtWorkers(gt: number): Promise<GtWorker[]> {
-    return this.http.get<GtWorker[]>(`${this.workerUrl}/get/${gt}`, HttpHeader).toPromise();
+    return this.http.get<GtWorker[]>(`${this.workerUrl}/get/low/${gt}`, HttpHeader).toPromise();
+  }
+
+  getGtWorkers(gt: number): Promise<GtWorker[]> {
+    return this.http.get<GtWorker[]>(`${this.workerUrl}/get/all/${gt}`, HttpHeader).toPromise();
   }
 
   getGtWorkerTables(worker: number, gt: number): Promise<GtWorkerTable[]> {

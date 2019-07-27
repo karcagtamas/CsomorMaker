@@ -661,7 +661,20 @@
                             require 'gt.generator.php';
                             switch ($event) {
                                 case 'get':
-                                    getLowGtWorkers($url[5]);
+                                    $subevent = $url[5];
+                                    switch ($subevent) {
+                                        case 'all':
+                                            getGtWorkers($url[6]);         
+                                            break;
+
+                                        case 'low':
+                                            getLowGtWorkers($url[6]);         
+                                            break;
+                                        
+                                        default:
+                                            echo '{"response" : "bad-subevent", "message" : "Bad request subevent!"}';
+                                            break;
+                                    }
                                     break;
 
                                 case 'tables':

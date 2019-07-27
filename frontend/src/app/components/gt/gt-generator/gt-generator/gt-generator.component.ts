@@ -49,7 +49,7 @@ export class GtGeneratorComponent implements OnInit, OnChanges {
 
   getWorkers() {
     this.gtgeneratorservice
-      .getLowGtWorkers(this.gt.id)
+      .getGtWorkers(this.gt.id)
       .then(res => {
         this.gtWorkers = res;
       })

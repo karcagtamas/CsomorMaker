@@ -5,18 +5,34 @@
     <div class="title">Posztok:</div>
     <div class="status border rounded" *ngFor="let status of workStatuses">
       <div class="title">{{ status.work }}</div>
-      <div>
-        <mat-checkbox [(ngModel)]="status.isActive" (change)="setWorkStatusActive(status.workId)">Aktív?</mat-checkbox>
-      </div>
-      <div>
-        <mat-checkbox [(ngModel)]="status.isBoss" (change)="setWorkStatusBoss(status.workId)">
-          Posztfőszervező?
-        </mat-checkbox>
-      </div>
-      <div>
-        <mat-checkbox [(ngModel)]="status.isFixed" (change)="setWorkStatusFixed(status.workId)">
-          Fixálva?
-        </mat-checkbox>
+
+      <div [ngSwitch]="worker.accessLevel">
+        <div *ngSwitchCase="1">
+          <div>
+            <mat-checkbox
+              [(ngModel)]="status.isActive"
+              (change)="setWorkStatusActive(status.workId)"
+              [disabled]="status.isFixed"
+              >Aktív?</mat-checkbox
+            >
+          </div>
+          <div>
+            <mat-checkbox
+              [(ngModel)]="status.isFixed"
+              (change)="setWorkStatusFixed(status.workId)"
+              [disabled]="!status.isActive"
+            >
+              Fixálva?
+            </mat-checkbox>
+          </div>
+          <div *ngSwitchCase="2">
+            <div>
+              <mat-checkbox [(ngModel)]="status.isBoss" (change)="setWorkStatusBoss(status.workId)">
+                Posztfőszervező?
+              </mat-checkbox>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

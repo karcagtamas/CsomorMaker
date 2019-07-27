@@ -207,6 +207,26 @@
         $stmt->close();
     }
 
+    function getGtWorkers($gtId){
+        global $db;
+
+        $sql = "CALL getGtWorkers(?);";
+        
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $gtId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $array = [];
+        while($row = $result->fetch_assoc()){
+            array_push($array, $row);
+        }
+        echo json_encode($array);
+        $stmt->close();
+    }
+
+
     function getGtWorkerTables($workerId, $gtId){
         global $db;
 
