@@ -1,4 +1,4 @@
-import { GtGeneratorService } from 'src/app/services';
+import { GtGeneratorService, ExportService } from 'src/app/services';
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { GtWorker, GtWorkerTable } from 'src/app/models';
 
@@ -13,7 +13,7 @@ export class GtCsomorPersonalComponent implements OnInit, OnChanges {
   workerTables: GtWorkerTable[] = [];
   hoverValue = '-';
 
-  constructor(private gtgeneratorservice: GtGeneratorService) {}
+  constructor(private gtgeneratorservice: GtGeneratorService, private exportservice: ExportService) {}
 
   ngOnInit() {
     if (this.gtWorkers.length > 0) {
@@ -39,5 +39,9 @@ export class GtCsomorPersonalComponent implements OnInit, OnChanges {
 
   changeWorker() {
     this.getWorkerTables();
+  }
+
+  exportPersonal() {
+    this.exportservice.exportPersonal(this.gtWorkers[this.selectedWorker]);
   }
 }

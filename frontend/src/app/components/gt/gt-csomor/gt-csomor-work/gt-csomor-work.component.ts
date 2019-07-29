@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { GtWork, GtWorkTable } from 'src/app/models';
-import { GtGeneratorService } from 'src/app/services';
+import { GtGeneratorService, ExportService } from 'src/app/services';
 
 @Component({
   selector: 'app-gt-csomor-work',
@@ -12,7 +12,7 @@ export class GtCsomorWorkComponent implements OnInit, OnChanges {
   selectedWork = 0;
   workTables: GtWorkTable[] = [];
 
-  constructor(private gtgeneratorservice: GtGeneratorService) {}
+  constructor(private gtgeneratorservice: GtGeneratorService, private exportserivce: ExportService) {}
 
   ngOnInit() {
     if (this.gtWorks.length > 0) {
@@ -38,5 +38,9 @@ export class GtCsomorWorkComponent implements OnInit, OnChanges {
 
   changeWork() {
     this.getWorkTables();
+  }
+
+  exportWork() {
+    this.exportserivce.exportWork(this.gtWorks[this.selectedWork]);
   }
 }

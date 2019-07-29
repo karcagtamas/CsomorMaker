@@ -5,24 +5,30 @@
       <mat-option [value]="i" *ngFor="let worker of gtWorkers; let i = index">{{ worker.name }}</mat-option>
     </mat-select>
   </mat-form-field>
-  <div class="buttons">
-    <button
-      mat-raised-button
-      color="warn"
-      *ngIf="selectedWorker > 0"
-      (click)="selectedWorker = selectedWorker - 1; getWorkerTables()"
-    >
-      Elöző
-    </button>
-    <button
-      mat-raised-button
-      color="primary"
-      *ngIf="selectedWorker < gtWorkers.length - 1"
-      (click)="selectedWorker = selectedWorker + 1; getWorkerTables()"
-      class="float-right"
-    >
-      Következő
-    </button>
+  <div class="row col-12 buttons">
+    <div class="col col-12 col-md-4">
+      <button
+        mat-raised-button
+        color="warn"
+        *ngIf="selectedWorker > 0"
+        (click)="selectedWorker = selectedWorker - 1; getWorkerTables()"
+      >
+        Elöző
+      </button>
+    </div>
+    <div class="col col-12 col-md-4">
+      <button mat-stroked-button (click)="exportPersonal()">Export</button>
+    </div>
+    <div class="col col-12 col-md-4">
+      <button
+        mat-raised-button
+        color="primary"
+        *ngIf="selectedWorker < gtWorkers.length - 1"
+        (click)="selectedWorker = selectedWorker + 1; getWorkerTables()"
+      >
+        Következő
+      </button>
+    </div>
   </div>
   <div class="personal">
     <div

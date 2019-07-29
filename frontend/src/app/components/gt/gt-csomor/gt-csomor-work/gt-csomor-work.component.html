@@ -5,24 +5,30 @@
       <mat-option [value]="i" *ngFor="let work of gtWorks; let i = index">{{ work.name }}</mat-option>
     </mat-select>
   </mat-form-field>
-  <div class="buttons">
-    <button
-      mat-raised-button
-      color="warn"
-      *ngIf="selectedWork > 0"
-      (click)="selectedWork = selectedWork - 1; getWorkTables()"
-    >
-      Elöző
-    </button>
-    <button
-      mat-raised-button
-      color="primary"
-      *ngIf="selectedWork < gtWorks.length - 1"
-      (click)="selectedWork = selectedWork + 1; getWorkTables()"
-      class="float-right"
-    >
-      Következő
-    </button>
+  <div class="row col-12 buttons">
+    <div class="col col-12 col-md-4">
+      <button
+        mat-raised-button
+        color="warn"
+        *ngIf="selectedWork > 0"
+        (click)="selectedWork = selectedWork - 1; getWorkTables()"
+      >
+        Elöző
+      </button>
+    </div>
+    <div class="col col-12 col-md-4">
+      <button mat-stroked-button (click)="exportWork()">Export</button>
+    </div>
+    <div class="col col-12 col-md-4">
+      <button
+        mat-raised-button
+        color="primary"
+        *ngIf="selectedWork < gtWorks.length - 1"
+        (click)="selectedWork = selectedWork + 1; getWorkTables()"
+      >
+        Következő
+      </button>
+    </div>
   </div>
   <div class="work row col-12">
     <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 worker-frame" *ngFor="let table of workTables">

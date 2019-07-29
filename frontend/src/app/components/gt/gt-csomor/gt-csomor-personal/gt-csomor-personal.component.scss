@@ -16,5 +16,13 @@
 }
 
 .buttons {
+  margin: 0;
   margin-bottom: 0.5rem;
+  div {
+    text-align: center;
+    button {
+      margin-top: 0.2rem;
+      margin-bottom: 0.2rem;
+    }
+  }
 }

@@ -46,7 +46,8 @@ import {
   GtPayoutsService,
   GtGeneratorService,
   GtMembersService,
-  GtClassesService
+  GtClassesService,
+  ExportService
 } from './services';
 import {
   HomeComponent,
@@ -268,6 +269,7 @@ import { ResetPasswordComponent } from './components/main/reset-password/reset-p
     GtGeneratorService,
     GtClassesService,
     GtMembersService,
+    ExportService,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
