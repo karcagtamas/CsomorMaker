@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, SimpleChanges, OnChanges } from '@angular/core';
-import { NotificationService, GtService } from 'src/app/services';
+import { NotificationService, GtService, GtGeneratorService } from 'src/app/services';
 import { Gt } from 'src/app/models';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
@@ -16,7 +16,8 @@ export class GtSettingsComponent implements OnInit, OnChanges {
   constructor(
     private fb: FormBuilder,
     private notificationservice: NotificationService,
-    private gtservice: GtService
+    private gtservice: GtService,
+    private gtgeneratorservice: GtGeneratorService
   ) {}
 
   ngOnInit() {
@@ -47,23 +48,32 @@ export class GtSettingsComponent implements OnInit, OnChanges {
     if (this.form.invalid) {
       this.notificationservice.warning('Nem megfelelő adatok!');
     } else {
-      const gt = this.modifiedGt;
-      gt.tShirtColor = this.form.get('tShirtColor').value;
-      gt.days = +this.form.get('days').value;
-      gt.greenyCost = +this.form.get('greenyCost').value;
+      this.gtgeneratorservice.getGtWorks(this.gt.id).then(res => {
+        const gt = this.modifiedGt;
+        gt.tShirtColor = this.form.get('tShirtColor').value;
+        gt.days = +this.form.get('days').value;
+        gt.greenyCost = +this.form.get('greenyCost').value;
+        const f = !!res.find(x => x.day > gt.days);
 
-      this.gtservice
-        .updateGt(gt)
-        .then(res => {
-          if (res.response === 'success') {
-            this.notificationservice.success(res.message);
-          } else {
-            this.notificationservice.error(res.message);
-          }
-        })
-        .catch(() => {
-          this.notificationservice.error('A gólyatábor frissítése közben hiba történt! Kérjük próbálja újra késöbb!');
-        });
+        if (f) {
+          this.notificationservice.warning('Sajnos van egy poszt, ami kivül esne a határokon az új nap beállítással!');
+        } else {
+          this.gtservice
+            .updateGt(gt)
+            .then(res2 => {
+              if (res2.response === 'success') {
+                this.notificationservice.success(res2.message);
+              } else {
+                this.notificationservice.error(res2.message);
+              }
+            })
+            .catch(() => {
+              this.notificationservice.error(
+                'A gólyatábor frissítése közben hiba történt! Kérjük próbálja újra késöbb!'
+              );
+            });
+        }
+      });
     }
   }
 }
