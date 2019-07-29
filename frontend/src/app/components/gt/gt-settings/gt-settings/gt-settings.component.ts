@@ -62,6 +62,7 @@ export class GtSettingsComponent implements OnInit, OnChanges {
         gt.days = +this.form.get('days').value;
         gt.greenyCost = +this.form.get('greenyCost').value;
         gt.startDate = new Date(this.form.get('startDate').value);
+        gt.startDate.setHours(10);
         const f = !!res.find(x => x.day > gt.days);
 
         if (f) {
