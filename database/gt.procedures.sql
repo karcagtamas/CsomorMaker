@@ -191,7 +191,7 @@ CREATE OR REPLACE PROCEDURE setGtWorkStatusIsFixed(_workerId int(11), _workId in
 
 CREATE OR REPLACE PROCEDURE getLowGtWorkers(_gtId int(11))
     BEGIN
-      SELECT usergtswitch.gt, users.id AS id, users.username, users.name, eventroles.accessLevel FROM usergtswitch
+      SELECT usergtswitch.gt, users.id AS id, users.username, users.name, eventroles.accessLevel, usergtswitch.isGeneratable FROM usergtswitch
       INNER JOIN users ON users.id = usergtswitch.user
       INNER JOIN eventroles ON eventroles.id = usergtswitch.role 
       WHERE usergtswitch.gt = _gtId AND eventroles.accessLevel = 1
@@ -200,7 +200,7 @@ CREATE OR REPLACE PROCEDURE getLowGtWorkers(_gtId int(11))
 
 CREATE OR REPLACE PROCEDURE getGtWorkers(_gtId int(11))
     BEGIN
-      SELECT usergtswitch.gt, users.id AS id, users.username, users.name, eventroles.accessLevel FROM usergtswitch
+      SELECT usergtswitch.gt, users.id AS id, users.username, users.name, eventroles.accessLevel, usergtswitch.isGeneratable FROM usergtswitch
       INNER JOIN users ON users.id = usergtswitch.user
       INNER JOIN eventroles ON eventroles.id = usergtswitch.role 
       WHERE usergtswitch.gt = _gtId AND eventroles.accessLevel <= 2
@@ -209,12 +209,36 @@ CREATE OR REPLACE PROCEDURE getGtWorkers(_gtId int(11))
 
 CREATE OR REPLACE PROCEDURE getGtHigherWorkers(_gtId int(11))
     BEGIN
-      SELECT usergtswitch.gt, users.id AS id, users.username, users.name, eventroles.accessLevel FROM usergtswitch
+      SELECT usergtswitch.gt, users.id AS id, users.username, users.name, eventroles.accessLevel, usergtswitch.isGeneratable FROM usergtswitch
       INNER JOIN users ON users.id = usergtswitch.user
       INNER JOIN eventroles ON eventroles.id = usergtswitch.role 
       WHERE usergtswitch.gt = _gtId AND eventroles.accessLevel = 2
       ORDER BY users.name;
     END;
+
+CREATE OR REPLACE PROCEDURE getGtWorkersForGen(_gtId int(11))
+    BEGIN
+      SELECT usergtswitch.gt, users.id AS id, users.username, users.name, eventroles.accessLevel, usergtswitch.isGeneratable FROM usergtswitch
+      INNER JOIN users ON users.id = usergtswitch.user
+      INNER JOIN eventroles ON eventroles.id = usergtswitch.role 
+      WHERE usergtswitch.gt = _gtId AND eventroles.accessLevel = 1 OR (eventroles.accessLevel = 2 AND usergtswitch.isGeneratable)
+      ORDER BY users.name;
+    END;
+
+CREATE OR REPLACE PROCEDURE setGtWorkerStatusGeneratable(_gtId int(11), _workerId int(11))
+    BEGIN
+      DECLARE _generatable boolean;
+        SELECT isGeneratable INTO _generatable FROM usergtswitch WHERE gt = _gtId AND user = _workerId;
+
+        IF _generatable
+        THEN
+            SET _generatable = FALSE;
+        ELSE
+            SET _generatable = TRUE;
+        END IF;
+        UPDATE usergtswitch u SET isGeneratable = _generatable WHERE gt = _gtId AND user = _workerId;
+    END;
+
 
 CREATE OR REPLACE PROCEDURE getGtWorkerTables(_workerId int(11), _gtId int(11))
     BEGIN

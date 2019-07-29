@@ -13,7 +13,7 @@
 
     function getGtWorkersForGen($gtId){
         global $db;
-        $sql = "CALL getLowGtWorkers(?);";
+        $sql = "CALL getGtWorkersForGen(?);";
         $stmt = $db->prepare($sql);
         $stmt->bind_param("i", $gtId);
         $stmt->execute();
@@ -114,6 +114,16 @@
     function setWorks($gt, $works, $workers){
         for ($i=0; $i < count($works); $i++) { 
             $works[$i]['workers'] = [];
+        }
+        foreach ($workers as $worker) {
+            //var_dump($worker);
+           foreach ($worker['statuses'] as $status) {
+               if ($status['isBoss'] && $worker['isGeneratable']){
+                   $workId = $status['workId'];
+                   $workKey = array_search($workId, array_column($works, 'id'));
+                   array_push($works[$workKey]['workers'], $worker['id']);
+               }
+           }
         }
         return $works;
     }
@@ -292,17 +302,15 @@
             }
         }
 
-        $sql = "CALL clearGtWorkTable(?);";
-
         foreach ($works as $work) {
+            $sql = "CALL clearGtWorkTable(?);";
             $stmt = $db->prepare($sql);
             $stmt->bind_param("i", $work['id']);
             $stmt->execute();
             $stmt->close();
 
-            $sql = "CALL updateGtWorkTable(?, ?);";
-
             foreach ($work['workers'] as $workerId) {
+                $sql = "CALL updateGtWorkTable(?, ?);";
                 $stmt = $db->prepare($sql);
                 $stmt->bind_param("ii", $work['id'], $workerId);
                 $stmt->execute();

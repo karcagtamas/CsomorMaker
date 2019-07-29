@@ -226,6 +226,28 @@
         $stmt->close();
     }
 
+    function setGtWorkerStatusGeneratable($gtId, $workerId){
+        global $db;
+
+        $sql = "CALL setGtWorkerStatusGeneratable(?, ?);";
+        
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("ii", $gtId, $workerId);
+        $stmt->execute();
+
+        if ($stmt->errno){
+            $array['response'] =  'fail';
+            $array['message'] = 'A szervező generálási állapota sikeresen átállítva!';
+        }else{
+            $array['response'] =  'success';
+            $array['message'] = 'A szervező generálási állapota sikeres átállítva!';
+        }
+        echo json_encode($array);
+        $stmt->close();
+
+    }
+
 
     function getGtWorkerTables($workerId, $gtId){
         global $db;

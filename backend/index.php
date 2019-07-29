@@ -677,6 +677,10 @@
                                     }
                                     break;
 
+                                case 'set':
+                                    setGtWorkerStatusGeneratable($url[5], $url[6]);
+                                    break;
+
                                 case 'tables':
                                     $subevent = $url[5];
                                     switch ($subevent) {

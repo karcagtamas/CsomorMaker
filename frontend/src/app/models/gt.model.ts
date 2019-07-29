@@ -55,6 +55,7 @@ export class GtWorker {
   name: string;
   username: string;
   accessLevel: number;
+  isGeneratable: boolean;
   gt: number;
 }
 

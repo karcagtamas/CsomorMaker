@@ -1,6 +1,14 @@
 <div class="details">
   <div><span class="title">Név: </span>{{ worker.name }}</div>
   <div><span class="title">Felhasználó név: </span>{{ worker.username }}</div>
+  <div>
+    <mat-checkbox
+      [(ngModel)]="worker.isGeneratable"
+      [disabled]="worker.accessLevel == 1"
+      (change)="setWorkerStatusGeneratable()"
+      >Beosztandó?</mat-checkbox
+    >
+  </div>
   <div class="statuses">
     <div class="title">Posztok:</div>
     <div class="status border rounded" *ngFor="let status of workStatuses">

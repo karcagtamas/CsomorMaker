@@ -246,6 +246,7 @@ CREATE TABLE usergtswitch(
   user int(11) NOT NULL,
   role int(11) NOT NULL,
   connectionDate datetime NOT NULL DEFAULT NOW(),
+  isGeneratable boolean NOT NULL DEFAULT TRUE,
   PRIMARY KEY(gt,user,role),
   CONSTRAINT fk_gt_gts_usergtswitch FOREIGN KEY (gt)
   REFERENCES gts(id),
