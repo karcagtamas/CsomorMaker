@@ -4,6 +4,7 @@
     <mat-label>Név</mat-label>
     <input matInput type="text" placeholder="Név" formControlName="name" />
     <mat-error *ngIf="form.get('name').hasError('required')">A név megadása kötelező!</mat-error>
+    <mat-error *ngIf="form.get('name').hasError('maxlength')">A név hossza maximum 100 karakter!</mat-error>
   </mat-form-field>
   <mat-form-field class="w-100" appearance="outline">
     <mat-label>Poló</mat-label>

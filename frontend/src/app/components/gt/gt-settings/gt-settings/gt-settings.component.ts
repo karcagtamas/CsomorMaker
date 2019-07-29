@@ -22,9 +22,9 @@ export class GtSettingsComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.form = this.fb.group({
-      tShirtColor: ['', Validators.required],
-      days: ['', Validators.required],
-      greenyCost: ['', Validators.required],
+      tShirtColor: ['', [Validators.required, Validators.maxLength(50)]],
+      days: ['', [Validators.required, Validators.min(1)]],
+      greenyCost: ['', [Validators.required, Validators.min(0)]],
       startDate: ['']
     });
     this.setValues();

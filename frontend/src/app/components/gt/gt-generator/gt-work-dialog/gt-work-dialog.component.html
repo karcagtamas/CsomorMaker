@@ -4,6 +4,7 @@
     <mat-label>Név</mat-label>
     <input matInput type="text" placeholder="Név" formControlName="name" />
     <mat-error *ngIf="form.get('name').hasError('required')">A név megadása kötelező!</mat-error>
+    <mat-error *ngIf="form.get('name').hasError('maxlength')">A név maximum hossza 50 karakter!</mat-error>
   </mat-form-field>
   <mat-form-field class="w-100" appearance="outline">
     <mat-label>Nap</mat-label>
@@ -11,6 +12,7 @@
       <mat-option *ngFor="let day of days" [value]="day">{{ day }}</mat-option>
     </mat-select>
     <mat-error *ngIf="form.get('day').hasError('required')">A nap megadása kötelező!</mat-error>
+    <mat-error *ngIf="form.get('day').hasError('min')">A nap számának minimuma 1!</mat-error>
   </mat-form-field>
   <mat-form-field class="w-100" appearance="outline">
     <mat-label>Kezdet</mat-label>
@@ -18,6 +20,8 @@
       <mat-option *ngFor="let start of startHours" [value]="start">{{ start }}</mat-option>
     </mat-select>
     <mat-error *ngIf="form.get('start').hasError('required')">A kezdet megadása kötelező!</mat-error>
+    <mat-error *ngIf="form.get('start').hasError('min')">A kezdeti óra számának minimuma 0!</mat-error>
+    <mat-error *ngIf="form.get('start').hasError('max')">A kezdeti óra számának maximuma 23!</mat-error>
   </mat-form-field>
   <mat-form-field class="w-100" appearance="outline">
     <mat-label>Vége</mat-label>
@@ -25,11 +29,14 @@
       <mat-option *ngFor="let end of endHours" [value]="end">{{ end }}</mat-option>
     </mat-select>
     <mat-error *ngIf="form.get('end').hasError('required')">A vége megadása kötelező!</mat-error>
+    <mat-error *ngIf="form.get('end').hasError('min')">A vége óra számának minimuma 0!</mat-error>
+    <mat-error *ngIf="form.get('end').hasError('max')">A vége óra számának maximuma 23!</mat-error>
   </mat-form-field>
   <mat-form-field class="w-100" appearance="outline">
     <mat-label>Humán igény</mat-label>
     <input matInput type="number" placeholder="Humán igény" formControlName="workers" min="0" />
     <mat-error *ngIf="form.get('workers').hasError('required')">Az igény szám megadása kötelező!</mat-error>
+    <mat-error *ngIf="form.get('workers').hasError('min')">Az igény számának minimuma 0!</mat-error>
   </mat-form-field>
 </form>
 <div mat-dialog-actions>

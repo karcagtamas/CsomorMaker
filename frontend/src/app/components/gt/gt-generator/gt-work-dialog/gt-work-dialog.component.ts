@@ -27,11 +27,11 @@ export class GtWorkDialogComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      name: ['', Validators.required],
-      day: ['', Validators.required],
-      start: ['', Validators.required],
-      end: ['', Validators.required],
-      workers: ['', Validators.required]
+      name: ['', [Validators.required, Validators.maxLength(50)]],
+      day: ['', [Validators.required, Validators.min(1)]],
+      start: ['', [Validators.required, Validators.min(0), Validators.max(23)]],
+      end: ['', [Validators.required, Validators.min(0), Validators.max(23)]],
+      workers: ['', [Validators.required, Validators.min(0)]]
     });
     this.isEdit = this.data.work ? true : false;
     if (this.isEdit) {

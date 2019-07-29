@@ -23,7 +23,7 @@ export class GtClassMemberDialogComponent implements OnInit {
 
   ngOnInit() {
     this.isEdit = this.data ? true : false;
-    this.form = this.fb.group({ name: ['', Validators.required], description: [''] });
+    this.form = this.fb.group({ name: ['', [Validators.required, Validators.maxLength(100)]], description: [''] });
     if (this.isEdit) {
       this.setValues();
     }

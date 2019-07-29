@@ -25,9 +25,12 @@ export class GtClassDialogComponent implements OnInit {
     this.isEdit = this.data ? true : false;
     let form;
     if (this.isEdit) {
-      form = { name: ['', Validators.required], tShirtColor: ['', Validators.required] };
+      form = {
+        name: ['', [Validators.required, Validators.maxLength(5)]],
+        tShirtColor: ['', [Validators.required, Validators.maxLength(50)]]
+      };
     } else {
-      form = { name: ['', Validators.required] };
+      form = { name: ['', [Validators.required, Validators.maxLength(5)]] };
     }
     this.form = this.fb.group(form);
     if (this.isEdit) {

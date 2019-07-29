@@ -4,11 +4,15 @@
     <mat-label>Név</mat-label>
     <input matInput type="text" placeholder="Név" formControlName="name" />
     <mat-error *ngIf="form.get('name').hasError('required')">A név megadása kötelező!</mat-error>
+    <mat-error *ngIf="form.get('name').hasError('maxlength')">A név maximum hossza 5 karakter!</mat-error>
   </mat-form-field>
   <mat-form-field class="w-100" appearance="outline" *ngIf="isEdit">
     <mat-label>Poló</mat-label>
     <input matInput type="text" placeholder="Poló" formControlName="tShirtColor" />
-    <mat-error *ngIf="form.get('name').hasError('required')">A poló szín megadása kötelező!</mat-error>
+    <mat-error *ngIf="form.get('tShirtColor').hasError('required')">A poló szín megadása kötelező!</mat-error>
+    <mat-error *ngIf="form.get('tShirtColor').hasError('maxlength')"
+      >A poló szín maximuma hossza 50 akrakter!</mat-error
+    >
   </mat-form-field>
 </form>
 <div mat-dialog-actions>
