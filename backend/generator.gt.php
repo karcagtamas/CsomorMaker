@@ -55,7 +55,7 @@
 
     function getGtHigherWorkersForGen($gtId){
         global $db;
-        $sql = "CALL getGtHigherWorkers(?);";
+        $sql = "CALL getHigherGtWorkers(?);";
         $stmt = $db->prepare($sql);
         $stmt->bind_param("i", $gtId);
         $stmt->execute();

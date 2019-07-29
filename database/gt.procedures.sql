@@ -207,7 +207,7 @@ CREATE OR REPLACE PROCEDURE getGtWorkers(_gtId int(11))
       ORDER BY users.name;
     END;
 
-CREATE OR REPLACE PROCEDURE getGtHigherWorkers(_gtId int(11))
+CREATE OR REPLACE PROCEDURE getHigherGtWorkers(_gtId int(11))
     BEGIN
       SELECT usergtswitch.gt, users.id AS id, users.username, users.name, eventroles.accessLevel, usergtswitch.isGeneratable FROM usergtswitch
       INNER JOIN users ON users.id = usergtswitch.user
