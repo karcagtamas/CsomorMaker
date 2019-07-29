@@ -24,19 +24,27 @@ export class GtSettingsComponent implements OnInit, OnChanges {
     this.form = this.fb.group({
       tShirtColor: ['', Validators.required],
       days: ['', Validators.required],
-      greenyCost: ['', Validators.required]
+      greenyCost: ['', Validators.required],
+      startDate: ['']
     });
     this.setValues();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges() {
     this.modifiedGt = { ...this.gt };
     this.setValues();
   }
 
   setValues() {
     const gt = this.modifiedGt;
-    this.form.setValue({ tShirtColor: gt.tShirtColor, days: gt.days, greenyCost: gt.greenyCost });
+    if (this.form) {
+      this.form.setValue({
+        tShirtColor: gt.tShirtColor,
+        days: gt.days,
+        greenyCost: gt.greenyCost,
+        startDate: gt.startDate
+      });
+    }
   }
 
   reset() {
@@ -53,6 +61,7 @@ export class GtSettingsComponent implements OnInit, OnChanges {
         gt.tShirtColor = this.form.get('tShirtColor').value;
         gt.days = +this.form.get('days').value;
         gt.greenyCost = +this.form.get('greenyCost').value;
+        gt.startDate = new Date(this.form.get('startDate').value);
         const f = !!res.find(x => x.day > gt.days);
 
         if (f) {

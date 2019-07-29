@@ -10,6 +10,7 @@ export class Gt {
   isLocked: boolean;
   greeny: number;
   greenyCost: number;
+  startDate: Date;
 }
 
 export class GtMember {

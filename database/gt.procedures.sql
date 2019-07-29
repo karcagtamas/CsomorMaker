@@ -3,7 +3,7 @@ USE csomormaker;
 
 CREATE OR REPLACE PROCEDURE getGts(_userId int(11))
     BEGIN
-        SELECT gts.id, gts.year, gts.tShirtColor, gts.days, gts.members, gts.ready, gts.creater AS createrId, gts.isLocked, gts.greeny, gts.greenyCost, users.name AS creater FROM gts 
+        SELECT gts.id, gts.year, gts.tShirtColor, gts.days, gts.members, gts.ready, gts.creater AS createrId, gts.isLocked, gts.greeny, gts.greenyCost, users.name AS creater, gts.startDate FROM gts 
         INNER JOIN usergtswitch ON gts.id = usergtswitch.gt
         INNER JOIN users ON gts.creater = users.id
         WHERE usergtswitch.user = _userId
@@ -12,14 +12,14 @@ CREATE OR REPLACE PROCEDURE getGts(_userId int(11))
 
 CREATE OR REPLACE PROCEDURE getGt(_gtId int(11))
     BEGIN
-        SELECT gts.id, gts.year, gts.tShirtColor, gts.days, gts.members, gts.ready, gts.creater AS createrId, gts.isLocked, gts.greeny, gts.greenyCost, users.name AS creater FROM gts 
+        SELECT gts.id, gts.year, gts.tShirtColor, gts.days, gts.members, gts.ready, gts.creater AS createrId, gts.isLocked, gts.greeny, gts.greenyCost, users.name AS creater, gts.startDate FROM gts 
         INNER JOIN users ON gts.creater = users.id
         WHERE gts.id = _gtId;
     END;
 
-CREATE OR REPLACE PROCEDURE updateGt(_gtId int(11), _year int(4), _tShirtColor varchar(50), _days int(2))
+CREATE OR REPLACE PROCEDURE updateGt(_gtId int(11), _year int(4), _tShirtColor varchar(50), _days int(2), _startDate date)
     BEGIN
-        UPDATE gts SET year = _year, tShirtColor = _tShirtColor, days = _days WHERE id = _gtId;
+        UPDATE gts SET year = _year, tShirtColor = _tShirtColor, days = _days, startDate = _startDate WHERE id = _gtId;
     END;
 
 CREATE OR REPLACE PROCEDURE addGt(_year int(4), _creater int(11))

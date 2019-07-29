@@ -236,6 +236,7 @@ CREATE TABLE gts(
   isLocked boolean NOT NULL DEFAULT FALSE,
   greeny int(11) NOT NULL DEFAULT 0,
   greenyCost decimal NOT NULL DEFAULT 10000,
+  startDate date,
   PRIMARY KEY(id),
   CONSTRAINT fk_creater_users_gts FOREIGN KEY (creater)
   REFERENCES users(id)
