@@ -35,10 +35,38 @@
           </div>
         </div>
         <div *ngSwitchCase="2">
-          <div>
-            <mat-checkbox [(ngModel)]="status.isBoss" (change)="setWorkStatusBoss(status.workId)">
-              Posztfőszervező?
-            </mat-checkbox>
+          <div [ngSwitch]="worker.isGeneratable">
+            <div *ngSwitchCase="true">
+              <div>
+                <mat-checkbox [(ngModel)]="status.isBoss" (change)="setWorkStatusBoss(status.workId)">
+                  Posztfőszervező?
+                </mat-checkbox>
+              </div>
+              <div>
+                <mat-checkbox
+                  [(ngModel)]="status.isActive"
+                  (change)="setWorkStatusActive(status.workId)"
+                  [disabled]="status.isFixed || status.isBoss"
+                  >Aktív?</mat-checkbox
+                >
+              </div>
+              <div>
+                <mat-checkbox
+                  [(ngModel)]="status.isFixed"
+                  (change)="setWorkStatusFixed(status.workId)"
+                  [disabled]="!status.isActive || status.isBoss"
+                >
+                  Fixálva?
+                </mat-checkbox>
+              </div>
+            </div>
+            <div *ngSwitchCase="false">
+              <div>
+                <mat-checkbox [(ngModel)]="status.isBoss" (change)="setWorkStatusBoss(status.workId)">
+                  Posztfőszervező?
+                </mat-checkbox>
+              </div>
+            </div>
           </div>
         </div>
       </div>

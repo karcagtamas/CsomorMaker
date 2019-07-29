@@ -149,7 +149,8 @@ CREATE OR REPLACE PROCEDURE getGtWorkStatuses(_workerId int(11), _gtId int(11))
 
 CREATE OR REPLACE PROCEDURE setGtWorkStatusIsActive(_workerId int(11), _workId int(11))
     BEGIN
-      DECLARE _active boolean;
+        DECLARE _active boolean;
+        DECLARE _gtId int(11);
         SELECT isActive INTO _active FROM gtworkworkerswitch WHERE worker = _workerId AND work = _workId;
 
         IF _active
@@ -159,11 +160,14 @@ CREATE OR REPLACE PROCEDURE setGtWorkStatusIsActive(_workerId int(11), _workId i
             SET _active = TRUE;
         END IF;
         UPDATE gtworkworkerswitch SET isActive = _active WHERE worker = _workerId AND work = _workId;
+        SELECT gt INTO _gtId FROM gtworks WHERE id = _workId; 
+        CALL setGtReadyStatus(_gtId, FALSE);
     END;
 
 CREATE OR REPLACE PROCEDURE setGtWorkStatusIsBoss(_workerId int(11), _workId int(11))
     BEGIN
       DECLARE _boss boolean;
+      DECLARE _gtId int(11);
         SELECT isBoss INTO _boss FROM gtworkworkerswitch WHERE worker = _workerId AND work = _workId;
 
         IF _boss
@@ -173,11 +177,14 @@ CREATE OR REPLACE PROCEDURE setGtWorkStatusIsBoss(_workerId int(11), _workId int
             SET _boss = TRUE;
         END IF;
         UPDATE gtworkworkerswitch SET isBoss = _boss WHERE worker = _workerId AND work = _workId;
+        SELECT gt INTO _gtId FROM gtworks WHERE id = _workId; 
+        CALL setGtReadyStatus(_gtId, FALSE);
     END;
 
 CREATE OR REPLACE PROCEDURE setGtWorkStatusIsFixed(_workerId int(11), _workId int(11))
     BEGIN
       DECLARE _fix boolean;
+      DECLARE _gtId int(11);
         SELECT isFixed INTO _fix FROM gtworkworkerswitch WHERE worker = _workerId AND work = _workId;
 
         IF _fix
@@ -187,6 +194,8 @@ CREATE OR REPLACE PROCEDURE setGtWorkStatusIsFixed(_workerId int(11), _workId in
             SET _fix = TRUE;
         END IF;
         UPDATE gtworkworkerswitch SET isFixed = _fix WHERE worker = _workerId AND work = _workId;
+        SELECT gt INTO _gtId FROM gtworks WHERE id = _workId; 
+        CALL setGtReadyStatus(_gtId, FALSE);
     END;
 
 CREATE OR REPLACE PROCEDURE getLowGtWorkers(_gtId int(11))
@@ -237,6 +246,7 @@ CREATE OR REPLACE PROCEDURE setGtWorkerStatusGeneratable(_gtId int(11), _workerI
             SET _generatable = TRUE;
         END IF;
         UPDATE usergtswitch u SET isGeneratable = _generatable WHERE gt = _gtId AND user = _workerId;
+        CALL setGtReadyStatus(_gtId, FALSE);
     END;
 
 

@@ -424,6 +424,12 @@ CREATE TRIGGER gt_members_de AFTER DELETE ON usergtswitch
     CALL setGtReadyStatus(OLD.gt, FALSE);
   END;
 
+CREATE TRIGGER gt_members_update AFTER UPDATE ON usergtswitch
+  FOR EACH ROW
+  BEGIN
+    CALL setGtReadyStatus(OLD.gt, FALSE);
+  END;
+
 CREATE TRIGGER gt_update AFTER UPDATE ON gts
   FOR EACH ROW
   BEGIN
@@ -473,6 +479,12 @@ CREATE TRIGGER deleting_work AFTER DELETE ON gtworks
   BEGIN
     DELETE FROM gtworkworkerswitch WHERE work = OLD.id;
     DELETE FROM gtworktables WHERE work = OLD.id;
+    CALL setGtReadyStatus(OLD.id, FALSE);
+  END;
+
+CREATE TRIGGER work_update AFTER UPDATE ON gtworks
+  FOR EACH ROW
+  BEGIN
     CALL setGtReadyStatus(NEW.id, FALSE);
   END;
 
