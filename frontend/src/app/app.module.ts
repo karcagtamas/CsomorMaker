@@ -24,6 +24,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatNativeDateModule } from '@angular/material/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -54,7 +55,8 @@ import {
   NavigatorComponent,
   LoginComponent,
   RegistrationComponent,
-  PageNotFoundComponent
+  PageNotFoundComponent,
+  ResetPasswordComponent
 } from './components/main';
 import { EventsComponent, NewEventComponent } from './components/event';
 import {
@@ -125,21 +127,20 @@ import {
   GtMembersComponent,
   GtAddMemberDialogComponent,
   GtMemberModifyDialogComponent,
-  GtMemberRowComponent
+  GtMemberRowComponent,
+  GtImportMembersDialogComponent
 } from './components/gt/gt-members';
 import { GtSettingsComponent } from './components/gt/gt-settings';
 import { GtSummaryComponent, GtPayoutDialogComponent } from './components/gt/gt-summary';
 import { GtTodoesComponent, GtTodoComponent, GtTodoDialogComponent } from './components/gt/gt-todo';
 import { GtsComponent, NewGtComponent } from './components/gt';
 import { LoaderComponent } from './components/main/loader/loader.component';
-import { MatNativeDateModule } from '@angular/material/core';
 import {
   ProfileComponent,
   MyProfileComponent,
   ChangePasswordDialogComponent,
   UserModifyDialogComponent
 } from './components/user';
-import { ResetPasswordComponent } from './components/main/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -219,7 +220,8 @@ import { ResetPasswordComponent } from './components/main/reset-password/reset-p
     MyProfileComponent,
     UserModifyDialogComponent,
     ChangePasswordDialogComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    GtImportMembersDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -292,7 +294,8 @@ import { ResetPasswordComponent } from './components/main/reset-password/reset-p
     GtClassMemberDialogComponent,
     GtPayoutDialogComponent,
     UserModifyDialogComponent,
-    ChangePasswordDialogComponent
+    ChangePasswordDialogComponent,
+    GtImportMembersDialogComponent
   ]
 })
 export class AppModule {}

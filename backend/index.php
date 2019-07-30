@@ -501,6 +501,10 @@
                                 case 'update':
                                     updateGtMember($_POST['gt'], $_POST['user'], $_POST['role']);
                                     break;
+
+                                case 'import':
+                                    importGtMembers($_POST['gt'], $_POST['file'], $_POST['value']);
+                                    break;
                                 
                                 default:
                                     echo '{"response" : "bad-event", "message" : "Bad request event!"}';

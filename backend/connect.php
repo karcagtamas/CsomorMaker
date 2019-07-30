@@ -2,8 +2,8 @@
 
     if ($_SERVER['SERVER_NAME'] == "localhost"){
         define('SERVER', '127.0.0.1');
-        define('USER', 'root');
-        define('PASS', '');
+        define('USER', 'gitbucket');
+        define('PASS', 'gitbucket');
         define('DATABASE' , 'csomormaker');
     }else{
         define('SERVER', '127.0.0.1');

@@ -17,4 +17,7 @@
   <button mat-raised-button color="primary" (click)="openAddMemberModal()" *ngIf="accessLevel >= 3">
     Új tag felvétele
   </button>
+  <button mat-stroked-button (click)="openImportDialog()" *ngIf="accessLevel >= 3" [disabled]="true">
+    Tagok importálása
+  </button>
 </div>

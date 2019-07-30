@@ -104,4 +104,10 @@
 
     }
 
+    function importGtMembers($gtId, $file, $value){
+        var_dump($file);
+        $path = "./teszt";
+        
+    }
+
 ?>
