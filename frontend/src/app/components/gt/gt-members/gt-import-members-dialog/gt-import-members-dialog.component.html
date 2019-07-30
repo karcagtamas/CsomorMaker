@@ -1,0 +1,13 @@
+<form mat-dialog-content>
+  <div class="text-center panel-title border rounded">Importálás</div>
+  <div class="w-100">
+    <label>Importálandó fájl</label>
+    <input type="file" id="file" (change)="onFileChange($event)" />
+  </div>
+</form>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="onSubmit()">
+    Mentés
+  </button>
+  <button mat-raised-button color="accent" (click)="onNoClick()">Mégsem</button>
+</div>

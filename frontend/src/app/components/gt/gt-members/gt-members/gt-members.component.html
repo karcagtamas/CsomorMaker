@@ -2,11 +2,14 @@
 <div class="members">
   <mat-form-field class="w-100" appearance="outline">
     <mat-label>Szűrés</mat-label>
-    <input matInput type="text" placeholder="Szűrés" [(ngModel)]="filterValue" (keyup.enter)="filter()" />
+    <input matInput type="text" placeholder="Szűrés" [(ngModel)]="filterValue" />
   </mat-form-field>
+  <button mat-raised-button color="primary" (click)="filter()">
+    Szűrés
+  </button>
   <div class="table">
     <app-gt-member-row
-      *ngFor="let member of gtMembers"
+      *ngFor="let member of filteredMembers"
       [gtMember]="member"
       [accessLevel]="accessLevel"
       [userId]="userId"
@@ -16,5 +19,8 @@
   </div>
   <button mat-raised-button color="primary" (click)="openAddMemberModal()" *ngIf="accessLevel >= 3">
     Új tag felvétele
+  </button>
+  <button mat-stroked-button (click)="openImportDialog()" *ngIf="accessLevel >= 3" [disabled]="true">
+    Tagok importálása
   </button>
 </div>

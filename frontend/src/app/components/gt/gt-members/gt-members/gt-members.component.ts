@@ -4,6 +4,7 @@ import { GtMembersService } from 'src/app/services/gt-members.service';
 import { NotificationService, UserService } from 'src/app/services';
 import { MatDialog } from '@angular/material/dialog';
 import { GtAddMemberDialogComponent } from '../gt-add-member-dialog/gt-add-member-dialog.component';
+import { GtImportMembersDialogComponent } from '../gt-import-members-dialog/gt-import-members-dialog.component';
 
 @Component({
   selector: 'app-gt-members',
@@ -16,6 +17,7 @@ export class GtMembersComponent implements OnInit, OnChanges {
   userId = 0;
   filterValue = '';
   gtMembers: GtMember[] = [];
+  filteredMembers: GtMember[] = [];
 
   constructor(
     private gtmembersservice: GtMembersService,
@@ -49,6 +51,7 @@ export class GtMembersComponent implements OnInit, OnChanges {
       .getGtMembers(this.gt.id)
       .then(res => {
         this.gtMembers = res;
+        this.filteredMembers = this.gtMembers;
       })
       .catch(() => {
         this.gtMembers = [];
@@ -111,5 +114,30 @@ export class GtMembersComponent implements OnInit, OnChanges {
     });
   }
 
-  filter() {}
+  openImportDialog() {
+    const dialogRef = this.dialog.open(GtImportMembersDialogComponent, {});
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result.file);
+        console.log(result.value);
+        this.gtmembersservice
+          .importGtMembers(this.gt.id, result.file, result.value)
+          .then(res => {
+            if (res.response === 'success') {
+              this.notificationservice.success(res.message);
+            } else {
+              this.notificationservice.error(res.message);
+            }
+          })
+          .catch(() => {
+            this.notificationservice.error('A tagok importálása közben hiba történt. Kérjük próbálja újra késübb.');
+          });
+      }
+    });
+  }
+
+  filter() {
+    this.filteredMembers = this.gtMembers.filter(x => x.user.toLowerCase().includes(this.filterValue.toLowerCase()));
+  }
 }

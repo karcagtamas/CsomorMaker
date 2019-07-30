@@ -16,3 +16,5 @@ export * from './event.role.model';
 export * from './event.team.model';
 export * from './event.team.member.model';
 export * from './gt.model';
+export * from './news.model';
+export * from './notification.model';

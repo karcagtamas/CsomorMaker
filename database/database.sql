@@ -6,6 +6,30 @@ COLLATE utf8_hungarian_ci;
 
 USE csomormaker;
 
+CREATE TABLE news(
+  id int(11) NOT NULL AUTO_INCREMENT,
+  text text NOT NULL,
+  date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  creater int(11) NOT NULL,
+  lastUpdate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  lastUpdater int(11) NOT NULL,
+  PRIMARY KEY(id),
+  CONSTRAINT fk_creater_users_news FOREIGN KEY (creater)
+  REFERENCES users(id),
+  CONSTRAINT fk_lastUpdater_users_news FOREIGN KEY (lastUpdater)
+  REFERENCE users(id)
+);
+
+CREATE TABLE notifications(
+  id int(11) NOT NULL AUTO_INCREMENT,
+  text text NOT NULL,
+  date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  owner int(11) NOT NULL,
+  PRIMARY KEY(id),
+  CONSTRAINT fk_owner_users_notifications FOREIGN KEY (owner)
+  REFERENCES users(id)
+);
+
 CREATE TABLE roles(
   id int(11) NOT NULL,
   name varchar(100) NOT NULL,

@@ -15,6 +15,7 @@ export class EventMembersComponent implements OnInit, OnChanges {
   userId = 0;
   filterValue = '';
   eventMembers: EventMember[];
+  filteredMembers: EventMember[] = [];
 
   constructor(
     private eventmembersservice: EventMembersService,
@@ -44,6 +45,7 @@ export class EventMembersComponent implements OnInit, OnChanges {
       .getEventMembers(this.event.id)
       .then(res => {
         this.eventMembers = res;
+        this.filteredMembers = this.eventMembers;
       })
       .catch(() => {
         this.eventMembers = [];
@@ -106,5 +108,7 @@ export class EventMembersComponent implements OnInit, OnChanges {
     });
   }
 
-  filter() {}
+  filter() {
+    this.filteredMembers = this.eventMembers.filter(x => x.name.toLowerCase().includes(this.filterValue.toLowerCase()));
+  }
 }

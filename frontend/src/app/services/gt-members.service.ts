@@ -34,4 +34,8 @@ export class GtMembersService {
   updateGtMember(gt: number, user: number, role: number): Promise<Response> {
     return this.http.post<Response>(`${this.url}/update`, { gt, user, role }, HttpHeader).toPromise();
   }
+
+  importGtMembers(gt: number, file: File, value: string) {
+    return this.http.post<Response>(`${this.url}/import`, { gt, file, value }, HttpHeader).toPromise();
+  }
 }
