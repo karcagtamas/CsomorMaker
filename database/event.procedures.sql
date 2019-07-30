@@ -34,14 +34,19 @@ CREATE OR REPLACE PROCEDURE getEvent(_id int(11))
       events.members,
       events.creater AS createId, 
       users.name AS creater, 
-      events.startDate FROM events
+      events.startDate,
+      events.lastUpdate,
+      events.lastUpdater AS lastUpdaterId,
+      u2.name AS lastUpdater
+      FROM events
       INNER JOIN users ON events.creater = users.id
+      INNER JOIN users u2 ON events.lastUpdater = users.id
       WHERE NOT events.isDisabled AND events.id = _id;
     END;
 
 CREATE OR REPLACE PROCEDURE getUsersEvents(_userId int(11))
     BEGIN
-     SELECT events.id, 
+      SELECT DISTINCT events.id, 
       events.name,
       events.isLocked, 
       events.isDisabled, 
@@ -61,16 +66,21 @@ CREATE OR REPLACE PROCEDURE getUsersEvents(_userId int(11))
       events.members,
       events.creater AS createId, 
       users.name AS creater, 
-      events.startDate FROM events
+      events.startDate,
+      events.lastUpdate,
+      events.lastUpdater AS lastUpdaterId,
+      u2.name AS lastUpdater 
+      FROM events
       INNER JOIN usereventswitch ON events.id = usereventswitch.event
       INNER JOIN users ON events.creater = users.id
-      WHERE NOT events.isDisabled AND user = _userId;
+      INNER JOIN users u2 ON events.lastUpdater = users.id
+      WHERE NOT events.isDisabled AND usereventswitch.user = _userId;
     END;
 
 CREATE OR REPLACE PROCEDURE addEvent(_name varchar(50), _creater int(11))
     BEGIN
-     INSERT INTO events (name, creater)
-      VALUES (_name, _creater);
+     INSERT INTO events (name, creater, lastUpdater)
+      VALUES (_name, _creater, _creater);
 
      CALL addUserToEvent(_creater, LAST_INSERT_ID(), 1);
     END;
@@ -88,7 +98,8 @@ CREATE OR REPLACE PROCEDURE updateEvent(
     _startHour int(2),
     _endHour int(2),
     _length int(4),
-    _startDate date
+    _startDate date,
+    _updater int(11)
     )
     BEGIN
      UPDATE events SET 
@@ -103,7 +114,9 @@ CREATE OR REPLACE PROCEDURE updateEvent(
       startHour = _startHour,
       endHour = _endHour,
       length = _length,
-      startDate = _startDate
+      startDate = _startDate,
+      lastUpdater = _updater,
+      lastUpdate = NOW()
      WHERE id = _id;
     END;
 

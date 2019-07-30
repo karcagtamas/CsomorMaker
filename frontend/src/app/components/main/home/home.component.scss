@@ -20,6 +20,7 @@
     padding: 0.5rem;
     mat-card {
       overflow: auto;
+      max-height: 85vh;
     }
   }
 }

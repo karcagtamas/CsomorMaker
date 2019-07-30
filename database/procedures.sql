@@ -30,7 +30,7 @@ USE csomormaker;
       SELECT news.id, news.text, news.date, news.creater AS createrId, users.name AS creater, news.lastUpdate, news.lastUpdater AS lastUpdaterId, u2.name AS lastUpdater FROM news
       INNER JOIN users ON news.creater = users.id
       INNER JOIN users u2 ON news.lastUpdater = u2.id
-      ORDER BY news.lastUpdate;
+      ORDER BY news.lastUpdate DESC;
     END;
 
   CREATE OR REPLACE PROCEDURE deleteNews(_id int(11))
@@ -57,7 +57,7 @@ CREATE OR REPLACE PROCEDURE getNotifications(_user int(11))
       SELECT notifications.id, notifications.text, notifications.date, notifications.owner AS ownerId, users.name AS owner FROM notifications
         INNER JOIN users ON notifications.owner = users.id
         WHERE notifications.owner = _user
-      ORDER BY notifications.date;
+      ORDER BY notifications.date DESC;
     END;
 
   CREATE OR REPLACE PROCEDURE addNotification(_text text, _owner int(11))

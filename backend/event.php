@@ -86,13 +86,13 @@
         $oldLength = $row['length'];
         $stmt->close();
         
-        $sql = "CALL updateEvent(?, ?, ?, ?, ? ,?, ?, ? ,? , ?, ?, ?, ?);";
+        $sql = "CALL updateEvent(?, ?, ?, ?, ? ,?, ?, ? ,? , ?, ?, ?, ?, ?);";
         $stmt = $db->prepare($sql);
         $days = $event['days'];
         $start = $event['startHour'];
         $end = $event['endHour'];
         $length = $days * 24 - $start + $end;
-        $stmt->bind_param("isiiiiiiiiiis", $event['id'], $event['name'], $event['injured'],$event['visitors'],$event['visitorLimit'], $event['playerCost'], $event['visitorCost'], $event['playerDeposit'], $days, $start,$end, $length, $event['startDate']);
+        $stmt->bind_param("isiiiiiiiiiisi", $event['id'], $event['name'], $event['injured'],$event['visitors'],$event['visitorLimit'], $event['playerCost'], $event['visitorCost'], $event['playerDeposit'], $days, $start,$end, $length, $event['startDate'], $_SESSION['userId']);
         $stmt->execute();
         if ($stmt->errno){
             $array['response'] =  'fail';

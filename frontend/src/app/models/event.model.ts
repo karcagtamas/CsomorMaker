@@ -20,4 +20,7 @@ export class Event {
   ready: boolean;
   members: number;
   startDate: Date;
+  lastUpdate: Date;
+  lastUpdater: string;
+  lastUpdaterId: number;
 }

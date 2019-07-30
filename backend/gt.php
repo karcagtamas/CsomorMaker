@@ -21,11 +21,11 @@
     function updateGt($gt){
         global $db;
 
-        $sql = "CALL updateGt(?, ?, ?, ?, ?);";
+        $sql = "CALL updateGt(?, ?, ?, ?, ?, ?);";
         
 
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("iisis", $gt['id'], $gt['year'], $gt['tShirtColor'], $gt['days'], $gt['startDate']);
+        $stmt->bind_param("iisisi", $gt['id'], $gt['year'], $gt['tShirtColor'], $gt['days'], $gt['startDate'], $_SESSION['userId']);
         $stmt->execute();
 
         if ($stmt->errno){

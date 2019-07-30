@@ -6,6 +6,27 @@ COLLATE utf8_hungarian_ci;
 
 USE csomormaker;
 
+
+
+CREATE TABLE roles(
+  id int(11) NOT NULL,
+  name varchar(100) NOT NULL,
+  accessLevel int(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY(id)
+);
+
+CREATE TABLE users(
+  id int(11) AUTO_INCREMENT NOT NULL,
+  username varchar(100) NOT NULL UNIQUE,
+  email varchar(255) NOT NULL UNIQUE,
+  password varchar(100) NOT NULL,
+  name varchar(100) NOT NULL,
+  role int(11) NOT NULL DEFAULT 3,
+  PRIMARY KEY(id),
+  CONSTRAINT fk_role_roles FOREIGN KEY (role)
+  REFERENCES roles(id)
+);
+
 CREATE TABLE news(
   id int(11) NOT NULL AUTO_INCREMENT,
   text text NOT NULL,
@@ -28,25 +49,6 @@ CREATE TABLE notifications(
   PRIMARY KEY(id),
   CONSTRAINT fk_owner_users_notifications FOREIGN KEY (owner)
   REFERENCES users(id)
-);
-
-CREATE TABLE roles(
-  id int(11) NOT NULL,
-  name varchar(100) NOT NULL,
-  accessLevel int(1) NOT NULL DEFAULT 1,
-  PRIMARY KEY(id)
-);
-
-CREATE TABLE users(
-  id int(11) AUTO_INCREMENT NOT NULL,
-  username varchar(100) NOT NULL UNIQUE,
-  email varchar(255) NOT NULL UNIQUE,
-  password varchar(100) NOT NULL,
-  name varchar(100) NOT NULL,
-  role int(11) NOT NULL DEFAULT 3,
-  PRIMARY KEY(id),
-  CONSTRAINT fk_role_roles FOREIGN KEY (role)
-  REFERENCES roles(id)
 );
 
 CREATE TABLE eventroles(
@@ -77,8 +79,12 @@ CREATE TABLE events(
     ready boolean NOT NULL DEFAULT FALSE,
     members int(11) NOT NULL DEFAULT 0,
     startDate date,
+    lastUpdater int(11) NOT NULL,
+    lastUpdate datetime NOT NULL DEFAULT NOW(),
     PRIMARY KEY(id),
     CONSTRAINT fk_creater_users FOREIGN KEY (creater)
+    REFERENCES users(id),
+    CONSTRAINT fk_lastUpdater_users_events FOREIGN KEY (lastUpdater)
     REFERENCES users(id) 
 );
 
@@ -218,13 +224,31 @@ CREATE TABLE eventteammembers(
 CREATE TRIGGER event_members AFTER INSERT ON usereventswitch
   FOR EACH ROW
   BEGIN
+    DECLARE event varchar(100);
+    DECLARE role varchar(100);
+    SELECT name INTO event FROM events WHERE id = NEW.event;
+    SELECT name INTO role FROM eventroles WHERE id = NEW.role;
     UPDATE events SET members = members + 1 WHERE id = NEW.event;
+    CALL addNotification(CONCAT('Felvettek a következõ eseménybe: ', event, CONCAT(' mint ', role, '!')), NEW.user);
+  END;
+
+CREATE TRIGGER update_event_member AFTER UPDATE ON usereventswitch
+  FOR EACH ROW
+  BEGIN
+    DECLARE event varchar(100);
+    DECLARE role varchar(100);
+    SELECT name INTO event FROM events WHERE id = NEW.event;
+    SELECT name INTO role FROM eventroles WHERE id = NEW.role;
+    CALL addNotification(CONCAT(event, ' eseményben megváltozott a rangod a következõre: ', role), NEW.user);
   END;
 
 CREATE TRIGGER event_members_de AFTER DELETE ON usereventswitch
   FOR EACH ROW
   BEGIN
+    DECLARE event varchar(100);
+    SELECT name INTO event FROM events WHERE id = OLD.event;
     UPDATE events SET members = members - 1 WHERE id = OLD.event;
+    CALL addNotification(CONCAT('Eltávolítottka a következõ eseménybõl: ', event, '!'), OLD.user);
   END;
 
 CREATE TRIGGER team_members AFTER INSERT ON eventteammembers
@@ -249,6 +273,78 @@ CREATE TRIGGER team_members_de AFTER DELETE ON eventteammembers
     
   END;
 
+CREATE TRIGGER news_insert AFTER INSERT ON news
+  FOR EACH ROW
+  BEGIN
+    CALL addNotification('A hír hozzáadása sikeres!', NEW.creater);
+  END;
+
+CREATE TRIGGER news_delete AFTER DELETE ON news
+  FOR EACH ROW
+  BEGIN
+    CALL addNotification('Az egyik híred törlésre került!', OLD.creater);
+  END;
+
+CREATE TRIGGER news_update AFTER UPDATE ON news
+  FOR EACH ROW
+  BEGIN
+    DECLARE _updater varchar(100);
+    DECLARE _creater varchar(100);
+    SELECT username INTO _updater FROM users WHERE id = NEW.lastUpdater;
+    SELECT username INTO _creater FROM users WHERE id = NEW.creater;
+    CALL addNotification(CONCAT('Az egyik híredet szerkesztette ', _updater, ' nevû felhasználó!'), OLD.creater);
+    CALL addNotification(CONCAT('Szerkesztetted ', _updater, ' nevû felhasználó hírét!'), NEW.lastUpdater);
+  END;
+
+CREATE TRIGGER user_update AFTER UPDATE ON users
+  FOR EACH ROW
+  BEGIN
+    DECLARE _role varchar(100);
+    IF NEW.role <> OLD.role
+      THEN
+      SELECT name INTO _role FROM roles WHERE id = NEW.role;
+      CALL addNotification(CONCAT('Megváltozott a szerver rangod a következõre: ', _role), NEW.id);
+    END IF;
+    IF NEW.name <> OLD.name
+      THEN
+      CALL addNotification(CONCAT('Megváltozott a neved következõre: ', NEW.name), NEW.id);
+    END IF;
+    IF NEW.email <> OLD.email
+      THEN
+      CALL addNotification(CONCAT('Megváltozott az e-mail címed következõre: ', NEW.email), NEW.id);
+    END IF;
+    IF NEW.password <> OLD.password
+      THEN
+      CALL addNotification('Megváltozott a neved a jelszavad', NEW.id);
+    END IF;
+  END;
+
+CREATE TRIGGER event_insert AFTER INSERT ON events
+  FOR EACH ROW
+  BEGIN
+    CALL addNotification(CONCAT('Sikeres létrejött a következeõ eseményed: ', NEW.name), NEW.creater);
+  END;
+ 
+CREATE TRIGGER event_update AFTER UPDATE ON events
+  FOR EACH ROW
+  BEGIN
+    DECLARE _updater varchar(100);
+    SELECT name INTO _updater FROM users WHERE id = NEW.lastUpdater;
+    
+    IF NEW.isDisabled <> OLD.isDisabled
+      THEN CALL addNotification(CONCAT(NEW.name, ' eseményed acrhiválva lett ', CONCAT(_updater, ' felhasználó által!')), NEW.creater);
+      ELSE IF NEW.isLocked <> OLD.isLocked AND NEW.isLocked
+           THEN CALL addNotification(CONCAT(NEW.name, ' eseményed zárolva lett ', CONCAT(_updater, ' felhasználó által!')), NEW.creater);
+           ELSE IF NEW.isLocked <> OLD.isLocked AND NOT NEW.isLocked
+                THEN CALL addNotification(CONCAT(NEW.name, ' eseményed fel lett oldva ', CONCAT(_updater, ' felhasználó által!')), NEW.creater);
+                ELSE IF NEW.members = OLD.members AND NEW.ready = OLD.ready
+                  THEN CALL addNotification(CONCAT(NEW.name, ' eseményed sikeresen frissítve lett ', CONCAT(_updater, ' felhasználó által!')), NEW.creater);
+                  END IF;
+                END IF;
+           END IF;
+    END IF;
+  END;
+
 CREATE TABLE gts(
   id int(11) NOT NULL AUTO_INCREMENT,
   year int(4) UNIQUE NOT NULL,
@@ -257,12 +353,17 @@ CREATE TABLE gts(
   members int(11) NOT NULL DEFAULT 0,
   ready boolean NOT NULL DEFAULT FALSE,
   creater int(11) NOT NULL,
+  creationDate datetime NOT NULL DEFAULT NOW(),
   isLocked boolean NOT NULL DEFAULT FALSE,
   greeny int(11) NOT NULL DEFAULT 0,
   greenyCost decimal NOT NULL DEFAULT 10000,
   startDate date,
+  lastUpdater int(11) NOT NULL,
+  lastUpdate datetime NOT NULL DEFAULT NOW(),
   PRIMARY KEY(id),
   CONSTRAINT fk_creater_users_gts FOREIGN KEY (creater)
+  REFERENCES users(id),
+  CONSTRAINT fk_lastUpdater_users_gts FOREIGN KEY (lastUpdater)
   REFERENCES users(id)
   );
 
@@ -411,9 +512,16 @@ CREATE TABLE gtpayouts(
 CREATE TRIGGER gt_members AFTER INSERT ON usergtswitch
   FOR EACH ROW
   BEGIN
+    DECLARE gt int(4);
+    DECLARE role varchar(100);
+    
     DECLARE _days int(2);
     DECLARE _currentDay int(2) DEFAULT 1;
     DECLARE _x int(2) DEFAULT 0;
+
+    SELECT year INTO gt FROM gts WHERE id = NEW.gt;
+    SELECT name INTO role FROM eventroles WHERE id = NEW.role;
+    CALL addNotification(CONCAT('Felvettek a következõ gólyatáborba: ', gt, CONCAT(' mint ', role, '!')), NEW.user);
 
     UPDATE gts SET members = members + 1 WHERE id = NEW.gt;
     INSERT INTO gtworkworkerswitch (work, worker, gt)
@@ -442,6 +550,9 @@ CREATE TRIGGER gt_members AFTER INSERT ON usergtswitch
 CREATE TRIGGER gt_members_de AFTER DELETE ON usergtswitch
   FOR EACH ROW
   BEGIN
+    DECLARE gt int(4);
+    SELECT year INTO gt FROM gts WHERE id = OLD.gt;
+    CALL addNotification(CONCAT('Eltávolítottka a következõ gólyatáborból: ', gt, '!'), OLD.user);
     UPDATE gts SET members = members - 1 WHERE id = OLD.gt;
     DELETE FROM gtworkworkerswitch
     WHERE worker = OLD.user AND gtworkworkerswitch.gt = OLD.gt;
@@ -452,15 +563,37 @@ CREATE TRIGGER gt_members_de AFTER DELETE ON usergtswitch
 CREATE TRIGGER gt_members_update AFTER UPDATE ON usergtswitch
   FOR EACH ROW
   BEGIN
+    DECLARE gt int(4);
+    DECLARE role varchar(100);
+    IF NEW.role <> OLD.role
+      THEN
+    SELECT year INTO gt FROM gts WHERE id = NEW.gt;
+    SELECT name INTO role FROM eventroles WHERE id = NEW.role;
+    CALL addNotification(CONCAT(gt, ' gólyatáborban megváltozott a rangod a következõre: ', role), NEW.user);
+    END IF;
     CALL setGtReadyStatus(OLD.gt, FALSE);
   END;
 
 CREATE TRIGGER gt_update AFTER UPDATE ON gts
   FOR EACH ROW
   BEGIN
+    DECLARE _updater varchar(100);
+    
     DECLARE _days int(2) DEFAULT NEW.days;
     DECLARE _currentDay int(2) DEFAULT 1;
     DECLARE _x int(2) DEFAULT 0;
+
+    SELECT name INTO _updater FROM users WHERE id = NEW.lastUpdater;
+      
+      IF NEW.isLocked <> OLD.isLocked AND NEW.isLocked
+         THEN CALL addNotification(CONCAT(NEW.year, ' gólyatáborod zárolva lett ', CONCAT(_updater, ' felhasználó által!')), NEW.creater);
+          ELSE IF NEW.isLocked <> OLD.isLocked AND NOT NEW.isLocked
+               THEN CALL addNotification(CONCAT(NEW.year, ' gólyatáborod fel lett oldva ', CONCAT(_updater, ' felhasználó által!')), NEW.creater);
+               ELSE IF NEW.members = OLD.members AND NEW.ready = OLD.ready
+               THEN CALL addNotification(CONCAT(NEW.year, ' gólyatáborod sikeresen frissítve lett ', CONCAT(_updater, ' felhasználó által!')), NEW.creater);
+                END IF;
+            END IF;
+      END IF;
 
     IF NEW.days <> OLD.days
       THEN
@@ -523,4 +656,10 @@ CREATE TRIGGER class_member_de AFTER DELETE ON gtclassmembers
   FOR EACH ROW
   BEGIN
     UPDATE gtclasses set members = members - 1 WHERE id = OLD.class;
+  END;
+
+CREATE TRIGGER gt_insert AFTER INSERT ON gts
+  FOR EACH ROW
+  BEGIN
+    CALL addNotification(CONCAT('Sikeres létrejött a következeõ gólyatáborod: ', NEW.year), NEW.creater);
   END;

@@ -18,6 +18,8 @@
   <div class="element"><span class="name">Generátor állapot:</span> {{ event.ready | isReady }}</div>
   <div class="element"><span class="name">Sérültek:</span> {{ event.injured | personCount }}</div>
   <div class="element"><span class="name">Kezdeti dátum:</span> {{ event.startDate | date: 'yyyy. MM. dd.' }}</div>
+  <div class="element"><span class="name">Utolsó frissítés:</span> {{ event.lastUpdate | date: 'yyyy. MM. dd.' }}</div>
+  <div class="element"><span class="name">Utolsó frissítő:</span> {{ event.lastUpdater }}</div>
   <div class="text-center">
     <button mat-raised-button color="accent" *ngIf="!event.isLocked && accessLevel >= 3" (click)="lockEvent()">
       Zárolás

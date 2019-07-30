@@ -11,6 +11,10 @@ export class Gt {
   greeny: number;
   greenyCost: number;
   startDate: Date;
+  creationDate: Date;
+  lastUpdater: string;
+  lastUpdaterId: number;
+  lastUpdate: Date;
 }
 
 export class GtMember {

@@ -3,6 +3,9 @@
   <div class="element"><span class="name">Év:</span> {{ gt.year }}</div>
   <div class="element"><span class="name">Zárolási állapot:</span> {{ gt.isLocked | isLocked }}</div>
   <div class="element"><span class="name">Létrehozó:</span> {{ gt.creater }}</div>
+  <div class="element">
+    <span class="name">Létrehozás ideje:</span> {{ gt.creationDate | date: 'yyyy. MM. dd. HH:mm:ss' }}
+  </div>
   <div class="element"><span class="name">Napok:</span> {{ gt.days }}</div>
   <div class="element"><span class="name">Poló szín:</span> {{ gt.tShirtColor }}</div>
   <div class="element"><span class="name">Tagok:</span> {{ gt.members | personCount }}</div>
@@ -11,6 +14,10 @@
   <div class="element" [ngClass]="{ ready: gt.ready, unready: !gt.ready }">
     <span class="name">Generálási állapot:</span> {{ gt.ready | isReady }}
   </div>
+  <div class="element">
+    <span class="name">Utolsó frissítés:</span> {{ gt.lastUpdate | date: 'yyyy. MM. dd. HH:mm:ss' }}
+  </div>
+  <div class="element"><span class="name">Utolsó frissítő:</span> {{ gt.lastUpdater }}</div>
 
   <div class="text-center">
     <button mat-raised-button color="accent" *ngIf="!gt.isLocked && accessLevel >= 3" (click)="lockGt()">
