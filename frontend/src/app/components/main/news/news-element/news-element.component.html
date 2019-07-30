@@ -10,7 +10,7 @@
       <hr />
       {{ news.text }}
       <hr />
-      <div class="buttons">
+      <div class="buttons" *ngIf="accessLevel >= 2">
         <button mat-raised-button color="accent" (click)="updateNews()">&#9998;</button>
         <button mat-raised-button color="warn" (click)="deleteNews()">&#10006;</button>
       </div>

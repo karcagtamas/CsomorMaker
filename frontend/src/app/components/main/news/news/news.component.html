@@ -8,5 +8,5 @@
     (update)="openNewsDialog($event)"
   ></app-news-element>
   <div *ngIf="news.length == 0" class="text-center">Sajnos nincs még hír! :(</div>
-  <button mat-raised-button color="primary" (click)="openNewsDialog()">Új hír</button>
+  <button mat-raised-button color="primary" (click)="openNewsDialog()" *ngIf="accessLevel >= 2">Új hír</button>
 </div>

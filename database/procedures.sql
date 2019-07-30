@@ -65,5 +65,3 @@ CREATE OR REPLACE PROCEDURE getNotifications(_user int(11))
       INSERT INTO notifications (text, date, owner)
   VALUES (_text, NOW(), _owner);
   END;
-
-   CALL addNotification('Hello', 1);
