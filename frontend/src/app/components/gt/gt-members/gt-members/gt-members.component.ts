@@ -17,6 +17,7 @@ export class GtMembersComponent implements OnInit, OnChanges {
   userId = 0;
   filterValue = '';
   gtMembers: GtMember[] = [];
+  filteredMembers: GtMember[] = [];
 
   constructor(
     private gtmembersservice: GtMembersService,
@@ -50,6 +51,7 @@ export class GtMembersComponent implements OnInit, OnChanges {
       .getGtMembers(this.gt.id)
       .then(res => {
         this.gtMembers = res;
+        this.filteredMembers = this.gtMembers;
       })
       .catch(() => {
         this.gtMembers = [];
@@ -135,5 +137,7 @@ export class GtMembersComponent implements OnInit, OnChanges {
     });
   }
 
-  filter() {}
+  filter() {
+    this.filteredMembers = this.gtMembers.filter(x => x.user.toLowerCase().includes(this.filterValue.toLowerCase()));
+  }
 }
