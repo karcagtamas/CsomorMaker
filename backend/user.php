@@ -169,4 +169,21 @@
         }
     }
 
+    function getAccessLevel(){
+        global $db;
+
+        $sql = "CALL getAccessLevel(?);";
+        
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $_SESSION['userId']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $row = $result->fetch_assoc();
+
+        echo json_encode($row['accessLevel']);
+        $stmt->close();
+    }
+
 ?>

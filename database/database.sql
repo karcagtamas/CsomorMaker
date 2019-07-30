@@ -17,7 +17,7 @@ CREATE TABLE news(
   CONSTRAINT fk_creater_users_news FOREIGN KEY (creater)
   REFERENCES users(id),
   CONSTRAINT fk_lastUpdater_users_news FOREIGN KEY (lastUpdater)
-  REFERENCE users(id)
+  REFERENCES users(id)
 );
 
 CREATE TABLE notifications(

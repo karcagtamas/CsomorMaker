@@ -48,7 +48,9 @@ import {
   GtGeneratorService,
   GtMembersService,
   GtClassesService,
-  ExportService
+  ExportService,
+  NewsService,
+  UserNotificationService
 } from './services';
 import {
   HomeComponent,
@@ -280,6 +282,8 @@ import { NotificationsComponent, NotificationComponent } from './components/main
     GtClassesService,
     GtMembersService,
     ExportService,
+    NewsService,
+    UserNotificationService,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
@@ -303,7 +307,8 @@ import { NotificationsComponent, NotificationComponent } from './components/main
     GtPayoutDialogComponent,
     UserModifyDialogComponent,
     ChangePasswordDialogComponent,
-    GtImportMembersDialogComponent
+    GtImportMembersDialogComponent,
+    NewsDialogComponent
   ]
 })
 export class AppModule {}

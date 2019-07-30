@@ -57,6 +57,10 @@
                             updateUser($_POST['user'], $_POST['name']);
                             break;
 
+                        case 'accesslevel':
+                            getAccessLevel();
+                            break;
+
                         case 'password':
                             $subevent = $url[4];
                             switch ($subevent) {
@@ -782,6 +786,46 @@
                             echo '{"response" : "bad-subgroup", "message" : "Bad request subgroup!"}';
                             break;
 
+                    }
+                    break;
+
+                case 'news':
+                    require 'news.php';
+                    $subgroup = $url[3];
+                    switch ($subgroup) {
+                        case 'get':
+                            getNews();
+                            break;
+
+                        case 'add':
+                            addNews($_POST['text']);
+                            break;
+
+                        case 'update':
+                            updateNews($_POST['id'], $_POST['text']);
+                            break;
+
+                        case 'delete':
+                            deleteNews($url[4]);
+                            break;
+                        
+                        default:
+                            echo '{"response" : "bad-subgroup", "message" : "Bad request subgroup!"}';
+                            break;
+                    }
+                    break;
+
+                case 'notifications':
+                    require 'notification.php';
+                    $subgroup = $url[3];
+                    switch ($subgroup) {
+                        case 'get':
+                            getNotifications();
+                            break;
+                        
+                        default:
+                            echo '{"response" : "bad-subgroup", "message" : "Bad request subgroup!"}';
+                            break;
                     }
                     break;
                     

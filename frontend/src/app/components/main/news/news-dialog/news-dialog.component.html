@@ -1,3 +1,14 @@
-<p>
-  news-dialog works!
-</p>
+<form mat-dialog-content [formGroup]="form">
+  <div class="text-center panel-title border rounded">{{ title }}</div>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Hír</mat-label>
+    <textarea matInput rows="20" type="text" placeholder="Hír szövege" formControlName="text"></textarea>
+    <mat-error *ngIf="form.get('text').hasError('required')">A szöveg megadása kötelező!</mat-error>
+  </mat-form-field>
+</form>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="save()">
+    Mentés
+  </button>
+  <button mat-raised-button color="accent" (click)="onNoClick()">Mégsem</button>
+</div>

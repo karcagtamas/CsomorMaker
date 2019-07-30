@@ -18,3 +18,5 @@ export * from './gt-todoes.service';
 export * from './gt-payouts.service';
 export * from './gt-classes.service';
 export * from './export.service';
+export * from './user-notification.service';
+export * from './news.service';

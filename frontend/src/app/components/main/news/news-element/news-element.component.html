@@ -1,3 +1,19 @@
-<p>
-  news-element works!
-</p>
+<div class="frame">
+  <div class="news border rounded">
+    <div>
+      <div class="title">
+        Készítette: {{ news.creater }} - <small>{{ news.date | chatDate }}</small>
+      </div>
+      <div class="title">
+        Utoljára szerkesztette: {{ news.lastUpdater }} - <small>{{ news.lastUpdate | chatDate }}</small>
+      </div>
+      <hr />
+      {{ news.text }}
+      <hr />
+      <div class="buttons">
+        <button mat-raised-button color="accent" (click)="updateNews()">&#9998;</button>
+        <button mat-raised-button color="warn" (click)="deleteNews()">&#10006;</button>
+      </div>
+    </div>
+  </div>
+</div>

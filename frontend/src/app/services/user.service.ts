@@ -38,4 +38,8 @@ export class UserService {
   updateUser(user: number, name: string): Promise<Response> {
     return this.http.post<Response>(`${this.url}/update`, { user, name }, HttpHeader).toPromise();
   }
+
+  getAccessLevel(): Promise<number> {
+    return this.http.get<number>(`${this.url}/accesslevel`, HttpHeader).toPromise();
+  }
 }

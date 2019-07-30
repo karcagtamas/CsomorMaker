@@ -1,0 +1,17 @@
+.frame {
+  padding: 0.5rem;
+  .news {
+    padding: 0.2rem;
+    .title {
+      font-size: 65%;
+    }
+    hr {
+      margin-bottom: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    button {
+      margin: 0.2rem;
+    }
+  }
+}
