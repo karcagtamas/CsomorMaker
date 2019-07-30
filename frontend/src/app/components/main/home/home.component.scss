@@ -1,0 +1,25 @@
+.main {
+  margin: 0;
+  padding: 0;
+  .details {
+    max-height: 45vh;
+    padding: 0.5rem;
+    mat-card {
+      overflow: auto;
+    }
+  }
+  .news {
+    max-height: 45vh;
+    padding: 0.5rem;
+    mat-card {
+      overflow: auto;
+    }
+  }
+  .notifications {
+    max-height: 90vh;
+    padding: 0.5rem;
+    mat-card {
+      overflow: auto;
+    }
+  }
+}

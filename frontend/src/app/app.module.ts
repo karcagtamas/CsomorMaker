@@ -142,6 +142,9 @@ import {
   UserModifyDialogComponent
 } from './components/user';
 
+import { NewsComponent, NewsElementComponent, NewsDialogComponent } from './components/main/news';
+import { NotificationsComponent, NotificationComponent } from './components/main/notifications';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -221,7 +224,12 @@ import {
     UserModifyDialogComponent,
     ChangePasswordDialogComponent,
     ResetPasswordComponent,
-    GtImportMembersDialogComponent
+    GtImportMembersDialogComponent,
+    NewsComponent,
+    NewsElementComponent,
+    NewsDialogComponent,
+    NotificationsComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,
