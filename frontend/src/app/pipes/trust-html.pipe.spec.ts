@@ -1,8 +1,4 @@
+import { DomSanitizer } from '@angular/platform-browser';
 import { TrustHTMLPipe } from './trust-html.pipe';
 
-describe('TrustHTMLPipe', () => {
-  it('create an instance', () => {
-    const pipe = new TrustHTMLPipe();
-    expect(pipe).toBeTruthy();
-  });
-});
+describe('TrustHTMLPipe', () => {});
