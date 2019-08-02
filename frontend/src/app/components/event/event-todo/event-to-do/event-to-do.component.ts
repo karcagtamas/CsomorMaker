@@ -97,6 +97,7 @@ export class EventToDoComponent implements OnInit, OnChanges {
       .then(res => {
         if (res.response === 'success') {
           this.notificationservice.success(res.message);
+          this.getEventTodoes();
         } else {
           this.notificationservice.error(res.message);
         }
