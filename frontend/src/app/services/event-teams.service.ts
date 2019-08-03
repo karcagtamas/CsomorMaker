@@ -35,6 +35,14 @@ export class EventTeamsService {
     return this.http.post<Response>(`${this.url}/add`, { event, name }, HttpHeader).toPromise();
   }
 
+  setHasResponsibilityPaper(team: number): Promise<Response> {
+    return this.http.get<Response>(`${this.url}/set/responsibility/${team}`, HttpHeader).toPromise();
+  }
+
+  setTeamMemberToTeamLeader(team: number, member: number): Promise<Response> {
+    return this.http.get<Response>(`${this.url}/set/leader/${team}/${member}`, HttpHeader).toPromise();
+  }
+
   getEventTeamMembers(team: number): Promise<EventTeamMember[]> {
     return this.http.get<EventTeamMember[]>(`${this.url}/members/get/${team}`, HttpHeader).toPromise();
   }

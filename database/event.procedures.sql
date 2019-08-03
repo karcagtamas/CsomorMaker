@@ -560,7 +560,8 @@ CREATE OR REPLACE PROCEDURE setIsValidWorkStatus(_work int(11), _worker int(11))
 
 CREATE OR REPLACE PROCEDURE getEventTeams(_event int(11))
     BEGIN
-      SELECT * FROM eventteams
+      SELECT eventteams.id, eventteams.name, eventteams.event, eventteams.members, eventteams.creationDate, eventteams.hasResponsibilityPaper, eventteams.teamLeader AS teamLeaderId, eventteammembers.name AS teamLeader FROM eventteams
+        LEFT JOIN eventteammembers ON eventteammembers.id = eventteams.teamLeader
       WHERE event = _event;
     END;
 
@@ -579,6 +580,26 @@ CREATE OR REPLACE PROCEDURE addEventTeam(_eventId int(11), _name varchar(100))
       INSERT INTO eventteams (name, event)
         VALUES (_name, _eventId);
     END;
+
+CREATE OR REPLACE PROCEDURE setHasResponsibilityPaper(_teamId int(11))
+    BEGIN
+      DECLARE responsibility int(11);
+
+     SELECT hasResponsibilityPaper INTO responsibility FROM eventteams WHERE id = _teamId;
+
+     IF responsibility
+      THEN
+        SET responsibility = FALSE;
+      ELSE
+        SET responsibility = TRUE;
+      END IF;
+      UPDATE eventteams SET hasResponsibilityPaper = responsibility  WHERE id = _teamId;
+  END;
+
+CREATE OR REPLACE PROCEDURE setTeamMemberToTeamLeader(_teamId int(11), _memberId int(11))
+    BEGIN
+      UPDATE eventteams SET teamLeader = _memberId WHERE id = _teamId;
+  END;
 
   
     

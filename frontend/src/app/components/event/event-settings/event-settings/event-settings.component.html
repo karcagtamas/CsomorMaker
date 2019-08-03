@@ -1,4 +1,8 @@
 <div class="text-center panel-title border rounded">Beállítások</div>
+<div class="buttons">
+  <button mat-raised-button color="primary" (click)="save()">Mentés</button>
+  <button mat-raised-button color="accent" (click)="reset()">Visszaállítás</button>
+</div>
 <div class="settings" *ngIf="event">
   <mat-form-field class="w-100" appearance="outline">
     <mat-label>Név</mat-label>
@@ -77,6 +81,4 @@
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
-  <button mat-raised-button color="primary" (click)="save()">Mentés</button>
-  <button mat-raised-button color="accent" (click)="reset()">Visszaállítás</button>
 </div>

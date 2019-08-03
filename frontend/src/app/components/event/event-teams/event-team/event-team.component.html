@@ -4,6 +4,12 @@
   <div><strong>Regisztráció:</strong> {{ team.creationDate | date: 'yyyy. MM. dd. HH:mm:ss' }}</div>
   <div><strong>Előleg:</strong> {{ countOfDeposit | personCount }} / {{ team.members | personCount }}</div>
   <div><strong>Díj:</strong> {{ countOfCost | personCount }} / {{ team.members | personCount }}</div>
+  <div><strong>Csapat kapitány:</strong> {{ team.teamLeader | exists }}</div>
+  <div>
+    <mat-checkbox [(ngModel)]="team.hasResponsibilityPaper" (change)="setHasReposnsibilityPaper()"
+      >Felelőségvállalási</mat-checkbox
+    >
+  </div>
   <div>
     <button mat-raised-button color="accent" (click)="openTeamDetailsModal()">Szerkesztés</button>
     <button mat-raised-button color="warn" (click)="openConfirmDeleteModal()">Törlés</button>

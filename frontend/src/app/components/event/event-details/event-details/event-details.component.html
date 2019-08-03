@@ -21,6 +21,7 @@
   <div class="element"><span class="name">Jelenlegi játékos szám:</span> {{ event.currentPlayers | personCount }}</div>
   <div class="element"><span class="name">Nézők:</span> {{ event.visitors | personCount }}</div>
   <div class="element"><span class="name">Sérültek:</span> {{ event.injured | personCount }}</div>
+  <div class="element"><span class="name">Tagok:</span> {{ event.members | personCount }}</div>
   <hr />
   <div class="big-title">Generálás</div>
   <div class="element"><span class="name">Zárolási állapot:</span> {{ event.isLocked | isLocked }}</div>

@@ -4,4 +4,7 @@ export class EventTeam {
   event: number;
   members: number;
   creationDate: Date;
+  hasResponsibilityPaper: boolean;
+  teamLeader: string;
+  teamLeaderId: number;
 }

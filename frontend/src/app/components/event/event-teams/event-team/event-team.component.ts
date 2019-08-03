@@ -36,6 +36,21 @@ export class EventTeamComponent implements OnInit {
       });
   }
 
+  setHasReposnsibilityPaper() {
+    this.eventteamsservice
+      .setHasResponsibilityPaper(this.team.id)
+      .then(res => {
+        if (res.response === 'success') {
+          this.notificationservice.success(res.message);
+        } else {
+          this.notificationservice.error(res.message);
+        }
+      })
+      .catch(() => {
+        this.notificationservice.error('Az állapot állítása közben hiba történt! Kérjük próbálja őjra késöbb!');
+      });
+  }
+
   openTeamDetailsModal() {
     const dialogRef = this.dialog.open(TeamDeatilsDialogComponent, {
       data: this.team,

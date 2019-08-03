@@ -396,6 +396,23 @@
                                     addEventTeam($_POST['event'], $_POST['name']);
                                     break;
 
+                                case 'set':
+                                    $subevent = $url[5];
+                                    switch ($subevent) {
+                                        case 'responsibility':
+                                            setHasResponsibilityPaper($url[6]);
+                                            break;
+
+                                        case 'leader':
+                                            setTeamMemberToTeamLeader($url[6], $url[7]);
+                                            break;
+
+                                        default:
+                                            echo '{"response" : "bad-subevent", "message" : "Bad request subevent!"}';
+                                            break;
+                                    }
+                                    break;
+
                                 case 'status':
                                     countOfCostAndDeposit($url[5]);
                                     break;

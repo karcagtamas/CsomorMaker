@@ -49,6 +49,10 @@ export class TeamDeatilsDialogComponent implements OnInit {
     }
   }
 
+  isLeader(member: EventTeamMember) {
+    return this.data.teamLeaderId === member.id;
+  }
+
   openAddTeamMemberModal() {
     const dialogRef = this.dialog.open(AddTeamMemberDialogComponent, {});
 
@@ -103,6 +107,23 @@ export class TeamDeatilsDialogComponent implements OnInit {
         this.notificationservice.error(
           'A csapat tag díj átállítás közben hiba történt. Kérjük próbálja meg újra késöbb.'
         );
+      });
+  }
+
+  setTeamMemberToTeamLeader(member: EventTeamMember) {
+    this.eventteamsservice
+      .setTeamMemberToTeamLeader(member.team, member.id)
+      .then(res => {
+        if (res.response === 'success') {
+          this.data.teamLeaderId = member.id;
+          this.data.teamLeader = member.name;
+          this.notificationservice.success(res.message);
+        } else {
+          this.notificationservice.error(res.message);
+        }
+      })
+      .catch(() => {
+        this.notificationservice.error('A csapattag beállítása közben hiba történt! Kérjük próbálja újra késöbb!');
       });
   }
 

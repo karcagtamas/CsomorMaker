@@ -203,6 +203,8 @@ CREATE TABLE eventteams(
   event int(11) NOT NULL,
   members int(11) NOT NULL DEFAULT 0,
   creationDate datetime DEFAULT NOW(),
+  hasResponsibilityPaper boolean NOT NULL DEFAULT FALSE,
+  teamLeader int(11),
   PRIMARY KEY (id),
   CONSTRAINT fk_event_events_eventteams FOREIGN KEY (event)
   REFERENCES events(id)
@@ -216,9 +218,10 @@ CREATE TABLE eventteammembers(
   team int(11) NOT NULL,
   PRIMARY KEY(id),
   CONSTRAINT fk_team_eventteams_eventteammembers FOREIGN KEY (team)
-  REFERENCES eventteams(id)
+  REFERENCES eventteams(id) ON DELETE CASCADE
   );
 
+ALTER TABLE eventteams ADD CONSTRAINT fk_teamLeader_teammembers_eventteams FOREIGN KEY(teamLeader) REFERENCES eventteammembers(id);
 
 
 CREATE TRIGGER event_members AFTER INSERT ON usereventswitch

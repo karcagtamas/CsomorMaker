@@ -29,10 +29,10 @@
 
         if ($stmt->errno){
             $array['response'] =  'fail';
-            $array['message'] = 'Az csapat törlése az eseményből sikeretelen!';
+            $array['message'] = 'A csapat törlése az eseményből sikeretelen!';
         }else{
             $array['response'] =  'success';
-            $array['message'] = 'Az csapat sikeresen törölve az eseményből!';
+            $array['message'] = 'A csapat sikeresen törölve az eseményből!';
         }
         echo json_encode($array);
         $stmt->close();
@@ -49,10 +49,10 @@
 
         if ($stmt->errno){
             $array['response'] =  'fail';
-            $array['message'] = 'Az csapat frissítése sikeretelen!';
+            $array['message'] = 'A csapat frissítése sikeretelen!';
         }else{
             $array['response'] =  'success';
-            $array['message'] = 'Az csapat frissítése sikeres!';
+            $array['message'] = 'A csapat frissítése sikeres!';
         }
         echo json_encode($array);
         $stmt->close();
@@ -69,13 +69,55 @@
 
         if ($stmt->errno){
             $array['response'] =  'fail';
-            $array['message'] = 'Az csapat hozzáadása sikeretelen!';
+            $array['message'] = 'A csapat hozzáadása sikeretelen!';
         }else{
             $array['response'] =  'success';
-            $array['message'] = 'Az csapat hozzáadása sikeres!';
+            $array['message'] = 'A csapat hozzáadása sikeres!';
         }
         echo json_encode($array);
         $stmt->close();
+    }
+
+    function setHasResponsibilityPaper($teamId){
+        global $db;
+
+        $sql = "CALL setHasResponsibilityPaper(?);";
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $teamId);
+        $stmt->execute();
+
+        if ($stmt->errno){
+            $array['response'] =  'fail';
+            $array['message'] = 'A csapat felelősségvállalási papír állapotának státuszának átátllítása sikeretelen!';
+        }else{
+            $array['response'] =  'success';
+            $array['message'] = 'A csapat felelősségvállalási papír állapotának státuszának átátllítása sikeres!';
+        }
+        echo json_encode($array);
+        $stmt->close();
+
+    }
+
+    function setTeamMemberToTeamLeader($teamId, $memberId){
+        global $db;
+
+        $sql = "CALL setTeamMemberToTeamLeader(?, ?);";
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("ii", $teamId, $memberId);
+        $stmt->execute();
+
+        if ($stmt->errno){
+            $array['response'] =  'fail';
+            $array['message'] = 'A csapat vezetőjének beállítása sikeretelen!';
+        }else{
+            $array['response'] =  'success';
+            $array['message'] = 'A csapat vezetőjének beállítása sikeres!';
+        }
+        echo json_encode($array);
+        $stmt->close();
+
     }
 
     function getEventTeamMembers($teamId){
@@ -108,10 +150,10 @@
 
         if ($stmt->errno){
             $array['response'] =  'fail';
-            $array['message'] = 'Az csapat tag törlése sikeretelen!';
+            $array['message'] = 'A csapat tag törlése sikeretelen!';
         }else{
             $array['response'] =  'success';
-            $array['message'] = 'Az csapat tag sikeresen törölve!';
+            $array['message'] = 'A csapat tag sikeresen törölve!';
         }
         echo json_encode($array);
         $stmt->close();
@@ -128,10 +170,10 @@
 
         if ($stmt->errno){
             $array['response'] =  'fail';
-            $array['message'] = 'Az csapat tag hozzáadása sikeretelen!';
+            $array['message'] = 'A csapat tag hozzáadása sikeretelen!';
         }else{
             $array['response'] =  'success';
-            $array['message'] = 'Az csapat tag hozzáadása sikeres!';
+            $array['message'] = 'A csapat tag hozzáadása sikeres!';
         }
         echo json_encode($array);
         $stmt->close();
@@ -149,10 +191,10 @@
 
         if ($stmt->errno){
             $array['response'] =  'fail';
-            $array['message'] = 'Az csapat tag előleg státuszának átátllítása sikeretelen!';
+            $array['message'] = 'A csapat tag előleg státuszának átátllítása sikeretelen!';
         }else{
             $array['response'] =  'success';
-            $array['message'] = 'Az csapat tag előleg státusza sikeresen átállítva!';
+            $array['message'] = 'A csapat tag előleg státusza sikeresen átállítva!';
         }
         echo json_encode($array);
         $stmt->close();
@@ -169,10 +211,10 @@
 
         if ($stmt->errno){
             $array['response'] =  'fail';
-            $array['message'] = 'Az csapat tag fizetési státuszának átátllítása sikeretelen!';
+            $array['message'] = 'A csapat tag fizetési státuszának átátllítása sikeretelen!';
         }else{
             $array['response'] =  'success';
-            $array['message'] = 'Az csapat tag fizetési státusza sikeresen átállítva!';
+            $array['message'] = 'A csapat tag fizetési státusza sikeresen átállítva!';
         }
         echo json_encode($array);
         $stmt->close();
