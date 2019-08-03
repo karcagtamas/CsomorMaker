@@ -7,7 +7,7 @@ CREATE OR REPLACE PROCEDURE getGts(_userId int(11))
         INNER JOIN usergtswitch ON gts.id = usergtswitch.gt
         INNER JOIN users ON gts.creater = users.id
         INNER JOIN users u2 ON gts.lastUpdater = users.id
-        WHERE usergtswitch.user = _userId
+        WHERE usergtswitch.user = _userId AND u2.id = gts.lastUpdater
         ORDER BY gts.year;
     END;
 
