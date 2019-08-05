@@ -1,4 +1,7 @@
 <div class="text-center panel-title border rounded">Generátor</div>
+<div class="buttons">
+  <button mat-raised-button color="accent" (click)="generate()">Generálás</button>
+</div>
 <div class="generator" *ngIf="gt">
   <div class="eventWorks">
     <div class="text-center panel-title border rounded">Posztok</div>
@@ -60,5 +63,4 @@
       Nincs még humánod :(
     </div>
   </div>
-  <button mat-raised-button color="accent" (click)="generate()">Generálás</button>
 </div>

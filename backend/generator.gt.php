@@ -337,8 +337,19 @@
         global $db;
         $workers = getGtHigherWorkersForGen($gt['id']);
         
+        $sql = "CALL clearGtHigherWorkerTable(?, ?);";
+
         for ($i = 0; $i < count($workers); $i++) {
+            
+            $stmt = $db->prepare($sql);
+            $stmt->bind_param("ii", $gt['id'], $workers[$i]['id']);
+            $stmt->execute();
+            $stmt->close();
+
+            var_dump($stmt);
+
             foreach ($workers[$i]['statuses'] as $status) {
+                echo $workers[$i]['name'].'-'.$status['workId'].'-'.$status['isBoss'].' ';
                 if ($status['isBoss']){
                     $work = $works[array_search($status['workId'], array_column($works, 'id'))];
                     for ($k=0; $k < count($workers[$i]['tables']); $k++) {

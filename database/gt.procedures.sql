@@ -15,7 +15,7 @@ CREATE OR REPLACE PROCEDURE getGt(_gtId int(11))
     BEGIN
         SELECT gts.id, gts.year, gts.tShirtColor, gts.days, gts.members, gts.ready, gts.creater AS createrId, gts.isLocked, gts.greeny, gts.greenyCost, users.name AS creater, gts.startDate, gts.lastUpdate, gts.creationDate, gts.lastUpdater AS lastUpdaterId, u2.name AS lastUpdater FROM gts 
         INNER JOIN users ON gts.creater = users.id
-        INNER JOIN users u2 ON gt.lastUpdater = users.id
+        INNER JOIN users u2 ON gts.lastUpdater = users.id
         WHERE gts.id = _gtId;
     END;
 
@@ -139,7 +139,6 @@ CREATE OR REPLACE PROCEDURE updateGtWorkTable(_workId int(11), _workerId int(11)
       INSERT INTO gtworktables(work, worker)
         VALUES (_workId, _workerId);
     END;
-
 
 CREATE OR REPLACE PROCEDURE getGtWorkStatuses(_workerId int(11), _gtId int(11))
     BEGIN
@@ -266,6 +265,14 @@ CREATE OR REPLACE PROCEDURE updateGtWorkerTable(_gtId int(11), _workerId int(11)
     BEGIN
       UPDATE gtworkertables SET work = _workId WHERE gt = _gtId AND worker = _workerId AND day = _day AND hour = _hour;
     END;
+
+CREATE OR REPLACE PROCEDURE clearGtHigherWorkerTable(_gtId int(11), _workerId int(11))
+  BEGIN
+    UPDATE gtworkertables SET work = NULL WHERE gt = _gtId AND worker = _workerId;
+  END;
+
+
+
 
 /* Gt Payouts */
 
