@@ -54,7 +54,7 @@
                             break;
 
                         case 'update':
-                            updateUser($_POST['user'], $_POST['name']);
+                            updateUser($_POST['user'], $_POST['name'], $_POST['tShirtSize'], $_POST['allergy'], $_POST['class']);
                             break;
 
                         case 'accesslevel':

@@ -22,6 +22,11 @@ CREATE TABLE users(
   password varchar(100) NOT NULL,
   name varchar(100) NOT NULL,
   role int(11) NOT NULL DEFAULT 3,
+  tShirtSize varchar(6),
+  allergy text,
+  lastLogin datetime,
+  class varchar(10),
+  registrationTime datetime NOT NULL DEFAULT NOW(),
   PRIMARY KEY(id),
   CONSTRAINT fk_role_roles FOREIGN KEY (role)
   REFERENCES roles(id)

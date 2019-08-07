@@ -21,9 +21,17 @@ export class UserModifyDialogComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      name: ['', [Validators.required, Validators.maxLength(100)]]
+      name: ['', [Validators.required, Validators.maxLength(100)]],
+      tShirtSize: [''],
+      class: [''],
+      allergy: ['']
     });
-    this.form.setValue({ name: this.data.name });
+    this.form.setValue({
+      name: this.data.name,
+      tShirtSize: this.data.tShirtSize,
+      class: this.data.class,
+      allergy: this.data.allergy
+    });
   }
 
   onNoClick() {
@@ -34,7 +42,7 @@ export class UserModifyDialogComponent implements OnInit {
     if (this.form.invalid) {
       this.notificationservice.warning('Nem megfelelő adatok!');
     } else {
-      this.dialogRef.close({ name: this.form.get('name').value });
+      this.dialogRef.close(this.form.value);
     }
   }
 }

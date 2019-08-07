@@ -14,6 +14,12 @@
             if (password_verify($password, $row['hash'])){
                 echo '{"response" : "success", "message" : "A belépés sikeres!"}';
                 $_SESSION['userId'] = $row['userId'];
+                $sql = "CALL login(?);";
+                $stmt->close();
+                $stmt = $db->prepare($sql);
+                $stmt->bind_param("i", $_SESSION['userId']);
+                $stmt->execute();
+                $stmt->close();
             }else{
                 echo '{"response" : "fail", "message" : "A jelszó nem megfelelő!"}';
             }
@@ -87,13 +93,13 @@
         $stmt->close();
     }
 
-    function updateUser($userId, $name){
+    function updateUser($userId, $name, $tShirtSize, $allergy, $class){
         global $db;
 
-        $sql = "CALL updateUser(?, ?);";
+        $sql = "CALL updateUser(?, ?, ?, ?, ?);";
 
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("is", $userId, $name);
+        $stmt->bind_param("issss", $userId, $name, $tShirtSize, $allergy, $class);
         $stmt->execute();
 
         if ($stmt->errno){

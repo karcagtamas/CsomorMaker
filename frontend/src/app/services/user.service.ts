@@ -35,8 +35,10 @@ export class UserService {
     return this.http.post<Response>(`${this.url}/password/check`, { user, password }, HttpHeader).toPromise();
   }
 
-  updateUser(user: number, name: string): Promise<Response> {
-    return this.http.post<Response>(`${this.url}/update`, { user, name }, HttpHeader).toPromise();
+  updateUser(user: number, name: string, tShirtSize: string, allergy: string, claass: string): Promise<Response> {
+    return this.http
+      .post<Response>(`${this.url}/update`, { user, name, tShirtSize, allergy, class: claass }, HttpHeader)
+      .toPromise();
   }
 
   getAccessLevel(): Promise<number> {

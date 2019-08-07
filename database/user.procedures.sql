@@ -42,21 +42,21 @@ USE csomormaker;
 
   CREATE OR REPLACE PROCEDURE getUsers()
     BEGIN
-     SELECT users.id, users.name, users.username, users.email, users.role AS roleId, roles.name AS role FROM users 
+     SELECT users.id, users.name, users.username, users.email, users.role AS roleId, roles.name AS role, users.tShirtSize, users.allergy, users.lastLogin, users.class, users.registrationTime FROM users 
      INNER JOIN roles ON users.role = roles.id;
     END;
 
   CREATE OR REPLACE PROCEDURE getUser(_id int(11))
     BEGIN
-     SELECT users.id, users.name, users.username, users.email, users.role AS roleId, roles.name AS role FROM users 
+     SELECT users.id, users.name, users.username, users.email, users.role AS roleId, roles.name AS role, users.tShirtSize, users.allergy, users.lastLogin, users.class, users.registrationTime FROM users 
      INNER JOIN roles ON users.role = roles.id
      WHERE users.id = _id;
     END;
 
 
-  CREATE OR REPLACE PROCEDURE updateUser(_id int(11), _name varchar(100))
+  CREATE OR REPLACE PROCEDURE updateUser(_id int(11), _name varchar(100), _tShirtSize varchar(6), _allergy text, _class varchar(10))
     BEGIN
-     UPDATE users SET name = _name WHERE id = _id;
+     UPDATE users SET name = _name, tShirtSize = _tShirtSize, allergy = _allergy, class = _class WHERE id = _id;
     END;
 
   CREATE OR REPLACE PROCEDURE deleteUser(_id int(11))
@@ -73,4 +73,9 @@ USE csomormaker;
   CREATE OR REPLACE PROCEDURE changePassword(_id int(11), _password varchar(100))
     BEGIN
      UPDATE users SET password = _password WHERE id = _id;
+    END;
+
+  CREATE OR REPLACE PROCEDURE login(_userId int(11))
+    BEGIN
+    UPDATE users SET lastLogin = NOW() WHERE id = _userId;
     END;

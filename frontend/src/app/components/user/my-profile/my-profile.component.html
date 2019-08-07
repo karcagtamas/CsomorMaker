@@ -5,6 +5,11 @@
     <div><strong>Megjelenítendő név: </strong>{{ user.name }}</div>
     <div><strong>E-mail cím: </strong>{{ user.email }}</div>
     <div><strong>Rang: </strong>{{ user.role }}</div>
+    <div><strong>Utolsó belépés: </strong>{{ user.lastLogin }}</div>
+    <div><strong>Regisztráció: </strong>{{ user.registrationTime }}</div>
+    <div><strong>Poló méret: </strong>{{ user.tShirtSize }}</div>
+    <div><strong>Osztály: </strong>{{ user.class }}</div>
+    <div><strong>Allergia: </strong>{{ user.allergy }}</div>
     <div class="buttons">
       <button mat-raised-button color="accent" (click)="openModifyDialog()">Szerkesztés</button>
       <button mat-raised-button color="warn" (click)="changePassword()">Jelszó csere</button>

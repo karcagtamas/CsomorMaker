@@ -73,7 +73,7 @@ export class MyProfileComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.userservice
-          .updateUser(this.user.id, result.name)
+          .updateUser(this.user.id, result.name, result.tShirtSize, result.allergy, result.class)
           .then(res => {
             if (res.response === 'success') {
               this.notificationservice.success(res.message);

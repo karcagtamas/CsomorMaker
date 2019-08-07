@@ -6,6 +6,18 @@
     <mat-error *ngIf="form.get('name').hasError('required')">A név megadása kötelező!</mat-error>
     <mat-error *ngIf="form.get('name').hasError('maxlength')">A név hossza maximum 100 karakter lehet!</mat-error>
   </mat-form-field>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Osztály</mat-label>
+    <input matInput type="text" placeholder="Osztály" formControlName="class" />
+  </mat-form-field>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Allergia</mat-label>
+    <textarea matInput type="text" placeholder="Allergia" formControlName="allergy"></textarea>
+  </mat-form-field>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Poló méret</mat-label>
+    <input matInput type="text" placeholder="Poló méret" formControlName="tShirtSize" />
+  </mat-form-field>
 </form>
 <div mat-dialog-actions>
   <button mat-raised-button color="primary" (click)="save()">

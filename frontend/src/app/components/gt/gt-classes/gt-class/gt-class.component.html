@@ -3,15 +3,19 @@
   <div><span class="title">Polószín: </span>{{ gtClass.tShirtColor }}</div>
   <div><span class="title">Létszám: </span>{{ gtClass.members | personCount }}</div>
   <hr />
-  <div class="title">Személyek:</div>
-  <div class="members">
-    <div class="member border rounded" *ngFor="let member of gtClassMembers">
-      <app-gt-class-member [gtClassMember]="member" (update)="openMemberDialog($event)"></app-gt-class-member>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <div class="title">Személyek</div>
+    </mat-expansion-panel-header>
+    <div class="members">
+      <div class="member border rounded" *ngFor="let member of gtClassMembers">
+        <app-gt-class-member [gtClassMember]="member" (update)="openMemberDialog($event)"></app-gt-class-member>
+      </div>
+      <div *ngIf="gtClassMembers.length === 0" class="text-center">
+        Nincs még semmilyen osztály tagod :(
+      </div>
     </div>
-    <div *ngIf="gtClassMembers.length === 0" class="text-center">
-      Nincs még semmilyen osztály tagod :(
-    </div>
-  </div>
+  </mat-expansion-panel>
   <div class="buttons">
     <button mat-raised-button color="primary" (click)="openMemberDialog()">Új tag</button>
     <button mat-raised-button color="accent" (click)="updateClass()">Szerkesztés</button>
