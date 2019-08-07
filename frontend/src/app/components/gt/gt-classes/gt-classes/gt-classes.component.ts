@@ -61,7 +61,7 @@ export class GtClassesComponent implements OnInit, OnChanges {
             });
         } else {
           this.gtclassesservice
-            .updateGtClass(result.id, result.name, result.tShirtColor)
+            .updateGtClass(result.id, result.name, result.tShirtColor, result.classMaster)
             .then(res => {
               if (res.response === 'success') {
                 this.notificationservice.success(res.message);

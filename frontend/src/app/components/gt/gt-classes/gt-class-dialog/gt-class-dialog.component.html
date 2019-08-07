@@ -14,6 +14,10 @@
       >A poló szín maximuma hossza 50 akrakter!</mat-error
     >
   </mat-form-field>
+  <mat-form-field class="w-100" appearance="outline" *ngIf="isEdit">
+    <mat-label>Osztályfőnök</mat-label>
+    <input matInput type="text" placeholder="Osztályfőnök" formControlName="classMaster" />
+  </mat-form-field>
 </form>
 <div mat-dialog-actions>
   <button mat-raised-button color="primary" (click)="save()">

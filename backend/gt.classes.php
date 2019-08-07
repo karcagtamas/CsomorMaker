@@ -52,12 +52,12 @@
         $stmt->close();
     }
 
-    function updateGtClass($classId, $name, $tShirtColor){
+    function updateGtClass($classId, $name, $tShirtColor, $master){
         global $db;
 
-        $sql = "CALL updateGtClass(?, ?, ?);";
+        $sql = "CALL updateGtClass(?, ?, ?, ?);";
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("iss", $classId, $name, $tShirtColor);
+        $stmt->bind_param("isss", $classId, $name, $tShirtColor, $master);
         $stmt->execute();
         if ($stmt->errno){
             $array['response'] =  'fail';

@@ -396,6 +396,7 @@ CREATE TABLE gtclasses(
   tShirtColor varchar(50) NOT NULL DEFAULT 'Noone',
   gt int(11) NOT NULL,
   members int(11) NOT NULL DEFAULT 0,
+  classMaster varchar(100),
   PRIMARY KEY (id),
   CONSTRAINT fk_gt_gts_gtclasses FOREIGN KEY (gt)
   REFERENCES gts(id)

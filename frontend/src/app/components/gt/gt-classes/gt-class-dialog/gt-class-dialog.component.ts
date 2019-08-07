@@ -27,7 +27,8 @@ export class GtClassDialogComponent implements OnInit {
     if (this.isEdit) {
       form = {
         name: ['', [Validators.required, Validators.maxLength(5)]],
-        tShirtColor: ['', [Validators.required, Validators.maxLength(50)]]
+        tShirtColor: ['', [Validators.required, Validators.maxLength(50)]],
+        classMaster: ['']
       };
     } else {
       form = { name: ['', [Validators.required, Validators.maxLength(5)]] };
@@ -40,7 +41,11 @@ export class GtClassDialogComponent implements OnInit {
   }
 
   setValues() {
-    this.form.setValue({ name: this.data.name, tShirtColor: this.data.tShirtColor });
+    this.form.setValue({
+      name: this.data.name,
+      tShirtColor: this.data.tShirtColor,
+      classMaster: this.data.classMaster
+    });
   }
 
   onNoClick() {
@@ -53,7 +58,12 @@ export class GtClassDialogComponent implements OnInit {
     } else {
       let form;
       if (this.isEdit) {
-        form = { id: this.data.id, name: this.form.get('name').value, tShirtColor: this.form.get('tShirtColor').value };
+        form = {
+          id: this.data.id,
+          name: this.form.get('name').value,
+          tShirtColor: this.form.get('tShirtColor').value,
+          classMaster: this.form.get('classMaster').value
+        };
       } else {
         form = { name: this.form.get('name').value };
       }

@@ -34,6 +34,7 @@ export class GtClass {
   tShirtColor: string;
   gt: number;
   members: number;
+  classMaster: string;
 }
 
 export class GtClassMember {

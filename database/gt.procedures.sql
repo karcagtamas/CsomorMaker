@@ -357,13 +357,13 @@ CREATE OR REPLACE PROCEDURE getGtClasses(_gtId int(11))
 
 CREATE OR REPLACE PROCEDURE addGtClass(_gtId int(11), _name varchar(5))
   BEGIN
-    INSERT INTO gtclasses (name, gt)
-      VALUES(_name, _gtId);
+    INSERT INTO gtclasses (name, gt, classMaster)
+      VALUES(_name, _gtId, _master);
   END;
 
-CREATE OR REPLACE PROCEDURE updateGtClass(_classId int(11), _name varchar(5),_tShirtColor varchar(50))
+CREATE OR REPLACE PROCEDURE updateGtClass(_classId int(11), _name varchar(5), _tShirtColor varchar(50), _master varchar(100))
   BEGIN
-    UPDATE gtclasses SET name = _name, tShirtColor = _tShirtColor WHERE id = _classId;
+    UPDATE gtclasses SET name = _name, tShirtColor = _tShirtColor, classMaster = _master WHERE id = _classId;
   END;
 
 CREATE OR REPLACE PROCEDURE deleteGtClass(_classId int(11))

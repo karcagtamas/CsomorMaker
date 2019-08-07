@@ -2,6 +2,7 @@
   <div class="name"><span class="title">Név: </span>{{ gtClass.name }}</div>
   <div><span class="title">Polószín: </span>{{ gtClass.tShirtColor }}</div>
   <div><span class="title">Létszám: </span>{{ gtClass.members | personCount }}</div>
+  <div><span class="title">Osztályfőnök: </span>{{ gtClass.classMaster | exists }}</div>
   <hr />
   <mat-expansion-panel>
     <mat-expansion-panel-header>

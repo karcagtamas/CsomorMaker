@@ -546,7 +546,7 @@
                                     break;
 
                                 case 'update':
-                                    updateGtClass($_POST['class'], $_POST['name'], $_POST['tShirtColor']);
+                                    updateGtClass($_POST['class'], $_POST['name'], $_POST['tShirtColor'], $_POST['master']);
                                     break;
 
                                 case 'delete':
