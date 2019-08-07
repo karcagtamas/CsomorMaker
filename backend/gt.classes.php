@@ -87,12 +87,12 @@
         $stmt->close();
     }
 
-    function addGtClassMember($classId, $name, $description){
+    function addGtClassMember($classId, $name, $description, $allergy, $tShirtSize){
         global $db;
 
-        $sql = "CALL addGtClassMember(?, ?, ?);";
+        $sql = "CALL addGtClassMember(?, ?, ?, ?, ?);";
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("iss", $classId, $name, $description);
+        $stmt->bind_param("issss", $classId, $name, $description, $allergy, $tShirtSize);
         $stmt->execute();
         if ($stmt->errno){
             $array['response'] =  'fail';
@@ -123,12 +123,12 @@
         $stmt->close();
     }
 
-    function updateGtClassMember($memberId, $name, $description){
+    function updateGtClassMember($memberId, $name, $description, $allergy, $tShirtSize){
         global $db;
 
-        $sql = "CALL updateGtClassMember(?, ?, ?);";
+        $sql = "CALL updateGtClassMember(?, ?, ?, ?, ?);";
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("iss", $memberId, $name, $description);
+        $stmt->bind_param("issss", $memberId, $name, $description, $allergy, $tShirtSize);
         $stmt->execute();
         if ($stmt->errno){
             $array['response'] =  'fail';

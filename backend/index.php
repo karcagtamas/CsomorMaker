@@ -561,11 +561,11 @@
                                             break;
 
                                         case 'update':
-                                            updateGtClassMember($_POST['member'], $_POST['name'], $_POST['description']);
+                                            updateGtClassMember($_POST['member'], $_POST['name'], $_POST['description'], $_POST['allergy'], $_POST['tShirtSize']);
                                             break;
 
                                         case 'add':
-                                            addGtClassMember($_POST['class'], $_POST['name'], $_POST['description']);
+                                            addGtClassMember($_POST['class'], $_POST['name'], $_POST['description'], $_POST['allergy'], $_POST['tShirtSize']);
                                             break;
 
                                         case 'delete':

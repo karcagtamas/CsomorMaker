@@ -375,21 +375,21 @@ CREATE OR REPLACE PROCEDURE deleteGtClass(_classId int(11))
 
 CREATE OR REPLACE PROCEDURE getGtClassMembers(_classId int(11))
   BEGIN
-    SELECT gtclassmembers.id, gtclassmembers.class AS classId, gtclassmembers.name, gtclassmembers.isPaid, gtclassmembers.description, gtclasses.name AS class FROM gtclassmembers
+    SELECT gtclassmembers.id, gtclassmembers.class AS classId, gtclassmembers.name, gtclassmembers.isPaid, gtclassmembers.description, gtclasses.name AS class, gtclassmembers.allergy, gtclassmembers.tShirtSize FROM gtclassmembers
       INNER JOIN gtclasses ON gtclasses.id = gtclassmembers.class
       WHERE gtclassmembers.class = _classId
       ORDER BY name;
   END;
 
-CREATE OR REPLACE PROCEDURE addGtClassMember(_classId int(11), _name varchar(100), _description text)
+CREATE OR REPLACE PROCEDURE addGtClassMember(_classId int(11), _name varchar(100), _description text, _allergy text, _tShirtSize varchar(6))
   BEGIN
-    INSERT INTO gtclassmembers (name, description, class)
-      VALUES(_name,_description, _classId);
+    INSERT INTO gtclassmembers (name, description, class, allergy, tShirtSize)
+      VALUES(_name,_description, _classId, _allergy, _tShirtSize);
   END;
 
-CREATE OR REPLACE PROCEDURE updateGtClassMember(_memberId int(11), _name varchar(100),_description text)
+CREATE OR REPLACE PROCEDURE updateGtClassMember(_memberId int(11), _name varchar(100),_description text, _allergy text, _tShirtSize varchar(6))
   BEGIN
-    UPDATE gtclassmembers SET name = _name, description = _description WHERE id = _memberId;
+    UPDATE gtclassmembers SET name = _name, description = _description, allergy = _allergy, tShirtSize = _tShirtSize WHERE id = _memberId;
   END;
 
 CREATE OR REPLACE PROCEDURE deleteGtClassMember(_memberId int(11))

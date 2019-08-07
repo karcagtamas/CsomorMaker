@@ -78,7 +78,7 @@ export class GtClassComponent implements OnInit, OnChanges {
       if (result) {
         if (!event) {
           this.gtclassesservice
-            .addGtClassMember(this.gtClass.id, result.name, result.description)
+            .addGtClassMember(this.gtClass.id, result.name, result.description, result.allergy, result.tShirtSize)
             .then(res => {
               if (res.response === 'success') {
                 this.notificationservice.success(res.message);
@@ -94,7 +94,7 @@ export class GtClassComponent implements OnInit, OnChanges {
             });
         } else {
           this.gtclassesservice
-            .updateGtClassMember(event.member.id, result.name, result.description)
+            .updateGtClassMember(event.member.id, result.name, result.description, result.allergy, result.tShirtSize)
             .then(res => {
               if (res.response === 'success') {
                 this.notificationservice.success(res.message);

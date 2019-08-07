@@ -23,7 +23,12 @@ export class GtClassMemberDialogComponent implements OnInit {
 
   ngOnInit() {
     this.isEdit = this.data ? true : false;
-    this.form = this.fb.group({ name: ['', [Validators.required, Validators.maxLength(100)]], description: [''] });
+    this.form = this.fb.group({
+      name: ['', [Validators.required, Validators.maxLength(100)]],
+      description: [''],
+      allergy: [''],
+      tShirtSize: ['']
+    });
     if (this.isEdit) {
       this.setValues();
     }
@@ -31,7 +36,12 @@ export class GtClassMemberDialogComponent implements OnInit {
   }
 
   setValues() {
-    this.form.setValue({ name: this.data.name, description: this.data.description });
+    this.form.setValue({
+      name: this.data.name,
+      description: this.data.description,
+      allergy: this.data.allergy,
+      tShirtSize: this.data.tShirtSize
+    });
   }
 
   onNoClick() {
@@ -42,7 +52,7 @@ export class GtClassMemberDialogComponent implements OnInit {
     if (this.form.invalid) {
       this.notificatinservice.warning('Nem megfelelő adatok!');
     } else {
-      this.dialogRef.close({ name: this.form.get('name').value, description: this.form.get('description').value });
+      this.dialogRef.close(this.form.value);
     }
   }
 }

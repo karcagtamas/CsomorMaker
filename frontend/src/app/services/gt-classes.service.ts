@@ -36,9 +36,15 @@ export class GtClassesService {
     return this.http.get<GtClassMember[]>(`${this.memberUrl}/get/${claass}`, HttpHeader).toPromise();
   }
 
-  addGtClassMember(claass: number, name: string, description: string): Promise<Response> {
+  addGtClassMember(
+    claass: number,
+    name: string,
+    description: string,
+    allergy: string,
+    tShirtSize: string
+  ): Promise<Response> {
     return this.http
-      .post<Response>(`${this.memberUrl}/add`, { class: claass, name, description }, HttpHeader)
+      .post<Response>(`${this.memberUrl}/add`, { class: claass, name, description, allergy, tShirtSize }, HttpHeader)
       .toPromise();
   }
 
@@ -46,8 +52,16 @@ export class GtClassesService {
     return this.http.get<Response>(`${this.memberUrl}/delete/${member}`, HttpHeader).toPromise();
   }
 
-  updateGtClassMember(member: number, name: string, description: string): Promise<Response> {
-    return this.http.post<Response>(`${this.memberUrl}/update`, { member, name, description }, HttpHeader).toPromise();
+  updateGtClassMember(
+    member: number,
+    name: string,
+    description: string,
+    allergy: string,
+    tShirtSize: string
+  ): Promise<Response> {
+    return this.http
+      .post<Response>(`${this.memberUrl}/update`, { member, name, description, allergy, tShirtSize }, HttpHeader)
+      .toPromise();
   }
 
   setGtClassMemberPaidStatus(member: number): Promise<Response> {

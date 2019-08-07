@@ -406,6 +406,8 @@ CREATE TABLE gtclassmembers(
   name varchar(100) NOT NULL,
   class int(11) NOT NULL,
   isPaid boolean DEFAULT FALSE,
+  tShirtSize varchar(6),
+  allergy text,
   description text,
   PRIMARY KEY(id),
   CONSTRAINT fk_class_gtclasses_gtclassmembers FOREIGN KEY(class)

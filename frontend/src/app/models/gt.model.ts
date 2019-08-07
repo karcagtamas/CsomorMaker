@@ -43,6 +43,8 @@ export class GtClassMember {
   classId: number;
   class: string;
   description: string;
+  allergy: string;
+  tShirtSize: string;
 }
 
 export class GtWork {

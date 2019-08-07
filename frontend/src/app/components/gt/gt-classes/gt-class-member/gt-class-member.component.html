@@ -10,6 +10,8 @@
       &#9998;
     </button>
     <div><span class="title">Megjegyzés: </span><br />{{ gtClassMember.description }}</div>
+    <div><span class="title">Allergia: </span><br />{{ gtClassMember.allergy }}</div>
+    <div><span class="title">Poló méret: </span> {{ gtClassMember.tShirtSize }}</div>
     <mat-checkbox [(ngModel)]="gtClassMember.isPaid" (change)="setIsPaid()">Díj</mat-checkbox>
   </div>
 </mat-expansion-panel>
