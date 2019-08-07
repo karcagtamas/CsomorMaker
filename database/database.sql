@@ -520,6 +520,35 @@ CREATE TABLE gtpayouts(
   REFERENCES gts(id)
 );
 
+CREATE TABLE gtmeetingtypes(
+  id int(11) AUTO_INCREMENT NOT NULL,
+  name varchar(100) NOT NULL,
+  PRIMARY KEY(id)
+);
+
+CREATE TABLE gtmeetings(
+  id int(11) AUTO_INCREMENT NOT NULL,
+  date date NOT NULL,
+  creater int(11) NOT NULL,
+  type int(11) NOT NULL,
+  PRIMARY KEY(id),
+  CONSTRAINT fk_creater_users_gtmeetings FOREIGN KEY (creater)
+  REFERENCES users(id),
+  CONSTRAINT fk_type_gtmeetingtypes_gtmeetings FOREIGN KEY (type)
+  REFERENCES gtmeetingtypes(id)
+);
+
+CREATE TABLE gtmeetingswitch(
+  user int(11) NOT NULL,
+  meeting int(11) NOT NULL,
+  isThere boolean NOT NULL DEFAULT FALSE,
+  PRIMARY KEY(user, meeting),
+  CONSTRAINT fk_user_users_gtmeetingswitch FOREIGN KEY (user)
+  REFERENCES users(id),
+  CONSTRAINT fk_meeting_gtmeetings_gtmeetingswitch FOREIGN KEY (meeting)
+  REFERENCES gtmeetings(id)
+  );
+
 CREATE TRIGGER gt_members AFTER INSERT ON usergtswitch
   FOR EACH ROW
   BEGIN
