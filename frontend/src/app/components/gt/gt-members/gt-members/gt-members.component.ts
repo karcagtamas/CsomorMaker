@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Gt, GtMember } from 'src/app/models';
 import { GtMembersService } from 'src/app/services/gt-members.service';
-import { NotificationService, UserService } from 'src/app/services';
+import { NotificationService, UserService, ExportService } from 'src/app/services';
 import { MatDialog } from '@angular/material/dialog';
 import { GtAddMemberDialogComponent } from '../gt-add-member-dialog/gt-add-member-dialog.component';
 import { GtImportMembersDialogComponent } from '../gt-import-members-dialog/gt-import-members-dialog.component';
@@ -23,7 +23,8 @@ export class GtMembersComponent implements OnInit, OnChanges {
     private gtmembersservice: GtMembersService,
     private notificationservice: NotificationService,
     public dialog: MatDialog,
-    public userservice: UserService
+    public userservice: UserService,
+    private exportservice: ExportService
   ) {}
 
   ngOnInit() {
@@ -135,6 +136,9 @@ export class GtMembersComponent implements OnInit, OnChanges {
           });
       }
     });
+  }
+  export() {
+    this.exportservice.exportGtMembers(this.gt);
   }
 
   filter() {

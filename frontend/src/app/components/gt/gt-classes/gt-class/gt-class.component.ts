@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { GtClass, GtClassMember } from 'src/app/models';
-import { GtClassesService, NotificationService } from 'src/app/services';
+import { GtClassesService, NotificationService, ExportService } from 'src/app/services';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
 import { GtClassMemberDialogComponent } from '../gt-class-member-dialog/gt-class-member-dialog.component';
@@ -19,7 +19,8 @@ export class GtClassComponent implements OnInit, OnChanges {
   constructor(
     private gtclassesservice: GtClassesService,
     public dialog: MatDialog,
-    private notificationservice: NotificationService
+    private notificationservice: NotificationService,
+    private exportservice: ExportService
   ) {}
 
   ngOnInit() {
@@ -111,5 +112,9 @@ export class GtClassComponent implements OnInit, OnChanges {
         }
       }
     });
+  }
+
+  export() {
+    this.exportservice.exportClass(this.gtClass);
   }
 }

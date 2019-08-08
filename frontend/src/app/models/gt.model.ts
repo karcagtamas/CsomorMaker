@@ -26,6 +26,9 @@ export class GtMember {
   role: string;
   accessLevel: number;
   connectionDate: Date;
+  tShirtSize: string;
+  class: string;
+  email: string;
 }
 
 export class GtClass {

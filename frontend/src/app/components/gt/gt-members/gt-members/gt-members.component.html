@@ -23,4 +23,7 @@
   <button mat-stroked-button (click)="openImportDialog()" *ngIf="accessLevel >= 3" [disabled]="true">
     Tagok importálása
   </button>
+  <button mat-stroked-button (click)="export()" *ngIf="accessLevel >= 3">
+    Export
+  </button>
 </div>

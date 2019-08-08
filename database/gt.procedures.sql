@@ -63,7 +63,7 @@ CREATE OR REPLACE PROCEDURE setGtReadyStatus(_gtId int(11), _value boolean)
 
 CREATE OR REPLACE PROCEDURE getGtMembers(_gtId int(11))
     BEGIN
-      SELECT usergtswitch.gt, users.name AS user, users.username AS username, users.id AS userId, usergtswitch.role AS roleId, usergtswitch.connectionDate, eventroles.name AS role, eventroles.accessLevel FROM usergtswitch
+      SELECT usergtswitch.gt, users.name AS user, users.username AS username, users.id AS userId, usergtswitch.role AS roleId, usergtswitch.connectionDate, eventroles.name AS role, eventroles.accessLevel, users.email, users.tShirtSize, users.class FROM usergtswitch
       INNER JOIN users ON users.id = usergtswitch.user
       INNER JOIN eventroles ON eventroles.id = usergtswitch.role
       WHERE usergtswitch.gt = _gtId
