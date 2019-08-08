@@ -13,10 +13,13 @@ export class NewsElementComponent implements OnInit {
   @Input() accessLevel: number;
   @Output() delete = new EventEmitter();
   @Output() update = new EventEmitter();
+  convertedText = '';
 
   constructor(public dialog: MatDialog) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.convert();
+  }
 
   deleteNews() {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, { data: { title: 'Hír törlése', name: 'hír' } });
@@ -30,5 +33,17 @@ export class NewsElementComponent implements OnInit {
 
   updateNews() {
     this.update.emit({ news: this.news });
+  }
+
+  convert() {
+    let value = this.news.text;
+    value = value.replace(/¨/g, '¨T');
+    value = value.replace(/\$/g, '¨D');
+    value = value.replace(/\r\n/g, '\n');
+    value = value.replace(/\r/g, '\n');
+    value = value.replace(/\u00A0/g, '&nbsp;');
+    value = value.replace(/^[ \t]+$/gm, '');
+    value = value.split('\n').join('<br />');
+    this.convertedText = value;
   }
 }

@@ -8,7 +8,8 @@
         Utoljára szerkesztette: {{ news.lastUpdater }} - <small>{{ news.lastUpdate | chatDate }}</small>
       </div>
       <hr />
-      {{ news.text }}
+      <div [innerHTML]="convertedText"></div>
+
       <hr />
       <div class="buttons" *ngIf="accessLevel >= 2">
         <button mat-raised-button color="accent" (click)="updateNews()">&#9998;</button>
