@@ -417,3 +417,50 @@ CREATE OR REPLACE PROCEDURE countOfAllPaid(_gtId int(11))
       INNER JOIN gtclasses ON gtclassmembers.class = gtclasses.id
     WHERE gtclasses.gt = _gtId AND gtclassmembers.isPaid;
     END;
+
+/* Gt meetings */
+
+  CREATE OR REPLACE PROCEDURE getGtMeetings(_gtId int(11))
+    BEGIN
+      SELECT gtmeetings.id, gtmeetings.date, gtmeetings.creater AS createrId, users.name AS creater, gtmeetings.gt FROm gtmeetings
+        INNER JOIN users ON users.id = gtmeetings.creater
+      WHERE gtmeetings.gt = _gtId;
+    END;
+
+  CREATE OR REPLACE PROCEDURE addGtMeeting(_date date, _creater int(11), _gt int(11))
+    BEGIN
+      INSERT INTO gtmeetings(date, creater, gt)
+      VALUES (_date, _creater, _gt);
+    END;
+
+  CREATE OR REPLACE PROCEDURE updateGtMeeting(_id int(11), _date date)
+    BEGIN
+      UPDATE gtmeetings SET date = _date WHERE id = _id;
+    END;
+
+  CREATE OR REPLACE PROCEDURE deleteGtMeeting(_id int(11))
+    BEGIN
+      DELETE FROM gtmeetings WHERE id = _id;
+    END;
+
+  CREATE OR REPLACE PROCEDURE getGtMeetingMembers(_meetingId int(11))
+    BEGIN
+      SELECT gtmeetingswitch.user AS userId, gtmeetingswitch.meeting, gtmeetingswitch.isThere, users.name AS user FROM gtmeetingswitch
+        INNER JOIN users ON users.id = gtmeetingswitch.user 
+      WHERE gtmeetingswitch.meeting = _meetingId
+      ORDER BY gtmeetingswitch.meetings, gtmeetingswitch.user;
+    END;
+
+  CREATE OR REPLACE PROCEDURE setGtMeetingMemberThereStatus(_meeting int(11), _user int(11))
+  BEGIN
+    DECLARE _there boolean;
+     SELECT isThere INTO _there FROM gtmeetingswitch WHERE meeting = _meeting AND user = _user;
+
+     IF _there
+      THEN
+        SET _there = FALSE;
+      ELSE
+        SET _there = TRUE;
+      END IF;
+      UPDATE gtmeetingswitch SET isThere = _there WHERE meeting = _meeting AND user = _user;
+  END;

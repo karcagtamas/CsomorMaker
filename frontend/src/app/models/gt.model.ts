@@ -131,3 +131,19 @@ export class GtTodo {
   isSolved: boolean;
   expirationDate: Date;
 }
+
+export class GtMeeting {
+  id: number;
+  date: Date;
+  creater: string;
+  createrId: number;
+  gt: number;
+  members?: GtMeetingMember[] = [];
+}
+
+export class GtMeetingMember {
+  user: string;
+  userId: number;
+  meeting: number;
+  isThere: boolean;
+}

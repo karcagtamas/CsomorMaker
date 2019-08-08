@@ -773,6 +773,49 @@
                             }
                             break;
 
+                        case 'meetings':
+                            $event = $url[4];
+                            require 'gt.meetings.php';
+                            switch ($event) {
+                                case 'get':
+                                    getGtMeetings($url[5]);
+                                    break;
+
+                                case 'add':
+                                    addGtMeeting($_POST['date'], $_SESSION['userId'], $_POST['gt']);
+                                    break;
+
+                                case 'update':
+                                    updateGtMeeting($_POST['id'], $_POST['date']);
+                                    break;
+
+                                case 'delete':
+                                    deleteGtMeeting($url[5]);
+                                    break;
+
+                                case 'members':
+                                    $subevent = $url[5];
+                                    switch ($subevent) {
+                                        case 'get':
+                                            getGtMeetingMembers($url[6]);
+                                            break;
+
+                                        case 'set':
+                                            setGtMeetingMemberThereStatus($url[6], $url[7]);
+                                            break;
+                                        
+                                        default:
+                                            echo '{"response" : "bad-subevent", "message" : "Bad request subevent!"}';
+                                            break;
+                                    }
+                                    break;
+                                
+                                default:
+                                    echo '{"response" : "bad-event", "message" : "Bad request event!"}';
+                                    break;
+                            }
+                            break;
+
                         case 'payouts':
                             $event = $url[4];
                             require 'gt.payouts.php';

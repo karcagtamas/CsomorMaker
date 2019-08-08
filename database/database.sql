@@ -520,22 +520,16 @@ CREATE TABLE gtpayouts(
   REFERENCES gts(id)
 );
 
-CREATE TABLE gtmeetingtypes(
-  id int(11) AUTO_INCREMENT NOT NULL,
-  name varchar(100) NOT NULL,
-  PRIMARY KEY(id)
-);
-
 CREATE TABLE gtmeetings(
   id int(11) AUTO_INCREMENT NOT NULL,
   date date NOT NULL,
   creater int(11) NOT NULL,
-  type int(11) NOT NULL,
+  gt int(11) NOT NULL,
   PRIMARY KEY(id),
   CONSTRAINT fk_creater_users_gtmeetings FOREIGN KEY (creater)
   REFERENCES users(id),
-  CONSTRAINT fk_type_gtmeetingtypes_gtmeetings FOREIGN KEY (type)
-  REFERENCES gtmeetingtypes(id)
+  CONSTRAINT fk_gt_gts_gtmeetings FOREIGN KEY (gt)
+  REFERENCES gts(id)
 );
 
 CREATE TABLE gtmeetingswitch(
@@ -546,8 +540,24 @@ CREATE TABLE gtmeetingswitch(
   CONSTRAINT fk_user_users_gtmeetingswitch FOREIGN KEY (user)
   REFERENCES users(id),
   CONSTRAINT fk_meeting_gtmeetings_gtmeetingswitch FOREIGN KEY (meeting)
-  REFERENCES gtmeetings(id)
+  REFERENCES gtmeetings(id) ON DELETE CASCADE
   );
+
+CREATE TRIGGER gt_meetings AFTER INSERT ON gtmeetings
+  FOR EACH ROW
+  BEGIN
+     INSERT INTO gtmeetingswitch (user, meeting)
+       SELECT * FROM (
+        SELECT usergtswitch.user FROM usergtswitch
+        WHERE usergtswitch.gt = NEW.gt) AS T1
+      CROSS JOIN (SELECT NEW.id) AS T2;
+  END;
+
+CREATE TRIGGER gt_meetings AFTER DELETE ON gtmeetings
+  FOR EACH ROW
+  BEGIN
+    DELETE FROM gtmeetingswitch WHERE meeting = OLD.id;
+  END;
 
 CREATE TRIGGER gt_members AFTER INSERT ON usergtswitch
   FOR EACH ROW
@@ -585,6 +595,12 @@ CREATE TRIGGER gt_members AFTER INSERT ON usergtswitch
           END WHILE;
         SET _currentDay = _currentDay + 1;
       END WHILE;
+
+      INSERT INTO gtmeetingswitch (meeting, user)
+       SELECT * FROM (
+        SELECT gtmeetings.id FROM gtmeetings
+        WHERE gtmeetings.gt = NEW.gt) AS T1
+      CROSS JOIN (SELECT NEW.user) AS T2;
   END;
 
 CREATE TRIGGER gt_members_de AFTER DELETE ON usergtswitch
@@ -598,6 +614,7 @@ CREATE TRIGGER gt_members_de AFTER DELETE ON usergtswitch
     WHERE worker = OLD.user AND gtworkworkerswitch.gt = OLD.gt;
     DELETE FROM gtworkertables WHERE worker = OLD.user AND gtworkertables.gt = OLD.gt;
     CALL setGtReadyStatus(OLD.gt, FALSE);
+    DELETE FROM gtmeetingswitch WHERE user = OLD.user;
   END;
 
 CREATE TRIGGER gt_members_update AFTER UPDATE ON usergtswitch

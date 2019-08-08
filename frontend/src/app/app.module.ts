@@ -146,6 +146,7 @@ import {
 
 import { NewsComponent, NewsElementComponent, NewsDialogComponent } from './components/main/news';
 import { NotificationsComponent, NotificationComponent } from './components/main/notifications';
+import { GtMeetingsComponent } from './components/gt/gt-meetings/gt-meetings/gt-meetings.component';
 
 @NgModule({
   declarations: [
@@ -231,7 +232,8 @@ import { NotificationsComponent, NotificationComponent } from './components/main
     NewsElementComponent,
     NewsDialogComponent,
     NotificationsComponent,
-    NotificationComponent
+    NotificationComponent,
+    GtMeetingsComponent
   ],
   imports: [
     BrowserModule,

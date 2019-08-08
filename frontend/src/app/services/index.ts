@@ -20,3 +20,4 @@ export * from './gt-classes.service';
 export * from './export.service';
 export * from './user-notification.service';
 export * from './news.service';
+export * from './gt-meetings.service';
