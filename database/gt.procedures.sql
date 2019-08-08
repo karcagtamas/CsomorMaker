@@ -448,7 +448,7 @@ CREATE OR REPLACE PROCEDURE countOfAllPaid(_gtId int(11))
       SELECT gtmeetingswitch.user AS userId, gtmeetingswitch.meeting, gtmeetingswitch.isThere, users.name AS user FROM gtmeetingswitch
         INNER JOIN users ON users.id = gtmeetingswitch.user 
       WHERE gtmeetingswitch.meeting = _meetingId
-      ORDER BY gtmeetingswitch.meetings, gtmeetingswitch.user;
+      ORDER BY gtmeetingswitch.meeting, gtmeetingswitch.user;
     END;
 
   CREATE OR REPLACE PROCEDURE setGtMeetingMemberThereStatus(_meeting int(11), _user int(11))

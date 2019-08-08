@@ -553,7 +553,7 @@ CREATE TRIGGER gt_meetings AFTER INSERT ON gtmeetings
       CROSS JOIN (SELECT NEW.id) AS T2;
   END;
 
-CREATE TRIGGER gt_meetings AFTER DELETE ON gtmeetings
+CREATE TRIGGER gt_meetings_delete AFTER DELETE ON gtmeetings
   FOR EACH ROW
   BEGIN
     DELETE FROM gtmeetingswitch WHERE meeting = OLD.id;

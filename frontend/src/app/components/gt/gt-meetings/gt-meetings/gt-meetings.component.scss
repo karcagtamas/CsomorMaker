@@ -1,0 +1,24 @@
+.meetings {
+  .buttons {
+    button {
+      margin: 0.2rem;
+    }
+  }
+  .table {
+    overflow: auto;
+    margin: 0;
+    padding: 0;
+    width: fit-content !important;
+    .cell {
+      width: 120px;
+      margin: 0.2rem;
+      padding: 0.2rem;
+      text-align: center;
+
+      &:hover {
+        background-color: #9a68f1af;
+        transition-duration: 0.3s;
+      }
+    }
+  }
+}

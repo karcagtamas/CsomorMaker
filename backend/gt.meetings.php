@@ -81,10 +81,10 @@
 
     }
 
-    function updateGtMeeting($id){
+    function deleteGtMeeting($id){
         global $db;
 
-        $sql = "CALL updateGtMeeting(?);";
+        $sql = "CALL deleteGtMeeting(?);";
         
 
         $stmt = $db->prepare($sql);

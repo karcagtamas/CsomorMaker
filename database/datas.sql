@@ -37,3 +37,4 @@ CALL addGt(2019, 1);
 
 CALL gtAccessLevel(4, 1);
 
+CALL addGtMeeting(NOW(), 1, 1);
