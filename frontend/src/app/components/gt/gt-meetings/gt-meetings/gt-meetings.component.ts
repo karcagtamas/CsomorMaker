@@ -47,7 +47,6 @@ export class GtMeetingsComponent implements OnInit {
         });
       }
     }
-    console.log(this.indexes);
   }
 
   setIsThere(meeting: GtMeeting, user: number) {

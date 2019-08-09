@@ -13,6 +13,23 @@ const HttpHeader = { withCredentials: true };
 export class GtService {
   url = URL + '/gt';
 
+  menuItems = [
+    { name: 'Adatok', link: 'details', accessLevel: 1 },
+    { name: 'Beállítások', link: 'settings', accessLevel: 3 },
+    { name: 'Generátor', link: 'generator', accessLevel: 3 },
+    { name: 'Csömör', link: 'csomor', accessLevel: 1 },
+    { name: 'Áttekintés', link: 'summary', accessLevel: 3 },
+    { name: 'ToDo', link: 'todo', accessLevel: 2 },
+    { name: 'Chat', link: 'chat', accessLevel: 1 },
+    { name: 'Tagok', link: 'members', accessLevel: 1 },
+    { name: 'Osztályok', link: 'classes', accessLevel: 2 },
+    { name: 'Gyűlések', link: 'meetings', accessLevel: 3 },
+    { name: 'Bemutatás', link: 'presentings', accessLevel: 1 },
+    { name: 'Bemutatás beállítások', link: 'presentings-settings', accessLevel: 3 },
+    { name: 'Kérdések', link: 'questions', accessLevel: 3 },
+    { name: 'Válaszok', link: 'answers', accessLevel: 3 }
+  ];
+
   constructor(private http: HttpClient) {}
 
   getGts(): Promise<Gt[]> {
