@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Gt, GtMeeting } from 'src/app/models';
-import { GtMeetingsService } from 'src/app/services';
+import { GtMeetingsService, NotificationService } from 'src/app/services';
 
 interface Index {
   index: number;
@@ -18,7 +18,7 @@ export class GtMeetingsComponent implements OnInit {
   meetings: GtMeeting[] = [];
   indexes: Index[] = [];
 
-  constructor(private gtmeetingsservice: GtMeetingsService) {}
+  constructor(private gtmeetingsservice: GtMeetingsService, private notificationservice: NotificationService) {}
 
   ngOnInit() {
     this.getMeetings();
@@ -55,9 +55,13 @@ export class GtMeetingsComponent implements OnInit {
       .setGtMeetingMemberThereStatus(meeting.id, user)
       .then(res => {
         if (res.response === 'success') {
+          this.notificationservice.success(res.message);
         } else {
+          this.notificationservice.error(res.message);
         }
       })
-      .catch(() => {});
+      .catch(() => {
+        this.notificationservice.error('A státusz állítása közbe hiba történt! Kérjük próbálja újra késöbb!');
+      });
   }
 }

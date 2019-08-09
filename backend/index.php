@@ -773,6 +773,70 @@
                             }
                             break;
 
+                        case 'presentings':
+                            $event = $url[4];
+                            require 'gt.presenting.php';
+                            switch ($event) {
+                                case 'get':
+                                    getGtPresenting($url[5]);
+                                    break;
+
+                                case 'update':
+                                    updatePresentingAnswer($_POST['gt'], $_POST['user1'], $_POST['user2'], $_POST['answer']);
+                                    break;
+                                
+                                case 'set':
+                                    setGtPresentingLicensedStatus($_POST['gt'], $_POST['user1'], $_POST['user2']);
+                                    break;
+                                
+                                default:
+                                    echo '{"response" : "bad-event", "message" : "Bad request event!"}';
+                                    break;
+                            }
+                            break;
+
+                        case 'questions':
+                            $event = $url[4];
+                            require 'gt.questions.php';
+                            switch ($event) {
+                                case 'get':
+                                    getGtQuestions($url[5]);
+                                    break;
+
+                                case 'add':
+                                    addGtQuestion($_POST['gt'], $_SESSION['userId'], $_POST['question']);
+                                    break;
+
+                                case 'update':
+                                    updateGtQuestion($_POST['id'], $_SESSION['userId'], $_POST['question']);
+                                    break;
+
+                                case 'delete':
+                                    deleteGtQuestion($url[5]);
+                                    break;
+
+                                case 'answers':
+                                    $subevent = $url[5];
+                                    switch ($subevent) {
+                                        case 'get':
+                                            getGtAnswers($url[6]);
+                                            break;
+
+                                        case 'add':
+                                            addGtAnswer($_POST['question'], $_POST['answer'], $_POST['creater']);
+                                            break;
+                                        
+                                        default:
+                                            echo '{"response" : "bad-subevent", "message" : "Bad request subevent!"}';
+                                            break;
+                                    }
+                                    break;
+                                
+                                default:
+                                    echo '{"response" : "bad-event", "message" : "Bad request event!"}';
+                                    break;
+                            }
+
                         case 'meetings':
                             $event = $url[4];
                             require 'gt.meetings.php';
