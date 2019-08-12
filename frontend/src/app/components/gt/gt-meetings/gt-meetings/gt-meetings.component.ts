@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Gt, GtMeeting } from 'src/app/models';
 import { GtMeetingsService, NotificationService } from 'src/app/services';
 import { MatDialog } from '@angular/material/dialog';
@@ -15,7 +15,7 @@ interface Index {
   templateUrl: './gt-meetings.component.html',
   styleUrls: ['./gt-meetings.component.scss']
 })
-export class GtMeetingsComponent implements OnInit {
+export class GtMeetingsComponent implements OnInit, OnChanges {
   @Input() gt: Gt;
   meetings: GtMeeting[] = [];
   indexes: Index[] = [];
@@ -29,6 +29,10 @@ export class GtMeetingsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.getMeetings();
+  }
+
+  ngOnChanges() {
     this.getMeetings();
   }
 
@@ -94,8 +98,7 @@ export class GtMeetingsComponent implements OnInit {
       .then(res => {
         if (res.response === 'success') {
           this.notificationservice.success(res.message);
-          this.setRightSum();
-          this.setBottomSum();
+          this.getMeetings();
         } else {
           this.notificationservice.error(res.message);
         }
@@ -120,8 +123,6 @@ export class GtMeetingsComponent implements OnInit {
                 if (res.response === 'success') {
                   this.notificationservice.success(res.message);
                   this.getMeetings();
-                  this.setRightSum();
-                  this.setBottomSum();
                 } else {
                   this.notificationservice.error(res.message);
                 }
@@ -136,8 +137,6 @@ export class GtMeetingsComponent implements OnInit {
                 if (res.response === 'success') {
                   this.notificationservice.success(res.message);
                   this.getMeetings();
-                  this.setRightSum();
-                  this.setBottomSum();
                 } else {
                   this.notificationservice.error(res.message);
                 }
@@ -153,8 +152,6 @@ export class GtMeetingsComponent implements OnInit {
               if (res.response === 'success') {
                 this.notificationservice.success(res.message);
                 this.getMeetings();
-                this.setRightSum();
-                this.setBottomSum();
               } else {
                 this.notificationservice.error(res.message);
               }

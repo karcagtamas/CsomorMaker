@@ -149,6 +149,8 @@ import { NotificationsComponent, NotificationComponent } from './components/main
 import { GtMeetingsComponent } from './components/gt/gt-meetings/gt-meetings/gt-meetings.component';
 import { GtMeetingDialogComponent } from './components/gt/gt-meetings/gt-meeting-dialog/gt-meeting-dialog.component';
 import { GtPresentingsComponent } from './components/gt/gt-presentings/gt-presentings/gt-presentings.component';
+import { GtPresentingBlockComponent } from './components/gt/gt-presentings/gt-presenting-block/gt-presenting-block.component';
+import { GtPresentingDialogComponent } from './components/gt/gt-presentings/gt-presenting-dialog/gt-presenting-dialog.component';
 
 @NgModule({
   declarations: [
@@ -237,7 +239,9 @@ import { GtPresentingsComponent } from './components/gt/gt-presentings/gt-presen
     NotificationComponent,
     GtMeetingsComponent,
     GtMeetingDialogComponent,
-    GtPresentingsComponent
+    GtPresentingsComponent,
+    GtPresentingBlockComponent,
+    GtPresentingDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -315,7 +319,8 @@ import { GtPresentingsComponent } from './components/gt/gt-presentings/gt-presen
     ChangePasswordDialogComponent,
     GtImportMembersDialogComponent,
     NewsDialogComponent,
-    GtMeetingDialogComponent
+    GtMeetingDialogComponent,
+    GtPresentingDialogComponent
   ]
 })
 export class AppModule {}

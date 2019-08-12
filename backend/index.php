@@ -778,7 +778,7 @@
                             require 'gt.presenting.php';
                             switch ($event) {
                                 case 'get':
-                                    getGtPresenting($url[5]);
+                                    getGtPresentingForUser($url[5], $url[6]);
                                     break;
 
                                 case 'update':

@@ -1,0 +1,14 @@
+<div class="presenting">
+  <mat-card class="border rounded inside">
+    <div class="text-center panel-title border rounded">
+      {{ member.user }}
+    </div>
+    <div *ngFor="let presenting of presentings" class="block">
+      {{ presenting.presented }}
+      <button mat-mini-fab color="warn" class="ml-1 float-right">
+        &#10006;
+      </button>
+    </div>
+    <div class="text-center" *ngIf="presentings.length === 0">Még nincs a személyhez bemutatási teendő! :(</div>
+  </mat-card>
+</div>

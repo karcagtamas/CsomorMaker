@@ -481,7 +481,7 @@ CREATE OR REPLACE PROCEDURE getGtPresentingForUser(_gtId int(11), _user int(11))
       SELECT user1.id AS presenterId, user1.name AS presenter, user2.id AS presentedId, user2.name AS presented, gtpresentingsswitch.gt, gtpresentingsswitch.isLicensed, gtpresentingsswitch.answer FROM gtpresentingsswitch
       INNER JOIN users as user1 ON gtpresentingsswitch.presenter = user1.id
       INNER JOIN users As user2 ON gtpresentingsswitch.presented = user2.id
-      WHERE gt = _gtId AND user1.id = _user
+      WHERE gt = _gtId AND user1.id = _user AND gtpresentingsswitch.presenter <> gtpresentingsswitch.presented AND gtpresentingsswitch.isLicensed
       ORDER BY presenter, presented;
     END;
 

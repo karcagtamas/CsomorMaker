@@ -47,6 +47,7 @@
         $role = 3;
         $stmt->bind_param("iii", $gtId, $userId, $role);
         $stmt->execute();
+        var_dump($stmt);
 
         if ($stmt->errno){
             $array['response'] =  'fail';

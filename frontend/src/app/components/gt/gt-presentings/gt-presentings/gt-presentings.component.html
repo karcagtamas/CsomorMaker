@@ -1,14 +1,16 @@
 <div class="text-center panel-title border rounded">DÖK bemutatás - beállítások</div>
 <div class="buttons">
-  <button mat-raised-button color="primary">Új bemutatás</button>
+  <button mat-raised-button color="primary" (click)="openPresentingDialog()">Új bemutatás</button>
 </div>
 <div class="presentings">
-  <div class="row table" *ngIf="presentings.length > 0">
-    <div class="border rounded setting" *ngFor="let presenting of presentings">
-      {{ presenting.presenter }} -> {{ presenting.presented }}
-    </div>
+  <div class="row col col-12 blocks" *ngIf="members.length > 0">
+    <app-gt-presenting-block
+      class="col col-12 col-md-6"
+      [member]="member"
+      *ngFor="let member of members"
+    ></app-gt-presenting-block>
   </div>
-  <div *ngIf="presentings.length == 0" class="text-center">
+  <div *ngIf="members.length == 0" class="text-center">
     Sajnos még nincs semmilyen beállításod :(
   </div>
 </div>

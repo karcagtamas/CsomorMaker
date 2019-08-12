@@ -1,10 +1,10 @@
 <?php 
-    function getGtPresenting($gtId){
+    function getGtPresentingForUser($gtId, $user){
         global $db;
 
-        $sql = "CALL getGtPresenting(?);";
+        $sql = "CALL getGtPresentingForUser(?, ?);";
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("i", $gtId);
+        $stmt->bind_param("ii", $gtId, $user);
         $stmt->execute();
         $result = $stmt->get_result();
         
