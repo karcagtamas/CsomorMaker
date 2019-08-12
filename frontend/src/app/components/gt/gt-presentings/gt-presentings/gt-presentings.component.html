@@ -1,0 +1,14 @@
+<div class="text-center panel-title border rounded">DÖK bemutatás - beállítások</div>
+<div class="buttons">
+  <button mat-raised-button color="primary">Új bemutatás</button>
+</div>
+<div class="presentings">
+  <div class="row table" *ngIf="presentings.length > 0">
+    <div class="border rounded setting" *ngFor="let presenting of presentings">
+      {{ presenting.presenter }} -> {{ presenting.presented }}
+    </div>
+  </div>
+  <div *ngIf="presentings.length == 0" class="text-center">
+    Sajnos még nincs semmilyen beállításod :(
+  </div>
+</div>

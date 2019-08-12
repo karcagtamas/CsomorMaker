@@ -17,7 +17,7 @@ import { AngularCsv } from 'angular7-csv/dist/Angular-csv';
 import { GtGeneratorService } from './gt-generator.service';
 import { GtMembersService } from './gt-members.service';
 import { GtClassesService } from './gt-classes.service';
-import { GtMeetingsService } from '.';
+import { GtMeetingsService } from './gt-meetings.service';
 
 const URL = environment.api;
 

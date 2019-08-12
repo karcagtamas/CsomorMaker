@@ -23,6 +23,7 @@
   <div class="row table">
     <div class="cell border rounded">Szumma</div>
     <div class="cell border rounded" *ngFor="let i of bottomSum">{{ i | personCount }}</div>
+    <div class="cell border rounded"></div>
   </div>
   <div *ngIf="meetings.length == 0" class="text-center">
     Sajnos még nincs gyűlésed :(

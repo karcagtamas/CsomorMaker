@@ -15,7 +15,7 @@ export class GtPresentingServiceService {
 
   constructor(private http: HttpClient) {}
 
-  getGtPresenting(gt: number): Promise<GtPresenting[]> {
+  getGtPresentings(gt: number): Promise<GtPresenting[]> {
     return this.http.get<GtPresenting[]>(`${this.url}/get/${gt}`, HttpHeader).toPromise();
   }
 
