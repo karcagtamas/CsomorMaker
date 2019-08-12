@@ -117,7 +117,7 @@ export class GtGeneratorComponent implements OnInit, OnChanges {
               }
             })
             .catch(() => {
-              this.notificationservice.error('A poszt frissítése közben hiba történt! Kérjül próbálja újra késöbb');
+              this.notificationservice.error('A poszt frissítése közben hiba történt! Kérjük próbálja újra késöbb');
             });
         } else {
           this.gtgeneratorservice

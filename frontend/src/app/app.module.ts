@@ -147,6 +147,7 @@ import {
 import { NewsComponent, NewsElementComponent, NewsDialogComponent } from './components/main/news';
 import { NotificationsComponent, NotificationComponent } from './components/main/notifications';
 import { GtMeetingsComponent } from './components/gt/gt-meetings/gt-meetings/gt-meetings.component';
+import { GtMeetingDialogComponent } from './components/gt/gt-meetings/gt-meeting-dialog/gt-meeting-dialog.component';
 
 @NgModule({
   declarations: [
@@ -233,7 +234,8 @@ import { GtMeetingsComponent } from './components/gt/gt-meetings/gt-meetings/gt-
     NewsDialogComponent,
     NotificationsComponent,
     NotificationComponent,
-    GtMeetingsComponent
+    GtMeetingsComponent,
+    GtMeetingDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -310,7 +312,8 @@ import { GtMeetingsComponent } from './components/gt/gt-meetings/gt-meetings/gt-
     UserModifyDialogComponent,
     ChangePasswordDialogComponent,
     GtImportMembersDialogComponent,
-    NewsDialogComponent
+    NewsDialogComponent,
+    GtMeetingDialogComponent
   ]
 })
 export class AppModule {}

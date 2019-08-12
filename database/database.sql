@@ -549,7 +549,7 @@ CREATE TABLE gtpresentingsswitch(
   gt int(11) NOT NULL,
   isLicensed boolean NOT NULL DEFAULT FALSE,
   answer text,
-  PRIMARY KEY(presenter, presented, gt)
+  PRIMARY KEY(presenter, presented, gt),
   CONSTRAINT fk_presenter_users_gtpresentingsswitch FOREIGN KEY (presenter)
   REFERENCES users(id),
   CONSTRAINT fk_presented_users_gtpresentingsswitch FOREIGN KEY (presented)
@@ -583,7 +583,7 @@ CREATE TABLE gtanswers(
   creater varchar(100),
   PRIMARY KEY(id),
   CONSTRAINT fk_question_gtquestions_gtanswers FOREIGN KEY (question)
-  REFERENCES gtquestions(id),
+  REFERENCES gtquestions(id)
   );
 
 CREATE TRIGGER gt_meetings AFTER INSERT ON gtmeetings
@@ -645,7 +645,7 @@ CREATE TRIGGER gt_members AFTER INSERT ON usergtswitch
         WHERE gtmeetings.gt = NEW.gt) AS T1
       CROSS JOIN (SELECT NEW.user) AS T2;
 
-      INSERT INTO gtpresentingsswitch(presenter, presented)
+      INSERT INTO gtpresentingsswitch(presenter, presented, gt)
         SELECT * FROM (
           SELECT usergtswitch.user FROM usergtswitch
           WHERE usergtswitch.gt = NEW.gt
@@ -653,8 +653,8 @@ CREATE TRIGGER gt_members AFTER INSERT ON usergtswitch
         CROSS JOIN (SELECT * FROM (
           SELECT usergtswitch.user FROM usergtswitch
           WHERE usergtswitch.gt = NEW.gt
-          )) AS T2
-        CROSS JOIN (SELECT NEW.gt);
+          )AS T) AS T2
+        CROSS JOIN (SELECT NEW.gt) AS T3;
   END;
 
 CREATE TRIGGER gt_members_de AFTER DELETE ON usergtswitch
@@ -669,7 +669,7 @@ CREATE TRIGGER gt_members_de AFTER DELETE ON usergtswitch
     DELETE FROM gtworkertables WHERE worker = OLD.user AND gtworkertables.gt = OLD.gt;
     CALL setGtReadyStatus(OLD.gt, FALSE);
     DELETE FROM gtmeetingswitch WHERE user = OLD.user;
-    DELETE FROM gtpresentingsswitch WHERE gt = OLD.gt AND (presenter = OLD.id OR presented = OLD.id);
+    DELETE FROM gtpresentingsswitch WHERE gt = OLD.gt AND (presenter = OLD.user OR presented = OLD.user);
   END;
 
 CREATE TRIGGER gt_members_update AFTER UPDATE ON usergtswitch
