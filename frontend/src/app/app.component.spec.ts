@@ -1,4 +1,4 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, ComponentFixtureAutoDetect } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { LoaderComponent, NavigatorComponent } from './components/main';
@@ -9,7 +9,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { HttpClientModule } from '@angular/common/http';
 
-fdescribe('AppComponent', () => {
+describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -23,7 +23,7 @@ fdescribe('AppComponent', () => {
         HttpClientModule
       ],
       declarations: [AppComponent, LoaderComponent, NavigatorComponent],
-      providers: []
+      providers: [{ provide: ComponentFixtureAutoDetect, useValue: true }]
     }).compileComponents();
   }));
 
@@ -41,14 +41,14 @@ fdescribe('AppComponent', () => {
     it('should create loader component', () => {
       const { component, fixture } = setup();
       fixture.detectChanges();
-      const compiled = fixture.debugElement.nativeElement;
+      const compiled: HTMLElement = fixture.debugElement.nativeElement;
       expect(compiled.querySelector('app-loader')).toBeTruthy();
     });
 
     it('should create navigator component', () => {
       const { fixture } = setup();
       fixture.detectChanges();
-      const compiled = fixture.debugElement.nativeElement;
+      const compiled: HTMLElement = fixture.debugElement.nativeElement;
       expect(compiled.querySelector('app-navigator')).toBeTruthy();
     });
   });
