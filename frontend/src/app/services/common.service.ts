@@ -12,6 +12,6 @@ export class CommonService {
   changeEmitted$ = this.emitChangeSource.asObservable();
 
   emitChange(change: any) {
-    this.emitChangeSource.next();
+    this.emitChangeSource.next(change);
   }
 }
