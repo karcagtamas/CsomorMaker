@@ -3,19 +3,6 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Rout
 import { Observable } from 'rxjs';
 import { GtService } from '../services';
 
-const MENUITEMS = [
-  { name: 'Adatok', link: 'details', accessLevel: 1 },
-  { name: 'Beállítások', link: 'settings', accessLevel: 3 },
-  { name: 'Generátor', link: 'generator', accessLevel: 3 },
-  { name: 'Csömör', link: 'csomor', accessLevel: 1 },
-  { name: 'Áttekintés', link: 'summary', accessLevel: 3 },
-  { name: 'ToDo', link: 'todo', accessLevel: 2 },
-  { name: 'Chat', link: 'chat', accessLevel: 1 },
-  { name: 'Tagok', link: 'members', accessLevel: 1 },
-  { name: 'Osztályok', link: 'classes', accessLevel: 2 },
-  { name: 'Gyűlések', link: 'meetings', accessLevel: 3 }
-];
-
 @Injectable({
   providedIn: 'root'
 })
@@ -27,11 +14,12 @@ export class GtGuard implements CanActivate {
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const gtId = +next.paramMap.get('id');
     const page = next.paramMap.get('page');
+    const menuItems = this.gtservice.menuItems;
     return new Promise(resolve => {
       this.gtservice
         .getAccessLevel(gtId)
         .then(res => {
-          const item = MENUITEMS.find(x => x.link === page);
+          const item = menuItems.find(x => x.link === page);
           if (item && res) {
             if (item.accessLevel <= res) {
               resolve(true);

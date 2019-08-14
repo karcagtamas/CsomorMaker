@@ -543,6 +543,49 @@ CREATE TABLE gtmeetingswitch(
   REFERENCES gtmeetings(id) ON DELETE CASCADE
   );
 
+CREATE TABLE gtpresentingsswitch(
+  presenter int(11) NOT NULL,
+  presented int(11) NOT NULL,
+  gt int(11) NOT NULL,
+  isLicensed boolean NOT NULL DEFAULT FALSE,
+  answer text,
+  PRIMARY KEY(presenter, presented, gt),
+  CONSTRAINT fk_presenter_users_gtpresentingsswitch FOREIGN KEY (presenter)
+  REFERENCES users(id),
+  CONSTRAINT fk_presented_users_gtpresentingsswitch FOREIGN KEY (presented)
+  REFERENCES users(id),
+  CONSTRAINT fk_gt_gts_gtpresentingsswitch FOREIGN KEY (gt)
+  REFERENCES gts(id)
+);
+
+CREATE TABLE gtquestions(
+  id int(11) NOT NULL AUTO_INCREMENT,
+  question varchar(255) NOT NULL,
+  creationDate datetime NOT NULL DEFAULT NOW(),
+  creater int(11) NOT NULL,
+  lastUpdate datetime NOT NULL DEFAULT NOW(),
+  lastUpdater int(11) NOT NULL,
+  gt int(11) NOT NULL,
+  PRIMARY KEY(id),
+  CONSTRAINT fk_creater_users_gtquestions FOREIGN KEY (creater)
+  REFERENCES users(id),
+  CONSTRAINT fk_lastUpdater_users_gtquestions FOREIGN KEY (lastUpdater)
+  REFERENCES users(id),
+  CONSTRAINT fk_gt_gts_gtquestions FOREIGN KEY (gt)
+  REFERENCES gts(id)
+  );
+
+CREATE TABLE gtanswers(
+  id int(11) NOT NULL AUTO_INCREMENT,
+  answer text NOT NULL,
+  question int(11) NOT NULL,
+  creationDate datetime NOT NULL DEFAULT NOW(),
+  creater varchar(100),
+  PRIMARY KEY(id),
+  CONSTRAINT fk_question_gtquestions_gtanswers FOREIGN KEY (question)
+  REFERENCES gtquestions(id)
+  );
+
 CREATE TRIGGER gt_meetings AFTER INSERT ON gtmeetings
   FOR EACH ROW
   BEGIN
@@ -553,7 +596,7 @@ CREATE TRIGGER gt_meetings AFTER INSERT ON gtmeetings
       CROSS JOIN (SELECT NEW.id) AS T2;
   END;
 
-CREATE TRIGGER gt_meetings AFTER DELETE ON gtmeetings
+CREATE TRIGGER gt_meetings_delete AFTER DELETE ON gtmeetings
   FOR EACH ROW
   BEGIN
     DELETE FROM gtmeetingswitch WHERE meeting = OLD.id;
@@ -601,6 +644,17 @@ CREATE TRIGGER gt_members AFTER INSERT ON usergtswitch
         SELECT gtmeetings.id FROM gtmeetings
         WHERE gtmeetings.gt = NEW.gt) AS T1
       CROSS JOIN (SELECT NEW.user) AS T2;
+
+      INSERT IGNORE INTO gtpresentingsswitch(presenter, presented, gt)
+        SELECT * FROM (
+          SELECT usergtswitch.user FROM usergtswitch
+          WHERE usergtswitch.gt = NEW.gt
+          ) AS T1
+        CROSS JOIN (SELECT * FROM (
+          SELECT usergtswitch.user FROM usergtswitch
+          WHERE usergtswitch.gt = NEW.gt
+          )AS T) AS T2
+        CROSS JOIN (SELECT NEW.gt) AS T3;
   END;
 
 CREATE TRIGGER gt_members_de AFTER DELETE ON usergtswitch
@@ -608,13 +662,14 @@ CREATE TRIGGER gt_members_de AFTER DELETE ON usergtswitch
   BEGIN
     DECLARE gt int(4);
     SELECT year INTO gt FROM gts WHERE id = OLD.gt;
-    CALL addNotification(CONCAT('Eltávolítottka a következõ gólyatáborból: ', gt, '!'), OLD.user);
+    CALL addNotification(CONCAT('Eltávolította a következõt gólyatáborból: ', gt, '!'), OLD.user);
     UPDATE gts SET members = members - 1 WHERE id = OLD.gt;
     DELETE FROM gtworkworkerswitch
     WHERE worker = OLD.user AND gtworkworkerswitch.gt = OLD.gt;
     DELETE FROM gtworkertables WHERE worker = OLD.user AND gtworkertables.gt = OLD.gt;
     CALL setGtReadyStatus(OLD.gt, FALSE);
     DELETE FROM gtmeetingswitch WHERE user = OLD.user;
+    DELETE FROM gtpresentingsswitch WHERE gt = OLD.gt AND (presenter = OLD.user OR presented = OLD.user);
   END;
 
 CREATE TRIGGER gt_members_update AFTER UPDATE ON usergtswitch

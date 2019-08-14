@@ -1,0 +1,17 @@
+<form mat-dialog-content [formGroup]="form">
+  <div class="text-center panel-title border rounded">{{ title }}</div>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Dátum</mat-label>
+    <input matInput [matDatepicker]="picker" placeholder="Dátum" formControlName="date" />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="form.get('date').hasError('required')">A dátum megadása kötlező!</mat-error>
+  </mat-form-field>
+</form>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="save()">
+    Mentés
+  </button>
+  <button mat-raised-button color="accent" (click)="onNoClick()">Mégsem</button>
+  <button mat-raised-button color="warn" (click)="delete()" *ngIf="isEdit">Törlés</button>
+</div>

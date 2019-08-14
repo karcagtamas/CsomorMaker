@@ -25,7 +25,7 @@
         $stmt->execute();
         if ($stmt->errno){
             $array['response'] =  'fail';
-            $array['message'] = 'Az üzenet küldése sikertelen!';
+            $array['message'] = 'A üzenet küldése sikertelen!';
         }else{
             $array['response'] =  'success';
             $array['message'] = 'A üzenet küldése sikeres!';

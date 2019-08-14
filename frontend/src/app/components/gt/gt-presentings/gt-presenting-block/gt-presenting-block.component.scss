@@ -1,0 +1,22 @@
+.presenting {
+  padding: 0.5rem;
+
+  .inside {
+    padding: 0.2rem;
+
+    .panel-title {
+      font-size: 85%;
+    }
+
+    .block {
+      padding: 0.3rem;
+      margin: 0.2rem;
+      padding-bottom: 0.9rem;
+
+      &:hover {
+        background-color: #9a68f1af;
+        transition-duration: 0.3s;
+      }
+    }
+  }
+}

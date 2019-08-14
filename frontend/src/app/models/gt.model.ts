@@ -147,3 +147,33 @@ export class GtMeetingMember {
   meeting: number;
   isThere: boolean;
 }
+
+export class GtPresenting {
+  presenter: string;
+  presenterId: number;
+  presented: string;
+  presentedId: number;
+  gt: number;
+  isLicensed: boolean;
+  answer: string;
+}
+
+export class GtQuestion {
+  id: number;
+  question: string;
+  creationDate: Date;
+  creater: string;
+  createrId: number;
+  lastUpdate: Date;
+  lastUpdater: string;
+  lastUpdaterId: number;
+  gt: number;
+}
+
+export class GtAnswer {
+  id: number;
+  answer: string;
+  question: number;
+  creationDate: Date;
+  creater: string;
+}

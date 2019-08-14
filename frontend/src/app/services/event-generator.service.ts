@@ -16,7 +16,7 @@ export class EventGeneratorService {
   workerUrl = URL + '/event/workers';
   constructor(public http: HttpClient) {}
 
-  getWorks(id: number): Promise<EventWork[]> {
+  public getWorks(id: number): Promise<EventWork[]> {
     return this.http.get<EventWork[]>(`${this.workUrl}/get/${id}`, HttpHeader).toPromise();
   }
 

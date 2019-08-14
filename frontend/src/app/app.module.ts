@@ -70,7 +70,6 @@ import {
   HoursPipe,
   IsAdminPipe,
   PersonCountPipe,
-  TestPipe,
   TrustHTMLPipe,
   IsReadyPipe,
   IsLockedPipe
@@ -146,7 +145,13 @@ import {
 
 import { NewsComponent, NewsElementComponent, NewsDialogComponent } from './components/main/news';
 import { NotificationsComponent, NotificationComponent } from './components/main/notifications';
-import { GtMeetingsComponent } from './components/gt/gt-meetings/gt-meetings/gt-meetings.component';
+import { GtMeetingsComponent, GtMeetingDialogComponent } from './components/gt/gt-meetings';
+
+import {
+  GtPresentingsComponent,
+  GtPresentingDialogComponent,
+  GtPresentingBlockComponent
+} from './components/gt/gt-presentings';
 
 @NgModule({
   declarations: [
@@ -165,7 +170,6 @@ import { GtMeetingsComponent } from './components/gt/gt-meetings/gt-meetings/gt-
     HoursPipe,
     IsAdminPipe,
     PersonCountPipe,
-    TestPipe,
     TrustHTMLPipe,
     NewEventComponent,
     EventSettingsComponent,
@@ -233,7 +237,11 @@ import { GtMeetingsComponent } from './components/gt/gt-meetings/gt-meetings/gt-
     NewsDialogComponent,
     NotificationsComponent,
     NotificationComponent,
-    GtMeetingsComponent
+    GtMeetingsComponent,
+    GtMeetingDialogComponent,
+    GtPresentingsComponent,
+    GtPresentingBlockComponent,
+    GtPresentingDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -310,7 +318,9 @@ import { GtMeetingsComponent } from './components/gt/gt-meetings/gt-meetings/gt-
     UserModifyDialogComponent,
     ChangePasswordDialogComponent,
     GtImportMembersDialogComponent,
-    NewsDialogComponent
+    NewsDialogComponent,
+    GtMeetingDialogComponent,
+    GtPresentingDialogComponent
   ]
 })
 export class AppModule {}

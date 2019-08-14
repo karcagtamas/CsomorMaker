@@ -42,10 +42,9 @@
         
 
         $stmt = $db->prepare($sql);
-        $role = 3;
         $stmt->bind_param("sii", $date, $userId, $gt);
         $stmt->execute();
-
+        
         if ($stmt->errno){
             $array['response'] =  'fail';
             $array['message'] = 'A gyűlés hozzáadása a gólyatáborhoz sikertelen!';
@@ -81,10 +80,10 @@
 
     }
 
-    function updateGtMeeting($id){
+    function deleteGtMeeting($id){
         global $db;
 
-        $sql = "CALL updateGtMeeting(?);";
+        $sql = "CALL deleteGtMeeting(?);";
         
 
         $stmt = $db->prepare($sql);

@@ -1,3 +1,31 @@
-<p>
-  gt-meetings works!
-</p>
+<div class="text-center panel-title border rounded">Gyűlések</div>
+<div class="meetings">
+  <div class="buttons">
+    <button mat-raised-button color="primary" (click)="openGtMeetingDialog()">Új gyűlés</button>
+  </div>
+  <div class="row table" *ngIf="meetings.length > 0">
+    <div class="cell border rounded"></div>
+    <div class="cell border rounded" *ngFor="let meeting of meetings" (click)="openGtMeetingDialog(meeting)">
+      {{ meeting.date | date: 'yyyy. MM. dd.' }}
+    </div>
+    <div class="cell border rounded">Szumma</div>
+  </div>
+  <div class="row table" *ngFor="let i of indexes">
+    <div class="cell border rounded">{{ i.user }}</div>
+    <div class="cell border rounded" *ngFor="let meeting of meetings">
+      <mat-checkbox
+        [(ngModel)]="meeting.members[i.index].isThere"
+        (change)="setIsThere(meeting, i.userId)"
+      ></mat-checkbox>
+    </div>
+    <div class="cell border rounded">{{ rightSum[i.index] | personCount }}</div>
+  </div>
+  <div class="row table" *ngIf="meetings.length">
+    <div class="cell border rounded">Szumma</div>
+    <div class="cell border rounded" *ngFor="let i of bottomSum">{{ i | personCount }}</div>
+    <div class="cell border rounded"></div>
+  </div>
+  <div *ngIf="meetings.length == 0" class="text-center">
+    Sajnos még nincs gyűlésed :(
+  </div>
+</div>

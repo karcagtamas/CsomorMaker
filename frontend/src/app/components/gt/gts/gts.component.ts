@@ -12,23 +12,12 @@ import { GtService } from 'src/app/services';
 export class GtsComponent implements OnInit {
   gts: Gt[] = [];
 
-  menuItems = [
-    { name: 'Adatok', link: 'details', accessLevel: 1 },
-    { name: 'Beállítások', link: 'settings', accessLevel: 3 },
-    { name: 'Generátor', link: 'generator', accessLevel: 3 },
-    { name: 'Csömör', link: 'csomor', accessLevel: 1 },
-    { name: 'Áttekintés', link: 'summary', accessLevel: 3 },
-    { name: 'ToDo', link: 'todo', accessLevel: 2 },
-    { name: 'Chat', link: 'chat', accessLevel: 1 },
-    { name: 'Tagok', link: 'members', accessLevel: 1 },
-    { name: 'Osztályok', link: 'classes', accessLevel: 2 },
-    { name: 'Gyűlések', link: 'meetings', accessLevel: 3 }
-  ];
-
   currentGtId = 0;
   currentGt = new Gt();
   currentPage = 'details';
   accessLevel = 0;
+
+  menuItems = [];
 
   constructor(
     private gtservice: GtService,
@@ -38,6 +27,7 @@ export class GtsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.menuItems = this.gtservice.menuItems;
     this.route.params.subscribe(data => {
       console.log(data);
       this.gtservice

@@ -448,7 +448,7 @@ CREATE OR REPLACE PROCEDURE countOfAllPaid(_gtId int(11))
       SELECT gtmeetingswitch.user AS userId, gtmeetingswitch.meeting, gtmeetingswitch.isThere, users.name AS user FROM gtmeetingswitch
         INNER JOIN users ON users.id = gtmeetingswitch.user 
       WHERE gtmeetingswitch.meeting = _meetingId
-      ORDER BY gtmeetingswitch.meetings, gtmeetingswitch.user;
+      ORDER BY gtmeetingswitch.meeting, gtmeetingswitch.user;
     END;
 
   CREATE OR REPLACE PROCEDURE setGtMeetingMemberThereStatus(_meeting int(11), _user int(11))
@@ -464,3 +464,81 @@ CREATE OR REPLACE PROCEDURE countOfAllPaid(_gtId int(11))
       END IF;
       UPDATE gtmeetingswitch SET isThere = _there WHERE meeting = _meeting AND user = _user;
   END;
+
+  /* Gt Presenting */
+
+CREATE OR REPLACE PROCEDURE getGtPresenting(_gtId int(11))
+    BEGIN
+      SELECT user1.id AS presenterId, user1.name AS presenter, user2.id AS presentedId, user2.name AS presented, gtpresentingsswitch.gt, gtpresentingsswitch.isLicensed, gtpresentingsswitch.answer FROM gtpresentingsswitch
+      INNER JOIN users as user1 ON gtpresentingsswitch.presenter = user1.id
+      INNER JOIN users As user2 ON gtpresentingsswitch.presented = user2.id
+      WHERE gt = _gtId
+      ORDER BY presenter, presented;
+    END;
+
+CREATE OR REPLACE PROCEDURE getGtPresentingForUser(_gtId int(11), _user int(11))
+    BEGIN
+      SELECT user1.id AS presenterId, user1.name AS presenter, user2.id AS presentedId, user2.name AS presented, gtpresentingsswitch.gt, gtpresentingsswitch.isLicensed, gtpresentingsswitch.answer FROM gtpresentingsswitch
+      INNER JOIN users as user1 ON gtpresentingsswitch.presenter = user1.id
+      INNER JOIN users As user2 ON gtpresentingsswitch.presented = user2.id
+      WHERE gtpresentingsswitch.gt = _gtId AND user1.id = _user AND gtpresentingsswitch.presenter <> gtpresentingsswitch.presented AND gtpresentingsswitch.isLicensed
+      ORDER BY presenter, presented;
+    END;
+
+CREATE OR REPLACE PROCEDURE updatePresentingAnswer(_gtId int(11), _user1 int(11), _user2 int(11), _answer text)
+    BEGIN
+      UPDATE gtpresentingsswitch SET answer = _answer WHERE gt = _gtId AND presenter = _user1 AND presented = _user2;
+    END;
+
+CREATE OR REPLACE PROCEDURE setGtPresentingLicensedStatus(_gtId int(11), _user1 int(11), _user2 int(11))
+  BEGIN
+    DECLARE _licensed boolean;
+     SELECT isLicensed INTO _licensed FROM gtpresentingsswitch WHERE gt = _gtId AND presenter = _user1 AND presented = _user2;
+
+     IF _licensed
+      THEN
+        SET _licensed = FALSE;
+      ELSE
+        SET _licensed = TRUE;
+      END IF;
+      UPDATE gtpresentingsswitch SET isLicensed = _licensed WHERE gt = _gtId AND presenter = _user1 AND presented = _user2;
+  END;
+
+/* Gt questions */
+
+  CREATE OR REPLACE PROCEDURE getGtQuestions(_gtId int(11))
+    BEGIN
+      SELECT gtquestions.id, gtquestions.question, gtquestions.creater AS createrId, user1.name AS creater, gtquestions.gt, gtquestions.creationDate, gtquestions.lastUpdate, gtquestions.lastUpdater AS lastUpdaterId, user2.name AS lastUpdater FROM gtquestions
+        INNER JOIN users AS user1 ON user1.id = gtquestions.creater
+        INNER JOIN users AS user2 ON user2.id = gtquestions.lastUpdater
+      WHERE gtquestions.gt = _gtId;
+    END;
+
+  CREATE OR REPLACE PROCEDURE addGtQuestion(_gtId int(11), _creater int(11), _question varchar(255))
+    BEGIN
+      INSERT INTO gtquestions(question, creater, lastUpdater, gt)
+        VALUES(_question, _creater, _creater, _gtId);
+    END;
+
+  CREATE OR REPLACE PROCEDURE updateGtQuestion(_id int(11), _updater int(11), _question varchar(255))
+    BEGIN
+      UPDATE gtquestions SET question = _question, lastUpdater = _updater, lastUpdate = NOW() WHERE id = _id;
+    END;
+
+  CREATE OR REPLACE PROCEDURE deleteGtQuestion(_id int(11))
+    BEGIN
+      DELETE FROM gtquestions WHERE id = _id;
+    END;
+
+  /* Gt answers */
+
+CREATE OR REPLACE PROCEDURE getGtAnswers(_questionId int(11))
+    BEGIN
+      SELECT * FROM gtanswers WHERE question = _questionId;
+    END;
+
+CREATE OR REPLACE PROCEDURE addGtAnswer(_questionId int(11), _answer text, _creater varchar(100))
+    BEGIN
+      INSERT INTO gtanswers(answer, question, creater)
+        VALUES(_answer, _questionId, _creater);
+    END;

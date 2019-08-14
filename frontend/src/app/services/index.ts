@@ -21,3 +21,5 @@ export * from './export.service';
 export * from './user-notification.service';
 export * from './news.service';
 export * from './gt-meetings.service';
+export * from './gt-questions.service';
+export * from './gt-presenting-service.service';

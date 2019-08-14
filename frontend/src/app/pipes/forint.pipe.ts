@@ -5,6 +5,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ForintPipe implements PipeTransform {
   transform(value: number, args?: any): any {
-    return value + ' Ft';
+    return `${value} Ft`;
   }
 }

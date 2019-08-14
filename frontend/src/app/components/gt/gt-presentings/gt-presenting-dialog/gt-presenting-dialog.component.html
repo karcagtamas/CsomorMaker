@@ -1,0 +1,23 @@
+<form mat-dialog-content [formGroup]="form">
+  <div class="text-center panel-title border rounded">Új dök bemutatás</div>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Bemutató</mat-label>
+    <mat-select matInput formControlName="user1" (selectionChange)="user1Change()">
+      <mat-option *ngFor="let i of list1" [value]="i.userId">{{ i.user }}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('user1').hasError('required')">A bemutató megadása kötelező!</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Bemutatott</mat-label>
+    <mat-select matInput formControlName="user2">
+      <mat-option *ngFor="let i of list2" [value]="i.userId">{{ i.user }}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('user2').hasError('required')">A bemutatott megadása kötelező!</mat-error>
+  </mat-form-field>
+</form>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="save()">
+    Mentés
+  </button>
+  <button mat-raised-button color="accent" (click)="onNoClick()">Mégsem</button>
+</div>

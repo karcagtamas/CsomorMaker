@@ -5,7 +5,6 @@ import { DomSanitizer } from '@angular/platform-browser';
   name: 'trustHTML'
 })
 export class TrustHTMLPipe implements PipeTransform {
-  constructor(private sanitized: DomSanitizer) {}
   transform(value: string, args?: any): any {
     value = value.replace(/¨/g, '¨T');
     value = value.replace(/\$/g, '¨D');
@@ -14,7 +13,6 @@ export class TrustHTMLPipe implements PipeTransform {
     value = value.replace(/\u00A0/g, '&nbsp;');
     value = value.replace(/^[ \t]+$/gm, '');
     value = value.split('\n').join('<br />');
-    // return this.sanitized.bypassSecurityTrustHtml(value);
     return value;
   }
 }

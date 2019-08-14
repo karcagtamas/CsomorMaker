@@ -10,12 +10,14 @@ import {
   Gt,
   GtMember,
   GtClass,
-  GtClassMember
+  GtClassMember,
+  GtMeeting
 } from '../models';
 import { AngularCsv } from 'angular7-csv/dist/Angular-csv';
 import { GtGeneratorService } from './gt-generator.service';
 import { GtMembersService } from './gt-members.service';
 import { GtClassesService } from './gt-classes.service';
+import { GtMeetingsService } from './gt-meetings.service';
 
 const URL = environment.api;
 
@@ -49,7 +51,8 @@ export class ExportService {
     private http: HttpClient,
     private gtgeneratorservice: GtGeneratorService,
     private gtmembersservice: GtMembersService,
-    private gtclassesservice: GtClassesService
+    private gtclassesservice: GtClassesService,
+    private gtmeetingsservice: GtMeetingsService
   ) {}
 
   exportPersonal(worker: GtWorker): void {
