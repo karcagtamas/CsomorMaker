@@ -20,7 +20,7 @@
     </div>
     <div class="cell border rounded">{{ rightSum[i.index] | personCount }}</div>
   </div>
-  <div class="row table">
+  <div class="row table" *ngIf="meetings.length">
     <div class="cell border rounded">Szumma</div>
     <div class="cell border rounded" *ngFor="let i of bottomSum">{{ i | personCount }}</div>
     <div class="cell border rounded"></div>

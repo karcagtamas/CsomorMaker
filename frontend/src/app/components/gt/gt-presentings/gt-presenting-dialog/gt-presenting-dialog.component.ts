@@ -31,7 +31,7 @@ export class GtPresentingDialogComponent implements OnInit {
   }
 
   user1Change() {
-    this.list2 = this.members.filter(x => x.userId !== +this.form.get('user1'));
+    this.list2 = this.members.filter(x => x.userId !== +this.form.get('user1').value);
     this.gtpresentingsservice.getGtPresentingForUser(this.data.gt.id, +this.form.get('user1').value).then(res => {
       for (const i of res) {
         this.list2 = this.list2.filter(x => x.userId !== i.presentedId);

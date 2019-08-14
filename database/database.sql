@@ -645,7 +645,7 @@ CREATE TRIGGER gt_members AFTER INSERT ON usergtswitch
         WHERE gtmeetings.gt = NEW.gt) AS T1
       CROSS JOIN (SELECT NEW.user) AS T2;
 
-      INSERT INTO gtpresentingsswitch(presenter, presented, gt)
+      INSERT IGNORE INTO gtpresentingsswitch(presenter, presented, gt)
         SELECT * FROM (
           SELECT usergtswitch.user FROM usergtswitch
           WHERE usergtswitch.gt = NEW.gt

@@ -52,6 +52,7 @@ export class GtPresentingsComponent implements OnInit, OnChanges {
           .then(res => {
             if (res.response === 'success') {
               this.notificationservice.success(res.message);
+              this.getGtMembers();
             } else {
               this.notificationservice.error(res.message);
             }

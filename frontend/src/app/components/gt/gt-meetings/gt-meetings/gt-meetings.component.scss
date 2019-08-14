@@ -1,4 +1,7 @@
 .meetings {
+  width: fit-content;
+  overflow: auto;
+
   .buttons {
     button {
       margin: 0.2rem;
@@ -9,6 +12,7 @@
     margin: 0;
     padding: 0;
     width: fit-content !important;
+    flex-wrap: unset;
     .cell {
       width: 120px;
       margin: 0.2rem;
