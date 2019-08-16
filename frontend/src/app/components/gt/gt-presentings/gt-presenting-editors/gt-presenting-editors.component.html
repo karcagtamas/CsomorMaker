@@ -1,0 +1,5 @@
+<div class="text-center panel-title border rounded">DÖK bemutatás</div>
+<div class="editors">
+  <app-gt-presenting-editor *ngFor="let presenting of presentings" [presenting]="presenting"></app-gt-presenting-editor>
+  <div *ngIf="!presentings.length" class="text-center">Még nem kaptál DÖK bemutatást! :(</div>
+</div>

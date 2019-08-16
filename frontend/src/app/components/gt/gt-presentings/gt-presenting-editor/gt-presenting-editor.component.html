@@ -1,0 +1,6 @@
+<div class="presenting">
+  <div class="text-center panel-title border rounded">{{ presenting.presented }}</div>
+  <div [innerHTML]="presenting.answer" *ngIf="presenting.answer"></div>
+  <div *ngIf="!presenting.answer" class="text-center">Még nem adtál meg bemutatást :(</div>
+  <button mat-raised-button color="primary">{{ buttonTitle }}</button>
+</div>
