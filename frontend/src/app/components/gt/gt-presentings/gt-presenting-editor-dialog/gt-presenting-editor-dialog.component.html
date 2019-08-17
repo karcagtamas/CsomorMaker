@@ -1,3 +1,13 @@
-<p>
-  gt-presenting-editor-dialog works!
-</p>
+<form mat-dialog-content [formGroup]="form">
+  <div class="text-center panel-title border rounded">Dök bemutatás ({{ data.presented }})</div>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Bemutatás</mat-label>
+    <textarea rows="20" matInput formControlName="answer"></textarea>
+  </mat-form-field>
+</form>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="save()">
+    Mentés
+  </button>
+  <button mat-raised-button color="accent" (click)="onNoClick()">Mégsem</button>
+</div>
