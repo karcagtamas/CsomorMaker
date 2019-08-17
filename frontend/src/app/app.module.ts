@@ -150,7 +150,10 @@ import { GtMeetingsComponent, GtMeetingDialogComponent } from './components/gt/g
 import {
   GtPresentingsComponent,
   GtPresentingDialogComponent,
-  GtPresentingBlockComponent
+  GtPresentingBlockComponent,
+  GtPresentingEditorDialogComponent,
+  GtPresentingEditorsComponent,
+  GtPresentingEditorComponent
 } from './components/gt/gt-presentings';
 
 @NgModule({
@@ -241,7 +244,10 @@ import {
     GtMeetingDialogComponent,
     GtPresentingsComponent,
     GtPresentingBlockComponent,
-    GtPresentingDialogComponent
+    GtPresentingDialogComponent,
+    GtPresentingEditorComponent,
+    GtPresentingEditorsComponent,
+    GtPresentingEditorDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -320,7 +326,8 @@ import {
     GtImportMembersDialogComponent,
     NewsDialogComponent,
     GtMeetingDialogComponent,
-    GtPresentingDialogComponent
+    GtPresentingDialogComponent,
+    GtPresentingEditorDialogComponent
   ]
 })
 export class AppModule {}
