@@ -44,13 +44,14 @@
 
         }else{
             echo '{"response" : "success", "message" : "A regisztráció sikeres!"}';
+            require 'mail.php';
+            sendRegistrationEmail($email);
         }
     }
 
     function logout(){
         session_destroy();
         echo '{"response" : "success", "message" : "A kijelentkezés sikeres!"}';
-
     }
 
     function isAdmin(){
@@ -154,21 +155,19 @@
     function resetPassword($username, $email){
         global $db;
 
-
         $sql = "CALL isValidUsernameAndEmail(?, ?);";
         $stmt = $db->prepare($sql);
         $stmt->bind_param("ii", $username, $email);
         $stmt->execute();
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
-        var_dump($row);
-        var_dump($username);
-        var_dump($email);
 
-        mail("karcagtamas@gmail.com", "Teszt", "Asdfasdf asd fsad fasd as");
         if ($row['isValid']){
             echo '{"response" : "success", "message" : "A jelszó visszaállítás sikeres! Elküldtük az e-mailt a megadott e-mail címre!"}';
-            // TODO e-mail küldés
+            require 'mail.php';
+            $newPassword = generateRandomString(8);
+            changePassword($row['userId'], $newPassword);
+            sendNewPassword($email, $newPassword);
         }
         else{
             echo '{"response" : "fails", "message" : "A jelszó visszaállítás sikertelen! Rossz adatokat adtál meg!"}';     
@@ -190,6 +189,16 @@
 
         echo json_encode($row['accessLevel']);
         $stmt->close();
+    }
+
+    function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 
 ?>

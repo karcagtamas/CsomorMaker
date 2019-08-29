@@ -291,6 +291,7 @@
     function save($gt, $works, $workers){
         global $db;
 
+
         $sql = "CALL updateGtWorkerTable(?, ?, ?, ?, ?);";
 
         foreach ($workers as $worker) {
@@ -345,8 +346,6 @@
             $stmt->bind_param("ii", $gt['id'], $workers[$i]['id']);
             $stmt->execute();
             $stmt->close();
-
-            var_dump($stmt);
 
             foreach ($workers[$i]['statuses'] as $status) {
                 echo $workers[$i]['name'].'-'.$status['workId'].'-'.$status['isBoss'].' ';
