@@ -231,7 +231,7 @@ CREATE OR REPLACE PROCEDURE getGtWorkersForGen(_gtId int(11))
       SELECT usergtswitch.gt, users.id AS id, users.username, users.name, eventroles.accessLevel, usergtswitch.isGeneratable FROM usergtswitch
       INNER JOIN users ON users.id = usergtswitch.user
       INNER JOIN eventroles ON eventroles.id = usergtswitch.role 
-      WHERE usergtswitch.gt = _gtId AND eventroles.accessLevel = 1 OR (eventroles.accessLevel = 2 AND usergtswitch.isGeneratable)
+      WHERE usergtswitch.gt = _gtId AND (eventroles.accessLevel = 1 OR (eventroles.accessLevel = 2 AND usergtswitch.isGeneratable))
       ORDER BY users.name;
     END;
 
@@ -357,8 +357,8 @@ CREATE OR REPLACE PROCEDURE getGtClasses(_gtId int(11))
 
 CREATE OR REPLACE PROCEDURE addGtClass(_gtId int(11), _name varchar(5))
   BEGIN
-    INSERT INTO gtclasses (name, gt, classMaster)
-      VALUES(_name, _gtId, _master);
+    INSERT INTO gtclasses (name, gt)
+      VALUES(_name, _gtId);
   END;
 
 CREATE OR REPLACE PROCEDURE updateGtClass(_classId int(11), _name varchar(5), _tShirtColor varchar(50), _master varchar(100))

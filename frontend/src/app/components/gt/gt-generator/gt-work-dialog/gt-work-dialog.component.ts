@@ -79,10 +79,10 @@ export class GtWorkDialogComponent implements OnInit {
   }
 
   startChange() {
-    this.endHours = this.hours.filter(x => x > this.form.get('start').value);
+    this.endHours = this.hours.filter(x => x >= this.form.get('start').value);
   }
 
   endChange() {
-    this.startHours = this.hours.filter(x => x < this.form.get('end').value);
+    this.startHours = this.hours.filter(x => x <= this.form.get('end').value);
   }
 }
