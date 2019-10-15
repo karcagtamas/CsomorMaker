@@ -34,12 +34,32 @@
 
     }
 
-    function addPayOut($name, $eventId, $type, $cost){
+    function addPayOut($name, $eventId, $type, $cost, $source, $destination){
         global $db;
 
-        $sql = "CALL addPayOut(?, ?, ?, ?);";
+        $sql = "CALL addPayOut(?, ?, ?, ?, ?, ?);";
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("siii", $name, $eventId, $type, $cost);
+        $stmt->bind_param("siiiss", $name, $eventId, $type, $cost, $source, $destination);
+        $stmt->execute();
+
+        if ($stmt->errno){
+            $array['response'] =  'fail';
+            $array['message'] = 'A kifizetés/befizetés hozzáadása sikertelen!';
+        }else{
+            $array['response'] =  'success';
+            $array['message'] = 'A kifizetés/befizetés hozzáadása sikeres!';
+        }
+        echo json_encode($array);
+        $stmt->close();
+
+    }
+
+    function updatePayOut($id, $name, $type, $cost, $source, $destination){
+        global $db;
+
+        $sql = "CALL updatePayOut(?, ?, ?, ?, ?, ?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("isiiss", $id, $name, $type, $cost, $source, $destination);
         $stmt->execute();
 
         if ($stmt->errno){

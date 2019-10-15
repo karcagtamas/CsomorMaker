@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { EventWorker } from 'src/app/models';
-import { EventGeneratorService } from 'src/app/services';
+import { EventGeneratorService, ExportService } from 'src/app/services';
 import { EventWorkerTable } from 'src/app/models/event.worker.table.model';
 
 @Component({
@@ -14,7 +14,7 @@ export class EventPersonalCsomorComponent implements OnInit, OnChanges {
   workerTables: EventWorkerTable[] = [];
   hoverValue = '-';
 
-  constructor(private eventgeneratorservice: EventGeneratorService) {}
+  constructor(private eventgeneratorservice: EventGeneratorService, private exportserivce: ExportService) {}
 
   ngOnInit() {
     if (this.eventWorkers.length > 0) {
@@ -40,5 +40,9 @@ export class EventPersonalCsomorComponent implements OnInit, OnChanges {
 
   changeWorker() {
     this.getWorkerTables();
+  }
+
+  exportPersonal() {
+    this.exportserivce.exportEventPersonal(this.eventWorkers[this.selectedWorker]);
   }
 }

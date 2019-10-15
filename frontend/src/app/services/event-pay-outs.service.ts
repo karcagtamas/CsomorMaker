@@ -26,7 +26,32 @@ export class EventPayOutsService {
     return this.http
       .post<Response>(
         `${this.url}/add`,
-        { name: payout.name, eventId: payout.eventId, cost: payout.cost, type: payout.typeId },
+        {
+          name: payout.name,
+          eventId: payout.eventId,
+          cost: payout.cost,
+          type: payout.typeId,
+          source: payout.source,
+          destination: payout.destination
+        },
+        HttpHeader
+      )
+      .toPromise();
+  }
+
+  updatePayout(payout: EventPayOut): Promise<Response> {
+    return this.http
+      .post<Response>(
+        `${this.url}/update`,
+        {
+          id: payout.id,
+          name: payout.name,
+          eventId: payout.eventId,
+          cost: payout.cost,
+          type: payout.typeId,
+          source: payout.source,
+          destination: payout.destination
+        },
         HttpHeader
       )
       .toPromise();

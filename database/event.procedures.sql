@@ -321,22 +321,28 @@ CREATE OR REPLACE PROCEDURE updateEvent(
 
   CREATE OR REPLACE PROCEDURE getPayOuts(_eventId int(11))
     BEGIN
-     SELECT eventpayouts.name, eventpayouts.id, eventpayouts.eventId, eventpayouts.cost, eventpayouts.type AS typeId, eventpayouttypes.name AS type, eventpayouttypes.isOut FROM eventpayouts 
+     SELECT eventpayouts.name, eventpayouts.id, eventpayouts.eventId, eventpayouts.cost, eventpayouts.type AS typeId, eventpayouttypes.name AS type, eventpayouttypes.isOut, eventpayouts.source, eventpayouts.destination FROM eventpayouts 
      INNER JOIN eventpayouttypes ON eventpayouts.type = eventpayouttypes.id
      WHERE eventpayouts.eventId = _eventId;
     END;
 
   CREATE OR REPLACE PROCEDURE getPayOut(_id int(11))
     BEGIN
-    SELECT  eventpayouts.name, eventpayouts.id, eventpayouts.eventId, eventpayouts.cost, eventpayouts.type AS typeId, eventpayouttypes.name AS type, eventpayouttypes.isOu FROM eventpayouts 
+    SELECT  eventpayouts.name, eventpayouts.id, eventpayouts.eventId, eventpayouts.cost, eventpayouts.type AS typeId, eventpayouttypes.name AS type, eventpayouttypes.isOut, eventpayouts.source, eventpayouts.destination FROM eventpayouts 
      INNER JOIN eventpayouttypes ON eventpayouts.type = eventpayouttypes.id
      WHERE eventpayouts.id = _id;
     END;
 
-  CREATE OR REPLACE PROCEDURE addPayOut(_name varchar(75), _eventId int(11), _type int(11), _cost decimal)
+  CREATE OR REPLACE PROCEDURE addPayOut(_name varchar(75), _eventId int(11), _type int(11), _cost decimal, _source varchar(100), _destination varchar(100))
     BEGIN
-     INSERT INTO eventpayouts (name, eventId, type, cost)
-        VALUES (_name, _eventId, _type, _cost);
+     INSERT INTO eventpayouts (name, eventId, type, cost, source, destination)
+        VALUES (_name, _eventId, _type, _cost, _source, _destination);
+    END;
+
+  CREATE OR REPLACE PROCEDURE updatePayOut(_id int(11), _name varchar(75), _type int(11), _cost decimal, _source varchar(100), _destination varchar(100))
+    BEGIN
+     INSERT INTO eventpayouts (name, eventId, type, cost, source, destination)
+        VALUES (_name, _eventId, _type, _cost, _source, _destination);
     END;
 
   CREATE OR REPLACE PROCEDURE deletePayOut(_id int(11))

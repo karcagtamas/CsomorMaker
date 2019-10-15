@@ -242,13 +242,17 @@
                                     break;
 
                                 case 'add':
-                                    addPayOut($_POST['name'], $_POST['eventId'], $_POST['type'], $_POST['cost']);
+                                    addPayOut($_POST['name'], $_POST['eventId'], $_POST['type'], $_POST['cost'], $_POST['source'], $_POST['destination']);
                                     break;
 
                                 case 'delete':
                                     deletePayOut($url[5]);
                                     break;
 
+                                case 'update':
+                                    updatePayOut($_POST['id'], $_POST['type'], $_POST['cost'], $_POST['source'], $_POST['destination']);
+                                    break;
+                                    
                                 case 'types':
                                     $subevent = $url[5];
                                     switch ($subevent) {

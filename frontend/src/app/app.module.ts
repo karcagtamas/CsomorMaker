@@ -90,6 +90,7 @@ import {
 } from './components/event/event-generator';
 import {
   EventSummaryComponent,
+  EventPayoutDialogComponent,
   NewPayOutDialogComponent,
   DeletePayOutDialogComponent
 } from './components/event/event-summary';
@@ -247,7 +248,8 @@ import {
     GtPresentingDialogComponent,
     GtPresentingEditorComponent,
     GtPresentingEditorsComponent,
-    GtPresentingEditorDialogComponent
+    GtPresentingEditorDialogComponent,
+    EventPayoutDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -327,7 +329,8 @@ import {
     NewsDialogComponent,
     GtMeetingDialogComponent,
     GtPresentingDialogComponent,
-    GtPresentingEditorDialogComponent
+    GtPresentingEditorDialogComponent,
+    EventPayoutDialogComponent
   ]
 })
 export class AppModule {}

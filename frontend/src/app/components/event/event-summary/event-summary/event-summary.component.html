@@ -12,11 +12,9 @@
     </div>
     <div class="col-6 text-right">{{ visitorSumamry | forint }}</div>
   </div>
-  <div
-    class="element col-12 row border rounded"
-    *ngFor="let payout of payOuts"
-    [ngClass]="{ input: !payout.isOut, output: payout.isOut }"
-  >
+  <div class="element col-12 row border rounded clickable" *ngFor="let payout of payOuts"
+    [ngClass]="{ input: !payout.isOut, output: payout.isOut }" (click)="openPayOutDialog(payout)"
+    matTooltip="{{payout.source}} => {{payout.destination}}" matTooltipPosition="above">
     <div class="col-6 text-left">
       {{ payout.name }}
     </div>
@@ -29,7 +27,6 @@
     <div class="col-6 text-right">{{ summary | forint }}</div>
   </div>
   <div>
-    <button mat-raised-button color="primary" (click)="openNewPayOutDialog()">Új kifizetés/befizetés</button>
-    <button mat-raised-button color="warn" (click)="openDeletePayOutDialog()">Kifizetés/befizetés törlése</button>
+    <button mat-raised-button color="primary" (click)="openPayOutDialog()">Új kifizetés/befizetés</button>
   </div>
 </div>

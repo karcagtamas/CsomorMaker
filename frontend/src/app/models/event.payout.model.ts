@@ -6,4 +6,6 @@ export class EventPayOut {
   type: string;
   cost: number;
   isOut: boolean;
+  source: string;
+  destination: string;
 }
