@@ -2,6 +2,8 @@
 
 > Application for managing events.
 
+> Running production: csomormaker.karcags.hu
+
 This application is created for managing some bigger events. For instance, 24 hours football competition, or little camps
 
 You can create private events, and you can decide who can see the event and who not
@@ -14,7 +16,7 @@ Created by: Karcag Tamas
 
 ## Frontend
 
-> Angular
+> Angular (Typescript, HTML, CSS)
 
 I used Angular framework to create the user interface for the application
 
