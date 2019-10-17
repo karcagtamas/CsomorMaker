@@ -1,14 +1,14 @@
 USE csomormaker;
 
 INSERT INTO roles (id, name, accessLevel)
-  VALUES (1, 'Adminisztr·tor', 3),
-          (2, 'Moder·tor', 2),
-          (3, '¡ltal·nos felhaszn·lÛ', 1);
+  VALUES (1, 'Adminisztr√°tor', 3),
+          (2, 'Moder√°tor', 2),
+          (3, '√Åltal√°nos felhaszn√°l√≥', 1);
 
 INSERT INTO eventroles (name, accessLevel)
-  VALUES ('Fıszervezı', 3),
-          ('Posztfıszervezı', 2),
-          ('Hum·n', 1);
+  VALUES ('F≈ëszervez≈ë', 3),
+          ('Posztf≈ëszervez≈ë', 2),
+          ('Hum√°n', 1);
 
 INSERT INTO users (username, email, password, name, role)
   VALUES ('karcagtamas', 'karcagtamas@gmail.com', '$2y$10$H/hBwhyOF8pfqTwugvkCreTRVP7olOOPTLr2ACkH6OescL0FLc2/S', 'Karcag', 1);

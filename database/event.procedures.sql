@@ -341,8 +341,7 @@ CREATE OR REPLACE PROCEDURE updateEvent(
 
   CREATE OR REPLACE PROCEDURE updatePayOut(_id int(11), _name varchar(75), _type int(11), _cost decimal, _source varchar(100), _destination varchar(100))
     BEGIN
-     INSERT INTO eventpayouts (name, eventId, type, cost, source, destination)
-        VALUES (_name, _eventId, _type, _cost, _source, _destination);
+     UPDATE eventpayouts SET name = _name, type = _type, cost = _cost, source = _source, destination = _destination WHERE id = _id;
     END;
 
   CREATE OR REPLACE PROCEDURE deletePayOut(_id int(11))
