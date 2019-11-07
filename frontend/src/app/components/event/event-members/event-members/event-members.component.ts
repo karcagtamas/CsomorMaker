@@ -107,7 +107,6 @@ export class EventMembersComponent implements OnInit, OnChanges {
       }
     });
   }
-
   filter() {
     this.filteredMembers = this.eventMembers.filter(x => x.name.toLowerCase().includes(this.filterValue.toLowerCase()));
   }

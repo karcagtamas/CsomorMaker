@@ -8,16 +8,19 @@
   <div class="row col-12 buttons">
     <div class="col col-12 col-md-4">
       <button mat-raised-button color="warn" *ngIf="selectedWorker > 0"
-        (click)="selectedWorker = selectedWorker - 1; getWorkerTables()">
+        (click)="selectedWorker = selectedWorker - 1; getWorkerTables()"
+        title="Elöző személy ({{eventWorkers[selectedWorker - 1].name}})">
         Elöző
       </button>
     </div>
-    <div>
-      <button mat-stroked-button (click)="exportPersonal()">Export</button>
+    <div class="col col-12 col-md-4">
+      <button mat-stroked-button (click)="exportPersonal()"
+        title="Export csömör {{eventWorkers[selectedWorker].name}} számára">Export</button>
     </div>
     <div class="col col-12 col-md-4">
       <button mat-raised-button color="primary" *ngIf="selectedWorker < eventWorkers.length - 1"
-        (click)="selectedWorker = selectedWorker + 1; getWorkerTables()" class="float-right">
+        (click)="selectedWorker = selectedWorker + 1; getWorkerTables()" class="float-right"
+        title="Következő személy ({{eventWorkers[selectedWorker + 1].name}})">
         Következő
       </button>
     </div>

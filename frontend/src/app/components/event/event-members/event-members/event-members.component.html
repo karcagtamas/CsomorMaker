@@ -1,23 +1,18 @@
 <div class="text-center panel-title border rounded">Tagok</div>
 <div class="members">
-  <mat-form-field class="w-100" appearance="outline">
-    <mat-label>Szűrés</mat-label>
-    <input matInput type="text" placeholder="Szűrés" [(ngModel)]="filterValue" />
-  </mat-form-field>
-  <button mat-raised-button color="primary" (click)="filter()">
-    Szűrés
-  </button>
+  <form (submit)="filter()">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Szűrés</mat-label>
+      <input matInput name="filterValue" type="text" placeholder="Szűrés" [(ngModel)]="filterValue" />
+    </mat-form-field>
+  </form>
   <div class="table">
-    <app-event-member-item
-      *ngFor="let member of filteredMembers"
-      [eventMember]="member"
-      [accessLevel]="accessLevel"
-      [userId]="userId"
-      (delete)="deleteEventMember($event)"
-      (update)="updateEventMember($event)"
-    ></app-event-member-item>
+    <app-event-member-item *ngFor="let member of filteredMembers" [eventMember]="member" [accessLevel]="accessLevel"
+      [userId]="userId" (delete)="deleteEventMember($event)" (update)="updateEventMember($event)">
+    </app-event-member-item>
   </div>
-  <button mat-raised-button color="primary" (click)="openAddMemberModal()" *ngIf="accessLevel >= 3">
+  <button mat-raised-button color="primary" (click)="openAddMemberModal()" *ngIf="accessLevel >= 3"
+    title="Új esemény tag felvétele">
     Új tag felvétele
   </button>
 </div>

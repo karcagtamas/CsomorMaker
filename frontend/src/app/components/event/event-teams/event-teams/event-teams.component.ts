@@ -40,7 +40,8 @@ export class EventTeamsComponent implements OnInit, OnChanges {
 
   openAddTeamModal() {
     const dialogRef = this.dialog.open(AddTeamDialogComponent, {
-      data: this.event.id
+      data: this.event.id,
+      width: '50%'
     });
 
     dialogRef.afterClosed().subscribe(result => {

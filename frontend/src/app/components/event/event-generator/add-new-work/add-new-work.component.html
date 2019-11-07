@@ -8,8 +8,9 @@
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-raised-button color="primary" (click)="save()" cdkFocusInitial [disabled]="nameControl.invalid">
+  <button mat-raised-button color="primary" (click)="save()" cdkFocusInitial [disabled]="nameControl.invalid"
+    title="Új poszt mentése">
     Mentés
   </button>
-  <button mat-raised-button color="accent" (click)="onNoClick()">Mégsem</button>
+  <button mat-raised-button color="accent" (click)="onNoClick()" title="Visszalépés mentés nélkül">Mégsem</button>
 </div>

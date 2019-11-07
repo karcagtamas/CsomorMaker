@@ -41,9 +41,10 @@
   </mat-form-field>
 </form>
 <div mat-dialog-actions>
-  <button mat-raised-button color="primary" (click)="save()">
+  <button mat-raised-button color="primary" (click)="save()"
+    title="{{isEdit? 'Módosítások mentése': 'Új pénzmozgás rögzítése'}}">
     Mentés
   </button>
-  <button mat-raised-button color="accent" (click)="onNoClick()">Mégsem</button>
-  <button mat-raised-button color="warn" (click)="delete()" *ngIf="isEdit">Törlés</button>
+  <button mat-raised-button color="accent" (click)="onNoClick()" title="Visszalépés mentés nélkül">Mégsem</button>
+  <button mat-raised-button color="warn" (click)="delete()" *ngIf="isEdit" title="Pénzmozgás törlése">Törlés</button>
 </div>

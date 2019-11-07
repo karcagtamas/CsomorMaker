@@ -1,17 +1,34 @@
 <div class="team border rounded">
-  <div><strong>Csapat név:</strong> {{ team.name }}</div>
-  <div><strong>Csapat tagok:</strong> {{ team.members | personCount }}</div>
-  <div><strong>Regisztráció:</strong> {{ team.creationDate | date: 'yyyy. MM. dd. HH:mm:ss' }}</div>
-  <div><strong>Előleg:</strong> {{ countOfDeposit | personCount }} / {{ team.members | personCount }}</div>
-  <div><strong>Díj:</strong> {{ countOfCost | personCount }} / {{ team.members | personCount }}</div>
-  <div><strong>Csapat kapitány:</strong> {{ team.teamLeader | exists }}</div>
-  <div>
-    <mat-checkbox [(ngModel)]="team.hasResponsibilityPaper" (change)="setHasReposnsibilityPaper()"
-      >Felelőségvállalási</mat-checkbox
-    >
-  </div>
-  <div>
-    <button mat-raised-button color="accent" (click)="openTeamDetailsModal()">Szerkesztés</button>
-    <button mat-raised-button color="warn" (click)="openConfirmDeleteModal()">Törlés</button>
-  </div>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <strong>{{ team.name }}</strong>
+      &nbsp;
+      | Díj:&nbsp;
+      <span
+        [ngClass]="{green: team.members === countOfCost, red: team.members !== countOfCost}">{{team.members === countOfCost ? "&#10003;" : "&#x2717;"}}
+      </span>
+      &nbsp;
+      | Felelőségvállalási:&nbsp;
+      <span
+        [ngClass]="{green: team.hasResponsibilityPaper, red: !team.hasResponsibilityPaper}">{{team.hasResponsibilityPaper ? "&#10003;" : "&#x2717;"}}
+      </span>
+    </mat-expansion-panel-header>
+    <div><strong>Csapat tagok:</strong> {{ team.members | personCount }}</div>
+    <div><strong>Regisztráció:</strong> {{ team.creationDate | date: 'yyyy. MM. dd. HH:mm:ss' }}</div>
+    <div><strong>Előleg:</strong> {{ countOfDeposit | personCount }} / {{ team.members | personCount }}</div>
+    <div><strong>Díj:</strong> {{ countOfCost | personCount }} / {{ team.members | personCount }}</div>
+    <div><strong>Csapat kapitány:</strong> {{ team.teamLeader | exists }}</div>
+    <div>
+      <strong>Felelőségvállalási:</strong> &nbsp;
+      <mat-checkbox [(ngModel)]="team.hasResponsibilityPaper" (change)="setHasReposnsibilityPaper()"
+        title="Felelőségvállalási beállítása {{team.name}} csapatnak">
+      </mat-checkbox>
+    </div>
+    <div>
+      <button mat-raised-button color="accent" (click)="openTeamDetailsModal()"
+        title="{{team.name}} szerkesztése">Szerkesztés</button>
+      <button mat-raised-button color="warn" (click)="openConfirmDeleteModal()"
+        title="{{team.name}} törlése">Törlés</button>
+    </div>
+  </mat-expansion-panel>
 </div>
