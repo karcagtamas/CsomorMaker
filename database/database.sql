@@ -27,6 +27,7 @@ CREATE TABLE users(
   lastLogin datetime,
   class varchar(10),
   registrationTime datetime NOT NULL DEFAULT NOW(),
+  blocked boolean DEFAULT FALSE,
   PRIMARY KEY(id),
   CONSTRAINT fk_role_roles FOREIGN KEY (role)
   REFERENCES roles(id)

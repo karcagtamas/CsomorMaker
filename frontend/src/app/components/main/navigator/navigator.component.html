@@ -43,6 +43,13 @@
             <button mat-menu-item [routerLink]="['/gts']" routerLinkActive="activeMenu">Gólyatáborok</button>
           </mat-menu>
 
+          <button mat-menu-item [matMenuTriggerFor]="mobileadminmenu" *ngIf="isLoggedIn && isAdmin">
+            Admin
+          </button>
+          <mat-menu #mobileadminmenu="matMenu">
+            <button mat-menu-item [routerLink]="['/admin']" routerLinkActive="activeMenu">Adminisztráció</button>
+          </mat-menu>
+
           <button mat-menu-item (click)="logout()" *ngIf="isLoggedIn">
             Kijelentkezés
           </button>
@@ -75,6 +82,13 @@
             Új gólyatábor létrehozása
           </button>
           <button mat-menu-item [routerLink]="['/gts']" routerLinkActive="activeMenu">Gólyatáborok</button>
+        </mat-menu>
+
+        <button mat-button [matMenuTriggerFor]="adminmenu" *ngIf="isLoggedIn && isAdmin">
+          Admin
+        </button>
+        <mat-menu #adminmenu="matMenu">
+          <button mat-menu-item [routerLink]="['/admin']" routerLinkActive="activeMenu">Adminisztráció</button>
         </mat-menu>
 
         <span class="spacer"></span>

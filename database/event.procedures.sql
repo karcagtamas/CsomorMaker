@@ -5,13 +5,6 @@ CREATE OR REPLACE PROCEDURE disableEvent(_eventId int(11))
         UPDATE events SET isDisabled = TRUE WHERE id = _eventId;
     END;
 
-CREATE OR REPLACE PROCEDURE getEvents()
-    BEGIN
-        SELECT *
-        FROM events
-        WHERE NOT isDisabled;
-    END;
-
 CREATE OR REPLACE PROCEDURE getEvent(_id int(11))
     BEGIN
      SELECT events.id, 
@@ -40,7 +33,7 @@ CREATE OR REPLACE PROCEDURE getEvent(_id int(11))
       u2.name AS lastUpdater
       FROM events
       INNER JOIN users ON events.creater = users.id
-      INNER JOIN users u2 ON events.lastUpdater = users.id
+      INNER JOIN users u2 ON events.lastUpdater = u2.id
       WHERE NOT events.isDisabled AND events.id = _id;
     END;
 
@@ -73,8 +66,8 @@ CREATE OR REPLACE PROCEDURE getUsersEvents(_userId int(11))
       FROM events
       INNER JOIN usereventswitch ON events.id = usereventswitch.event
       INNER JOIN users ON events.creater = users.id
-      INNER JOIN users u2 ON events.lastUpdater = users.id
-      WHERE NOT events.isDisabled AND usereventswitch.user = _userId AND u2.id = events.lastUpdater;
+      INNER JOIN users u2 ON events.lastUpdater = u2.id
+      WHERE NOT events.isDisabled AND usereventswitch.user = _userId;
     END;
 
 CREATE OR REPLACE PROCEDURE addEvent(_name varchar(50), _creater int(11))

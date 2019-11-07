@@ -14,6 +14,8 @@ import { NewGtComponent, GtsComponent } from './components/gt';
 import { GtGuard } from './guards/gt.guard';
 import { MyProfileComponent } from 'src/app/components/user';
 import { NoAuthGuard } from './guards/no-auth.guard';
+import { AdminComponent } from './components/admin/admin/admin.component';
+import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -28,6 +30,7 @@ const routes: Routes = [
   { path: 'gts/:id/:page', pathMatch: 'full', component: GtsComponent, canActivate: [AuthGuard, GtGuard] },
   { path: 'new-gt', pathMatch: 'full', component: NewGtComponent, canActivate: [AuthGuard] },
   { path: 'my-profile', pathMatch: 'full', component: MyProfileComponent, canActivate: [AuthGuard] },
+  { path: 'admin', pathMatch: 'full', component: AdminComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: '**', component: PageNotFoundComponent }
 ];
 

@@ -83,7 +83,70 @@
                             break;
                     }
                     break;
+                case 'admin':
+                    $event = $url[3];
+                    require 'admin.php';
+                    switch ($event) {
+                        case 'users':
+                            $subevent = $url[4];
+                            switch ($subevent) {
+                                case 'get':
+                                    getAllUser();
+                                    break;
+                                
+                                case 'update':
+                                    updateUserRole($_POST['userId'], $_POST['roleId']);
+                                    break;
+                                
+                                case 'block':
+                                    blockUser($_POST['userId'], $_POST['status']);
+                                    break;
+                                
+                                default:
+                                    echo '{"response" : "bad-subevent", "message" : "Bad request event!"}';
+                                    break;
+                            }
+                            break;
 
+                        case 'events':
+                            $subevent = $url[4];
+                            switch ($subevent) {
+                                case 'get':
+                                    getAllEvent();
+                                    break;
+                                
+                                case 'update':
+                                    updateEventArchiveStatus($_POST['eventId'], $_POST['status']);
+                                    break;
+                                
+                                default:
+                                    echo '{"response" : "bad-subevent", "message" : "Bad request event!"}';
+                                    break;
+                            }
+                            break;
+
+                        case 'gts':
+                        $subevent = $url[4];
+                        switch ($subevent) {
+                            case 'get':
+                                getAllGt();
+                                break;
+                            
+                            case 'update':
+                                updateGtArchiveStatus($_POST['gtId'], $_POST['status']);
+                                break;
+                            
+                            default:
+                                echo '{"response" : "bad-subevent", "message" : "Bad request event!"}';
+                                break;
+                        }
+                            break;
+                        
+                        default:
+                            echo '{"response" : "bad-event", "message" : "Bad request event!"}';
+                            break;
+                    }
+                    break;
                 case 'event':
                     $subgroup = $url[3];
                     require 'event.php';

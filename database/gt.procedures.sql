@@ -3,20 +3,20 @@ USE csomormaker;
 
 CREATE OR REPLACE PROCEDURE getGts(_userId int(11))
     BEGIN
-        SELECT DISTINCT gts.id, gts.year, gts.tShirtColor, gts.days, gts.members, gts.ready, gts.creater AS createrId, gts.isLocked, gts.greeny, gts.greenyCost, users.name AS creater, gts.startDate, gts.lastUpdate, gts.creationDate, gts.lastUpdater AS lastUpdaterId, u2.name AS lastUpdater  FROM gts 
+        SELECT DISTINCT gts.id, gts.year, gts.tShirtColor, gts.days, gts.members, gts.ready, gts.creater AS createrId, gts.isLocked, gts.greeny, gts.greenyCost, users.name AS creater, gts.startDate, gts.lastUpdate, gts.creationDate, gts.lastUpdater AS lastUpdaterId, u2.name AS lastUpdater, gts.isDisabled  FROM gts 
         INNER JOIN usergtswitch ON gts.id = usergtswitch.gt
         INNER JOIN users ON gts.creater = users.id
-        INNER JOIN users u2 ON gts.lastUpdater = users.id
-        WHERE usergtswitch.user = _userId AND u2.id = gts.lastUpdater
+        INNER JOIN users u2 ON gts.lastUpdater = u2.id
+        WHERE usergtswitch.user = _userId AND NOT gts.isDisabled
         ORDER BY gts.year;
     END;
 
 CREATE OR REPLACE PROCEDURE getGt(_gtId int(11))
     BEGIN
-        SELECT gts.id, gts.year, gts.tShirtColor, gts.days, gts.members, gts.ready, gts.creater AS createrId, gts.isLocked, gts.greeny, gts.greenyCost, users.name AS creater, gts.startDate, gts.lastUpdate, gts.creationDate, gts.lastUpdater AS lastUpdaterId, u2.name AS lastUpdater FROM gts 
+        SELECT gts.id, gts.year, gts.tShirtColor, gts.days, gts.members, gts.ready, gts.creater AS createrId, gts.isLocked, gts.greeny, gts.greenyCost, users.name AS creater, gts.startDate, gts.lastUpdate, gts.creationDate, gts.lastUpdater AS lastUpdaterId, u2.name AS lastUpdater, gts.isDisabled FROM gts 
         INNER JOIN users ON gts.creater = users.id
-        INNER JOIN users u2 ON gts.lastUpdater = users.id
-        WHERE gts.id = _gtId;
+        INNER JOIN users u2 ON gts.lastUpdater = u2.id
+        WHERE gts.id = _gtId AND NOT gts.isDisabled;
     END;
 
 CREATE OR REPLACE PROCEDURE updateGt(_gtId int(11), _year int(4), _tShirtColor varchar(50), _days int(2), _startDate date, _updater int(11))

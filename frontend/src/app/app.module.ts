@@ -151,6 +151,7 @@ import {
   GtPresentingEditorsComponent,
   GtPresentingEditorComponent
 } from './components/gt/gt-presentings';
+import { AdminComponent } from './components/admin/admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -242,7 +243,8 @@ import {
     GtPresentingEditorComponent,
     GtPresentingEditorsComponent,
     GtPresentingEditorDialogComponent,
-    EventPayoutDialogComponent
+    EventPayoutDialogComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
