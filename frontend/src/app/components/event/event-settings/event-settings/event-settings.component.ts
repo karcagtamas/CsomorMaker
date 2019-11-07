@@ -87,8 +87,10 @@ export class EventSettingsComponent implements OnInit, OnChanges {
       event.startHour = this.startHourControl.value;
       event.endHour = this.endHourControl.value;
       event.injured = this.injuredControl.value;
-      event.startDate = new Date(this.startDateControl.value);
-      event.startDate.setHours(12);
+      if (this.startDateControl.value) {
+        event.startDate = new Date(this.startDateControl.value);
+        event.startDate.setHours(12);
+      }
       this.update.emit({ event });
     }
   }

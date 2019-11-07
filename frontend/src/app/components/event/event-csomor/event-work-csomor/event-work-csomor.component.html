@@ -5,33 +5,29 @@
       <mat-option [value]="i" *ngFor="let work of eventWorks; let i = index">{{ work.name }}</mat-option>
     </mat-select>
   </mat-form-field>
-  <div class="buttons">
-    <button
-      mat-raised-button
-      color="warn"
-      *ngIf="selectedWork > 0"
-      (click)="selectedWork = selectedWork - 1; getWorkTables()"
-    >
-      Elöző
-    </button>
-    <button
-      mat-raised-button
-      color="primary"
-      *ngIf="selectedWork < eventWorks.length - 1"
-      (click)="selectedWork = selectedWork + 1; getWorkTables()"
-      class="float-right"
-    >
-      Következő
-    </button>
+  <div class="row col-12 buttons">
+    <div class="col col-12 col-md-4">
+      <button mat-raised-button color="warn" *ngIf="selectedWork > 0"
+        (click)="selectedWork = selectedWork - 1; getWorkTables()"
+        title="Elöző poszt ({{eventWorks[selectedWork - 1].name}})">
+        Elöző
+      </button>
+    </div>
+    <div class="col col-12 col-md-4">
+      <button mat-stroked-button (click)="exportWork()"
+        title="Export csömör {{eventWorks[selectedWork].name}} poszthoz">Export</button>
+    </div>
+    <div class="row col-12 buttons">
+      <button mat-raised-button color="primary" *ngIf="selectedWork < eventWorks.length - 1"
+        (click)="selectedWork = selectedWork + 1; getWorkTables()" class="float-right"
+        title="Következő poszt ({{eventWorks[selectedWork + 1].name}})">
+        Következő
+      </button>
+    </div>
   </div>
   <div class="work">
-    <div
-      class="row col col-12 border rounded"
-      [ngClass]="{ over: hoverValue === table.worker }"
-      *ngFor="let table of workTables"
-      (mouseover)="hoverValue = table.worker"
-      (mouseleave)="hoverValue = ''"
-    >
+    <div class="row col col-12 border rounded" [ngClass]="{ over: hoverValue === table.worker }"
+      *ngFor="let table of workTables" (mouseover)="hoverValue = table.worker" (mouseleave)="hoverValue = ''">
       <div class="col col-12 col-md-6 text-center">{{ table.hour | convertToHour }}</div>
       <div class="col col-12 col-md-6 text-center">{{ table.worker | exists }}</div>
     </div>

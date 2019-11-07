@@ -61,8 +61,10 @@ export class GtSettingsComponent implements OnInit, OnChanges {
         gt.tShirtColor = this.form.get('tShirtColor').value;
         gt.days = +this.form.get('days').value;
         gt.greenyCost = +this.form.get('greenyCost').value;
-        gt.startDate = new Date(this.form.get('startDate').value);
-        gt.startDate.setHours(10);
+        if (this.form.get('startDate').value) {
+          gt.startDate = new Date(this.form.get('startDate').value);
+          gt.startDate.setHours(10);
+        }
         const f = !!res.find(x => x.day > gt.days);
 
         if (f) {

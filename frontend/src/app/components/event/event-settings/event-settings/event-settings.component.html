@@ -1,7 +1,8 @@
 <div class="text-center panel-title border rounded">Beállítások</div>
 <div class="buttons">
-  <button mat-raised-button color="primary" (click)="save()">Mentés</button>
-  <button mat-raised-button color="accent" (click)="reset()">Visszaállítás</button>
+  <button mat-raised-button color="primary" (click)="save()" title="Beállítások mentése">Mentés</button>
+  <button mat-raised-button color="accent" (click)="reset()"
+    title="Adatok visszaállítása az utolsó mentet változatra">Visszaállítás</button>
 </div>
 <div class="settings" *ngIf="event">
   <mat-form-field class="w-100" appearance="outline">
@@ -15,19 +16,13 @@
     <input matInput type="number" placeholder="Látógatók" [formControl]="visitorsControl" />
     <mat-error *ngIf="visitorsControl.hasError('required')">A látógató szám megadása kötelező!</mat-error>
     <mat-error *ngIf="visitorsControl.hasError('min')">A látógató szám minimuma 0!</mat-error>
-    <mat-error *ngIf="visitorsControl.hasError('max')"
-      >A látógató szám maximum {{ visitorLimitControl.value }}!</mat-error
-    >
+    <mat-error *ngIf="visitorsControl.hasError('max')">A látógató szám maximum {{ visitorLimitControl.value }}!
+    </mat-error>
   </mat-form-field>
   <mat-form-field class="w-100" appearance="outline">
     <mat-label>Látógató limit</mat-label>
-    <input
-      matInput
-      type="number"
-      placeholder="Látógató limit"
-      [formControl]="visitorLimitControl"
-      (change)="changeVisitorLimit()"
-    />
+    <input matInput type="number" placeholder="Látógató limit" [formControl]="visitorLimitControl"
+      (change)="changeVisitorLimit()" />
     <mat-error *ngIf="visitorLimitControl.hasError('required')">A látógató limit megadása kötelező!</mat-error>
     <mat-error *ngIf="visitorLimitControl.hasError('min')">A látógató limit minimuma 0!</mat-error>
   </mat-form-field>

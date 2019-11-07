@@ -1,15 +1,13 @@
 <div class="hours">
   <section>
-    <mat-checkbox
-      *ngFor="let table of workTables"
-      [(ngModel)]="table.isActive"
-      [labelPosition]="'before'"
+    <mat-checkbox *ngFor="let table of workTables" [(ngModel)]="table.isActive" [labelPosition]="'before'"
       (change)="saveWorkTable(table.day, table.hour, table.workId)"
-    >
+      title="Státusz állítása a {{table.day}}. nap {{table.hour}}. órájához">
       {{ table.day }} - {{ table.hour }}
     </mat-checkbox>
   </section>
   <div>
-    <button mat-raised-button color="primary" (click)="openConfirmDeleteWorkDialog()">Törlés</button>
+    <button mat-raised-button color="primary" (click)="openConfirmDeleteWorkDialog()"
+      title="Poszt ({{work.name}}) törlése">Törlés</button>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { LoginService, CommonService } from 'src/app/services';
+import { LoginService, CommonService, UserService } from 'src/app/services';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -9,13 +9,21 @@ import { Router } from '@angular/router';
 })
 export class NavigatorComponent implements OnInit {
   isLoggedIn = false;
+  isAdmin = false;
   isMobielView = window.innerWidth < 650;
-  constructor(private loginservice: LoginService, private router: Router, private commonservice: CommonService) {}
+  constructor(
+    private loginservice: LoginService,
+    private router: Router,
+    private commonservice: CommonService,
+    private userserive: UserService
+  ) {}
 
   ngOnInit() {
     this.getIsLoggedIn();
-    this.commonservice.changeEmitted$.subscribe(res => {
+    this.getIsAdmin();
+    this.commonservice.changeEmitted$.subscribe(() => {
       this.getIsLoggedIn();
+      this.getIsAdmin();
     });
   }
 
@@ -27,6 +35,17 @@ export class NavigatorComponent implements OnInit {
       })
       .catch(() => {
         this.isLoggedIn = false;
+      });
+  }
+
+  getIsAdmin() {
+    this.userserive
+      .isAdmin()
+      .then(res => {
+        this.isAdmin = res;
+      })
+      .catch(() => {
+        this.isAdmin = false;
       });
   }
 

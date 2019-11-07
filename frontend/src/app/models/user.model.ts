@@ -10,4 +10,5 @@ export class User {
   lastLogin: Date;
   class: string;
   registrationTime: Date;
+  blocked: boolean;
 }

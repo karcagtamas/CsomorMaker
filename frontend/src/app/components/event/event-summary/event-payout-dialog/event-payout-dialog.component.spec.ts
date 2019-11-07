@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewPayOutDialogComponent } from './new-pay-out-dialog.component';
+import { EventPayoutDialogComponent } from './event-payout-dialog.component';
 
-describe('NewPayOutDialogComponent', () => {
-  let component: NewPayOutDialogComponent;
-  let fixture: ComponentFixture<NewPayOutDialogComponent>;
+describe('EventPayoutDialogComponent', () => {
+  let component: EventPayoutDialogComponent;
+  let fixture: ComponentFixture<EventPayoutDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NewPayOutDialogComponent ]
+      declarations: [ EventPayoutDialogComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NewPayOutDialogComponent);
+    fixture = TestBed.createComponent(EventPayoutDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

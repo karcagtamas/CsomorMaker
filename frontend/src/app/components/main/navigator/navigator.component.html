@@ -43,6 +43,16 @@
             <button mat-menu-item [routerLink]="['/gts']" routerLinkActive="activeMenu">Gólyatáborok</button>
           </mat-menu>
 
+          <button mat-menu-item [matMenuTriggerFor]="mobileadminmenu" *ngIf="isLoggedIn && isAdmin">
+            Admin
+          </button>
+          <mat-menu #mobileadminmenu="matMenu">
+            <button mat-menu-item [routerLink]="['/user-admin']"
+              routerLinkActive="activeMenu">Felhasználókezelés</button>
+            <button mat-menu-item [routerLink]="['/event-admin']" routerLinkActive="activeMenu">Adminisztráció</button>
+            <button mat-menu-item [routerLink]="['/gt-admin']" routerLinkActive="activeMenu">Gólyatábor-kezelés</button>
+          </mat-menu>
+
           <button mat-menu-item (click)="logout()" *ngIf="isLoggedIn">
             Kijelentkezés
           </button>
@@ -75,6 +85,15 @@
             Új gólyatábor létrehozása
           </button>
           <button mat-menu-item [routerLink]="['/gts']" routerLinkActive="activeMenu">Gólyatáborok</button>
+        </mat-menu>
+
+        <button mat-button [matMenuTriggerFor]="adminmenu" *ngIf="isLoggedIn && isAdmin">
+          Admin
+        </button>
+        <mat-menu #adminmenu="matMenu">
+          <button mat-menu-item [routerLink]="['/user-admin']" routerLinkActive="activeMenu">Felhasználókezelés</button>
+          <button mat-menu-item [routerLink]="['/event-admin']" routerLinkActive="activeMenu">Eseménykezelés</button>
+          <button mat-menu-item [routerLink]="['/gt-admin']" routerLinkActive="activeMenu">Gólyatábor-kezelés</button>
         </mat-menu>
 
         <span class="spacer"></span>

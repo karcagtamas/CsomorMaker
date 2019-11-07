@@ -1,9 +1,8 @@
-import { NewPayOutDialogComponent } from './../new-pay-out-dialog/new-pay-out-dialog.component';
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Event, EventPayOut, EventPayOutType } from 'src/app/models';
 import { NotificationService, EventPayOutsService, EventService } from 'src/app/services';
 import { MatDialog } from '@angular/material/dialog';
-import { DeletePayOutDialogComponent } from '../delete-pay-out-dialog/delete-pay-out-dialog.component';
+import { EventPayoutDialogComponent } from '../event-payout-dialog/event-payout-dialog.component';
 
 @Component({
   selector: 'app-event-summary',
@@ -99,57 +98,52 @@ export class EventSummaryComponent implements OnInit, OnChanges {
     this.summary = summary;
   }
 
-  openNewPayOutDialog() {
-    const dialogRef = this.dialog.open(NewPayOutDialogComponent, {
-      data: this.payOutTypes
+  openPayOutDialog(payout?: EventPayOut) {
+    const dialogRef = this.dialog.open(EventPayoutDialogComponent, {
+      data: { payOutTypes: this.payOutTypes, payOut: payout ? payout : null }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        result.eventId = this.event.id;
-        this.eventpayoutservice
-          .addPayout(result)
-          .then(res => {
-            if (res.response === 'success') {
-              this.notificationservice.success(res.message);
-              this.payOuts.push(result);
-              this.setSummary();
-            } else {
-              this.notificationservice.error(res.message);
-            }
-          })
-          .catch(() => {
-            this.notificationservice.error(
-              'A kiadás/bevétel hozzáadása közben hiba történt! Kérjük próbálja újra késöbb!'
-            );
-          });
-      }
-    });
-  }
-
-  openDeletePayOutDialog() {
-    const dialogRef = this.dialog.open(DeletePayOutDialogComponent, {
-      data: this.payOuts
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && +result !== 0) {
-        this.eventpayoutservice
-          .deletePayout(+result)
-          .then(res => {
-            if (res.response === 'success') {
-              this.notificationservice.success(res.message);
-              this.payOuts = this.payOuts.filter(x => x.id !== +result);
-              this.setSummary();
-            } else {
-              this.notificationservice.error(res.message);
-            }
-          })
-          .catch(() => {
-            this.notificationservice.error(
-              'A kiadás/bevétel törlése közben hiba történt! Kérjük próbálja újra késöbb!'
-            );
-          });
+        if (!result.refresh) {
+          if (payout) {
+            result.id = payout.id;
+            this.eventpayoutservice
+              .updatePayout(result)
+              .then(res => {
+                if (res.response === 'success') {
+                  this.notificationservice.success(res.message);
+                  this.getPayOuts();
+                } else {
+                  this.notificationservice.error(res.message);
+                }
+              })
+              .catch(() => {
+                this.notificationservice.error(
+                  'A kiadás/bevétel frissítése közben hiba történt! Kérjük próbálja újra késöbb!'
+                );
+              });
+          } else {
+            result.eventId = this.event.id;
+            this.eventpayoutservice
+              .addPayout(result)
+              .then(res => {
+                if (res.response === 'success') {
+                  this.notificationservice.success(res.message);
+                  this.payOuts.push(result);
+                } else {
+                  this.notificationservice.error(res.message);
+                }
+              })
+              .catch(() => {
+                this.notificationservice.error(
+                  'A kiadás/bevétel hozzáadása közben hiba történt! Kérjük próbálja újra késöbb!'
+                );
+              });
+          }
+        } else {
+          this.getPayOuts();
+        }
       }
     });
   }

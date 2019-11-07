@@ -27,6 +27,7 @@ CREATE TABLE users(
   lastLogin datetime,
   class varchar(10),
   registrationTime datetime NOT NULL DEFAULT NOW(),
+  blocked boolean DEFAULT FALSE,
   PRIMARY KEY(id),
   CONSTRAINT fk_role_roles FOREIGN KEY (role)
   REFERENCES roles(id)
@@ -90,7 +91,7 @@ CREATE TABLE events(
     CONSTRAINT fk_creater_users FOREIGN KEY (creater)
     REFERENCES users(id),
     CONSTRAINT fk_lastUpdater_users_events FOREIGN KEY (lastUpdater)
-    REFERENCES users(id) 
+    REFERENCES users(id)
 );
 
 CREATE TABLE usereventswitch(
@@ -120,6 +121,8 @@ CREATE TABLE eventpayouts(
   eventId int(11) NOT NULL,
   type int(11) NOT NULL,
   cost decimal NOT NULL,
+  source varchar(100) NOT NULL,
+  destination varchar(100) NOT NULL,
   PRIMARY KEY(id),
   CONSTRAINT fk_type_eventpayouttypes FOREIGN KEY (type)
   REFERENCES eventpayouttypes(id),
@@ -237,7 +240,7 @@ CREATE TRIGGER event_members AFTER INSERT ON usereventswitch
     SELECT name INTO event FROM events WHERE id = NEW.event;
     SELECT name INTO role FROM eventroles WHERE id = NEW.role;
     UPDATE events SET members = members + 1 WHERE id = NEW.event;
-    CALL addNotification(CONCAT('Felvettek a kˆvetkezı esemÈnybe: ', event, CONCAT(' mint ', role, '!')), NEW.user);
+    CALL addNotification(CONCAT('Felvettek a k√∂vetkez≈ë esem√©nybe: ', event, CONCAT(' mint ', role, '!')), NEW.user);
   END;
 
 CREATE TRIGGER update_event_member AFTER UPDATE ON usereventswitch
@@ -247,7 +250,7 @@ CREATE TRIGGER update_event_member AFTER UPDATE ON usereventswitch
     DECLARE role varchar(100);
     SELECT name INTO event FROM events WHERE id = NEW.event;
     SELECT name INTO role FROM eventroles WHERE id = NEW.role;
-    CALL addNotification(CONCAT(event, ' esemÈnyben megv·ltozott a rangod a kˆvetkezıre: ', role), NEW.user);
+    CALL addNotification(CONCAT(event, ' esem√©nyben megv√°ltozott a rangod a k√∂vetkez≈ëre: ', role), NEW.user);
   END;
 
 CREATE TRIGGER event_members_de AFTER DELETE ON usereventswitch
@@ -256,7 +259,7 @@ CREATE TRIGGER event_members_de AFTER DELETE ON usereventswitch
     DECLARE event varchar(100);
     SELECT name INTO event FROM events WHERE id = OLD.event;
     UPDATE events SET members = members - 1 WHERE id = OLD.event;
-    CALL addNotification(CONCAT('Elt·volÌtottka a kˆvetkezı esemÈnybıl: ', event, '!'), OLD.user);
+    CALL addNotification(CONCAT('Elt√°vol√≠tottka a k√∂vetkez≈ë esem√©nyb≈ël: ', event, '!'), OLD.user);
   END;
 
 CREATE TRIGGER team_members AFTER INSERT ON eventteammembers
@@ -267,7 +270,7 @@ CREATE TRIGGER team_members AFTER INSERT ON eventteammembers
     SELECT event INTO _eventId FROM eventteams
       WHERE id = NEW.team;
     UPDATE events set currentPlayers = currentPlayers + 1 WHERE id = _eventId;
-    
+
   END;
 
 CREATE TRIGGER team_members_de AFTER DELETE ON eventteammembers
@@ -278,19 +281,19 @@ CREATE TRIGGER team_members_de AFTER DELETE ON eventteammembers
     SELECT event INTO _eventId FROM eventteams
       WHERE id = OLD.team;
     UPDATE events set currentPlayers = currentPlayers - 1 WHERE id = _eventId;
-    
+
   END;
 
 CREATE TRIGGER news_insert AFTER INSERT ON news
   FOR EACH ROW
   BEGIN
-    CALL addNotification('A hÌr hozz·ad·sa sikeres!', NEW.creater);
+    CALL addNotification('A h√≠r hozz√°ad√°sa sikeres!', NEW.creater);
   END;
 
 CREATE TRIGGER news_delete AFTER DELETE ON news
   FOR EACH ROW
   BEGIN
-    CALL addNotification('Az egyik hÌred tˆrlÈsre ker¸lt!', OLD.creater);
+    CALL addNotification('Az egyik h√≠red t√∂rl√©sre ker√ºlt!', OLD.creater);
   END;
 
 CREATE TRIGGER news_update AFTER UPDATE ON news
@@ -300,8 +303,8 @@ CREATE TRIGGER news_update AFTER UPDATE ON news
     DECLARE _creater varchar(100);
     SELECT username INTO _updater FROM users WHERE id = NEW.lastUpdater;
     SELECT username INTO _creater FROM users WHERE id = NEW.creater;
-    CALL addNotification(CONCAT('Az egyik hÌredet szerkesztette ', _updater, ' nev˚ felhaszn·lÛ!'), OLD.creater);
-    CALL addNotification(CONCAT('Szerkesztetted ', _updater, ' nev˚ felhaszn·lÛ hÌrÈt!'), NEW.lastUpdater);
+    CALL addNotification(CONCAT('Az egyik h√≠redet szerkesztette ', _updater, ' nev≈± felhaszn√°l√≥!'), OLD.creater);
+    CALL addNotification(CONCAT('Szerkesztetted ', _updater, ' nev≈± felhaszn√°l√≥ h√≠r√©t!'), NEW.lastUpdater);
   END;
 
 CREATE TRIGGER user_update AFTER UPDATE ON users
@@ -311,42 +314,42 @@ CREATE TRIGGER user_update AFTER UPDATE ON users
     IF NEW.role <> OLD.role
       THEN
       SELECT name INTO _role FROM roles WHERE id = NEW.role;
-      CALL addNotification(CONCAT('Megv·ltozott a szerver rangod a kˆvetkezıre: ', _role), NEW.id);
+      CALL addNotification(CONCAT('Megv√°ltozott a szerver rangod a k√∂vetkez≈ëre: ', _role), NEW.id);
     END IF;
     IF NEW.name <> OLD.name
       THEN
-      CALL addNotification(CONCAT('Megv·ltozott a neved kˆvetkezıre: ', NEW.name), NEW.id);
+      CALL addNotification(CONCAT('Megv√°ltozott a neved k√∂vetkez≈ëre: ', NEW.name), NEW.id);
     END IF;
     IF NEW.email <> OLD.email
       THEN
-      CALL addNotification(CONCAT('Megv·ltozott az e-mail cÌmed kˆvetkezıre: ', NEW.email), NEW.id);
+      CALL addNotification(CONCAT('Megv√°ltozott az e-mail c√≠med k√∂vetkez≈ëre: ', NEW.email), NEW.id);
     END IF;
     IF NEW.password <> OLD.password
       THEN
-      CALL addNotification('Megv·ltozott a neved a jelszavad', NEW.id);
+      CALL addNotification('Megv√°ltozott a neved a jelszavad', NEW.id);
     END IF;
   END;
 
 CREATE TRIGGER event_insert AFTER INSERT ON events
   FOR EACH ROW
   BEGIN
-    CALL addNotification(CONCAT('Sikeres lÈtrejˆtt a kˆvetkezeı esemÈnyed: ', NEW.name), NEW.creater);
+    CALL addNotification(CONCAT('Sikeres l√©trej√∂tt a k√∂vetkez≈ë esem√©nyed: ', NEW.name), NEW.creater);
   END;
- 
+
 CREATE TRIGGER event_update AFTER UPDATE ON events
   FOR EACH ROW
   BEGIN
     DECLARE _updater varchar(100);
     SELECT name INTO _updater FROM users WHERE id = NEW.lastUpdater;
-    
+
     IF NEW.isDisabled <> OLD.isDisabled
-      THEN CALL addNotification(CONCAT(NEW.name, ' esemÈnyed acrhiv·lva lett ', CONCAT(_updater, ' felhaszn·lÛ ·ltal!')), NEW.creater);
+      THEN CALL addNotification(CONCAT(NEW.name, ' esem√©nyed acrhiv√°lva lett ', CONCAT(_updater, ' felhaszn√°l√≥ √°ltal!')), NEW.creater);
       ELSE IF NEW.isLocked <> OLD.isLocked AND NEW.isLocked
-           THEN CALL addNotification(CONCAT(NEW.name, ' esemÈnyed z·rolva lett ', CONCAT(_updater, ' felhaszn·lÛ ·ltal!')), NEW.creater);
+           THEN CALL addNotification(CONCAT(NEW.name, ' esem√©nyed z√°rolva lett ', CONCAT(_updater, ' felhaszn√°l√≥ √°ltal!')), NEW.creater);
            ELSE IF NEW.isLocked <> OLD.isLocked AND NOT NEW.isLocked
-                THEN CALL addNotification(CONCAT(NEW.name, ' esemÈnyed fel lett oldva ', CONCAT(_updater, ' felhaszn·lÛ ·ltal!')), NEW.creater);
+                THEN CALL addNotification(CONCAT(NEW.name, ' esem√©nyed fel lett oldva ', CONCAT(_updater, ' felhaszn√°l√≥ √°ltal!')), NEW.creater);
                 ELSE IF NEW.members = OLD.members AND NEW.ready = OLD.ready
-                  THEN CALL addNotification(CONCAT(NEW.name, ' esemÈnyed sikeresen frissÌtve lett ', CONCAT(_updater, ' felhaszn·lÛ ·ltal!')), NEW.creater);
+                  THEN CALL addNotification(CONCAT(NEW.name, ' esem√©nyed sikeresen friss√≠tve lett ', CONCAT(_updater, ' felhaszn√°l√≥ √°ltal!')), NEW.creater);
                   END IF;
                 END IF;
            END IF;
@@ -607,14 +610,14 @@ CREATE TRIGGER gt_members AFTER INSERT ON usergtswitch
   BEGIN
     DECLARE gt int(4);
     DECLARE role varchar(100);
-    
+
     DECLARE _days int(2);
     DECLARE _currentDay int(2) DEFAULT 1;
     DECLARE _x int(2) DEFAULT 0;
 
     SELECT year INTO gt FROM gts WHERE id = NEW.gt;
     SELECT name INTO role FROM eventroles WHERE id = NEW.role;
-    CALL addNotification(CONCAT('Felvettek a kˆvetkezı gÛlyat·borba: ', gt, CONCAT(' mint ', role, '!')), NEW.user);
+    CALL addNotification(CONCAT('Felvettek a k√∂vetkez≈ë g√≥lyat√°borba: ', gt, CONCAT(' mint ', role, '!')), NEW.user);
 
     UPDATE gts SET members = members + 1 WHERE id = NEW.gt;
     INSERT INTO gtworkworkerswitch (work, worker, gt)
@@ -662,7 +665,7 @@ CREATE TRIGGER gt_members_de AFTER DELETE ON usergtswitch
   BEGIN
     DECLARE gt int(4);
     SELECT year INTO gt FROM gts WHERE id = OLD.gt;
-    CALL addNotification(CONCAT('Elt·volÌtotta a kˆvetkezıt gÛlyat·borbÛl: ', gt, '!'), OLD.user);
+    CALL addNotification(CONCAT('Elt√°vol√≠totta a k√∂vetkez≈ët g√≥lyat√°borb√≥l: ', gt, '!'), OLD.user);
     UPDATE gts SET members = members - 1 WHERE id = OLD.gt;
     DELETE FROM gtworkworkerswitch
     WHERE worker = OLD.user AND gtworkworkerswitch.gt = OLD.gt;
@@ -681,7 +684,7 @@ CREATE TRIGGER gt_members_update AFTER UPDATE ON usergtswitch
       THEN
     SELECT year INTO gt FROM gts WHERE id = NEW.gt;
     SELECT name INTO role FROM eventroles WHERE id = NEW.role;
-    CALL addNotification(CONCAT(gt, ' gÛlyat·borban megv·ltozott a rangod a kˆvetkezıre: ', role), NEW.user);
+    CALL addNotification(CONCAT(gt, ' g√≥lyat√°borban megv√°ltozott a rangod a k√∂vetkez≈ëre: ', role), NEW.user);
     END IF;
     CALL setGtReadyStatus(OLD.gt, FALSE);
   END;
@@ -698,11 +701,11 @@ CREATE TRIGGER gt_update AFTER UPDATE ON gts
     SELECT name INTO _updater FROM users WHERE id = NEW.lastUpdater;
       
       IF NEW.isLocked <> OLD.isLocked AND NEW.isLocked
-         THEN CALL addNotification(CONCAT(NEW.year, ' gÛlyat·borod z·rolva lett ', CONCAT(_updater, ' felhaszn·lÛ ·ltal!')), NEW.creater);
+         THEN CALL addNotification(CONCAT(NEW.year, ' g√≥lyat√°borod z√°rolva lett ', CONCAT(_updater, ' felhaszn√°l√≥ √°ltal!')), NEW.creater);
           ELSE IF NEW.isLocked <> OLD.isLocked AND NOT NEW.isLocked
-               THEN CALL addNotification(CONCAT(NEW.year, ' gÛlyat·borod fel lett oldva ', CONCAT(_updater, ' felhaszn·lÛ ·ltal!')), NEW.creater);
+               THEN CALL addNotification(CONCAT(NEW.year, ' g√≥lyat√°borod fel lett oldva ', CONCAT(_updater, ' felhaszn√°l√≥ √°ltal!')), NEW.creater);
                ELSE IF NEW.members = OLD.members AND NEW.ready = OLD.ready
-               THEN CALL addNotification(CONCAT(NEW.year, ' gÛlyat·borod sikeresen frissÌtve lett ', CONCAT(_updater, ' felhaszn·lÛ ·ltal!')), NEW.creater);
+               THEN CALL addNotification(CONCAT(NEW.year, ' g√≥lyat√°borod sikeresen friss√≠tve lett ', CONCAT(_updater, ' felhaszn√°l√≥ √°ltal!')), NEW.creater);
                 END IF;
             END IF;
       END IF;
@@ -773,5 +776,5 @@ CREATE TRIGGER class_member_de AFTER DELETE ON gtclassmembers
 CREATE TRIGGER gt_insert AFTER INSERT ON gts
   FOR EACH ROW
   BEGIN
-    CALL addNotification(CONCAT('Sikeres lÈtrejˆtt a kˆvetkezeı gÛlyat·borod: ', NEW.year), NEW.creater);
+    CALL addNotification(CONCAT('Sikeres l√©trej√∂tt a k√∂vetkeze√µ g√≥lyat√°borod: ', NEW.year), NEW.creater);
   END;

@@ -88,11 +88,7 @@ import {
   AddNewWorkComponent,
   WorkerSettingsComponent
 } from './components/event/event-generator';
-import {
-  EventSummaryComponent,
-  NewPayOutDialogComponent,
-  DeletePayOutDialogComponent
-} from './components/event/event-summary';
+import { EventSummaryComponent, EventPayoutDialogComponent } from './components/event/event-summary';
 import { EventToDoComponent, TodoDialogComponent } from './components/event/event-todo';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import {
@@ -155,6 +151,9 @@ import {
   GtPresentingEditorsComponent,
   GtPresentingEditorComponent
 } from './components/gt/gt-presentings';
+import { EventAdminComponent } from './components/admin/event-admin/event-admin.component';
+import { GtAdminComponent } from './components/admin/gt-admin/gt-admin.component';
+import { UserAdminComponent } from './components/admin/user-admin/user-admin.component';
 
 @NgModule({
   declarations: [
@@ -184,8 +183,6 @@ import {
     EventToDoComponent,
     IsLockedPipe,
     IsReadyPipe,
-    NewPayOutDialogComponent,
-    DeletePayOutDialogComponent,
     WorkSettingsComponent,
     AddNewWorkComponent,
     WorkerSettingsComponent,
@@ -247,7 +244,11 @@ import {
     GtPresentingDialogComponent,
     GtPresentingEditorComponent,
     GtPresentingEditorsComponent,
-    GtPresentingEditorDialogComponent
+    GtPresentingEditorDialogComponent,
+    EventPayoutDialogComponent,
+    EventAdminComponent,
+    GtAdminComponent,
+    UserAdminComponent
   ],
   imports: [
     BrowserModule,
@@ -304,8 +305,6 @@ import {
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    NewPayOutDialogComponent,
-    DeletePayOutDialogComponent,
     AddNewWorkComponent,
     ConfirmDialogComponent,
     ModifyEventMemberComponent,
@@ -327,7 +326,8 @@ import {
     NewsDialogComponent,
     GtMeetingDialogComponent,
     GtPresentingDialogComponent,
-    GtPresentingEditorDialogComponent
+    GtPresentingEditorDialogComponent,
+    EventPayoutDialogComponent
   ]
 })
 export class AppModule {}

@@ -2,13 +2,8 @@
   <div class="col col-12 col-sm-4 col-lg-2 menu">
     <div class="events border rounded">
       <div class="title text-center border rounded">Eseményeid</div>
-      <div
-        *ngFor="let event of events"
-        class="event rounded"
-        [routerLink]="['/events', event.id, currentPage]"
-        routerLinkActive="router-link-active"
-        [ngClass]="{ purple: event.id === +currentEventId }"
-      >
+      <div *ngFor="let event of events" class="event rounded" [routerLink]="['/events', event.id, currentPage]"
+        routerLinkActive="router-link-active" [ngClass]="{ purple: event.id === +currentEventId }">
         {{ event.name }}
       </div>
       <div class="event rounded" *ngIf="!currentEvent.id" [routerLink]="['/new-event']">
@@ -18,14 +13,10 @@
     <div class="menuitems border rounded" *ngIf="currentEvent.id">
       <div class="title text-center border rounded">Menü</div>
       <div *ngFor="let item of menuItems">
-        <div
-          class="item rounded"
-          [routerLink]="['/events', currentEventId, item.link]"
-          routerLinkActive="router-link-active"
-          [ngClass]="{ purple: item.link === currentPage }"
-          *ngIf="item.accessLevel <= accessLevel"
-        >
-          {{ item.name }}
+        <div class="item rounded" [routerLink]="['/events', currentEventId, item.link]"
+          routerLinkActive="router-link-active" [ngClass]="{ purple: item.link === currentPage }"
+          *ngIf="item.accessLevel <= accessLevel">
+          {{item.link === currentPage ? "&#9873;" : "&#9872;"}} {{ item.name }}
         </div>
       </div>
       <div>
@@ -36,31 +27,19 @@
   <div class="col col-12 col-sm-8 col-lg-10 changer" *ngIf="currentEvent.id">
     <mat-card class="card">
       <div [ngSwitch]="currentPage">
-        <app-event-details
-          *ngSwitchCase="'details'"
-          [event]="currentEvent"
-          [accessLevel]="accessLevel"
-          (lock)="lockEvent($event)"
-          (increaseVisitors)="increaseVisitors($event)"
-          (decreaseVisitors)="decreaseVisitors($event)"
-          (increaseInjured)="increaseInjured($event)"
-          (decreaseInjured)="decreaseInjured($event)"
-        ></app-event-details>
+        <app-event-details *ngSwitchCase="'details'" [event]="currentEvent" [accessLevel]="accessLevel"
+          (lock)="lockEvent($event)" (increaseVisitors)="increaseVisitors($event)"
+          (decreaseVisitors)="decreaseVisitors($event)" (increaseInjured)="increaseInjured($event)"
+          (decreaseInjured)="decreaseInjured($event)"></app-event-details>
         <app-event-csomor *ngSwitchCase="'csomor'" [event]="currentEvent"></app-event-csomor>
         <app-event-chat *ngSwitchCase="'chat'" [event]="currentEvent"></app-event-chat>
         <app-event-generator *ngSwitchCase="'generator'" [event]="currentEvent"></app-event-generator>
-        <app-event-settings
-          *ngSwitchCase="'settings'"
-          [event]="currentEvent"
-          (update)="updateEvent($event)"
-        ></app-event-settings>
+        <app-event-settings *ngSwitchCase="'settings'" [event]="currentEvent" (update)="updateEvent($event)">
+        </app-event-settings>
         <app-event-summary *ngSwitchCase="'summary'" [event]="currentEvent"></app-event-summary>
         <app-event-to-do *ngSwitchCase="'todo'" [event]="currentEvent"></app-event-to-do>
-        <app-event-members
-          *ngSwitchCase="'members'"
-          [event]="currentEvent"
-          [accessLevel]="accessLevel"
-        ></app-event-members>
+        <app-event-members *ngSwitchCase="'members'" [event]="currentEvent" [accessLevel]="accessLevel">
+        </app-event-members>
         <app-event-teams *ngSwitchCase="'teams'" [event]="currentEvent"></app-event-teams>
       </div>
     </mat-card>

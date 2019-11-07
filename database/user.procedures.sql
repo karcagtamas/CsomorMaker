@@ -2,20 +2,20 @@ USE csomormaker;
   CREATE OR REPLACE PROCEDURE getHash(_username varchar(50))
     BEGIN
       SELECT password AS hash, id AS userId FROM users
-        WHERE username = _username;
+        WHERE username = _username AND NOT blocked;
     END;
 
   CREATE OR REPLACE PROCEDURE getHashById(_userId varchar(50))
     BEGIN
       SELECT password AS hash FROM users
-        WHERE id = _userId;
+        WHERE id = _userId AND NOT blocked;
     END;
   
   CREATE OR REPLACE PROCEDURE isAdmin(_userId int(11))
     BEGIN
-      DECLARE level int(1);
+      DECLARE level int(1) DEFAULT -1;
       DECLARE roleId int(11);
-      SELECT role INTO roleId FROM users WHERE id = _userId;
+      SELECT role INTO roleId FROM users WHERE id = _userId AND NOT blocked;
       SELECT accessLevel INTO level FROM roles WHERE id = roleId;
       IF level = 3
         THEN SELECT TRUE AS isAdmin;
@@ -26,7 +26,7 @@ USE csomormaker;
   CREATE OR REPLACE PROCEDURE isValidUsernameAndEmail(_username varchar(100), _email varchar(255))
     BEGIN
       DECLARE countOf int(11) DEFAULT 0;
-      SELECT COUNT(*) INTO countOf FROM users WHERE username = _username AND email = _email;
+      SELECT COUNT(*) INTO countOf FROM users WHERE username = _username AND email = _email AND NOT blocked;
     IF countOf = 1
       THEN SELECT TRUE AS isValid;
       ELSE SELECT FALSE AS isValid;
@@ -42,15 +42,15 @@ USE csomormaker;
 
   CREATE OR REPLACE PROCEDURE getUsers()
     BEGIN
-     SELECT users.id, users.name, users.username, users.email, users.role AS roleId, roles.name AS role, users.tShirtSize, users.allergy, users.lastLogin, users.class, users.registrationTime FROM users 
+     SELECT users.id, users.name, users.username, users.email, users.role AS roleId, roles.name AS role, users.tShirtSize, users.allergy, users.lastLogin, users.class, users.registrationTime, users.blocked FROM users 
      INNER JOIN roles ON users.role = roles.id;
     END;
 
   CREATE OR REPLACE PROCEDURE getUser(_id int(11))
     BEGIN
-     SELECT users.id, users.name, users.username, users.email, users.role AS roleId, roles.name AS role, users.tShirtSize, users.allergy, users.lastLogin, users.class, users.registrationTime FROM users 
+     SELECT users.id, users.name, users.username, users.email, users.role AS roleId, roles.name AS role, users.tShirtSize, users.allergy, users.lastLogin, users.class, users.registrationTime, users.blocked FROM users 
      INNER JOIN roles ON users.role = roles.id
-     WHERE users.id = _id;
+     WHERE users.id = _id AND NOT blocked;
     END;
 
 

@@ -1,0 +1,50 @@
+<form mat-dialog-content [formGroup]="form">
+  <div class="text-center panel-title border rounded">{{ title }}</div>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Név</mat-label>
+    <input matInput type="text" placeholder="Név" formControlName="name" />
+    <mat-error *ngIf="form.get('name').hasError('required')">A név megadása kötelező!</mat-error>
+    <mat-error *ngIf="form.get('name').hasError('maxlength')">A név hossza maximum 75 karakter lehet!</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Összeg</mat-label>
+    <input matInput type="number" placeholder="Összeg" formControlName="cost" />
+    <mat-error *ngIf="form.get('cost').hasError('required')">A összeg megadása kötelező!</mat-error>
+    <mat-error *ngIf="form.get('cost').hasError('min')">A összeg minimum 0 kell, hogy legyen!</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Típus</mat-label>
+    <mat-select formControlName="type">
+      <mat-option *ngFor="let type of data.payOutTypes" [value]="type.id">
+        {{ type.name }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('type').hasError('required')">A típus megadása kötelező!</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Kitől</mat-label>
+    <input matInput type="text" placeholder="Kitől" formControlName="source" />
+    <mat-error *ngIf="form.get('source').hasError('required')">Az összeg forrásának megadása kötelező!</mat-error>
+    <mat-error *ngIf="form.get('source').hasError('maxlength')">Az összeg forrásának hossza maximum 100 karakter lehet!
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Kinek</mat-label>
+    <input matInput type="text" placeholder="Kinek" formControlName="destination" />
+    <mat-error *ngIf="form.get('destination').hasError('required')">Az összeg céljának megadása kötelező!</mat-error>
+    <mat-error *ngIf="form.get('destination').hasError('maxlength')">Az összeg céljának hossza maximum 100 karakter
+      lehet!</mat-error>
+  </mat-form-field>
+</form>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="save()"
+    title="{{isEdit? 'Módosítások mentése': 'Új pénzmozgás rögzítése'}}">
+    Mentés
+  </button>
+  <button mat-raised-button color="accent" (click)="onNoClick()" title="Visszalépés mentés nélkül">Mégsem</button>
+  <button mat-raised-button color="warn" (click)="delete()" *ngIf="isEdit" title="Pénzmozgás törlése">Törlés</button>
+</div>

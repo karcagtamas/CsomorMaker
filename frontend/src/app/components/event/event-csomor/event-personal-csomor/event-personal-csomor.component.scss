@@ -5,6 +5,7 @@
     margin-top: 0.3rem;
     padding: 0.2rem;
   }
+
   .over {
     background-color: #9a68f1af !important;
     transition-duration: 0.5s;
@@ -16,5 +17,15 @@
 }
 
 .buttons {
+  margin: 0;
   margin-bottom: 0.5rem;
+
+  div {
+    text-align: center;
+
+    button {
+      margin-bottom: 0.2rem;
+      margin-top: 0.2rem;
+    }
+  }
 }

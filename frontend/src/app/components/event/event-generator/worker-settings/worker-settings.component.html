@@ -1,21 +1,14 @@
 <div class="hours">
   <section>
-    <mat-checkbox
-      *ngFor="let table of workerTables"
-      [(ngModel)]="table.isAvaiable"
-      [labelPosition]="'before'"
+    <mat-checkbox *ngFor="let table of workerTables" [(ngModel)]="table.isAvaiable" [labelPosition]="'before'"
       (change)="saveWorkerTable(table.day, table.hour, table.workerId)"
-    >
+      title="Státusz állítása a {{table.day}}. nap {{table.hour}}. órájához">
       {{ table.day }} - {{ table.hour }}
     </mat-checkbox>
   </section>
   <section>
-    <mat-checkbox
-      *ngFor="let status of workStatuses"
-      [(ngModel)]="status.isValid"
-      [labelPosition]="'before'"
-      (change)="saveWorkStatus(status.workId)"
-    >
+    <mat-checkbox *ngFor="let status of workStatuses" [(ngModel)]="status.isValid" [labelPosition]="'before'"
+      (change)="saveWorkStatus(status.workId)" title="Státusz állítása {{status.work}} poszthoz">
       {{ status.work }}
     </mat-checkbox>
   </section>

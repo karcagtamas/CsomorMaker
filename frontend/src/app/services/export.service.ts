@@ -1,3 +1,4 @@
+import { EventWork, EventWorkTable } from 'src/app/models';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -11,13 +12,16 @@ import {
   GtMember,
   GtClass,
   GtClassMember,
-  GtMeeting
+  GtMeeting,
+  EventWorker
 } from '../models';
 import { AngularCsv } from 'angular7-csv/dist/Angular-csv';
 import { GtGeneratorService } from './gt-generator.service';
 import { GtMembersService } from './gt-members.service';
 import { GtClassesService } from './gt-classes.service';
 import { GtMeetingsService } from './gt-meetings.service';
+import { EventWorkerTable } from '../models/event.worker.table.model';
+import { EventGeneratorService } from './event-generator.service';
 
 const URL = environment.api;
 
@@ -27,6 +31,8 @@ const GT_PERSONAL_HEADERS = ['Nap', 'Óra', 'Poszt'];
 const GT_WORK_HEADERS = ['Sorszám', 'Személy'];
 const GT_MEMBERS_HEADERS = ['Sorszám', 'Név', 'Osztály', 'E-mail cím', 'Poló méret'];
 const GT_CLASS_MEMBERS_HEADERS = ['Sorszám', 'Név', 'Osztály', 'Státusz', 'Poló méret'];
+const EVENT_PERSONAL_HEADERS = ['Kezdet', 'Vége', 'Poszt'];
+const EVENT_WORK_HEADER = ['Kezdet', 'Vége', 'Személy'];
 
 const CSV_OPTIONS = {
   fieldSeparator: ',',
@@ -52,8 +58,41 @@ export class ExportService {
     private gtgeneratorservice: GtGeneratorService,
     private gtmembersservice: GtMembersService,
     private gtclassesservice: GtClassesService,
-    private gtmeetingsservice: GtMeetingsService
+    private gtmeetingsservice: GtMeetingsService,
+    private eventgeneratorservice: EventGeneratorService
   ) {}
+
+  exportEventPersonal(worker: EventWorker) {
+    let tables: EventWorkerTable[] = [];
+    const array = [];
+    const options = this.csvOptions;
+    options.headers = EVENT_PERSONAL_HEADERS;
+    options.title = worker.name;
+    this.eventgeneratorservice.getWorkerTables(worker.id, worker.event).then(res => {
+      tables = res;
+      for (const i of tables) {
+        array.push({ start: `${i.hour}. óra`, end: `${i.hour + 1}. óra`, work: i.work ? i.work : '-' });
+      }
+      // tslint:disable-next-line: no-unused-expression
+      new AngularCsv(array, `${worker.name}_${new Date().toDateString()}`, options);
+    });
+  }
+
+  exportEventWork(work: EventWork) {
+    let tables: EventWorkTable[] = [];
+    const array = [];
+    const options = this.csvOptions;
+    options.headers = EVENT_WORK_HEADER;
+    options.title = work.name;
+    this.eventgeneratorservice.getWorkTables(work.id).then(res => {
+      tables = res;
+      for (const i of tables) {
+        array.push({ start: `${i.hour}. óra`, end: `${i.hour + 1}. óra`, worker: i.worker ? i.worker : '-' });
+      }
+      // tslint:disable-next-line: no-unused-expression
+      new AngularCsv(array, `${work.name}_${new Date().toDateString()}`, options);
+    });
+  }
 
   exportPersonal(worker: GtWorker): void {
     let tables: GtWorkerTable[] = [];

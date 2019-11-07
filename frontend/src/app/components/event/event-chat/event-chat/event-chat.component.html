@@ -3,10 +3,8 @@
   <div class="body border rounded">
     <div *ngFor="let message of eventMessages" class="message">
       {{ message.sender }} <small>- {{ message.dateOfSent | chatDate }}</small>
-      <div
-        class="border rounded message-body"
-        [ngClass]="{ me: message.senderId == userId, other: message.senderId != userId }"
-      >
+      <div class="border rounded message-body"
+        [ngClass]="{ me: message.senderId == userId, other: message.senderId != userId }">
         {{ message.message }}
       </div>
     </div>
@@ -22,12 +20,9 @@
       </mat-form-field>
     </div>
     <div class="button">
-      <button
-        mat-raised-button
-        color="primary"
-        class="col-12 col-sm-6 offset-sm-3 col-md-4 offset-md-4 col-lg-2 offset-lg-5"
-        (click)="sendMessage()"
-      >
+      <button mat-raised-button color="primary"
+        class="col-12 col-sm-6 offset-sm-3 col-md-4 offset-md-4 col-lg-2 offset-lg-5" (click)="sendMessage()"
+        title="Üzenetek küldése">
         Küldés
       </button>
     </div>

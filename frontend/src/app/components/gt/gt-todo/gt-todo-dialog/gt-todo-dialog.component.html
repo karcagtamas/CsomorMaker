@@ -6,8 +6,8 @@
     <mat-error *ngIf="form.get('text').hasError('required')">A szöveg megadása kötelező!</mat-error>
   </mat-form-field>
   <mat-form-field class="w-100" appearance="outline">
-    <mat-label>Todo</mat-label>
-    <mat-select formControlName="importance" placeholder="Fontoság">
+    <mat-label>Fontosság</mat-label>
+    <mat-select formControlName="importance" placeholder="Fontosság">
       <mat-option [value]="1">Prio 1</mat-option>
       <mat-option [value]="2">Prio 2</mat-option>
       <mat-option [value]="3">Prio 3</mat-option>

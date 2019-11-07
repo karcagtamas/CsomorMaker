@@ -1,10 +1,12 @@
 <div class="text-center panel-title border rounded">Csömör</div>
 <div class="csomor" *ngIf="event && event.ready">
   <div class="buttons">
-    <button mat-raised-button color="{{ selectedMode === 1 ? 'primary' : 'accent' }}" (click)="changeSelection(1)">
+    <button mat-raised-button color="{{ selectedMode === 1 ? 'primary' : 'accent' }}" (click)="changeSelection(1)"
+      title="Személyes csömörök">
       Személyes
     </button>
-    <button mat-raised-button color="{{ selectedMode === 2 ? 'primary' : 'accent' }}" (click)="changeSelection(2)">
+    <button mat-raised-button color="{{ selectedMode === 2 ? 'primary' : 'accent' }}" (click)="changeSelection(2)"
+      title="Poszt csömörök">
       Poszt
     </button>
   </div>

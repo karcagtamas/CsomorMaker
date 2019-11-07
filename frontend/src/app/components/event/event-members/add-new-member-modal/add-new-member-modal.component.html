@@ -9,8 +9,9 @@
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-raised-button color="primary" (click)="add()" [disabled]="userControl.invalid">
+  <button mat-raised-button color="primary" (click)="add()" [disabled]="userControl.invalid"
+    title="Felhasználó hozzáasása az eseményhez">
     Hozzáadás
   </button>
-  <button mat-raised-button color="accent" (click)="dialogRef.close()">Mégsem</button>
+  <button mat-raised-button color="accent" (click)="dialogRef.close()" title="Visszalépés mentés nélkül">Mégsem</button>
 </div>

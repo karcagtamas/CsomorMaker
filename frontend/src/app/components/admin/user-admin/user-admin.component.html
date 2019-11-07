@@ -1,0 +1,58 @@
+<div class="m-2">
+  <mat-card>
+    <div class="text-center panel-title border rounded">Felhasználókezelés</div>
+    <div class="data-table">
+      <mat-form-field>
+        <input matInput (keyup)="filtering($event.target.value)" placeholder="Felhasználók szűrése...">
+      </mat-form-field>
+      <table class="data-table" mat-table [dataSource]="users" class="mat-elevation-z8" matSort>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Név</th>
+          <td mat-cell *matCellDef="let user">{{user.name}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="username">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Felhasználónév</th>
+          <td mat-cell *matCellDef="let user">{{user.username}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>E-mail</th>
+          <td mat-cell *matCellDef="let user">{{user.email}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="blocked">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Tiltási állapot</th>
+          <td mat-cell *matCellDef="let user">
+            <mat-checkbox [(ngModel)]="user.blocked" (change)="blockUser(user)" [disabled]="user.id === userId">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="role">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Weboldal rang</th>
+          <td mat-cell *matCellDef="let user" style="width: 150px; padding-right: 20px;">
+            <mat-select [(ngModel)]="user.roleId" class="mr-1" (selectionChange)="changeRole(user)"
+              [disabled]="user.id === userId">
+              <mat-option *ngFor="let role of roles" [value]="role.id">{{role.name}}</mat-option>
+            </mat-select>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="registrationTime">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Regisztráció</th>
+          <td mat-cell *matCellDef="let user">{{user.registrationTime}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="lastLogin">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Utolsó bejelentkezés</th>
+          <td mat-cell *matCellDef="let user">{{user.lastLogin}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
+    </div>
+  </mat-card>
+</div>

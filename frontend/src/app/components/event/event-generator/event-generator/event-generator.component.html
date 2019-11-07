@@ -1,28 +1,23 @@
 <div class="text-center panel-title border rounded">Generátor</div>
 <div class="buttons">
-  <button mat-raised-button color="accent" (click)="generate()">Generálás</button>
+  <button mat-raised-button color="accent" (click)="generate()" title="Csömörök generálása">Generálás</button>
 </div>
 <div class="generator" *ngIf="event">
   <div class="eventWorks">
     <div class="text-center panel-title border rounded">Posztok</div>
     <mat-accordion>
-      <mat-expansion-panel
-        *ngFor="let work of eventWorks; let i = index"
-        [expanded]="workStep === i"
-        (opened)="setWorkStep(i)"
-        hideToggle
-      >
+      <mat-expansion-panel *ngFor="let work of eventWorks; let i = index" [expanded]="workStep === i"
+        (opened)="setWorkStep(i)" hideToggle>
         <mat-expansion-panel-header>
           {{ work.name }}
         </mat-expansion-panel-header>
-        <app-work-settings
-          [work]="work"
-          (delete)="deleteWork($event)"
-          (save)="saveWorkTable($event)"
-        ></app-work-settings>
+        <app-work-settings [work]="work" (delete)="deleteWork($event)" (save)="saveWorkTable($event)">
+        </app-work-settings>
         <mat-action-row>
-          <button mat-raised-button color="warn" (click)="prevWorkStep()" *ngIf="workStep !== 0">Elöző</button>
-          <button mat-raised-button color="primary" (click)="nextWorkStep()" *ngIf="workStep !== eventWorks.length - 1">
+          <button mat-raised-button color="warn" (click)="prevWorkStep()" *ngIf="workStep !== 0"
+            title="Elöző poszt">Elöző</button>
+          <button mat-raised-button color="primary" (click)="nextWorkStep()" *ngIf="workStep !== eventWorks.length - 1"
+            title="Következő poszt">
             Következő
           </button>
         </mat-action-row>
@@ -31,34 +26,24 @@
     <div *ngIf="!eventWorks || eventWorks.length === 0" class="text-center">
       Nincs még posztod :(
     </div>
-    <button mat-raised-button color="primary" (click)="openAddNewWorkDialog()">Új poszt</button>
+    <button mat-raised-button color="primary" (click)="openAddNewWorkDialog()" title="Új psozt felvétele">Új
+      poszt</button>
   </div>
   <div class="eventWorkers">
     <div class="text-center panel-title border rounded">Humánok</div>
     <mat-accordion>
-      <mat-expansion-panel
-        *ngFor="let worker of eventWorkers; let i = index"
-        [expanded]="workerStep === i"
-        (opened)="setWorkerStep(i)"
-        hideToggle
-      >
+      <mat-expansion-panel *ngFor="let worker of eventWorkers; let i = index" [expanded]="workerStep === i"
+        (opened)="setWorkerStep(i)" hideToggle>
         <mat-expansion-panel-header>
           {{ worker.name }}
         </mat-expansion-panel-header>
-        <app-worker-settings
-          [worker]="worker"
-          (saveTable)="saveWorkerTable($event)"
-          (saveStatus)="saveWorkStatus($event)"
-          [eventId]="event.id"
-        ></app-worker-settings>
+        <app-worker-settings [worker]="worker" (saveTable)="saveWorkerTable($event)"
+          (saveStatus)="saveWorkStatus($event)" [eventId]="event.id"></app-worker-settings>
         <mat-action-row>
-          <button mat-raised-button color="warn" (click)="prevWorkerStep()" *ngIf="workerStep !== 0">Elöző</button>
-          <button
-            mat-raised-button
-            color="primary"
-            (click)="nextWorkerStep()"
-            *ngIf="workerStep !== eventWorkers.length - 1"
-          >
+          <button mat-raised-button color="warn" (click)="prevWorkerStep()" *ngIf="workerStep !== 0"
+            title="Elöző humán">Elöző</button>
+          <button mat-raised-button color="primary" (click)="nextWorkerStep()"
+            *ngIf="workerStep !== eventWorkers.length - 1" title="Következő humán">
             Következő
           </button>
         </mat-action-row>

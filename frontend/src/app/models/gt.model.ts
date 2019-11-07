@@ -15,6 +15,7 @@ export class Gt {
   lastUpdater: string;
   lastUpdaterId: number;
   lastUpdate: Date;
+  isDisabled: boolean;
 }
 
 export class GtMember {

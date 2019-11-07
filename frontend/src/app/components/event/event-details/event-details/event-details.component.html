@@ -17,30 +17,39 @@
   <div class="element"><span class="name">Utolsó frissítés:</span> {{ event.lastUpdate | date: 'yyyy. MM. dd.' }}</div>
   <hr />
   <div class="big-title">Adminisztratív adatok</div>
-  <div class="element"><span class="name">Zárolási állapot:</span> {{ event.isLocked | isLocked }}</div>
+  <div class="element" [ngClass]="{green: !event.isLocked, red: event.isLocked}"><span class="name">Zárolási
+      állapot:</span> {{ event.isLocked | isLocked }}</div>
   <div class="element"><span class="name">Jelenlegi játékos szám:</span> {{ event.currentPlayers | personCount }}</div>
   <div class="element"><span class="name">Nézők:</span> {{ event.visitors | personCount }}</div>
   <div class="element"><span class="name">Sérültek:</span> {{ event.injured | personCount }}</div>
   <div class="element"><span class="name">Tagok:</span> {{ event.members | personCount }}</div>
   <hr />
   <div class="big-title">Generálás</div>
-  <div class="element"><span class="name">Zárolási állapot:</span> {{ event.isLocked | isLocked }}</div>
-  <div class="element"><span class="name">Generátor állapot:</span> {{ event.ready | isReady }}</div>
+  <div class="element" [ngClass]="{green: !event.isLocked, red: event.isLocked}"><span class="name">Zárolási
+      állapot:</span> {{ event.isLocked | isLocked }}</div>
+  <div class="element" [ngClass]="{green: event.ready, red: !event.ready}"><span class="name">Generátor állapot:</span>
+    {{ event.ready | isReady }}</div>
   <div class="element"><span class="name">Tagok:</span> {{ event.members | personCount }}</div>
   <div class="text-center">
-    <button mat-raised-button color="accent" *ngIf="!event.isLocked && accessLevel >= 3" (click)="lockEvent()">
+    <button mat-raised-button color="accent" *ngIf="!event.isLocked && accessLevel >= 3" (click)="lockEvent()"
+      title="Esemény zárolása">
       Zárolás
     </button>
-    <button mat-raised-button color="accent" *ngIf="event.isLocked && accessLevel >= 3" (click)="lockEvent()">
+    <button mat-raised-button color="accent" *ngIf="event.isLocked && accessLevel >= 3" (click)="lockEvent()"
+      title="Esemény feloldása">
       Zárolás bontása
     </button>
   </div>
   <div class="text-center">
-    <button mat-stroked-button color="primary" (click)="decreaseV()" *ngIf="accessLevel >= 2">- Látógató -</button>
-    <button mat-stroked-button color="primary" (click)="increaseV()" *ngIf="accessLevel >= 2">+ Látógató +</button>
+    <button mat-stroked-button color="primary" (click)="decreaseV()" *ngIf="accessLevel >= 2"
+      title="Látógató szám csökkentése">- Látógató -</button>
+    <button mat-stroked-button color="primary" (click)="increaseV()" *ngIf="accessLevel >= 2"
+      title="Látógató szám növelése">+ Látógató +</button>
   </div>
   <div class="text-center">
-    <button mat-stroked-button color="primary" (click)="decreaseI()" *ngIf="accessLevel >= 2">- Sérült -</button>
-    <button mat-stroked-button color="primary" (click)="increaseI()" *ngIf="accessLevel >= 2">+ Sérült +</button>
+    <button mat-stroked-button color="primary" (click)="decreaseI()" *ngIf="accessLevel >= 2"
+      title="Sérült szám csökkentése">- Sérült -</button>
+    <button mat-stroked-button color="primary" (click)="increaseI()" *ngIf="accessLevel >= 2"
+      title="Sérült szám csökkentése">+ Sérült +</button>
   </div>
 </div>

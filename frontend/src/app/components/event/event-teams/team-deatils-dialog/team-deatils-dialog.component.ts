@@ -54,7 +54,9 @@ export class TeamDeatilsDialogComponent implements OnInit {
   }
 
   openAddTeamMemberModal() {
-    const dialogRef = this.dialog.open(AddTeamMemberDialogComponent, {});
+    const dialogRef = this.dialog.open(AddTeamMemberDialogComponent, {
+      width: '50%'
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
