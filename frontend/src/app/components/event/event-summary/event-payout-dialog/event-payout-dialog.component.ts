@@ -43,7 +43,7 @@ export class EventPayoutDialogComponent implements OnInit {
     const payout = this.data.payOut;
     this.form.setValue({
       name: payout.name,
-      type: payout.type,
+      type: payout.typeId,
       cost: payout.cost,
       source: payout.source,
       destination: payout.destination
@@ -62,7 +62,7 @@ export class EventPayoutDialogComponent implements OnInit {
       let payout = {
         name: this.form.get('name').value,
         cost: +this.form.get('cost').value,
-        type: +this.form.get('type').value,
+        typeId: +this.form.get('type').value,
         source: this.form.get('source').value,
         destination: this.form.get('destination').value
       };

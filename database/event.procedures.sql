@@ -74,7 +74,7 @@ CREATE OR REPLACE PROCEDURE getUsersEvents(_userId int(11))
       INNER JOIN usereventswitch ON events.id = usereventswitch.event
       INNER JOIN users ON events.creater = users.id
       INNER JOIN users u2 ON events.lastUpdater = users.id
-      WHERE NOT events.isDisabled AND usereventswitch.user = _userId AND u2.id = EVENTS.lastUpdater;
+      WHERE NOT events.isDisabled AND usereventswitch.user = _userId AND u2.id = events.lastUpdater;
     END;
 
 CREATE OR REPLACE PROCEDURE addEvent(_name varchar(50), _creater int(11))

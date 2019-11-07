@@ -1,9 +1,7 @@
-import { NewPayOutDialogComponent } from './../new-pay-out-dialog/new-pay-out-dialog.component';
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Event, EventPayOut, EventPayOutType } from 'src/app/models';
 import { NotificationService, EventPayOutsService, EventService } from 'src/app/services';
 import { MatDialog } from '@angular/material/dialog';
-import { DeletePayOutDialogComponent } from '../delete-pay-out-dialog/delete-pay-out-dialog.component';
 import { EventPayoutDialogComponent } from '../event-payout-dialog/event-payout-dialog.component';
 
 @Component({

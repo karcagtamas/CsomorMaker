@@ -250,7 +250,7 @@
                                     break;
 
                                 case 'update':
-                                    updatePayOut($_POST['id'], $_POST['type'], $_POST['cost'], $_POST['source'], $_POST['destination']);
+                                    updatePayOut($_POST['id'], $_POST['name'], $_POST['type'], $_POST['cost'], $_POST['source'], $_POST['destination']);
                                     break;
                                     
                                 case 'types':

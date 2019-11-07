@@ -88,12 +88,7 @@ import {
   AddNewWorkComponent,
   WorkerSettingsComponent
 } from './components/event/event-generator';
-import {
-  EventSummaryComponent,
-  EventPayoutDialogComponent,
-  NewPayOutDialogComponent,
-  DeletePayOutDialogComponent
-} from './components/event/event-summary';
+import { EventSummaryComponent, EventPayoutDialogComponent } from './components/event/event-summary';
 import { EventToDoComponent, TodoDialogComponent } from './components/event/event-todo';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import {
@@ -185,8 +180,6 @@ import {
     EventToDoComponent,
     IsLockedPipe,
     IsReadyPipe,
-    NewPayOutDialogComponent,
-    DeletePayOutDialogComponent,
     WorkSettingsComponent,
     AddNewWorkComponent,
     WorkerSettingsComponent,
@@ -306,8 +299,6 @@ import {
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    NewPayOutDialogComponent,
-    DeletePayOutDialogComponent,
     AddNewWorkComponent,
     ConfirmDialogComponent,
     ModifyEventMemberComponent,
