@@ -1,0 +1,22 @@
+.data-table {
+  padding: 1rem;
+
+  table {
+    width: 100%;
+  }
+}
+
+::ng-deep th .mat-sort-header-button {
+  font-size: 15px !important;
+  color: #683ab7;
+}
+
+th {
+  font-size: 15px !important;
+  color: #683ab7;
+}
+
+
+::ng-deep mat-select .ng-star-inserted {
+  font-size: 12px !important;
+}

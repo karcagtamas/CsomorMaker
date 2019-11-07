@@ -71,7 +71,7 @@
 
         $sql = "CALL blockUser(?, ?);";
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("is", $user, $status);
+        $stmt->bind_param("ii", $user, $status);
         $stmt->execute();
         if ($stmt->errno){
             $array['response'] =  'fail';
@@ -90,7 +90,7 @@
 
         $sql = "CALL updateEventArchiveStatus(?, ?);";
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("is", $event, $status);
+        $stmt->bind_param("ii", $event, $status);
         $stmt->execute();
         if ($stmt->errno){
             $array['response'] =  'fail';
@@ -108,7 +108,7 @@
 
         $sql = "CALL updateGtArchiveStatus(?, ?);";
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("is", $gt, $status);
+        $stmt->bind_param("ii", $gt, $status);
         $stmt->execute();
         if ($stmt->errno){
             $array['response'] =  'fail';

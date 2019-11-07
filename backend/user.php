@@ -201,4 +201,21 @@
         return $randomString;
     }
 
+    function getRoles(){
+        global $db;
+
+        $sql = "CALL getRoles();";
+        
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $array = [];
+        while($row = $result->fetch_assoc()){
+            array_push($array, $row);
+        }
+        echo json_encode($array);
+        $stmt->close();
+    }
+
 ?>

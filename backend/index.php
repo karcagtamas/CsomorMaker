@@ -77,6 +77,18 @@
                                     break;
                             }
                             break;
+                        case 'roles':
+                            $subevent = $url[4];
+                            switch ($subevent) {
+                                case 'get':
+                                    getRoles();
+                                    break;
+                                
+                                default:
+                                    echo '{"response" : "bad-subevent", "message" : "Bad request event!"}';
+                                    break;
+                            }
+                            break;
                         
                         default:
                             echo '{"response" : "bad-event", "message" : "Bad request event!"}';

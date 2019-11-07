@@ -151,7 +151,9 @@ import {
   GtPresentingEditorsComponent,
   GtPresentingEditorComponent
 } from './components/gt/gt-presentings';
-import { AdminComponent } from './components/admin/admin/admin.component';
+import { EventAdminComponent } from './components/admin/event-admin/event-admin.component';
+import { GtAdminComponent } from './components/admin/gt-admin/gt-admin.component';
+import { UserAdminComponent } from './components/admin/user-admin/user-admin.component';
 
 @NgModule({
   declarations: [
@@ -244,7 +246,9 @@ import { AdminComponent } from './components/admin/admin/admin.component';
     GtPresentingEditorsComponent,
     GtPresentingEditorDialogComponent,
     EventPayoutDialogComponent,
-    AdminComponent
+    EventAdminComponent,
+    GtAdminComponent,
+    UserAdminComponent
   ],
   imports: [
     BrowserModule,

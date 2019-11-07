@@ -31,7 +31,7 @@ CREATE OR REPLACE PROCEDURE getAllEvent()
 
 CREATE OR REPLACE PROCEDURE getAllGt()
     BEGIN
-        SELECT gts.id, gts.year, gts.tShirtColor, gts.days, gts.members, gts.ready, gts.creater AS createrId, gts.isLocked, gts.greeny, gts.greenyCost, users.name AS creater, gts.startDate, gts.lastUpdate, gts.creationDate, gts.lastUpdater AS lastUpdaterId, u2.name AS lastUpdater  FROM gts 
+        SELECT gts.id, gts.year, gts.tShirtColor, gts.days, gts.members, gts.ready, gts.creater AS createrId, gts.isLocked, gts.greeny, gts.greenyCost, users.name AS creater, gts.startDate, gts.lastUpdate, gts.creationDate, gts.lastUpdater AS lastUpdaterId, u2.name AS lastUpdater, gts.isDisabled FROM gts 
         INNER JOIN users ON gts.creater = users.id
         INNER JOIN users u2 ON gts.lastUpdater = u2.id
         ORDER BY gts.year;

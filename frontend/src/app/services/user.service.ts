@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { User, Response } from '../models';
+import { User, Response, Role } from '../models';
 
 const URL = environment.api;
 
@@ -14,6 +14,10 @@ export class UserService {
   url = URL + '/user';
 
   constructor(private http: HttpClient) {}
+
+  getRoles(): Promise<Role[]> {
+    return this.http.get<Role[]>(`${this.url}/roles/get`, HttpHeader).toPromise();
+  }
 
   isAdmin(): Promise<boolean> {
     return this.http.get<boolean>(`${this.url}/isadmin`, HttpHeader).toPromise();

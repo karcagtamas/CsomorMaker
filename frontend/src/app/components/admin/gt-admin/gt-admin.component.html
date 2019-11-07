@@ -1,0 +1,63 @@
+<div class="m-2">
+  <mat-card>
+    <div class="text-center panel-title border rounded">Gólyatábor-kezelés</div>
+    <div class="data-table">
+      <mat-form-field>
+        <input matInput (keyup)="filtering($event.target.value)" placeholder="Táborok szűrése...">
+      </mat-form-field>
+      <table class="data-table mat-elevation-z8" mat-table [dataSource]="gts" matSort>
+        <ng-container matColumnDef="year">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Év</th>
+          <td mat-cell *matCellDef="let gt">{{gt.year}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="tShirtColor">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Póló szín</th>
+          <td mat-cell *matCellDef="let gt">{{gt.tShirtColor}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="isDisabled">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Archív státusz</th>
+          <td mat-cell *matCellDef="let gt">
+            <mat-checkbox [(ngModel)]="gt.isDisabled" (change)="updateArchiveStatus(gt)">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="creater">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Létrehozó</th>
+          <td mat-cell *matCellDef="let gt">{{gt.creater}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="lastUpdater">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Utolsó frissítő</th>
+          <td mat-cell *matCellDef="let gt">{{gt.lastUpdater}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="greeny">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Gólyák</th>
+          <td mat-cell *matCellDef="let gt">{{gt.greeny}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="members">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Tagok</th>
+          <td mat-cell *matCellDef="let gt">{{gt.members}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="creationDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Létrehozás</th>
+          <td mat-cell *matCellDef="let gt">{{gt.creationDate}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="lastUpdate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Utolsó frissítés</th>
+          <td mat-cell *matCellDef="let gt">{{gt.lastUpdate}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
+    </div>
+  </mat-card>
+</div>
