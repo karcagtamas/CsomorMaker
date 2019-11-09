@@ -371,6 +371,7 @@ CREATE TABLE gts(
   startDate date,
   lastUpdater int(11) NOT NULL,
   lastUpdate datetime NOT NULL DEFAULT NOW(),
+  isDisabled boolean NOT NULL DEFAULT FALSE,
   PRIMARY KEY(id),
   CONSTRAINT fk_creater_users_gts FOREIGN KEY (creater)
   REFERENCES users(id),
