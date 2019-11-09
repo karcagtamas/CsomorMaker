@@ -10,6 +10,7 @@
         $stmt->execute();
         $result = $stmt->get_result();
         
+        
         $array = [];
         while($row = $result->fetch_assoc()){
             array_push($array, $row);

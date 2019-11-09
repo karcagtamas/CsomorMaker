@@ -8,7 +8,7 @@
     }else{
         define('SERVER', '127.0.0.1');
         define('USER', 'karcags');
-        define('PASS', 'SL7INGAsq6HfYKV0');
+        define('PASS', 'Tomi42457');
         define('DATABASE' , 'karcags_csomormaker');
     }
 
