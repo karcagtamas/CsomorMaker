@@ -57,7 +57,8 @@ CREATE OR REPLACE PROCEDURE getNotifications(_user int(11))
       SELECT notifications.id, notifications.text, notifications.date, notifications.owner AS ownerId, users.name AS owner FROM notifications
         INNER JOIN users ON notifications.owner = users.id
         WHERE notifications.owner = _user
-      ORDER BY notifications.date DESC;
+      ORDER BY notifications.date DESC
+      LIMIT 30;
     END;
 
   CREATE OR REPLACE PROCEDURE addNotification(_text text, _owner int(11))

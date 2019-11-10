@@ -1,6 +1,7 @@
-<div class="text-center panel-title border rounded">Chat</div>
+<div class="text-center panel-title border rounded">Chat <mat-icon>chat</mat-icon>
+</div>
 <div class="chat">
-  <div class="body border rounded">
+  <div class="body border rounded" id="chat-body">
     <div *ngFor="let message of eventMessages" class="message">
       {{ message.sender }} <mat-icon>person</mat-icon> <small>- {{ message.dateOfSent | chatDate }}</small>
       <div class="border rounded message-body"

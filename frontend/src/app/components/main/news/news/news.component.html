@@ -1,12 +1,8 @@
 <div>
-  <div class="text-center panel-title border rounded">Hírek</div>
-  <app-news-element
-    *ngFor="let element of news"
-    [accessLevel]="accessLevel"
-    [news]="element"
-    (delete)="deleteNews($event)"
-    (update)="openNewsDialog($event)"
-  ></app-news-element>
+  <div class="text-center panel-title border rounded">Hírek <mat-icon>info</mat-icon>
+  </div>
+  <app-news-element *ngFor="let element of news" [accessLevel]="accessLevel" [news]="element"
+    (delete)="deleteNews($event)" (update)="openNewsDialog($event)"></app-news-element>
   <div *ngIf="news.length == 0" class="text-center">Sajnos nincs még hír! :(</div>
   <button mat-raised-button color="primary" (click)="openNewsDialog()" *ngIf="accessLevel >= 2">Új hír</button>
 </div>

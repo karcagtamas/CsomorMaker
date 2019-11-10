@@ -40,6 +40,7 @@ export class EventChatComponent implements OnInit, OnChanges {
       .getEventMessages(this.event.id)
       .then(res => {
         this.eventMessages = res;
+        this.scroll();
       })
       .catch(() => {
         this.eventMessages = [];
@@ -55,6 +56,7 @@ export class EventChatComponent implements OnInit, OnChanges {
             this.notificationservice.success(res.message);
             this.message = '';
             this.getEventMessages();
+            this.scroll();
           } else {
             this.notificationservice.error(res.message);
           }
@@ -65,5 +67,12 @@ export class EventChatComponent implements OnInit, OnChanges {
     } else {
       this.notificationservice.warning('Nem megfelelő üzenet formátum!');
     }
+  }
+
+  scroll() {
+    setTimeout(() => {
+      const body = document.getElementById('chat-body');
+      body.scrollTop = body.scrollHeight;
+    }, 50);
   }
 }
