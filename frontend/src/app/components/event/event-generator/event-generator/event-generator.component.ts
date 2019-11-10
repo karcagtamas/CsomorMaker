@@ -144,7 +144,7 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
   }
 
   openAddNewWorkDialog() {
-    const dialogRef = this.dialog.open(AddNewWorkComponent, {});
+    const dialogRef = this.dialog.open(AddNewWorkComponent, { width: '50%' });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

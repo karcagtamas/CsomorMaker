@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { EventWork, EventWorkTable } from 'src/app/models';
+import { EventWork, EventWorkTable, Event } from 'src/app/models';
 import { EventGeneratorService, ExportService } from 'src/app/services';
 
 @Component({
@@ -9,6 +9,7 @@ import { EventGeneratorService, ExportService } from 'src/app/services';
 })
 export class EventWorkCsomorComponent implements OnInit, OnChanges {
   @Input() eventWorks: EventWork[];
+  @Input() event: Event;
   selectedWork = 0;
   workTables: EventWorkTable[] = [];
   hoverValue = '-';
@@ -43,5 +44,24 @@ export class EventWorkCsomorComponent implements OnInit, OnChanges {
 
   exportWork() {
     this.exportserive.exportEventWork(this.eventWorks[this.selectedWork]);
+  }
+
+  checkCurrent(workTable: EventWorkTable) {
+    if (this.event.startDate) {
+      const now: Date = new Date();
+      const afterStart: Date = new Date(this.event.startDate);
+      afterStart.setHours(workTable.hour);
+      afterStart.setDate(afterStart.getDate() + workTable.day);
+
+      if (
+        afterStart.getFullYear() === now.getFullYear() &&
+        afterStart.getMonth() === now.getMonth() &&
+        afterStart.getDate() === now.getDate() &&
+        afterStart.getHours() === now.getHours()
+      ) {
+        return true;
+      }
+    }
+    return false;
   }
 }

@@ -16,7 +16,7 @@
     [ngClass]="{ input: !payout.isOut, output: payout.isOut }" (click)="openPayOutDialog(payout)"
     matTooltip="{{payout.source}} => {{payout.destination}}" matTooltipPosition="above">
     <div class="col-6 text-left">
-      {{ payout.name }}
+      {{ payout.name }} <mat-icon>{{payout.isOut ? "arrow_downward" : "arrow_upward"}}</mat-icon>
     </div>
     <div class="col-6 text-right">{{ payout.cost | forint }}</div>
   </div>

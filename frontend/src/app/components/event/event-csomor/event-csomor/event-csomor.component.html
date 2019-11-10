@@ -3,16 +3,17 @@
   <div class="buttons">
     <button mat-raised-button color="{{ selectedMode === 1 ? 'primary' : 'accent' }}" (click)="changeSelection(1)"
       title="Személyes csömörök">
-      Személyes
+      Személyes <mat-icon>person</mat-icon>
     </button>
     <button mat-raised-button color="{{ selectedMode === 2 ? 'primary' : 'accent' }}" (click)="changeSelection(2)"
       title="Poszt csömörök">
-      Poszt
+      Poszt <mat-icon>work</mat-icon>
     </button>
   </div>
   <div [ngSwitch]="selectedMode">
-    <app-event-personal-csomor *ngSwitchCase="1" [eventWorkers]="eventWorkers"></app-event-personal-csomor>
-    <app-event-work-csomor *ngSwitchCase="2" [eventWorks]="eventWorks"></app-event-work-csomor>
+    <app-event-personal-csomor *ngSwitchCase="1" [eventWorkers]="eventWorkers" [event]="event">
+    </app-event-personal-csomor>
+    <app-event-work-csomor *ngSwitchCase="2" [eventWorks]="eventWorks" [event]="event"></app-event-work-csomor>
   </div>
 </div>
 <div *ngIf="event && !event.ready" class="text-center">

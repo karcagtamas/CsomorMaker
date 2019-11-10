@@ -12,7 +12,9 @@
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <strong>
-          <span *ngIf="isLeader(member)" class="yellow">&#10030;</span>&nbsp;
+          <span *ngIf="isLeader(member)" class="yellow">
+            <mat-icon>star</mat-icon>
+          </span>&nbsp;
           {{member.name}}
         </strong>&nbsp; |
         Előleg:&nbsp;
@@ -27,7 +29,8 @@
         &#10006;
       </button>
       <div>Előleg: <mat-checkbox [(ngModel)]="member.isPaidDeposit" (change)="setDeposit(member)"
-          [disabled]="member.isPaidCost === true" title="Előleg állítás {{member.name}} csapat tagnak"></mat-checkbox>
+          [disabled]="member.isPaidCost === true || member.isPaidCost == true"
+          title="Előleg állítás {{member.name}} csapat tagnak"></mat-checkbox>
       </div>
       <div>Díj: <mat-checkbox [(ngModel)]="member.isPaidCost" (change)="setCost(member)"
           title="Díj állítás {{member.name}} csapat tagnak"></mat-checkbox>
@@ -47,4 +50,6 @@
   <button mat-raised-button color="accent" (click)="onNoClick()" title="Visszalépés mentés nélkül">Vissza</button>
   <button mat-raised-button color="primary" (click)="openAddTeamMemberModal()"
     title="Új tag felvétele {{data.name}} csapathoz">Új tag</button>
+  <button mat-raised-button color="primary" (click)="setEveryMemberPaidStatusToTrue()"
+    title="A {{data.name}} csapat minden tagja fizetett">Mindenki fizetett</button>
 </div>

@@ -2,7 +2,7 @@
 <div class="chat">
   <div class="body border rounded">
     <div *ngFor="let message of eventMessages" class="message">
-      {{ message.sender }} <small>- {{ message.dateOfSent | chatDate }}</small>
+      {{ message.sender }} <mat-icon>person</mat-icon> <small>- {{ message.dateOfSent | chatDate }}</small>
       <div class="border rounded message-body"
         [ngClass]="{ me: message.senderId == userId, other: message.senderId != userId }">
         {{ message.message }}
