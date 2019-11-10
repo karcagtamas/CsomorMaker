@@ -2,7 +2,8 @@
 <div class="details" *ngIf="event">
   <div class="big-title">Általános</div>
   <div class="element"><span class="name">Név:</span> {{ event.name }}</div>
-  <div class="element"><span class="name">Létrehozó:</span> {{ event.creater }}</div>
+  <div class="element"><span class="name">Létrehozó:</span> {{ event.creater }} <mat-icon>person_pin</mat-icon>
+  </div>
   <div class="element"><span class="name">Létrehozás dátuma:</span> {{ event.creationDate }}</div>
   <div class="element"><span class="name">Kezdeti dátum:</span> {{ event.startDate | date: 'yyyy. MM. dd.' }}</div>
   <div class="element"><span class="name">Kezdeti óra:</span> {{ event.startHour | hours }}</div>
@@ -13,12 +14,15 @@
   <div class="element"><span class="name">Játékos díj:</span> {{ event.playerCost | forint }}</div>
   <div class="element"><span class="name">Néző díj:</span> {{ event.visitorCost | forint }}</div>
   <div class="element"><span class="name">Maximum néző szám:</span> {{ event.visitorLimit | personCount }}</div>
-  <div class="element"><span class="name">Utolsó frissítő:</span> {{ event.lastUpdater }}</div>
+  <div class="element"><span class="name">Utolsó frissítő:</span> {{ event.lastUpdater }} <mat-icon>person_pin
+    </mat-icon>
+  </div>
   <div class="element"><span class="name">Utolsó frissítés:</span> {{ event.lastUpdate | date: 'yyyy. MM. dd.' }}</div>
   <hr />
   <div class="big-title">Adminisztratív adatok</div>
   <div class="element" [ngClass]="{green: !event.isLocked, red: event.isLocked}"><span class="name">Zárolási
-      állapot:</span> {{ event.isLocked | isLocked }}</div>
+      állapot:</span> {{ event.isLocked | isLocked }} <mat-icon>{{event.isLocked? "lock" : "lock_open"}}</mat-icon>
+  </div>
   <div class="element"><span class="name">Jelenlegi játékos szám:</span> {{ event.currentPlayers | personCount }}</div>
   <div class="element"><span class="name">Nézők:</span> {{ event.visitors | personCount }}</div>
   <div class="element"><span class="name">Sérültek:</span> {{ event.injured | personCount }}</div>
@@ -26,18 +30,20 @@
   <hr />
   <div class="big-title">Generálás</div>
   <div class="element" [ngClass]="{green: !event.isLocked, red: event.isLocked}"><span class="name">Zárolási
-      állapot:</span> {{ event.isLocked | isLocked }}</div>
+      állapot:</span> {{ event.isLocked | isLocked }} <mat-icon>{{event.isLocked? "lock" : "lock_open"}}</mat-icon>
+  </div>
   <div class="element" [ngClass]="{green: event.ready, red: !event.ready}"><span class="name">Generátor állapot:</span>
-    {{ event.ready | isReady }}</div>
+    {{ event.ready | isReady }} <mat-icon>{{event.ready? "event_available" : "event_busy"}}</mat-icon>
+  </div>
   <div class="element"><span class="name">Tagok:</span> {{ event.members | personCount }}</div>
   <div class="text-center">
     <button mat-raised-button color="accent" *ngIf="!event.isLocked && accessLevel >= 3" (click)="lockEvent()"
       title="Esemény zárolása">
-      Zárolás
+      Zárolás <mat-icon>lock</mat-icon>
     </button>
     <button mat-raised-button color="accent" *ngIf="event.isLocked && accessLevel >= 3" (click)="lockEvent()"
       title="Esemény feloldása">
-      Zárolás bontása
+      Zárolás bontása <mat-icon>lock_open</mat-icon>
     </button>
   </div>
   <div class="text-center">

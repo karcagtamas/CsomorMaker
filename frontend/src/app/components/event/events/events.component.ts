@@ -13,15 +13,15 @@ export class EventsComponent implements OnInit {
   events: Event[] = [];
 
   menuItems = [
-    { name: 'Adatok', link: 'details', accessLevel: 1 },
-    { name: 'Beállítások', link: 'settings', accessLevel: 3 },
-    { name: 'Generátor', link: 'generator', accessLevel: 3 },
-    { name: 'Csömör', link: 'csomor', accessLevel: 1 },
-    { name: 'Áttekintés', link: 'summary', accessLevel: 3 },
-    { name: 'ToDo', link: 'todo', accessLevel: 2 },
-    { name: 'Chat', link: 'chat', accessLevel: 1 },
-    { name: 'Tagok', link: 'members', accessLevel: 1 },
-    { name: 'Csapatok', link: 'teams', accessLevel: 2 }
+    { name: 'Adatok', link: 'details', accessLevel: 1, icon: 'description' },
+    { name: 'Beállítások', link: 'settings', accessLevel: 3, icon: 'settings_applications' },
+    { name: 'Generátor', link: 'generator', accessLevel: 3, icon: 'build' },
+    { name: 'Csömör', link: 'csomor', accessLevel: 1, icon: 'calendar_today' },
+    { name: 'Áttekintés', link: 'summary', accessLevel: 3, icon: 'attach_money' },
+    { name: 'ToDo', link: 'todo', accessLevel: 2, icon: 'check_circle' },
+    { name: 'Chat', link: 'chat', accessLevel: 1, icon: 'chat' },
+    { name: 'Tagok', link: 'members', accessLevel: 1, icon: 'group' },
+    { name: 'Csapatok', link: 'teams', accessLevel: 2, icon: 'sports_soccer' }
   ];
   currentEventId = 0;
   currentEvent = new Event();

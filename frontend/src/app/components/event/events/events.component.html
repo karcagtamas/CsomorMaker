@@ -16,11 +16,13 @@
         <div class="item rounded" [routerLink]="['/events', currentEventId, item.link]"
           routerLinkActive="router-link-active" [ngClass]="{ purple: item.link === currentPage }"
           *ngIf="item.accessLevel <= accessLevel">
-          {{item.link === currentPage ? "&#9873;" : "&#9872;"}} {{ item.name }}
+          <mat-icon>{{item.icon}}</mat-icon>&nbsp;{{ item.name }}
         </div>
       </div>
       <div>
-        <div class="item rounded" *ngIf="accessLevel >= 3" (click)="disableEvent()">Esemény deaktiválása</div>
+        <div class="item rounded" *ngIf="accessLevel >= 3" (click)="disableEvent()">
+          <mat-icon>block</mat-icon>&nbsp;Esemény deaktiválása
+        </div>
       </div>
     </div>
   </div>

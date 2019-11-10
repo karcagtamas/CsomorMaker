@@ -100,7 +100,7 @@ export class TeamDeatilsDialogComponent implements OnInit {
       .then(res => {
         if (res.response === 'success') {
           this.notificationservice.success(res.message);
-          member.isPaidDeposit = member.isPaidCost;
+          member.isPaidDeposit = !!member.isPaidCost;
         } else {
           this.notificationservice.error(res.message);
         }
@@ -151,5 +151,12 @@ export class TeamDeatilsDialogComponent implements OnInit {
           });
       }
     });
+  }
+
+  setEveryMemberPaidStatusToTrue() {
+    for (const member of this.teamMembers) {
+      member.isPaidCost = true;
+      this.setCost(member);
+    }
   }
 }

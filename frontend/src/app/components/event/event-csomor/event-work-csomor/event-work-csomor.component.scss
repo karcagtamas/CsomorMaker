@@ -11,6 +11,11 @@
     transition-duration: 0.5s;
   }
 
+  .current{
+    border: 3px solid red !important;
+    background: #fc7272;
+  }
+
   .row:nth-child(even) {
     background-color: #9a68f13d;
   }

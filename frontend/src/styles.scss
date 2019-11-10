@@ -1,12 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import '~bootstrap/dist/css/bootstrap.min.css';
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
 $main-color: #683ab7;
 
 * {
   font-family: 'Bree Serif', serif !important;
   font-size: 20px;
+}
+
+mat-icon {
+  font-family: 'Material Icons' !important;
 }
 
 .activeMenu {
