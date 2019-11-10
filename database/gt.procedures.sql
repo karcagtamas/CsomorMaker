@@ -307,7 +307,7 @@ CREATE OR REPLACE PROCEDURE getGtMessages(_gtId int(11))
     SELECT gtmessages.id, gtmessages.sender AS senderId, gtmessages.gt, gtmessages.dateOfSent, gtmessages.message, users.name AS sender FROM gtmessages
       INNER JOIN users ON users.id = gtmessages.sender
       WHERE gtmessages.gt = _gtId
-    ORDER BY gtmessages.dateOfSent;
+    ORDER BY gtmessages.dateOfSent LIMIT 200;
   END;
 
 CREATE OR REPLACE PROCEDURE addGtMessage(_gtId int(11), _sender int(11), _message text)

@@ -346,7 +346,7 @@ CREATE OR REPLACE PROCEDURE updateEvent(
 
   CREATE OR REPLACE PROCEDURE getMessages(_eventId int(11))
     BEGIN
-     SELECT * FROM eventmessages WHERE event = _eventId ORDER BY dateOfSent;
+     SELECT * FROM eventmessages WHERE event = _eventId ORDER BY dateOfSent LIMIT 200;
     END;
 
   CREATE OR REPLACE PROCEDURE addMessage(_eventId int(11), _sender int(11), _message text)

@@ -5,9 +5,19 @@
 
   .details {
     padding: 0.2rem;
+
     .buttons {
       button {
         margin: 0.2rem;
+      }
+    }
+
+    .details-block {
+      margin: 0.5rem;
+      margin-top: 1rem;
+
+      &:first-child {
+        margin-top: 0;
       }
     }
   }

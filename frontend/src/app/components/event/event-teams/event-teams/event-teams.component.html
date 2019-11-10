@@ -1,4 +1,5 @@
-<div class="text-center panel-title border rounded">Csapatok</div>
+<div class="text-center panel-title border rounded">Csapatok <mat-icon>sports_soccer</mat-icon>
+</div>
 <div class="teams" *ngIf="event">
   <app-event-team *ngFor="let team of teams" [team]="team" [eventId]="event.id" (refresh)="getTeams()">
   </app-event-team>

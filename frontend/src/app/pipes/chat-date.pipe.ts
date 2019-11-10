@@ -8,6 +8,13 @@ export class ChatDatePipe implements PipeTransform {
     const now = new Date();
     const message = new Date(value);
     const valueInHour = this.toHour(now.valueOf()) - this.toHour(message.valueOf());
+    const valueInMin: number = valueInHour * 60;
+    if (Math.floor(valueInMin) === 0) {
+      return 'most';
+    }
+    if (Math.floor(valueInMin) <= 59) {
+      return `${Math.floor(valueInMin)} perce`;
+    }
     if (Math.floor(valueInHour) <= 23) {
       return `${Math.floor(valueInHour)} órája`;
     }

@@ -1,4 +1,5 @@
-<div class="text-center panel-title border rounded">Csömör</div>
+<div class="text-center panel-title border rounded">Csömör <mat-icon>calendar_today</mat-icon>
+</div>
 <div class="csomor" *ngIf="event && event.ready">
   <div class="buttons">
     <button mat-raised-button color="{{ selectedMode === 1 ? 'primary' : 'accent' }}" (click)="changeSelection(1)"

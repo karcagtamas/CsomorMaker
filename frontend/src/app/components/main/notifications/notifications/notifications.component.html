@@ -1,5 +1,6 @@
 <div>
-  <div class="text-center panel-title border rounded">Értesítések</div>
+  <div class="text-center panel-title border rounded">Értesítések <mat-icon>notification_important</mat-icon>
+  </div>
   <div class="notifications">
     <app-notification [notification]="notification" *ngFor="let notification of notifications"></app-notification>
     <div *ngIf="notifications.length === 0" class="text-center">
