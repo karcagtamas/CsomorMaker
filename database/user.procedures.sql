@@ -28,7 +28,7 @@ USE csomormaker;
       DECLARE countOf int(11) DEFAULT 0;
       SELECT COUNT(*) INTO countOf FROM users WHERE username = _username AND email = _email AND NOT blocked;
     IF countOf = 1
-      THEN SELECT TRUE AS isValid;
+      THEN SELECT id AS userId, TRUE AS isValid FROM users WHERE username = _username AND email = _email;
       ELSE SELECT FALSE AS isValid;
       END IF;
     END;
