@@ -71,6 +71,16 @@
     <mat-error *ngIf="injuredControl.hasError('min')">A sérültek minimuma 0!</mat-error>
   </mat-form-field>
   <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Fix csapat díj</mat-label>
+    <input matInput type="number" placeholder="Fix csapat díj" [formControl]="fixTeamCostControl" />
+    <mat-error *ngIf="fixTeamCostControl.hasError('min')">A díj minimuma 0!</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Fix csapat előleg</mat-label>
+    <input matInput type="number" placeholder="Fix csapat előleg" [formControl]="fixTeamDepositControl" />
+    <mat-error *ngIf="fixTeamDepositControl.hasError('min')">A díj minimuma 0!</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100" appearance="outline">
     <mat-label>Kezdeti dátum</mat-label>
     <input matInput [matDatepicker]="picker" placeholder="Kezdeti dátum" [formControl]="startDateControl" />
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

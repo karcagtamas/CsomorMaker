@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { EventTeam } from 'src/app/models';
+import { Event, EventTeam } from 'src/app/models';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificationService, EventTeamsService } from 'src/app/services';
 import { TeamDeatilsDialogComponent } from '../team-deatils-dialog/team-deatils-dialog.component';
@@ -12,7 +12,7 @@ import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confir
 })
 export class EventTeamComponent implements OnInit {
   @Input() team: EventTeam;
-  @Input() eventId: number;
+  @Input() event: Event;
   @Output() refresh = new EventEmitter();
   countOfCost = 0;
   countOfDeposit = 0;
@@ -34,6 +34,26 @@ export class EventTeamComponent implements OnInit {
         this.countOfCost = 0;
         this.countOfDeposit = 0;
       });
+  }
+
+  setIsPaidFixCostStatus() {
+    this.eventteamsservice.setIsPaidFixCostStatus(this.team.id, this.team.isPaidFixCost).then(res => {
+      if (res.response === 'success') {
+        this.notificationservice.success(res.message);
+      } else {
+        this.notificationservice.error(res.message);
+      }
+    }).catch(() => {this.notificationservice.error('A fizetési státusz állítása közben hiba történt! Kérjük próbálja újra késöbb!');});
+  }
+
+  setIsPaidFixDepositStatus() {
+    this.eventteamsservice.setIsPaidFixDepositStatus(this.team.id, this.team.isPaidFixDeposit).then(res => {
+      if (res.response === 'success') {
+        this.notificationservice.success(res.message);
+      } else {
+        this.notificationservice.error(res.message);
+      }
+    }).catch(() => {this.notificationservice.error('A fizetési státusz állítása közben hiba történt! Kérjük próbálja újra késöbb!');});
   }
 
   setHasReposnsibilityPaper() {

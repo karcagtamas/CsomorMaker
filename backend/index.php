@@ -486,6 +486,14 @@
                                             setTeamMemberToTeamLeader($url[6], $url[7]);
                                             break;
 
+                                        case 'cost':
+                                            setEventTeamIsPaidFixCostStatus($_POST['team'], $_POST['status']);
+                                            break;
+
+                                        case 'deposit':
+                                            setEventTeamIsPaidFixDepositStatus($_POST['team'], $_POST['status']);
+                                            break;
+
                                         default:
                                             echo '{"response" : "bad-subevent", "message" : "Bad request subevent!"}';
                                             break;

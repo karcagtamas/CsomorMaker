@@ -35,6 +35,18 @@ export class EventTeamsService {
     return this.http.post<Response>(`${this.url}/add`, { event, name }, HttpHeader).toPromise();
   }
 
+  setIsPaidFixCostStatus(team: number, status: boolean): Promise<Response> {
+    return this.http.post<Response>(`${this.url}/set/cost`, {team, status}, HttpHeader).toPromise();
+  }
+
+  setIsPaidFixDepositStatus(team: number, status: boolean): Promise<Response> {
+    return this.http.post<Response>(`${this.url}/set/deposit`, {team, status}, HttpHeader).toPromise();
+  }
+
+  getCountOFixCostsAndDeposits(event: number): Promise<Counts> {
+    return this.http.get<Counts>(`${this.url}/counts/${event}`, HttpHeader).toPromise();
+  }
+
   setHasResponsibilityPaper(team: number): Promise<Response> {
     return this.http.get<Response>(`${this.url}/set/responsibility/${team}`, HttpHeader).toPromise();
   }

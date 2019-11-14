@@ -78,6 +78,48 @@
         $stmt->close();
     }
 
+    function setEventTeamIsPaidFixCostStatus($teamId, $status){
+        global $db;
+
+        $sql = "CALL setEventTeamIsPaidFixCostStatus(?, ?);";
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("is", $teamId, $status);
+        $stmt->execute();
+
+        if ($stmt->errno){
+            $array['response'] =  'fail';
+            $array['message'] = 'A csapat fix díj befizetési státuszának átátllítása sikeretelen!';
+        }else{
+            $array['response'] =  'success';
+            $array['message'] = 'A csapat fix díj befizetési státuszának átátllítása sikeres!';
+        }
+        echo json_encode($array);
+        $stmt->close();
+
+    }
+
+    function setEventTeamIsPaidFixDepositStatus($teamId, $status){
+        global $db;
+
+        $sql = "CALL setEventTeamIsPaidFixDepositStatus(?, ?);";
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("is", $teamId, $status);
+        $stmt->execute();
+
+        if ($stmt->errno){
+            $array['response'] =  'fail';
+            $array['message'] = 'A csapat fix előleg befizetési státuszának átátllítása sikeretelen!';
+        }else{
+            $array['response'] =  'success';
+            $array['message'] = 'A csapat fix előleg befizetési státuszának átátllítása sikeres!';
+        }
+        echo json_encode($array);
+        $stmt->close();
+
+    }
+
     function setHasResponsibilityPaper($teamId){
         global $db;
 

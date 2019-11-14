@@ -7,4 +7,6 @@ export class EventTeam {
   hasResponsibilityPaper: boolean;
   teamLeader: string;
   teamLeaderId: number;
+  isPaidFixCost: boolean;
+  isPaidFixDeposit: boolean;
 }

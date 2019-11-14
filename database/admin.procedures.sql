@@ -1,4 +1,5 @@
-CREATE OR REPLACE PROCEDURE getAllEvent()
+DROP PROCEDURE getAllEvent;
+CREATE PROCEDURE getAllEvent()
     BEGIN
         SELECT events.id, 
         events.name,
@@ -23,7 +24,9 @@ CREATE OR REPLACE PROCEDURE getAllEvent()
         events.startDate,
         events.lastUpdate,
         events.lastUpdater AS lastUpdaterId,
-        u2.name AS lastUpdater 
+        u2.name AS lastUpdater,
+        events.fixTeamCost,
+        events.fixTeamDeposit
         FROM events
         INNER JOIN users ON events.creater = users.id
         INNER JOIN users u2 ON events.lastUpdater = u2.id;
