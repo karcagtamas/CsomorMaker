@@ -36,15 +36,15 @@ export class EventTeamsService {
   }
 
   setIsPaidFixCostStatus(team: number, status: boolean): Promise<Response> {
-    return this.http.post<Response>(`${this.url}/set/cost`, {team, status}, HttpHeader).toPromise();
+    return this.http.post<Response>(`${this.url}/set/cost`, { team, status }, HttpHeader).toPromise();
   }
 
   setIsPaidFixDepositStatus(team: number, status: boolean): Promise<Response> {
-    return this.http.post<Response>(`${this.url}/set/deposit`, {team, status}, HttpHeader).toPromise();
+    return this.http.post<Response>(`${this.url}/set/deposit`, { team, status }, HttpHeader).toPromise();
   }
 
   getCountOFixCostsAndDeposits(event: number): Promise<Counts> {
-    return this.http.get<Counts>(`${this.url}/counts/${event}`, HttpHeader).toPromise();
+    return this.http.get<Counts>(`${this.url}/fixcounts/${event}`, HttpHeader).toPromise();
   }
 
   setHasResponsibilityPaper(team: number): Promise<Response> {
@@ -75,7 +75,7 @@ export class EventTeamsService {
     return this.http.get<Response>(`${this.url}/members/cost/${member}`, HttpHeader).toPromise();
   }
 
-  countOfCostAndDeposit(team: number): Promise<Counts> {
-    return this.http.get<Counts>(`${this.url}/status/${team}`, HttpHeader).toPromise();
+  countOfCostAndDeposit(event: number): Promise<Counts> {
+    return this.http.get<Counts>(`${this.url}/counts/${event}`, HttpHeader).toPromise();
   }
 }

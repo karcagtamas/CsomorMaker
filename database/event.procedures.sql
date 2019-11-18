@@ -39,7 +39,7 @@ CREATE PROCEDURE getEvent(_id int(11))
       WHERE NOT events.isDisabled AND events.id = _id;
     END;
 
-DROP PROCEDURE getUsersEvents;
+DROP PROCEDURE IF EXISTS getUsersEvents;
 CREATE PROCEDURE getUsersEvents(_userId int(11))
     BEGIN
       SELECT DISTINCT events.id, 
@@ -83,7 +83,7 @@ CREATE PROCEDURE addEvent(_name varchar(50), _creater int(11))
      CALL addUserToEvent(_creater, LAST_INSERT_ID(), 1);
     END;
 
-DROP PROCEDURE updateEvent;
+DROP PROCEDURE IF EXISTS updateEvent;
 CREATE PROCEDURE updateEvent(
     _id int(11),
     _name varchar(50),
@@ -629,7 +629,7 @@ CREATE PROCEDURE getCountOfFixCostsAndDeposits(_event int(11))
        DECLARE deposits int(11) DEFAULT 0;
 
        SELECT COUNT(id) INTO costs FROM eventteams WHERE event = _event AND isPaidFixCost;
-       SELECT COUNT(id) INTO deposits FROM eventteams WHERE event = _event AND isPaidFixDeposit;
+       SELECT COUNT(id) INTO deposits FROM eventteams WHERE event = _event AND isPaidFixDeposit AND NOT isPaidFixCost;
 
        SELECT costs AS countOfCost, deposits AS countOfDeposit;
     END;

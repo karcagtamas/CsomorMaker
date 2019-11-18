@@ -1,4 +1,4 @@
-DROP PROCEDURE getAllEvent;
+DROP PROCEDURE IF EXISTS getAllEvent;
 CREATE PROCEDURE getAllEvent()
     BEGIN
         SELECT events.id, 

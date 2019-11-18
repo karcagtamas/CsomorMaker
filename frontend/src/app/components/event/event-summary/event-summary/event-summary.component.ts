@@ -30,8 +30,8 @@ export class EventSummaryComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit() {
-    this.getPayOuts();
     this.getPayOutTypes();
+    this.getPayOuts();
     if (this.event.fixTeamCost) {
       this.getCountOfFixCosts();
     } else {
@@ -48,8 +48,6 @@ export class EventSummaryComponent implements OnInit, OnChanges {
     } else {
       this.getCountOfCost();
     }
-    this.setVisitorSummary();
-    this.setSummary();
   }
 
   getPayOuts() {
@@ -57,7 +55,7 @@ export class EventSummaryComponent implements OnInit, OnChanges {
       .getPayOuts(this.event.id)
       .then(res => {
         this.payOuts = res;
-        this.setSummary();
+        this.setVisitorSummary();
       })
       .catch(() => {
         this.payOuts = [];
@@ -82,24 +80,36 @@ export class EventSummaryComponent implements OnInit, OnChanges {
         this.countOfCosts = res.countOfCosts;
         this.countOfDeposits = res.countOfDeposits;
         this.setPlayerSummary();
+        this.setSummary();
       })
       .catch(() => {
         this.countOfCosts = 0;
+        this.countOfDeposits = 0;
       });
   }
 
   getCountOfFixCosts() {
-    this.eventteamservice.getCountOFixCostsAndDeposits(this.event.id).then(res => {
-      this.countOfFixCosts = res.countOfCost;
-      this.countOfFixDeposits = res.countOfDeposit;
-    }).catch(() => {
-      this.countOfFixDeposits = 0;
-      this.countOfFixCosts = 0;
-    });
+    this.eventteamservice
+      .getCountOFixCostsAndDeposits(this.event.id)
+      .then(res => {
+        this.countOfFixCosts = res.countOfCost;
+        this.countOfFixDeposits = res.countOfDeposit;
+        this.setPlayerSummary();
+        this.setSummary();
+      })
+      .catch(() => {
+        this.countOfFixDeposits = 0;
+        this.countOfFixCosts = 0;
+      });
   }
 
   setPlayerSummary() {
-    this.playerSummary = this.countOfCosts * this.event.playerCost + this.countOfDeposits * this.event.playerDeposit;
+    if (this.event.fixTeamCost) {
+      this.playerSummary =
+        this.countOfFixCosts * this.event.fixTeamCost + this.countOfFixDeposits * this.event.fixTeamDeposit;
+    } else {
+      this.playerSummary = this.countOfCosts * this.event.playerCost + this.countOfDeposits * this.event.playerDeposit;
+    }
     this.setSummary();
   }
 

@@ -262,14 +262,30 @@
         $stmt->close();
     }
 
-    function countOfCostAndDeposit($teamId){
+    function countOfCostAndDeposit($event){
         global $db;
 
         $sql = "CALL countOfCostAndDeposit(?);";
         
 
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("i", $teamId);
+        $stmt->bind_param("i", $event);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        
+        echo json_encode($row);
+        $stmt->close();
+    }
+
+    function getCountOfFixCostsAndDeposits($event){
+        global $db;
+
+        $sql = "CALL getCountOfFixCostsAndDeposits(?);";
+        
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $event);
         $stmt->execute();
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();

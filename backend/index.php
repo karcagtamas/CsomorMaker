@@ -500,8 +500,12 @@
                                     }
                                     break;
 
-                                case 'status':
+                                case 'counts':
                                     countOfCostAndDeposit($url[5]);
+                                    break;
+                                
+                                case 'fixcounts':
+                                    getCountOfFixCostsAndDeposits($url[5]);
                                     break;
 
                                 case 'members':

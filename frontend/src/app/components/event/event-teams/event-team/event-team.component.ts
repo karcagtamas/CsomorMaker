@@ -37,23 +37,33 @@ export class EventTeamComponent implements OnInit {
   }
 
   setIsPaidFixCostStatus() {
-    this.eventteamsservice.setIsPaidFixCostStatus(this.team.id, this.team.isPaidFixCost).then(res => {
-      if (res.response === 'success') {
-        this.notificationservice.success(res.message);
-      } else {
-        this.notificationservice.error(res.message);
-      }
-    }).catch(() => {this.notificationservice.error('A fizetési státusz állítása közben hiba történt! Kérjük próbálja újra késöbb!');});
+    this.eventteamsservice
+      .setIsPaidFixCostStatus(this.team.id, this.team.isPaidFixCost)
+      .then(res => {
+        if (res.response === 'success') {
+          this.notificationservice.success(res.message);
+        } else {
+          this.notificationservice.error(res.message);
+        }
+      })
+      .catch(() => {
+        this.notificationservice.error('A fizetési státusz állítása közben hiba történt! Kérjük próbálja újra késöbb!');
+      });
   }
 
   setIsPaidFixDepositStatus() {
-    this.eventteamsservice.setIsPaidFixDepositStatus(this.team.id, this.team.isPaidFixDeposit).then(res => {
-      if (res.response === 'success') {
-        this.notificationservice.success(res.message);
-      } else {
-        this.notificationservice.error(res.message);
-      }
-    }).catch(() => {this.notificationservice.error('A fizetési státusz állítása közben hiba történt! Kérjük próbálja újra késöbb!');});
+    this.eventteamsservice
+      .setIsPaidFixDepositStatus(this.team.id, this.team.isPaidFixDeposit)
+      .then(res => {
+        if (res.response === 'success') {
+          this.notificationservice.success(res.message);
+        } else {
+          this.notificationservice.error(res.message);
+        }
+      })
+      .catch(() => {
+        this.notificationservice.error('A fizetési státusz állítása közben hiba történt! Kérjük próbálja újra késöbb!');
+      });
   }
 
   setHasReposnsibilityPaper() {
@@ -73,7 +83,7 @@ export class EventTeamComponent implements OnInit {
 
   openTeamDetailsModal() {
     const dialogRef = this.dialog.open(TeamDeatilsDialogComponent, {
-      data: this.team,
+      data: { team: this.team, event: this.event },
       width: '75%',
       maxHeight: '100vh'
     });
