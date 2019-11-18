@@ -40,12 +40,11 @@
         $stmt->execute();
 
         if ($stmt->errno){
-            echo '{"response" : "fail", "message" : "Már létezik felhasználó ezzel az e-mail címmel!"}';
+            echo '{"response" : "fail", "message" : "Már létezik felhasználó ezzel az e-mail címmel vagy felhasználónévvel!"}';
 
         }else{
             echo '{"response" : "success", "message" : "A regisztráció sikeres!"}';
-            require 'mail.php';
-            sendRegistrationEmail($email);
+            sendRegistrationEmail($email, $username);
         }
     }
 
@@ -109,6 +108,7 @@
         }else{
             echo '{"response" : "success", "message" : "A felhasználó frissítése sikeres!"}';
         }
+        $stmt->close();
     }
 
     function checkPassword($userId, $password){
@@ -132,6 +132,7 @@
         else{
             echo '{"response" : "fail", "message" : "A felhasználó id nem létezik!"}';
         }
+        $stmt->close();
     }
 
     function changePassword($userId, $password){
@@ -150,6 +151,7 @@
         }else{
             echo '{"response" : "success", "message" : "A felhasználó jelszó cseréje sikeres!"}';
         }
+        $stmt->close();
     }
 
     function resetPassword($username, $email){
@@ -157,21 +159,37 @@
 
         $sql = "CALL isValidUsernameAndEmail(?, ?);";
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("ii", $username, $email);
+        $stmt->bind_param("ss", $username, $email);
         $stmt->execute();
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
+        $stmt->close();
 
         if ($row['isValid']){
-            echo '{"response" : "success", "message" : "A jelszó visszaállítás sikeres! Elküldtük az e-mailt a megadott e-mail címre!"}';
-            require 'mail.php';
             $newPassword = generateRandomString(8);
-            changePassword($row['userId'], $newPassword);
-            sendNewPassword($email, $newPassword);
+
+            $sql = "CALL changePassword(?, ?);";
+
+            $stmt = $db->prepare($sql);
+            $hash = password_hash($newPassword, PASSWORD_BCRYPT);
+            $stmt->bind_param("is", $row['userId'], $hash);
+            $stmt->execute();
+
+            if ($stmt->errno){
+                echo '{"response" : "fail", "message" : "Hiba a jelszó visszaállítása közben. Próbáld újra késöbb!"}';     
+            }else{
+                echo '{"response" : "success", "message" : "A jelszó visszaállítás sikeres! Elküldtük az e-mailt a megadott e-mail címre!"}';
+                sendNewPassword($email, $newPassword);
+            }
+            $stmt->close();
+
+            
         }
         else{
-            echo '{"response" : "fails", "message" : "A jelszó visszaállítás sikertelen! Rossz adatokat adtál meg!"}';     
+            echo '{"response" : "fail", "message" : "A jelszó visszaállítás sikertelen! Rossz adatokat adtál meg!"}';
+            $stmt->close();
         }
+        
     }
 
     function getAccessLevel(){

@@ -78,6 +78,48 @@
         $stmt->close();
     }
 
+    function setEventTeamIsPaidFixCostStatus($teamId, $status){
+        global $db;
+
+        $sql = "CALL setEventTeamIsPaidFixCostStatus(?, ?);";
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("is", $teamId, $status);
+        $stmt->execute();
+
+        if ($stmt->errno){
+            $array['response'] =  'fail';
+            $array['message'] = 'A csapat fix díj befizetési státuszának átátllítása sikeretelen!';
+        }else{
+            $array['response'] =  'success';
+            $array['message'] = 'A csapat fix díj befizetési státuszának átátllítása sikeres!';
+        }
+        echo json_encode($array);
+        $stmt->close();
+
+    }
+
+    function setEventTeamIsPaidFixDepositStatus($teamId, $status){
+        global $db;
+
+        $sql = "CALL setEventTeamIsPaidFixDepositStatus(?, ?);";
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("is", $teamId, $status);
+        $stmt->execute();
+
+        if ($stmt->errno){
+            $array['response'] =  'fail';
+            $array['message'] = 'A csapat fix előleg befizetési státuszának átátllítása sikeretelen!';
+        }else{
+            $array['response'] =  'success';
+            $array['message'] = 'A csapat fix előleg befizetési státuszának átátllítása sikeres!';
+        }
+        echo json_encode($array);
+        $stmt->close();
+
+    }
+
     function setHasResponsibilityPaper($teamId){
         global $db;
 
@@ -220,14 +262,30 @@
         $stmt->close();
     }
 
-    function countOfCostAndDeposit($teamId){
+    function countOfCostAndDeposit($event){
         global $db;
 
         $sql = "CALL countOfCostAndDeposit(?);";
         
 
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("i", $teamId);
+        $stmt->bind_param("i", $event);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        
+        echo json_encode($row);
+        $stmt->close();
+    }
+
+    function getCountOfFixCostsAndDeposits($event){
+        global $db;
+
+        $sql = "CALL getCountOfFixCostsAndDeposits(?);";
+        
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $event);
         $stmt->execute();
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();

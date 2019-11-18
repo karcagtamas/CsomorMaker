@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Event, EventPayOut, EventPayOutType } from 'src/app/models';
-import { NotificationService, EventPayOutsService, EventService } from 'src/app/services';
+import { NotificationService, EventPayOutsService, EventService, EventTeamsService } from 'src/app/services';
 import { MatDialog } from '@angular/material/dialog';
 import { EventPayoutDialogComponent } from '../event-payout-dialog/event-payout-dialog.component';
 
@@ -18,27 +18,36 @@ export class EventSummaryComponent implements OnInit, OnChanges {
   summary = 0;
   countOfCosts = 0;
   countOfDeposits = 0;
+  countOfFixCosts = 0;
+  countOfFixDeposits = 0;
 
   constructor(
     private eventpayoutservice: EventPayOutsService,
     public dialog: MatDialog,
     private notificationservice: NotificationService,
-    private eventservice: EventService
+    private eventservice: EventService,
+    private eventteamservice: EventTeamsService
   ) {}
 
   ngOnInit() {
-    this.getPayOuts();
     this.getPayOutTypes();
-    this.getCountOfCost();
+    this.getPayOuts();
+    if (this.event.fixTeamCost) {
+      this.getCountOfFixCosts();
+    } else {
+      this.getCountOfCost();
+    }
     this.setVisitorSummary();
     this.setSummary();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     this.getPayOuts();
-    this.getCountOfCost();
-    this.setVisitorSummary();
-    this.setSummary();
+    if (this.event.fixTeamCost) {
+      this.getCountOfFixCosts();
+    } else {
+      this.getCountOfCost();
+    }
   }
 
   getPayOuts() {
@@ -46,7 +55,7 @@ export class EventSummaryComponent implements OnInit, OnChanges {
       .getPayOuts(this.event.id)
       .then(res => {
         this.payOuts = res;
-        this.setSummary();
+        this.setVisitorSummary();
       })
       .catch(() => {
         this.payOuts = [];
@@ -71,14 +80,36 @@ export class EventSummaryComponent implements OnInit, OnChanges {
         this.countOfCosts = res.countOfCosts;
         this.countOfDeposits = res.countOfDeposits;
         this.setPlayerSummary();
+        this.setSummary();
       })
       .catch(() => {
         this.countOfCosts = 0;
+        this.countOfDeposits = 0;
+      });
+  }
+
+  getCountOfFixCosts() {
+    this.eventteamservice
+      .getCountOFixCostsAndDeposits(this.event.id)
+      .then(res => {
+        this.countOfFixCosts = res.countOfCost;
+        this.countOfFixDeposits = res.countOfDeposit;
+        this.setPlayerSummary();
+        this.setSummary();
+      })
+      .catch(() => {
+        this.countOfFixDeposits = 0;
+        this.countOfFixCosts = 0;
       });
   }
 
   setPlayerSummary() {
-    this.playerSummary = this.countOfCosts * this.event.playerCost + this.countOfDeposits * this.event.playerDeposit;
+    if (this.event.fixTeamCost) {
+      this.playerSummary =
+        this.countOfFixCosts * this.event.fixTeamCost + this.countOfFixDeposits * this.event.fixTeamDeposit;
+    } else {
+      this.playerSummary = this.countOfCosts * this.event.playerCost + this.countOfDeposits * this.event.playerDeposit;
+    }
     this.setSummary();
   }
 

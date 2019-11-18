@@ -23,6 +23,8 @@ export class EventSettingsComponent implements OnInit, OnChanges {
   endHourControl = new FormControl('', [Validators.required, Validators.min(0), Validators.max(23)]);
   injuredControl = new FormControl('', [Validators.required, Validators.min(0)]);
   startDateControl = new FormControl('');
+  fixTeamCostControl = new FormControl(null, [Validators.min(0)]);
+  fixTeamDepositControl = new FormControl(null, [Validators.min(0)]);
 
   constructor(private notificationservice: NotificationService) {}
 
@@ -50,6 +52,8 @@ export class EventSettingsComponent implements OnInit, OnChanges {
     this.endHourControl.setValue(event.endHour);
     this.injuredControl.setValue(event.injured);
     this.startDateControl.setValue(event.startDate);
+    this.fixTeamCostControl.setValue(event.fixTeamCost);
+    this.fixTeamDepositControl.setValue(event.fixTeamDeposit);
   }
 
   reset() {
@@ -72,7 +76,9 @@ export class EventSettingsComponent implements OnInit, OnChanges {
       this.daysControl.invalid ||
       this.startHourControl.invalid ||
       this.endHourControl.invalid ||
-      this.injuredControl.invalid
+      this.injuredControl.invalid ||
+      this.fixTeamCostControl.invalid ||
+      this.fixTeamDepositControl.invalid
     ) {
       this.notificationservice.error('Nem megfelelő adatok!');
     } else {
@@ -87,6 +93,8 @@ export class EventSettingsComponent implements OnInit, OnChanges {
       event.startHour = this.startHourControl.value;
       event.endHour = this.endHourControl.value;
       event.injured = this.injuredControl.value;
+      event.fixTeamCost = this.fixTeamCostControl.value;
+      event.fixTeamDeposit = this.fixTeamDepositControl.value;
       if (this.startDateControl.value) {
         event.startDate = new Date(this.startDateControl.value);
         event.startDate.setHours(12);

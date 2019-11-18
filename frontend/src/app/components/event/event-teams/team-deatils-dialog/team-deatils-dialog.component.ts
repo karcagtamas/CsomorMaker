@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { EventTeam, EventTeamMember } from 'src/app/models';
+import { Component, OnInit, Inject, Input } from '@angular/core';
+import { EventTeam, EventTeamMember, Event } from 'src/app/models';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { FormControl, Validators } from '@angular/forms';
 import { EventTeamsService, NotificationService } from 'src/app/services';
@@ -18,19 +18,19 @@ export class TeamDeatilsDialogComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<TeamDeatilsDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: EventTeam,
+    @Inject(MAT_DIALOG_DATA) public data: { team: EventTeam; event: Event },
     private eventteamsservice: EventTeamsService,
     private notificationservice: NotificationService
   ) {}
 
   ngOnInit() {
-    this.nameControl.setValue(this.data.name);
+    this.nameControl.setValue(this.data.team.name);
     this.getTeamMembers();
   }
 
   getTeamMembers() {
     this.eventteamsservice
-      .getEventTeamMembers(this.data.id)
+      .getEventTeamMembers(this.data.team.id)
       .then(res => {
         this.teamMembers = res;
       })
@@ -50,7 +50,7 @@ export class TeamDeatilsDialogComponent implements OnInit {
   }
 
   isLeader(member: EventTeamMember) {
-    return this.data.teamLeaderId === member.id;
+    return this.data.team.teamLeaderId === member.id;
   }
 
   openAddTeamMemberModal() {
@@ -61,7 +61,7 @@ export class TeamDeatilsDialogComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.eventteamsservice
-          .addEventTeamMember(this.data.id, result.name)
+          .addEventTeamMember(this.data.team.id, result.name)
           .then(res => {
             if (res.response === 'success') {
               this.notificationservice.success(res.message);
@@ -117,8 +117,8 @@ export class TeamDeatilsDialogComponent implements OnInit {
       .setTeamMemberToTeamLeader(member.team, member.id)
       .then(res => {
         if (res.response === 'success') {
-          this.data.teamLeaderId = member.id;
-          this.data.teamLeader = member.name;
+          this.data.team.teamLeaderId = member.id;
+          this.data.team.teamLeader = member.name;
           this.notificationservice.success(res.message);
         } else {
           this.notificationservice.error(res.message);

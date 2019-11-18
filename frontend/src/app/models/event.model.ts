@@ -23,4 +23,6 @@ export class Event {
   lastUpdate: Date;
   lastUpdater: string;
   lastUpdaterId: number;
+  fixTeamCost: number;
+  fixTeamDeposit: number;
 }

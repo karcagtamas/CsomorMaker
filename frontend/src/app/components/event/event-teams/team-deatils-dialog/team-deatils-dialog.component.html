@@ -1,5 +1,5 @@
 <div mat-dialog-content>
-  <div class="text-center panel-title border rounded">{{ data.name }}</div>
+  <div class="text-center panel-title border rounded">{{ data.team.name }}</div>
   <mat-form-field class="w-100" appearance="outline">
     <mat-label>Név</mat-label>
     <input matInput type="text" placeholder="Név" [formControl]="nameControl" />
@@ -12,44 +12,82 @@
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <strong>
-          <span *ngIf="isLeader(member)" class="yellow">
-            <mat-icon>star</mat-icon>
-          </span>&nbsp;
-          {{member.name}}
-        </strong>&nbsp; |
-        Előleg:&nbsp;
-        <span
-          [ngClass]="{green: member.isPaidDeposit, red: !member.isPaidDeposit}">{{member.isPaidDeposit ? "&#10003;" : "&#x2717;"}}</span>
+          <span *ngIf="isLeader(member)" class="yellow"> <mat-icon>star</mat-icon> </span>&nbsp;
+          {{ member.name }} </strong
+        >&nbsp; | Előleg:&nbsp;
+        <span [ngClass]="{ green: member.isPaidDeposit, red: !member.isPaidDeposit }">{{
+          member.isPaidDeposit ? '&#10003;' : '&#x2717;'
+        }}</span>
         | Díj:&nbsp;
-        <span
-          [ngClass]="{green: member.isPaidCost, red: !member.isPaidCost}">{{member.isPaidCost ? "&#10003;" : "&#x2717;"}}</span>
+        <span [ngClass]="{ green: member.isPaidCost, red: !member.isPaidCost }">{{
+          member.isPaidCost ? '&#10003;' : '&#x2717;'
+        }}</span>
       </mat-expansion-panel-header>
-      <button mat-mini-fab color="warn" class="ml-1 float-right" (click)="openConfirmDeleteModal(member)"
-        [disabled]="isLeader(member)" title="{{member.name}} csapat tag törlése a {{data.name}} csapatból">
+      <button
+        mat-mini-fab
+        color="warn"
+        class="ml-1 float-right"
+        (click)="openConfirmDeleteModal(member)"
+        [disabled]="isLeader(member)"
+        title="{{ member.name }} csapat tag törlése a {{ data.team.name }} csapatból"
+      >
         &#10006;
       </button>
-      <div>Előleg: <mat-checkbox [(ngModel)]="member.isPaidDeposit" (change)="setDeposit(member)"
+      <div *ngIf="data.event.fixTeamCost === null">
+        Előleg:
+        <mat-checkbox
+          [(ngModel)]="member.isPaidDeposit"
+          (change)="setDeposit(member)"
           [disabled]="member.isPaidCost === true || member.isPaidCost == true"
-          title="Előleg állítás {{member.name}} csapat tagnak"></mat-checkbox>
+          title="Előleg állítás {{ member.name }} csapat tagnak"
+        ></mat-checkbox>
       </div>
-      <div>Díj: <mat-checkbox [(ngModel)]="member.isPaidCost" (change)="setCost(member)"
-          title="Díj állítás {{member.name}} csapat tagnak"></mat-checkbox>
+      <div *ngIf="data.event.fixTeamCost === null">
+        Díj:
+        <mat-checkbox
+          [(ngModel)]="member.isPaidCost"
+          (change)="setCost(member)"
+          title="Díj állítás {{ member.name }} csapat tagnak"
+        ></mat-checkbox>
       </div>
-      <button mat-raised-button color="primary" (click)="setTeamMemberToTeamLeader(member)"
-        [disabled]="isLeader(member)" title="{{data.name}} csapat kapitánya legyen {{member.name}}">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="setTeamMemberToTeamLeader(member)"
+        [disabled]="isLeader(member)"
+        title="{{ data.team.name }} csapat kapitánya legyen {{ member.name }}"
+      >
         Csapatkapitány
       </button>
     </mat-expansion-panel>
   </div>
 </div>
 <div mat-dialog-actions>
-  <button mat-raised-button color="primary" (click)="save()" cdkFocusInitial [disabled]="nameControl.invalid"
-    title="Változtatások mentése">
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="save()"
+    cdkFocusInitial
+    [disabled]="nameControl.invalid"
+    title="Változtatások mentése"
+  >
     Mentés
   </button>
   <button mat-raised-button color="accent" (click)="onNoClick()" title="Visszalépés mentés nélkül">Vissza</button>
-  <button mat-raised-button color="primary" (click)="openAddTeamMemberModal()"
-    title="Új tag felvétele {{data.name}} csapathoz">Új tag</button>
-  <button mat-raised-button color="primary" (click)="setEveryMemberPaidStatusToTrue()"
-    title="A {{data.name}} csapat minden tagja fizetett">Mindenki fizetett</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="openAddTeamMemberModal()"
+    title="Új tag felvétele {{ data.team.name }} csapathoz"
+  >
+    Új tag
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="setEveryMemberPaidStatusToTrue()"
+    title="A {{ data.team.name }} csapat minden tagja fizetett"
+  >
+    Mindenki fizetett
+  </button>
 </div>
