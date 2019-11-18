@@ -30,7 +30,7 @@
     </div>
     <div *ngIf="event.fixTeamCost">
       <strong>Csapat előleg:</strong>&nbsp;
-      <mat-checkbox [(ngModel)]="team.isPaidFixDeposit" title="Fix csapat díj beállítása {{team.name}} csapatnak" (change)="setIsPaidFixDepositStatus()"></mat-checkbox>
+      <mat-checkbox [(ngModel)]="team.isPaidFixDeposit" title="Fix csapat díj beállítása {{team.name}} csapatnak" (change)="setIsPaidFixDepositStatus()" [disabled]="team.isPaidFixCost === true"></mat-checkbox>
     </div>
     <div>
       <button mat-raised-button color="accent" (click)="openTeamDetailsModal()"

@@ -42,6 +42,10 @@ export class EventTeamComponent implements OnInit {
       .then(res => {
         if (res.response === 'success') {
           this.notificationservice.success(res.message);
+          if (this.team.isPaidFixCost !== this.team.isPaidFixDeposit) {
+            this.team.isPaidFixDeposit = this.team.isPaidFixCost;
+            this.setIsPaidFixDepositStatus();
+          }
         } else {
           this.notificationservice.error(res.message);
         }
