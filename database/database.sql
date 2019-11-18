@@ -87,8 +87,8 @@ CREATE TABLE events(
     startDate date,
     lastUpdater int(11) NOT NULL,
     lastUpdate datetime NOT NULL DEFAULT NOW(),
-    fixTeamCost decimal(8,3),
-    fixTeamDeposit decimal(8, 3),
+    fixTeamCost decimal(10, 3),
+    fixTeamDeposit decimal(10, 3),
     PRIMARY KEY(id),
     CONSTRAINT fk_creater_users FOREIGN KEY (creater)
     REFERENCES users(id),
