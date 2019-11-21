@@ -2,15 +2,13 @@
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <strong>{{ team.name }}</strong>
-      &nbsp;
-      | Díj:&nbsp;
-      <span
-        [ngClass]="{green: team.members === countOfCost, red: team.members !== countOfCost}">{{team.members === countOfCost ? "&#10003;" : "&#x2717;"}}
+      &nbsp; | Díj:&nbsp;
+      <span [ngClass]="{ green: team.members === countOfCost, red: team.members !== countOfCost }"
+        >{{ team.members === countOfCost ? '&#10003;' : '&#x2717;' }}
       </span>
-      &nbsp;
-      | Felelőségvállalási:&nbsp;
-      <span
-        [ngClass]="{green: team.hasResponsibilityPaper, red: !team.hasResponsibilityPaper}">{{team.hasResponsibilityPaper ? "&#10003;" : "&#x2717;"}}
+      &nbsp; | Felelőségvállalási:&nbsp;
+      <span [ngClass]="{ green: team.hasResponsibilityPaper, red: !team.hasResponsibilityPaper }"
+        >{{ team.hasResponsibilityPaper ? '&#10003;' : '&#x2717;' }}
       </span>
     </mat-expansion-panel-header>
     <div><strong>Csapat tagok:</strong> {{ team.members | personCount }}</div>
@@ -20,23 +18,37 @@
     <div><strong>Csapat kapitány:</strong> {{ team.teamLeader | exists }}</div>
     <div>
       <strong>Felelőségvállalási:</strong> &nbsp;
-      <mat-checkbox [(ngModel)]="team.hasResponsibilityPaper" (change)="setHasReposnsibilityPaper()"
-        title="Felelőségvállalási beállítása {{team.name}} csapatnak">
+      <mat-checkbox
+        [(ngModel)]="team.hasResponsibilityPaper"
+        (change)="setHasReposnsibilityPaper()"
+        title="Felelőségvállalási beállítása {{ team.name }} csapatnak"
+      >
       </mat-checkbox>
     </div>
     <div *ngIf="event.fixTeamCost">
       <strong>Csapat díj:</strong>&nbsp;
-      <mat-checkbox [(ngModel)]="team.isPaidFixCost" title="Fix csapat díj beállítása {{team.name}} csapatnak" (change)="setIsPaidFixCostStatus()"></mat-checkbox>
+      <mat-checkbox
+        [(ngModel)]="team.isPaidFixCost"
+        title="Fix csapat díj beállítása {{ team.name }} csapatnak"
+        (change)="setIsPaidFixCostStatus()"
+      ></mat-checkbox>
     </div>
     <div *ngIf="event.fixTeamCost">
       <strong>Csapat előleg:</strong>&nbsp;
-      <mat-checkbox [(ngModel)]="team.isPaidFixDeposit" title="Fix csapat díj beállítása {{team.name}} csapatnak" (change)="setIsPaidFixDepositStatus()" [disabled]="team.isPaidFixCost === true"></mat-checkbox>
+      <mat-checkbox
+        [(ngModel)]="team.isPaidFixDeposit"
+        title="Fix csapat díj beállítása {{ team.name }} csapatnak"
+        (change)="setIsPaidFixDepositStatus()"
+        [disabled]="team.isPaidFixCost == true"
+      ></mat-checkbox>
     </div>
     <div>
-      <button mat-raised-button color="accent" (click)="openTeamDetailsModal()"
-        title="{{team.name}} szerkesztése">Szerkesztés</button>
-      <button mat-raised-button color="warn" (click)="openConfirmDeleteModal()"
-        title="{{team.name}} törlése">Törlés</button>
+      <button mat-raised-button color="accent" (click)="openTeamDetailsModal()" title="{{ team.name }} szerkesztése">
+        Szerkesztés
+      </button>
+      <button mat-raised-button color="warn" (click)="openConfirmDeleteModal()" title="{{ team.name }} törlése">
+        Törlés
+      </button>
     </div>
   </mat-expansion-panel>
 </div>

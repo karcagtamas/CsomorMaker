@@ -1,3 +1,5 @@
+@import 'src/variables.scss';
+
 .details {
   .element {
     .name {
@@ -6,18 +8,18 @@
   }
 
   .unready {
-    color: red;
+    color: $red;
     font-weight: bold;
   }
 
   .ready {
-    color: green;
+    color: $green;
     font-weight: bold;
   }
 
   .big-title {
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: $menu-font-size;
   }
 
   button {

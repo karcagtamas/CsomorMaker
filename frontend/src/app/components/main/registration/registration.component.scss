@@ -1,14 +1,12 @@
+@import 'src/variables.scss';
+
 .panel {
   padding: 0.5rem;
   margin-top: 3rem;
   .title {
-    color: white;
-    background-color: #673ab7;
+    color: $white;
+    background-color: $primary;
     margin-bottom: 1rem;
-    font-size: 150%;
-  }
-
-  mat-error {
-    font-size: 65%;
+    font-size: $header-font-size;
   }
 }

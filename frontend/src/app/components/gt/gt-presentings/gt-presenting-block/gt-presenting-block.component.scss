@@ -1,3 +1,5 @@
+@import 'src/variables.scss';
+
 .presenting {
   padding: 0.5rem;
 
@@ -5,7 +7,7 @@
     padding: 0.2rem;
 
     .panel-title {
-      font-size: 85%;
+      font-size: $font-size;
     }
 
     .block {
@@ -14,7 +16,7 @@
       padding-bottom: 0.9rem;
 
       &:hover {
-        background-color: #9a68f1af;
+        background-color: $primary-lighter;
         transition-duration: 0.3s;
       }
     }

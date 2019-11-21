@@ -17,8 +17,8 @@
         >&nbsp; | Előleg:&nbsp;
         <span [ngClass]="{ green: member.isPaidDeposit, red: !member.isPaidDeposit }">{{
           member.isPaidDeposit ? '&#10003;' : '&#x2717;'
-        }}</span>
-        | Díj:&nbsp;
+        }}</span
+        >&nbsp; | Díj:&nbsp;
         <span [ngClass]="{ green: member.isPaidCost, red: !member.isPaidCost }">{{
           member.isPaidCost ? '&#10003;' : '&#x2717;'
         }}</span>

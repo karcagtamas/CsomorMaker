@@ -1,21 +1,4 @@
-/* .events {
-  padding: 0.5rem;
-  .event {
-    padding: 0.5rem;
-    margin-bottom: 0.5rem;
-    .title {
-      font-weight: bold;
-    }
-    button {
-      margin: 0.2rem;
-    }
-    &:hover {
-      background-color: #683ab79a;
-      transition-duration: 0.5s;
-    }
-  }
-}
- */
+@import 'src/variables.scss';
 
 .panel {
   margin: 0;
@@ -30,8 +13,8 @@
     margin-bottom: 0.5rem;
 
     .title {
-      background-color: #683ab7;
-      color: white;
+      background-color: $primary;
+      color: $white;
       padding: 0.2rem;
     }
 
@@ -40,11 +23,11 @@
 
       &:hover {
         cursor: pointer;
-        background-color: #9a68f1af;
+        background-color: $primary-lighter;
       }
     }
     .purple {
-      color: #683ab7;
+      color: $primary;
       font-weight: bold;
     }
   }
@@ -53,8 +36,8 @@
     padding: 0.2rem;
 
     .title {
-      background-color: #683ab7;
-      color: white;
+      background-color: $primary;
+      color: $white;
       padding: 0.2rem;
     }
     .item {
@@ -62,11 +45,11 @@
 
       &:hover {
         cursor: pointer;
-        background-color: #9a68f1af;
+        background-color: $primary-lighter;
       }
     }
     .purple {
-      color: #683ab7;
+      color: $primary;
       font-weight: bold;
     }
   }
@@ -78,18 +61,5 @@
   .card {
     max-height: 85vh;
     overflow: auto;
-
-    ::-webkit-scrollbar-track {
-      border-radius: 10px;
-      background: red;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: #888;
-
-      :hover {
-        background: #555;
-      }
-    }
   }
 }

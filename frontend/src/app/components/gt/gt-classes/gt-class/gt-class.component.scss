@@ -1,3 +1,5 @@
+@import 'src/variables.scss';
+
 .class {
   padding: 0.2rem;
   .title {
@@ -5,7 +7,7 @@
   }
 
   .name {
-    color: rgba(255, 0, 0, 0.75);
+    color: $warn;
   }
   .members {
     .member {

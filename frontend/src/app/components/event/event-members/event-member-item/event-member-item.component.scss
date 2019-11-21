@@ -1,3 +1,5 @@
+@import 'src/variables.scss';
+
 .item {
   margin: 0;
   margin-top: 0.2rem;
@@ -6,29 +8,34 @@
 }
 
 .level1 {
-  background-color: rgba(23, 76, 199, 0.7);
+  background-color: $primary-lighter;
+  transition-duration: 0.75s;
 
   &:hover {
-    transition-duration: 0.5s;
-    background-color: rgba(7, 18, 121, 0.7);
-    color: white;
+    transition-duration: 0.75s;
+    background-color: $primary-light;
+    color: $white;
   }
 }
 
 .level2 {
-  background-color: rgba(212, 151, 38, 0.7);
+  background-color: $orange;
+  transition-duration: 0.75s;
+
   &:hover {
-    transition-duration: 0.5s;
-    background-color: rgba(233, 131, 15, 0.7);
-    color: white;
+    transition-duration: 0.75s;
+    background-color: $accent;
+    color: $white;
   }
 }
 
 .level3 {
-  background-color: rgba(87, 20, 175, 0.7);
+  background-color: $green-light;
+  transition-duration: 0.75s;
+
   &:hover {
-    transition-duration: 0.5s;
-    background-color: rgba(34, 7, 109, 0.7);
-    color: white;
+    transition-duration: 0.75s;
+    background-color: $green;
+    color: $white;
   }
 }

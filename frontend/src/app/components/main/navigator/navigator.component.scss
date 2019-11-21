@@ -1,8 +1,10 @@
+@import 'src/variables.scss';
+
 .spacer {
   flex: 1 1 auto;
 }
 
 .title {
-  font-size: 150%;
+  font-size: $header-font-size;
   cursor: pointer;
 }

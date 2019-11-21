@@ -1,7 +1,9 @@
+@import 'src/variables.scss';
+
 .presenting {
   padding: 1rem;
   margin: 1rem;
   .panel-title {
-    font-size: 0.8rem;
+    font-size: $font-size;
   }
 }

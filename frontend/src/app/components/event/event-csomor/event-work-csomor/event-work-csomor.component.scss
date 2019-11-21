@@ -1,3 +1,5 @@
+@import 'src/variables.scss';
+
 .work {
   .row {
     margin: 0;
@@ -7,23 +9,28 @@
   }
 
   .over {
-    background-color: #9a68f1af !important;
+    background-color: $primary-light !important;
     transition-duration: 0.5s;
   }
 
-  .current{
-    border: 3px solid red !important;
-    background: #fc7272;
+  .current {
+    border: 3px solid $red !important;
+    background: $red-light !important;
+    color: black !important;
+  }
+
+  .row {
+    transition-duration: 0.75s;
   }
 
   .row:nth-child(even) {
-    background-color: #9a68f13d;
+    background-color: $blue-light;
   }
 }
 
 .buttons {
   margin: 0;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
 
   div {
     text-align: center;

@@ -87,7 +87,7 @@ export class EventMembersComponent implements OnInit, OnChanges {
   }
 
   openAddMemberModal() {
-    const dialogRef = this.dialog.open(AddNewMemberModalComponent, { data: this.event.id });
+    const dialogRef = this.dialog.open(AddNewMemberModalComponent, { data: this.event.id, minWidth: '50%' });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
