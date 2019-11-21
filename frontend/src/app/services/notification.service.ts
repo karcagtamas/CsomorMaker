@@ -8,7 +8,7 @@ export class NotificationService {
   constructor(private snackBar: MatSnackBar) {}
 
   error(value: string) {
-    this.snackBar.open(value, 'OK', { duration: 5000, panelClass: ['error-snackbar'] });
+    this.snackBar.open(value, 'OK', { duration: 0, panelClass: ['error-snackbar'] });
   }
 
   warning(value: string) {
