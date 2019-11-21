@@ -1,55 +1,59 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import '~bootstrap/dist/css/bootstrap.min.css';
-@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
-
-$main-color: #683ab7;
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import './theme.scss';
+@import './variables';
 
 * {
   font-family: 'Bree Serif', serif !important;
-  font-size: 20px;
+  font-size: $font-size;
 }
 
 mat-icon {
   font-family: 'Material Icons' !important;
 }
 
+mat-error {
+  font-size: $small-font-size;
+}
+
 .activeMenu {
-  color: rgba(54, 202, 228, 0.685);
+  color: $accent !important;
 }
 
 .panel-title {
-  background-color: #683ab7;
-  color: white;
-  font-size: 150%;
+  background-color: $primary;
+  color: $white;
+  font-size: $header-font-size;
 }
 
 .error-snackbar {
-  background-color: rgba(95, 7, 7, 0.781);
+  background-color: $warn;
 }
 
 .warning-snackbar {
-  background-color: rgba(105, 105, 5, 0.787);
+  background-color: $accent;
 }
 
 .success-snackbar {
-  background-color: rgba(5, 46, 5, 0.774);
+  background-color: $green-dark;
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 5px;
 }
 
 ::-webkit-scrollbar-track {
   border-radius: 100px;
-  background: #b99ee7;
+  background: $primary-lighter;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #683ab7;
+  background: $primary-light;
   border-radius: 100px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #5812cf;
+  background: $primary;
 }

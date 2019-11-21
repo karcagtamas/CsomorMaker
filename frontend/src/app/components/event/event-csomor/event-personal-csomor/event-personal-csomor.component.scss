@@ -1,3 +1,5 @@
+@import 'src/variables.scss';
+
 .personal {
   .row {
     margin: 0;
@@ -7,17 +9,23 @@
   }
 
   .over {
-    background-color: #9a68f1af !important;
-    transition-duration: 0.5s;
+    background-color: $primary-light !important;
+    transition-duration: 0.75s;
+    color: $white;
   }
 
-  .current{
-    border: 3px solid red !important;
-    background: #fc7272;
+  .current {
+    border: 3px solid $red !important;
+    background: $red-light !important;
+    color: black !important;
+  }
+
+  .row {
+    transition-duration: 0.75s;
   }
 
   .row:nth-child(even) {
-    background-color: #9a68f13d;
+    background-color: $blue-light;
   }
 }
 

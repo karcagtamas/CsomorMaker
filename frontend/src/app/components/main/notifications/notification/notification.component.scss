@@ -1,10 +1,11 @@
+@import 'src/variables.scss';
+
 .notification {
   padding: 0.2rem;
   margin-top: 0.2rem;
   margin-bottom: 0.2rem;
-  font-size: 50% !important;
 
   &:hover {
-    background-color: #9a68f1af;
+    background-color: $primary-lighter;
   }
 }

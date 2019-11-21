@@ -1,3 +1,5 @@
+@import 'src/variables.scss';
+
 .data-table {
   padding: 1rem;
 
@@ -7,15 +9,12 @@
 }
 
 ::ng-deep th .mat-sort-header-button {
-  font-size: 15px !important;
-  color: #683ab7;
+  color: $primary;
 }
 
 th {
-  font-size: 15px !important;
-  color: #683ab7;
+  color: $primary;
 }
-
 
 ::ng-deep .data-table table mat-select .ng-star-inserted {
   font-size: 12px !important;

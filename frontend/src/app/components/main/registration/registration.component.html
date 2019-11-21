@@ -5,7 +5,7 @@
 
   <mat-form-field class="w-100" appearance="outline">
     <mat-label>Felhasználónév</mat-label>
-    <input matInput placeholder="Felhasználónév" formControlName="username" />
+    <input matInput placeholder="Felhasználónév" autocomplete="off" formControlName="username" />
     <mat-error *ngIf="form.get('username').hasError('required')">A felhasználónév megadás kötelező</mat-error>
     <mat-error *ngIf="form.get('username').hasError('maxlength')"
       >A felhasználónév hossza maximum 50 karakter lehet</mat-error
@@ -17,7 +17,7 @@
 
   <mat-form-field class="w-100" appearance="outline">
     <mat-label>Jelszó</mat-label>
-    <input matInput placeholder="Jelszó" type="password" formControlName="password" />
+    <input matInput placeholder="Jelszó" type="password" autocomplete="off" formControlName="password" />
     <mat-error *ngIf="form.get('password').hasError('required')">A jelszó megadás kötelező</mat-error>
     <mat-error *ngIf="form.get('password').hasError('maxlength')">A jelszó hossza maximum 50 karakter lehet</mat-error>
     <mat-error *ngIf="form.get('password').hasError('minlength')"
@@ -27,7 +27,7 @@
 
   <mat-form-field class="w-100" appearance="outline">
     <mat-label>Jelszó újra</mat-label>
-    <input matInput placeholder="Jelszó újra" type="password" formControlName="rePassword" />
+    <input matInput placeholder="Jelszó újra" type="password" autocomplete="off" formControlName="rePassword" />
     <mat-error *ngIf="form.get('rePassword').hasError('required')">A jelszó megadás kötelező</mat-error>
     <mat-error *ngIf="form.get('rePassword').hasError('maxlength')"
       >A jelszó hossza maximum 50 karakter lehet</mat-error
@@ -39,7 +39,7 @@
 
   <mat-form-field class="w-100" appearance="outline">
     <mat-label>E-mail</mat-label>
-    <input matInput placeholder="E-mail" type="email" formControlName="email" />
+    <input matInput placeholder="E-mail" type="email" autocomplete="off" formControlName="email" />
     <mat-error *ngIf="form.get('email').hasError('required')">Az e-mail cím megadás kötelező</mat-error>
     <mat-error *ngIf="form.get('email').hasError('email')">Az e-mail cím formája nem helyes</mat-error>
     <mat-error *ngIf="form.get('email').hasError('maxLength')"

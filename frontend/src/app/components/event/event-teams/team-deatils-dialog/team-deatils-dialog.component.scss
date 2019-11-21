@@ -1,19 +1,21 @@
+@import 'src/variables.scss';
+
 .member {
   margin: 0.2rem;
   padding: 0.2rem;
 
   .yellow {
-    color: yellow;
+    color: $yellow;
     font-size: 1.1rem;
   }
 
   .red {
-    color: red;
+    color: $red;
     font-size: 1.1rem;
   }
 
   .green {
-    color: green;
+    color: $green;
     font-size: 1.1rem;
   }
 }

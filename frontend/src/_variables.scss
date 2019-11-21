@@ -1,0 +1,45 @@
+@import './theme.scss';
+@include mat-core();
+
+$primary: mat-color($primary-palette);
+$primary-light: #683ab7;
+$primary-lighter: #b99ee7;
+$accent: mat-color($accent-palette);
+$warn: mat-color($warning-palette);
+
+$white-light: #ffffff;
+$white: #f9f9f9;
+$white-dark: #f5f5f5;
+
+$black-light: #333333;
+$black: #201f20;
+$black-dark: #000000;
+
+$gray-light: #e1e0e1;
+$gray: #a3a3a3;
+$egrey: #d9d9d9;
+
+$green-light: #cbffbb;
+$green: #1d9932;
+$green-dark: #052d05;
+
+$red-light: #ffbbbb;
+$red: #ef5350;
+
+$yellow-light: rgb(255, 247, 172);
+$yellow: #ff0;
+$orange: #f0ae49;
+
+$blue-light: #bbbbff;
+$blue: #0027bc;
+
+$small-font-size: 13px;
+$font-size: 16px;
+$menu-font-size: 24px;
+$header-font-size: 32px;
+
+$important-1: rgba(235, 109, 109, 0.75);
+$important-2: rgba(235, 159, 109, 0.75);
+$important-3: rgba(235, 223, 109, 0.75);
+$solved: rgba(156, 133, 133, 0.75);
+$exp: rgba(255, 0, 0, 0.75);

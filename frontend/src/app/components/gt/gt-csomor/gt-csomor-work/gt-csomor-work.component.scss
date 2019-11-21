@@ -1,3 +1,5 @@
+@import 'src/variables.scss';
+
 .buttons {
   margin: 0;
   margin-bottom: 0.5rem;
@@ -25,7 +27,7 @@
       padding: 0.2rem;
 
       &:hover {
-        background-color: #9a68f1af;
+        background-color: $primary-light;
 
         transition-duration: 0.5s;
       }

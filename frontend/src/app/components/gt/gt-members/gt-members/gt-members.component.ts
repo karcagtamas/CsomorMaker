@@ -94,7 +94,7 @@ export class GtMembersComponent implements OnInit, OnChanges {
   }
 
   openAddMemberModal() {
-    const dialogRef = this.dialog.open(GtAddMemberDialogComponent, { data: this.gt.id });
+    const dialogRef = this.dialog.open(GtAddMemberDialogComponent, { data: this.gt.id, minWidth: '50%' });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

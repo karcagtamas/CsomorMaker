@@ -1,3 +1,5 @@
+@import 'src/variables.scss';
+
 .personal {
   .row {
     margin: 0;
@@ -6,18 +8,22 @@
     padding: 0.2rem;
   }
   .over {
-    background-color: #9a68f1af !important;
+    background-color: $primary-light !important;
     transition-duration: 0.5s;
   }
 
+  .row {
+    transition-duration: 0.75s;
+  }
+
   .row:nth-child(even) {
-    background-color: #9a68f13d;
+    background-color: $blue-light;
   }
 }
 
 .buttons {
   margin: 0;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
   div {
     text-align: center;
     button {
