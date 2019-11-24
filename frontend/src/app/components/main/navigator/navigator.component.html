@@ -47,8 +47,9 @@
             Admin
           </button>
           <mat-menu #mobileadminmenu="matMenu">
-            <button mat-menu-item [routerLink]="['/user-admin']"
-              routerLinkActive="activeMenu">Felhasználókezelés</button>
+            <button mat-menu-item [routerLink]="['/user-admin']" routerLinkActive="activeMenu">
+              Felhasználókezelés
+            </button>
             <button mat-menu-item [routerLink]="['/event-admin']" routerLinkActive="activeMenu">Adminisztráció</button>
             <button mat-menu-item [routerLink]="['/gt-admin']" routerLinkActive="activeMenu">Gólyatábor-kezelés</button>
           </mat-menu>
@@ -98,7 +99,17 @@
 
         <span class="spacer"></span>
 
-        <button mat-button (click)="logout()" *ngIf="isLoggedIn" class="float-right">Kijelentkezés</button>
+        <button mat-button [matMenuTriggerFor]="profilemenu" *ngIf="isLoggedIn" class="float-right">
+          <mat-icon>person</mat-icon>
+        </button>
+        <mat-menu #profilemenu="matMenu">
+          <div mat-menu-item (click)="$event.stopPropagation()">
+            <mat-select name="theme" [(value)]="selectedTheme" (selectionChange)="changeTheme()">
+              <mat-option [value]="theme.clazz" *ngFor="let theme of themes">{{ theme.name }}</mat-option>
+            </mat-select>
+          </div>
+          <button mat-menu-item (click)="logout()" *ngIf="isLoggedIn" class="float-right">Kijelentkezés</button>
+        </mat-menu>
       </div>
     </div>
   </mat-toolbar-row>

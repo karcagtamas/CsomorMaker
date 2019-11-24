@@ -109,10 +109,13 @@ $light-theme: mat-light-theme($primary-palette, $accent-palette, $warning-palett
 
 $dark-theme: mat-light-theme($accent-palette, $warning-palette, $primary-palette);
 
-.light {
+.other-theme {
   @include angular-material-theme($dark-theme);
+  $selected-theme: $dark-theme;
 }
 
-.dark {
+.purple-theme {
   @include angular-material-theme($light-theme);
+  $selected-theme: $light-theme;
+  $primary-palette: $accent-palette;
 }

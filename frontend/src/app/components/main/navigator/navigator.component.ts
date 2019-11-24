@@ -1,4 +1,4 @@
-import { LoginService, CommonService, UserService } from 'src/app/services';
+import { LoginService, CommonService, UserService, Theme, THEMES } from 'src/app/services';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -11,6 +11,11 @@ export class NavigatorComponent implements OnInit {
   isLoggedIn = false;
   isAdmin = false;
   isMobielView = window.innerWidth < 650;
+
+  themes = THEMES;
+
+  selectedTheme: string;
+
   constructor(
     private loginservice: LoginService,
     private router: Router,
@@ -21,9 +26,14 @@ export class NavigatorComponent implements OnInit {
   ngOnInit() {
     this.getIsLoggedIn();
     this.getIsAdmin();
-    this.commonservice.changeEmitted$.subscribe(() => {
-      this.getIsLoggedIn();
-      this.getIsAdmin();
+    this.commonservice.state$.subscribe(() => {
+      if (this.commonservice.isLoggedIn) {
+        this.getIsLoggedIn();
+        this.getIsAdmin();
+      }
+      if (this.commonservice.selectedTheme) {
+        this.selectedTheme = this.commonservice.selectedTheme.clazz;
+      }
     });
   }
 
@@ -64,5 +74,9 @@ export class NavigatorComponent implements OnInit {
       .catch(() => {
         window.alert('Sikertelen kijelentkezés!');
       });
+  }
+
+  changeTheme() {
+    this.commonservice.selectedTheme = THEMES.find(x => x.clazz === this.selectedTheme);
   }
 }
