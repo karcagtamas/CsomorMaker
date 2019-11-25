@@ -1,18 +1,13 @@
 <mat-card class="card">
-  <div class="text-center panel-title border rounded">Saját Profil <mat-icon>person</mat-icon>
-  </div>
+  <mat-toolbar color="primary" class="page-header">
+    <span class="title">Saját Profil <mat-icon>person</mat-icon></span>
+  </mat-toolbar>
   <div *ngIf="user" class="details">
     <div class="details-block">
       <h4>Felhasználói adatok</h4>
-      <div>
-        <mat-icon>person</mat-icon>&nbsp;<strong>Felhasználónév: </strong>{{ user.username }}
-      </div>
-      <div>
-        <mat-icon>person</mat-icon>&nbsp;<strong>Megjelenítendő név: </strong>{{ user.name }}
-      </div>
-      <div>
-        <mat-icon>email</mat-icon>&nbsp;<strong>E-mail cím: </strong>{{ user.email }}
-      </div>
+      <div><mat-icon>person</mat-icon>&nbsp;<strong>Felhasználónév: </strong>{{ user.username }}</div>
+      <div><mat-icon>person</mat-icon>&nbsp;<strong>Megjelenítendő név: </strong>{{ user.name }}</div>
+      <div><mat-icon>email</mat-icon>&nbsp;<strong>E-mail cím: </strong>{{ user.email }}</div>
     </div>
     <mat-divider></mat-divider>
     <div class="details-block">

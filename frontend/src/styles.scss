@@ -28,6 +28,14 @@ mat-error {
   font-size: $header-font-size;
 }
 
+mat-toolbar.page-header {
+  border-radius: 4px;
+  .title {
+    font-size: $header-font-size;
+    margin: 0 auto;
+  }
+}
+
 .error-snackbar {
   background-color: $warn;
 }
