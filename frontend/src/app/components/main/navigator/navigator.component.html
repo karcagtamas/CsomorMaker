@@ -108,6 +108,15 @@
               <mat-option [value]="theme.clazz" *ngFor="let theme of themes">{{ theme.name }}</mat-option>
             </mat-select>
           </div>
+          <div mat-menu-item (click)="$event.stopPropagation()">
+            <div><strong>Felhasználónév: </strong> {{ user.username }}</div>
+          </div>
+          <div mat-menu-item (click)="$event.stopPropagation()">
+            <div><strong>Utolsó bejelentkezés: </strong> {{ user.lastLogin | date: 'yyyy-MM-dd' }}</div>
+          </div>
+          <button mat-menu-item [routerLink]="['/my-profile']" routerLinkActive="activeMenu">
+            Profilom megnyitása
+          </button>
           <button mat-menu-item (click)="logout()" *ngIf="isLoggedIn" class="float-right">Kijelentkezés</button>
         </mat-menu>
       </div>

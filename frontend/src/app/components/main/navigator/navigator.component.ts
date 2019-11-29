@@ -1,6 +1,7 @@
 import { LoginService, CommonService, UserService, Theme, THEMES } from 'src/app/services';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from 'src/app/models';
 
 @Component({
   selector: 'app-navigator',
@@ -11,6 +12,7 @@ export class NavigatorComponent implements OnInit {
   isLoggedIn = false;
   isAdmin = false;
   isMobielView = window.innerWidth < 650;
+  user: User = null;
 
   themes = THEMES;
 
@@ -26,15 +28,35 @@ export class NavigatorComponent implements OnInit {
   ngOnInit() {
     this.getIsLoggedIn();
     this.getIsAdmin();
+    this.getUser();
     this.commonservice.state$.subscribe(() => {
       if (this.commonservice.isLoggedIn) {
         this.getIsLoggedIn();
         this.getIsAdmin();
+        this.getUser();
       }
       if (this.commonservice.selectedTheme) {
         this.selectedTheme = this.commonservice.selectedTheme.clazz;
       }
     });
+  }
+
+  getUser(): void {
+    this.userserive
+      .getId()
+      .then(res => {
+        this.userserive
+          .getUser(res)
+          .then(user => {
+            this.user = user;
+          })
+          .catch(() => {
+            this.user = null;
+          });
+      })
+      .catch(() => {
+        this.user = null;
+      });
   }
 
   getIsLoggedIn() {
