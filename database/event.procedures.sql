@@ -305,7 +305,7 @@ CREATE PROCEDURE updateEvent(
       WHERE users.id NOT IN (
       SELECT user as id FROM usereventswitch
       WHERE event = _event
-      );
+      ) AND NOT users.blocked AND roles.accessLevel <> 4;
     END;
 
   /* eventpayouttypes */

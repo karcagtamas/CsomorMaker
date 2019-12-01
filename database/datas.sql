@@ -3,16 +3,18 @@ USE csomormaker;
 INSERT INTO roles (id, name, accessLevel)
   VALUES (1, 'Adminisztrátor', 3),
           (2, 'Moderátor', 2),
-          (3, 'Általános felhasználó', 1);
+          (3, 'Általános felhasználó', 1),
+          (4, 'Root', 4);
 
 INSERT INTO eventroles (name, accessLevel)
   VALUES ('Főszervező', 3),
           ('Posztfőszervező', 2),
-          ('Humán', 1);
+          ('Humán', 1),
+          ('Fejlesztő', 3);
 
 
 INSERT INTO users (username, email, password, name, role)
-  VALUES ('admin', 'csomormaker.karcags.hu', '$2y$10$H/hBwhyOF8pfqTwugvkCreTRVP7olOOPTLr2ACkH6OescL0FLc2/S', 'ADMIN', 1);
+  VALUES ('root', 'csomormaker.karcags.hu', '$2y$10$H/hBwhyOF8pfqTwugvkCreTRVP7olOOPTLr2ACkH6OescL0FLc2/S', 'ROOT', 4);
 
 INSERT INTO users (username, email, password, name, role)
   VALUES ('karcagtamas', 'karcagtamas@outlook.com', '$2y$10$H/hBwhyOF8pfqTwugvkCreTRVP7olOOPTLr2ACkH6OescL0FLc2/S', 'Karcag', 1);

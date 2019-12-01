@@ -3,7 +3,7 @@ USE csomormaker;
 
   CREATE OR REPLACE PROCEDURE getRoles()
     BEGIN
-      SELECT * FROM roles;
+      SELECT * FROM roles WHERE accessLevel <> 4;
     END;
 
   CREATE OR REPLACE PROCEDURE deleteRole(_id int(11))

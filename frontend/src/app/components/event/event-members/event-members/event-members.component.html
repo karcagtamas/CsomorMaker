@@ -21,7 +21,7 @@
   <button
     mat-raised-button
     color="primary"
-    [disabled]="event.isLocked"
+    [disabled]="event.isLocked === true"
     (click)="openAddMemberModal()"
     *ngIf="accessLevel >= 3"
     title="Új esemény tag felvétele"

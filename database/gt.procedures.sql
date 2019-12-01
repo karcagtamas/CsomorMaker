@@ -77,7 +77,7 @@ CREATE OR REPLACE PROCEDURE getNonGtMembers(_gtId int(11))
       WHERE users.id NOT IN (
       SELECT user as id FROM usergtswitch
       WHERE gt = _gtId
-      ) ORDER BY users.name;
+      ) AND NOT users.blocked AND roles.accessLevel <> 4 ORDER BY users.name;
     END;
 
 CREATE OR REPLACE PROCEDURE addGtMember(_gtId int(11), _userId int(11), _roleId int(11))
