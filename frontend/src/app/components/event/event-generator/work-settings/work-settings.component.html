@@ -16,7 +16,7 @@
       color="primary"
       (click)="openConfirmDeleteWorkDialog()"
       title="Poszt ({{ work.name }}) törlése"
-      [disabled]="event.isLocked === true"
+      [disabled]="event.isLocked == true"
     >
       Törlés
     </button>

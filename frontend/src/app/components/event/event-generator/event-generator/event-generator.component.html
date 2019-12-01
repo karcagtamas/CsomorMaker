@@ -1,6 +1,12 @@
 <div class="text-center panel-title border rounded">Generátor <mat-icon>build</mat-icon></div>
 <div class="buttons">
-  <button mat-raised-button color="accent" (click)="generate()" title="Csömörök generálása" [disabled]="event.isLocked === true">
+  <button
+    mat-raised-button
+    color="accent"
+    (click)="generate()"
+    title="Csömörök generálása"
+    [disabled]="event.isLocked == true"
+  >
     Generálás
   </button>
 </div>
@@ -43,7 +49,7 @@
       color="primary"
       (click)="openAddNewWorkDialog()"
       title="Új psozt felvétele"
-      [disabled]="event.isLocked === true"
+      [disabled]="event.isLocked === true || event.isLocked == true"
     >
       Új poszt
     </button>

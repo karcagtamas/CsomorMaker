@@ -21,7 +21,7 @@
       (click)="openModifyDialog()"
       *ngIf="accessLevel >= 3 && eventMember.id !== userId"
       title="{{ eventMember.name }} felhasználó esemény adatainak szereksztése"
-      [disabled]="event.isLocked === true"
+      [disabled]="event.isLocked === true || event.isLocked == true"
     >
       &#9998;
     </button>
@@ -32,7 +32,7 @@
       (click)="openDeleteConfirmDialog()"
       *ngIf="accessLevel >= 3 && eventMember.id !== userId"
       title="{{ eventMember.name }} felhasználó törlése az eseményből"
-      [disabled]="event.isLocked === true"
+      [disabled]="event.isLocked === true || event.isLocked == true"
     >
       &#10006;
     </button>

@@ -1,9 +1,21 @@
 <div class="text-center panel-title border rounded">Beállítások <mat-icon>settings_applications</mat-icon></div>
 <div class="buttons">
-  <button mat-raised-button color="primary" (click)="save()" title="Beállítások mentése" [disabled]="event && event.isLocked === true">
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="save()"
+    title="Beállítások mentése"
+    [disabled]="(event && event.isLocked === true) || event.isLocked == true"
+  >
     Mentés
   </button>
-  <button mat-raised-button color="accent" (click)="reset()" title="Adatok visszaállítása az utolsó mentet változatra" [disabled]="event && event.isLocked === true">
+  <button
+    mat-raised-button
+    color="accent"
+    (click)="reset()"
+    title="Adatok visszaállítása az utolsó mentet változatra"
+    [disabled]="(event && event.isLocked === true) || event.isLocked == true"
+  >
     Visszaállítás
   </button>
 </div>
