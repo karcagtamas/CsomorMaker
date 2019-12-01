@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { EventMember } from 'src/app/models';
+import { EventMember, Event } from 'src/app/models';
 import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
 import { ModifyEventMemberComponent } from '../modify-event-member/modify-event-member.component';
 
@@ -13,6 +13,7 @@ export class EventMemberItemComponent implements OnInit {
   @Input() eventMember: EventMember;
   @Input() accessLevel: number;
   @Input() userId: number;
+  @Input() event: Event;
   @Output() delete = new EventEmitter();
   @Output() update = new EventEmitter();
   constructor(public dialog: MatDialog) {}

@@ -108,10 +108,10 @@
               <mat-option [value]="theme.clazz" *ngFor="let theme of themes">{{ theme.name }}</mat-option>
             </mat-select>
           </div>
-          <div mat-menu-item (click)="$event.stopPropagation()">
+          <div mat-menu-item (click)="$event.stopPropagation()" *ngIf="isLoggedIn && user">
             <div><strong>Felhasználónév: </strong> {{ user.username }}</div>
           </div>
-          <div mat-menu-item (click)="$event.stopPropagation()">
+          <div mat-menu-item (click)="$event.stopPropagation()" *ngIf="isLoggedIn && user">
             <div><strong>Utolsó bejelentkezés: </strong> {{ user.lastLogin | date: 'yyyy-MM-dd' }}</div>
           </div>
           <button mat-menu-item [routerLink]="['/my-profile']" routerLinkActive="activeMenu">

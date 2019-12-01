@@ -31,11 +31,17 @@ export class EventSettingsComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.modifiedEvent = { ...this.event };
     this.setValues();
+    if (this.event.isLocked) {
+      this.notificationservice.warning('Az esemény zárolva van!');
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
     this.modifiedEvent = { ...this.event };
     this.setValues();
+    if (this.event.isLocked) {
+      this.notificationservice.warning('Az esemény zárolva van!');
+    }
   }
 
   setValues() {

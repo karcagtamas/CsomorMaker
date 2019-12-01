@@ -14,6 +14,7 @@ import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confir
 export class TeamDeatilsDialogComponent implements OnInit {
   teamMembers: EventTeamMember[] = [];
   nameControl = new FormControl('', [Validators.required, Validators.maxLength(100)]);
+  isMobielView = window.innerWidth < 650;
 
   constructor(
     public dialog: MatDialog,

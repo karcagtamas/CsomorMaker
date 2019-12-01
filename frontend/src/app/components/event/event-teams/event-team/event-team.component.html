@@ -2,13 +2,15 @@
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <strong>{{ team.name }}</strong>
-      &nbsp; | Díj:&nbsp;
-      <span [ngClass]="{ green: team.members === countOfCost, red: team.members !== countOfCost }"
-        >{{ team.members === countOfCost ? '&#10003;' : '&#x2717;' }}
-      </span>
-      &nbsp; | Felelőségvállalási:&nbsp;
-      <span [ngClass]="{ green: team.hasResponsibilityPaper, red: !team.hasResponsibilityPaper }"
-        >{{ team.hasResponsibilityPaper ? '&#10003;' : '&#x2717;' }}
+      <span *ngIf="!isMobielView">
+        &nbsp; | Díj:&nbsp;
+        <span [ngClass]="{ green: (!event.fixTeamCost && team.members === countOfCost) || (event.fixTeamCost && team.isPaidFixCost), red: (!event.fixTeamCost && team.members !== countOfCost) || (event.fixTeamCost && !team.isPaidFixCost) }"
+          >{{ (!event.fixTeamCost && team.members === countOfCost) || (event.fixTeamCost && team.isPaidFixCost) ? '&#10003;' : '&#x2717;' }}
+        </span>
+        &nbsp; | Felelőségvállalási:&nbsp;
+        <span [ngClass]="{ green: team.hasResponsibilityPaper, red: !team.hasResponsibilityPaper }"
+          >{{ team.hasResponsibilityPaper ? '&#10003;' : '&#x2717;' }}
+        </span>
       </span>
     </mat-expansion-panel-header>
     <div><strong>Csapat tagok:</strong> {{ team.members | personCount }}</div>

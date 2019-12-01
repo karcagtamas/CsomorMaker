@@ -12,7 +12,7 @@ interface RooState {
 
 export const THEMES: Theme[] = [
   { clazz: 'purple-theme', name: 'Lila' },
-  { clazz: 'other-theme', name: 'Más' }
+  { clazz: 'dark-theme', name: 'Sötét Lila' }
 ];
 
 @Injectable({

@@ -2,17 +2,19 @@
   margin: 0;
   padding: 0;
   .details {
-    max-height: 45vh;
+    max-height: 25vh;
     padding: 0.5rem;
     mat-card {
       overflow: auto;
+      max-height: 20vh;
     }
   }
   .news {
-    max-height: 45vh;
+    max-height: 60vh;
     padding: 0.5rem;
     mat-card {
       overflow: auto;
+      max-height: 55vh;
     }
   }
   .notifications {

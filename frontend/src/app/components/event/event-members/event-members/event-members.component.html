@@ -1,5 +1,4 @@
-<div class="text-center panel-title border rounded">Tagok <mat-icon>groups</mat-icon>
-</div>
+<div class="text-center panel-title border rounded">Tagok <mat-icon>groups</mat-icon></div>
 <div class="members">
   <form (submit)="filter()">
     <mat-form-field class="w-100" appearance="outline">
@@ -8,12 +7,25 @@
     </mat-form-field>
   </form>
   <div class="table">
-    <app-event-member-item *ngFor="let member of filteredMembers" [eventMember]="member" [accessLevel]="accessLevel"
-      [userId]="userId" (delete)="deleteEventMember($event)" (update)="updateEventMember($event)">
+    <app-event-member-item
+      *ngFor="let member of filteredMembers"
+      [eventMember]="member"
+      [accessLevel]="accessLevel"
+      [userId]="userId"
+      [event]="event"
+      (delete)="deleteEventMember($event)"
+      (update)="updateEventMember($event)"
+    >
     </app-event-member-item>
   </div>
-  <button mat-raised-button color="primary" (click)="openAddMemberModal()" *ngIf="accessLevel >= 3"
-    title="Új esemény tag felvétele">
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="event.isLocked"
+    (click)="openAddMemberModal()"
+    *ngIf="accessLevel >= 3"
+    title="Új esemény tag felvétele"
+  >
     Új tag felvétele
   </button>
 </div>
