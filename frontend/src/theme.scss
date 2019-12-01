@@ -107,4 +107,12 @@ $warning-palette: mat-palette($warning);
 
 $light-theme: mat-light-theme($primary-palette, $accent-palette, $warning-palette);
 
-@include angular-material-theme($light-theme);
+$dark-theme: mat-dark-theme($primary-palette, $accent-palette, $warning-palette);
+
+.dark-theme {
+  @include angular-material-theme($dark-theme);
+}
+
+.purple-theme {
+  @include angular-material-theme($light-theme);
+}

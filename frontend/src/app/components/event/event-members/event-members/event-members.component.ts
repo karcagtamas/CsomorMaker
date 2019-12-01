@@ -34,10 +34,16 @@ export class EventMembersComponent implements OnInit, OnChanges {
       .catch(() => {
         this.userId = 0;
       });
+    if (this.event.isLocked) {
+      this.notificationservice.warning('Az esemény zárolva van!');
+    }
   }
 
   ngOnChanges() {
     this.getEventMembers();
+    if (this.event.isLocked) {
+      this.notificationservice.warning('Az esemény zárolva van!');
+    }
   }
 
   getEventMembers() {

@@ -17,7 +17,7 @@ USE csomormaker;
       DECLARE roleId int(11);
       SELECT role INTO roleId FROM users WHERE id = _userId AND NOT blocked;
       SELECT accessLevel INTO level FROM roles WHERE id = roleId;
-      IF level = 3
+      IF level = 3 OR level = 4
         THEN SELECT TRUE AS isAdmin;
         ELSE SELECT FALSE AS isAdmin;
         END IF;
@@ -43,7 +43,8 @@ USE csomormaker;
   CREATE OR REPLACE PROCEDURE getUsers()
     BEGIN
      SELECT users.id, users.name, users.username, users.email, users.role AS roleId, roles.name AS role, users.tShirtSize, users.allergy, users.lastLogin, users.class, users.registrationTime, users.blocked FROM users 
-     INNER JOIN roles ON users.role = roles.id;
+     INNER JOIN roles ON users.role = roles.id
+     WHERE roles.accessLevel <> 4;
     END;
 
   CREATE OR REPLACE PROCEDURE getUser(_id int(11))

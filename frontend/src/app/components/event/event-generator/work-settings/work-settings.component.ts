@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { EventWork } from 'src/app/models';
+import { EventWork, Event } from 'src/app/models';
 import { EventGeneratorService } from 'src/app/services';
 import { EventWorkTable } from 'src/app/models';
 import { MatDialog } from '@angular/material/dialog';
@@ -12,6 +12,7 @@ import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confir
 })
 export class WorkSettingsComponent implements OnInit {
   @Input() work: EventWork;
+  @Input() event: Event;
   @Output() delete = new EventEmitter();
   @Output() save = new EventEmitter();
   workTables: EventWorkTable[] = [];

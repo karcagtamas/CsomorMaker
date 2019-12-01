@@ -1,11 +1,12 @@
-<div class="col col-12 row item border rounded" [ngClass]="{
+<div
+  class="col col-12 row item border rounded"
+  [ngClass]="{
     level1: eventMember.accessLevel === 1,
     level2: eventMember.accessLevel === 2,
     level3: eventMember.accessLevel === 3
-  }">
-  <div class="col col-12 col-lg-4 text-center">
-    {{ eventMember.name }} <mat-icon>person</mat-icon>
-  </div>
+  }"
+>
+  <div class="col col-12 col-lg-4 text-center">{{ eventMember.name }} <mat-icon>person</mat-icon></div>
   <div class="col col-12 col-lg-2 text-center">
     {{ eventMember.role }}
   </div>
@@ -13,14 +14,26 @@
     {{ eventMember.connectionDate | date: 'yyyy. MM. dd. HH:mm:ss' }}
   </div>
   <div class="col col-12 col-lg-2 text-center">
-    <button mat-mini-fab color="accent" class="mr-1" (click)="openModifyDialog()"
+    <button
+      mat-mini-fab
+      color="accent"
+      class="mr-1"
+      (click)="openModifyDialog()"
       *ngIf="accessLevel >= 3 && eventMember.id !== userId"
-      title="{{eventMember.name}} felhasználó esemény adatainak szereksztése">
+      title="{{ eventMember.name }} felhasználó esemény adatainak szereksztése"
+      [disabled]="event.isLocked === true"
+    >
       &#9998;
     </button>
-    <button mat-mini-fab color="warn" class="ml-1" (click)="openDeleteConfirmDialog()"
+    <button
+      mat-mini-fab
+      color="warn"
+      class="ml-1"
+      (click)="openDeleteConfirmDialog()"
       *ngIf="accessLevel >= 3 && eventMember.id !== userId"
-      title="{{eventMember.name}} felhasználó törlése az eseményből">
+      title="{{ eventMember.name }} felhasználó törlése az eseményből"
+      [disabled]="event.isLocked === true"
+    >
       &#10006;
     </button>
   </div>

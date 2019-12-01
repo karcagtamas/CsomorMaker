@@ -13,15 +13,17 @@
       <mat-expansion-panel-header>
         <strong>
           <span *ngIf="isLeader(member)" class="yellow"> <mat-icon>star</mat-icon> </span>&nbsp;
-          {{ member.name }} </strong
-        >&nbsp; | Előleg:&nbsp;
-        <span [ngClass]="{ green: member.isPaidDeposit, red: !member.isPaidDeposit }">{{
-          member.isPaidDeposit ? '&#10003;' : '&#x2717;'
-        }}</span
-        >&nbsp; | Díj:&nbsp;
-        <span [ngClass]="{ green: member.isPaidCost, red: !member.isPaidCost }">{{
-          member.isPaidCost ? '&#10003;' : '&#x2717;'
-        }}</span>
+          {{ member.name }} </strong>
+        <span *ngIf="!isMobileView">
+          &nbsp; | Előleg:&nbsp;
+          <span [ngClass]="{ green: (!data.event.fixTeamCost && member.isPaidDeposit) || (data.event.fixTeamCost && data.team.isPaidFixDeposit), red: (!data.event.fixTeamCost && !member.isPaidDeposit) || (data.event.fixTeamCost && !data.team.isPaidFixDeposit) }">{{
+              (!data.event.fixTeamCost && member.isPaidDeposit) || (data.event.fixTeamCost && data.team.isPaidFixDeposit) ? '&#10003;' : '&#x2717;'
+          }}</span
+          >&nbsp; | Díj:&nbsp;
+          <span [ngClass]="{ green: (!data.event.fixTeamCost && member.isPaidCost) || (data.event.fixTeamCost && data.team.isPaidFixCost), red: (!data.event.fixTeamCost && !member.isPaidCost) || (data.event.fixTeamCost && !data.team.isPaidFixCost) }">{{
+              (!data.event.fixTeamCost && member.isPaidCost) || (data.event.fixTeamCost && data.team.isPaidFixCost) ? '&#10003;' : '&#x2717;'
+          }}</span>
+        </span>
       </mat-expansion-panel-header>
       <button
         mat-mini-fab
@@ -84,6 +86,7 @@
   </button>
   <button
     mat-raised-button
+    *ngIf="!data.event.fixTeamCost"
     color="primary"
     (click)="setEveryMemberPaidStatusToTrue()"
     title="A {{ data.team.name }} csapat minden tagja fizetett"

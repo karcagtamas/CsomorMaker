@@ -1,3 +1,10 @@
-<app-navigator></app-navigator>
-<app-loader></app-loader>
-<router-outlet></router-outlet>
+<div
+  [ngClass]="{
+    'purple-theme': selectedTheme.clazz === 'purple-theme',
+    'dark-theme': selectedTheme.clazz === 'dark-theme'
+  }"
+>
+  <app-navigator></app-navigator>
+  <app-loader></app-loader>
+  <router-outlet></router-outlet>
+</div>

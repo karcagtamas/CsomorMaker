@@ -16,6 +16,7 @@ export class EventTeamComponent implements OnInit {
   @Output() refresh = new EventEmitter();
   countOfCost = 0;
   countOfDeposit = 0;
+  isMobielView = window.innerWidth < 650;
 
   constructor(
     private eventteamsservice: EventTeamsService,

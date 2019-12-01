@@ -25,6 +25,9 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.getWorks();
     this.getWorkers();
+    if (this.event.isLocked) {
+      this.notificationservice.warning('Az esemény zárolva van!');
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -32,6 +35,9 @@ export class EventGeneratorComponent implements OnInit, OnChanges {
     this.getWorkers();
     this.workStep = -1;
     this.workerStep = -1;
+    if (this.event.isLocked) {
+      this.notificationservice.warning('Az esemény zárolva van!');
+    }
   }
 
   getWorks() {

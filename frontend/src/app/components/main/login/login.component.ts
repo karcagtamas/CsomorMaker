@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
         .login(this.form.get('username').value, this.form.get('password').value)
         .then(res => {
           if (res.response === 'success') {
-            this.commonservice.emitChange(true);
+            this.commonservice.isLoggedIn = true;
             this.router.navigateByUrl('/home');
           } else {
             this.notificationservice.error(res.message);
