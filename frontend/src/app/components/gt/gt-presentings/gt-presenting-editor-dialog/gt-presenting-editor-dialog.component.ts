@@ -27,7 +27,6 @@ export class GtPresentingEditorDialogComponent implements OnInit {
   }
 
   save() {
-    console.log(this.form.value);
     this.dialogRef.close(this.form.value);
   }
 }

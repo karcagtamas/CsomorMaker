@@ -18,6 +18,13 @@ export class Gt {
   isDisabled: boolean;
 }
 
+export class GtRole {
+  id: number;
+  name: string;
+  accessLevel: string;
+  gt: number;
+}
+
 export class GtMember {
   gt: number;
   userId: number;

@@ -7,7 +7,13 @@ INSERT INTO roles (id, name, accessLevel)
           (4, 'Root', 4);
 
 INSERT INTO eventroles (name, accessLevel)
-  VALUES ('Főszervező', 3),
+  VALUES ('Főszervező', 4),
+          ('Posztfőszervező', 2),
+          ('Humán', 1),
+          ('Fejlesztő', 3);
+
+INSERT INTO gtroles (name, accessLevel)
+  VALUES ('Főszervező', 4),
           ('Posztfőszervező', 2),
           ('Humán', 1),
           ('Fejlesztő', 3);

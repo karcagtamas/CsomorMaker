@@ -4,8 +4,11 @@
     if ($_SERVER['SERVER_NAME'] == "localhost"){
         header("Access-Control-Allow-Origin: http://localhost:4200", false);
     }
-    else{
+    else if ($_SERVER['SERVER_NAME'] == 'csomormaker.karcags.hu'){
         header("Access-Control-Allow-Origin: http://csomormaker.karcags.hu", false);
+    }
+    else{
+        header("Access-Control-Allow-Origin: *", false);
     }
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
     header('Content-Type: application/json, application/xls, text/csv');
@@ -390,7 +393,19 @@
                             $event = $url[4];
                             switch ($event) {
                                 case 'get':
-                                    getEventRoles();
+                                    getEventRoles($url[5]);
+                                    break;
+                                
+                                case 'update':
+                                    updateEventRole($_POST['id'], $_POST['name'], $_POST['accessLevel']);
+                                    break;
+
+                                case 'delete':
+                                    deleteEventRole($url[5]);
+                                    break;
+
+                                case 'add':
+                                    addEventRole($_POST['event'], $_POST['name'], $_POST['accessLevel']);
                                     break;
                                 
                                 default:
@@ -571,6 +586,31 @@
 
                         case 'accesslevel':
                             gtAccessLevel($url[4]);
+                            break;
+
+                        case 'roles':
+                            $event = $url[4];
+                            switch ($event) {
+                                case 'get':
+                                    getGtRoles($url[5]);
+                                    break;
+
+                                case 'update':
+                                    updateGtRole($_POST['id'], $_POST['name'], $_POST['accessLevel']);
+                                    break;
+    
+                                case 'delete':
+                                    deleteGtRole($url[5]);
+                                    break;
+    
+                                case 'add':
+                                    addGtRole($_POST['gt'], $_POST['name'], $_POST['accessLevel']);
+                                    break;
+                                
+                                default:
+                                    echo '{"response" : "bad-event", "message" : "Bad request event!"}';
+                                    break;
+                            }
                             break;
 
                         case 'generate':

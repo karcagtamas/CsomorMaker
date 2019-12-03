@@ -39,3 +39,14 @@
     color: $white;
   }
 }
+
+.level4 {
+  background-color: $green-light;
+  transition-duration: 0.75s;
+
+  &:hover {
+    transition-duration: 0.75s;
+    background-color: $green;
+    color: $white;
+  }
+}

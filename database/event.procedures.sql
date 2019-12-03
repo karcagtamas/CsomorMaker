@@ -77,10 +77,16 @@ CREATE PROCEDURE getUsersEvents(_userId int(11))
 
 CREATE PROCEDURE addEvent(_name varchar(50), _creater int(11))
     BEGIN
+    DECLARE _event int(2) DEFAULT 0;
      INSERT INTO events (name, creater, lastUpdater)
       VALUES (_name, _creater, _creater);
-
-     CALL addUserToEvent(_creater, LAST_INSERT_ID(), 1);
+      SET _event = LAST_INSERT_ID();
+     CALL addUserToEvent(_creater, _event, 1);
+     INSERT INTO eventroles(name, accessLevel, event)
+        VALUES ('Főszervező', 4, _event),
+          ('Posztfőszervező', 2, _event),
+          ('Humán', 1, _event),
+          ('Fejlesztő', 3, _event);
     END;
 
 DROP PROCEDURE IF EXISTS updateEvent;
@@ -123,9 +129,25 @@ CREATE PROCEDURE updateEvent(
      WHERE id = _id;
     END;
 
-  CREATE PROCEDURE getEventRoles()
+  CREATE PROCEDURE getEventRoles(_event int(11))
     BEGIN
-        SELECT * FROM eventroles;
+        SELECT * FROM eventroles WHERE event = _event;
+     END;
+
+  CREATE PROCEDURE addEventRole(_event int(11), _name varchar(50), _accessLevel int(1))
+    BEGIN
+        INSERT INTO eventroles(event, name, accessLevel)
+        VALUES(_event, _name, _accessLevel);
+     END;
+
+  CREATE PROCEDURE updateEventRole(_id int(11), _name varchar(50), _accessLevel int(1))
+    BEGIN
+        UPDATE eventroles SET name = _name, accessLevel = _accessLevel WHERE id = _id;
+     END;
+
+  CREATE PROCEDURE deleteEventRole(_id int(11))
+    BEGIN
+        DELETE FROM eventroles WHERE id = _id;
      END;
 
   CREATE PROCEDURE getEventAccessLevel(_user int(11), _event int(11))

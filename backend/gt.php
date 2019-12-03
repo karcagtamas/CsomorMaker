@@ -129,6 +129,77 @@
         $stmt->close();
     }
 
+    function getGtRoles($gt){
+        global $db;
+
+        $sql = "CALL getGtRoles(?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $gt);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $array = [];
+        while($row = $result->fetch_assoc()){
+            array_push($array, $row);
+        }
+        echo json_encode($array);
+        $stmt->close();
+    }
+
+    function addGtRole($gt, $name, $accessLevel){
+        global $db;
+
+        $sql = "CALL addGtRole(?, ?, ?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("isi", $gt, $name, $accessLevel);
+        $stmt->execute();
+        if ($stmt->errno){
+            $array['response'] =  'fail';
+            $array['message'] = 'Az gólyatábor rang létrehozása sikertelen!';
+        }else{
+            $array['response'] =  'success';
+            $array['message'] = 'Az gólyatábor rang létrehozása sikeres!';
+        }
+        echo json_encode($array);
+        $stmt->close();
+    }
+
+    function updateGtRole($id, $name, $accessLevel){
+        global $db;
+
+        $sql = "CALL updateGtRole(?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("isi", $id, $name, $accessLevel);
+        $stmt->execute();
+        if ($stmt->errno){
+            $array['response'] =  'fail';
+            $array['message'] = 'Az gólyatábor rang frissítése sikertelen!';
+        }else{
+            $array['response'] =  'success';
+            $array['message'] = 'Az gólyatábor rang frissítése sikeres!';
+        }
+        echo json_encode($array);
+        $stmt->close();
+    }
+
+    function deleteGtRole($id){
+        global $db;
+
+        $sql = "CALL deleteGtRole(?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        if ($stmt->errno){
+            $array['response'] =  'fail';
+            $array['message'] = 'Az gólyatábor rang törlése sikertelen!';
+        }else{
+            $array['response'] =  'success';
+            $array['message'] = 'Az gólyatábor rang törlése sikeres!';
+        }
+        echo json_encode($array);
+        $stmt->close();
+    }
+
     function generate($gtId){
         global $db;
         require 'generator.gt.php';
