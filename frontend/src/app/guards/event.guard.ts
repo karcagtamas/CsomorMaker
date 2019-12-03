@@ -12,7 +12,8 @@ const MENUITEMS = [
   { name: 'ToDo', link: 'todo', accessLevel: 2 },
   { name: 'Chat', link: 'chat', accessLevel: 1 },
   { name: 'Tagok', link: 'members', accessLevel: 1 },
-  { name: 'Csapatok', link: 'teams', accessLevel: 2 }
+  { name: 'Csapatok', link: 'teams', accessLevel: 2 },
+  { name: 'Rangok', link: 'roles', accessLevel: 3 }
 ];
 
 @Injectable({

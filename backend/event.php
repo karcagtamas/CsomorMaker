@@ -278,7 +278,7 @@
     function updateEventRole($id, $name, $accessLevel){
         global $db;
 
-        $sql = "CALL updateEventRole(?);";
+        $sql = "CALL updateEventRole(?, ?, ?);";
         $stmt = $db->prepare($sql);
         $stmt->bind_param("isi", $id, $name, $accessLevel);
         $stmt->execute();

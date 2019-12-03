@@ -131,7 +131,7 @@ CREATE PROCEDURE updateEvent(
 
   CREATE PROCEDURE getEventRoles(_event int(11))
     BEGIN
-        SELECT * FROM eventroles WHERE event = _event;
+        SELECT * FROM eventroles WHERE event = _event ORDER BY accessLevel DESC, name;
      END;
 
   CREATE PROCEDURE addEventRole(_event int(11), _name varchar(50), _accessLevel int(1))

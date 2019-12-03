@@ -66,7 +66,7 @@ CREATE OR REPLACE PROCEDURE setGtReadyStatus(_gtId int(11), _value boolean)
 
 CREATE PROCEDURE getGtRoles(_gt int(11))
     BEGIN
-        SELECT * FROM gtroles WHERE gt = _gt;
+        SELECT * FROM gtroles WHERE gt = _gt ORDER BY accessLevel DESC, name;
      END;
 
 CREATE PROCEDURE addGtRole(_gt int(11), _name varchar(50), _accessLevel int(1))

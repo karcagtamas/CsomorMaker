@@ -156,6 +156,8 @@ import { EventAdminComponent } from './components/admin/event-admin/event-admin.
 import { GtAdminComponent } from './components/admin/gt-admin/gt-admin.component';
 import { UserAdminComponent } from './components/admin/user-admin/user-admin.component';
 import { EventTeamImportModalComponent } from './components/event/event-teams/event-team-import-modal/event-team-import-modal.component';
+import { EventRolesComponent } from './components/event/event-roles/event-roles/event-roles.component';
+import { EventRoleModalComponent } from './components/event/event-roles/event-role-modal/event-role-modal.component';
 
 @NgModule({
   declarations: [
@@ -251,7 +253,9 @@ import { EventTeamImportModalComponent } from './components/event/event-teams/ev
     EventAdminComponent,
     GtAdminComponent,
     UserAdminComponent,
-    EventTeamImportModalComponent
+    EventTeamImportModalComponent,
+    EventRolesComponent,
+    EventRoleModalComponent
   ],
   imports: [
     BrowserModule,
@@ -332,7 +336,8 @@ import { EventTeamImportModalComponent } from './components/event/event-teams/ev
     GtPresentingDialogComponent,
     GtPresentingEditorDialogComponent,
     EventPayoutDialogComponent,
-    EventTeamImportModalComponent
+    EventTeamImportModalComponent,
+    EventRoleModalComponent
   ]
 })
 export class AppModule {}

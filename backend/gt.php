@@ -167,7 +167,7 @@
     function updateGtRole($id, $name, $accessLevel){
         global $db;
 
-        $sql = "CALL updateGtRole(?);";
+        $sql = "CALL updateGtRole(?, ?, ?);";
         $stmt = $db->prepare($sql);
         $stmt->bind_param("isi", $id, $name, $accessLevel);
         $stmt->execute();
