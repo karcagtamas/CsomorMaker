@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { EventTeam, Response, EventTeamMember } from '../models';
+import { Observable } from 'rxjs';
 
 const URL = environment.api;
 
@@ -77,5 +78,11 @@ export class EventTeamsService {
 
   countOfCostAndDeposit(event: number): Promise<Counts> {
     return this.http.get<Counts>(`${this.url}/counts/${event}`, HttpHeader).toPromise();
+  }
+
+  postFile(fileToUpload: File, event: number): Promise<boolean> {
+    const formData: FormData = new FormData();
+    formData.append('fileKey', fileToUpload, fileToUpload.name);
+    return this.http.post<boolean>(`${this.url}/upload/${event}`, formData, HttpHeader).toPromise();
   }
 }

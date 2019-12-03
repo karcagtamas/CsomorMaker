@@ -610,6 +610,7 @@ CREATE PROCEDURE addEventTeam(_eventId int(11), _name varchar(100))
     BEGIN
       INSERT INTO eventteams (name, event)
         VALUES (_name, _eventId);
+      SELECT LAST_INSERT_ID() As id;
     END;
 
 DROP PROCEDURE setEventTeamIsPaidFixCostStatus;

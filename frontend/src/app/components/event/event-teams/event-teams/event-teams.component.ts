@@ -3,6 +3,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Event, EventTeam } from 'src/app/models';
 import { EventTeamsService, NotificationService } from 'src/app/services';
 import { AddTeamDialogComponent } from '../add-team-dialog/add-team-dialog.component';
+import { EventTeamImportModalComponent } from '../event-team-import-modal/event-team-import-modal.component';
 
 @Component({
   selector: 'app-event-teams',
@@ -59,6 +60,19 @@ export class EventTeamsComponent implements OnInit, OnChanges {
           .catch(() => {
             this.notificationservice.error('A csapat hozzáadása közben hiba lépett fel. Kérjük próbálja újra késöbb.');
           });
+      }
+    });
+  }
+
+  openImportModal() {
+    const dialogRef = this.dialog.open(EventTeamImportModalComponent, {
+      data: this.event.id,
+      width: '50%'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.getTeams();
       }
     });
   }

@@ -58,7 +58,7 @@
         $stmt->close();
     }
 
-    function addEventTeam($eventId, $name){
+    function addEventTeam($eventId, $name, $response){
         global $db;
 
         $sql = "CALL addEventTeam(?, ?);";
@@ -66,16 +66,24 @@
         $stmt = $db->prepare($sql);
         $stmt->bind_param("is", $eventId, $name);
         $stmt->execute();
-
-        if ($stmt->errno){
-            $array['response'] =  'fail';
-            $array['message'] = 'A csapat hozzáadása sikeretelen!';
-        }else{
-            $array['response'] =  'success';
-            $array['message'] = 'A csapat hozzáadása sikeres!';
+        $result = $stmt->get_result();
+        $row=$result->fetch_assoc();
+        $id = $row["id"];
+        if ($response){
+            if ($stmt->errno){
+                $array['response'] =  'fail';
+                $array['message'] = 'A csapat hozzáadása sikeretelen!';
+            }else{
+                $array['response'] =  'success';
+                $array['message'] = 'A csapat hozzáadása sikeres!';
+            }
+            echo json_encode($array);
         }
-        echo json_encode($array);
         $stmt->close();
+        if (!$response){
+            return $id;
+        }
+        
     }
 
     function setEventTeamIsPaidFixCostStatus($teamId, $status){
@@ -201,7 +209,7 @@
         $stmt->close();
     }
 
-    function addEventTeamMember($teamId, $name){
+    function addEventTeamMember($teamId, $name, $response){
         global $db;
 
         $sql = "CALL addEventTeamMember(?, ?);";
@@ -209,15 +217,16 @@
         $stmt = $db->prepare($sql);
         $stmt->bind_param("is", $teamId, $name);
         $stmt->execute();
-
-        if ($stmt->errno){
-            $array['response'] =  'fail';
-            $array['message'] = 'A csapat tag hozzáadása sikeretelen!';
-        }else{
-            $array['response'] =  'success';
-            $array['message'] = 'A csapat tag hozzáadása sikeres!';
+        if ($response){
+            if ($stmt->errno){
+                $array['response'] =  'fail';
+                $array['message'] = 'A csapat tag hozzáadása sikeretelen!';
+            }else{
+                $array['response'] =  'success';
+                $array['message'] = 'A csapat tag hozzáadása sikeres!';
+            }
+            echo json_encode($array);
         }
-        echo json_encode($array);
         $stmt->close();
     }
 
@@ -292,6 +301,21 @@
         
         echo json_encode($row);
         $stmt->close();
+    }
+
+    function importTeam($fileKey, $event){
+        global $db;
+
+        $content = file_get_contents($fileKey["tmp_name"]);
+        $rows = explode("\n", $content);
+        if ($rows[0]){
+            $id = addEventTeam($event, utf8_encode($rows[0]), false);
+            for ($i=1; $i < count($rows); $i++) { 
+                if ($rows[$i]){
+                    addEventTeamMember($id, utf8_encode($rows[$i]), false);
+                }
+            }
+        }
     }
 
 ?>

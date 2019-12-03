@@ -487,7 +487,11 @@
                                     break;
 
                                 case 'add':
-                                    addEventTeam($_POST['event'], $_POST['name']);
+                                    addEventTeam($_POST['event'], $_POST['name'], true);
+                                    break;
+
+                                case 'upload':
+                                    importTeam($_FILES['fileKey'], $url[5]);
                                     break;
 
                                 case 'set':
@@ -535,7 +539,7 @@
                                             break;
 
                                         case 'add':
-                                            addEventTeamMember($_POST['team'], $_POST['name']);
+                                            addEventTeamMember($_POST['team'], $_POST['name'], true);
                                             break;
                                         
                                         case 'deposit':
