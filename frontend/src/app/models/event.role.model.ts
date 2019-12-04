@@ -3,4 +3,5 @@ export class EventRole {
   name: string;
   accessLevel: number;
   event: number;
+  users: number;
 }

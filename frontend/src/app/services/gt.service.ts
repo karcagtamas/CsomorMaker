@@ -27,7 +27,8 @@ export class GtService {
     { name: 'Bemutatás', link: 'presentings', accessLevel: 1 },
     { name: 'Bemutatás beállítások', link: 'presentings-settings', accessLevel: 3 },
     { name: 'Kérdések', link: 'questions', accessLevel: 3 },
-    { name: 'Válaszok', link: 'answers', accessLevel: 3 }
+    { name: 'Válaszok', link: 'answers', accessLevel: 3 },
+    { name: 'Rangok', link: 'roles', accessLevel: 3 }
   ];
 
   constructor(private http: HttpClient) {}

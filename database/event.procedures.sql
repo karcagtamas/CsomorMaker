@@ -131,7 +131,11 @@ CREATE PROCEDURE updateEvent(
 
   CREATE PROCEDURE getEventRoles(_event int(11))
     BEGIN
-        SELECT * FROM eventroles WHERE event = _event ORDER BY accessLevel DESC, name;
+        SELECT eventroles.id, eventroles.name, eventroles.event, eventroles.accessLevel, COUNT(usereventswitch.user) AS users FROM eventroles
+        LEFT JOIN usereventswitch ON usereventswitch.role = eventroles.id
+        WHERE eventroles.event = _event
+        GROUP BY eventroles.id
+        ORDER BY eventroles.accessLevel DESC, eventroles.name;
      END;
 
   CREATE PROCEDURE addEventRole(_event int(11), _name varchar(50), _accessLevel int(1))

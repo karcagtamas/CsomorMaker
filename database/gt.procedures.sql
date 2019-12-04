@@ -66,12 +66,16 @@ CREATE OR REPLACE PROCEDURE setGtReadyStatus(_gtId int(11), _value boolean)
 
 CREATE PROCEDURE getGtRoles(_gt int(11))
     BEGIN
-        SELECT * FROM gtroles WHERE gt = _gt ORDER BY accessLevel DESC, name;
+        SELECT gtroles.id, gtroles.gt, gtroles.name, gtroles.accessLevel, COUNT(usergtswitch.user) as users FROM gtroles
+        LEFT JOIN usergtswitch ON usergtswitch.role = gtroles.id 
+        WHERE gtroles.gt = _gt 
+        GROUP BY gtroles.id
+        ORDER BY gtroles.accessLevel DESC, gtroles.name;
      END;
 
 CREATE PROCEDURE addGtRole(_gt int(11), _name varchar(50), _accessLevel int(1))
     BEGIN
-        INSERT INTO gtroles(event, name, accessLevel)
+        INSERT INTO gtroles(gt, name, accessLevel)
         VALUES(_gt, _name, _accessLevel);
      END;
 

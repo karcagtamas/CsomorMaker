@@ -23,6 +23,7 @@ export class GtRole {
   name: string;
   accessLevel: string;
   gt: number;
+  users: number;
 }
 
 export class GtMember {
