@@ -18,6 +18,10 @@ mat-error {
   font-size: $small-font-size;
 }
 
+mat-icon {
+  font-size: $menu-font-size !important;
+}
+
 .activeMenu {
   color: $accent !important;
 }
