@@ -22,7 +22,7 @@ export class ModifyEventMemberComponent implements OnInit {
 
   ngOnInit() {
     this.eventservice
-      .getEventRoles()
+      .getEventRoles(this.data.eventMember.event)
       .then(res => {
         this.eventRoles = res;
         this.roleControl.setValue(this.data.eventMember.roleId);

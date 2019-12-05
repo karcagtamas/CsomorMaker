@@ -27,7 +27,6 @@ export class GtImportMembersDialogComponent implements OnInit {
       reader.onload = () => {
         this.file = file;
         this.value = reader.result.toString().split(',')[1];
-        console.log(reader.result.toString().split(',')[1]);
       };
     }
   }

@@ -77,10 +77,16 @@ CREATE PROCEDURE getUsersEvents(_userId int(11))
 
 CREATE PROCEDURE addEvent(_name varchar(50), _creater int(11))
     BEGIN
+    DECLARE _event int(2) DEFAULT 0;
      INSERT INTO events (name, creater, lastUpdater)
       VALUES (_name, _creater, _creater);
-
-     CALL addUserToEvent(_creater, LAST_INSERT_ID(), 1);
+      SET _event = LAST_INSERT_ID();
+     CALL addUserToEvent(_creater, _event, 1);
+     INSERT INTO eventroles(name, accessLevel, event)
+        VALUES ('Főszervező', 4, _event),
+          ('Posztfőszervező', 2, _event),
+          ('Humán', 1, _event),
+          ('Fejlesztő', 3, _event);
     END;
 
 DROP PROCEDURE IF EXISTS updateEvent;
@@ -123,9 +129,29 @@ CREATE PROCEDURE updateEvent(
      WHERE id = _id;
     END;
 
-  CREATE PROCEDURE getEventRoles()
+  CREATE PROCEDURE getEventRoles(_event int(11))
     BEGIN
-        SELECT * FROM eventroles;
+        SELECT eventroles.id, eventroles.name, eventroles.event, eventroles.accessLevel, COUNT(usereventswitch.user) AS users FROM eventroles
+        LEFT JOIN usereventswitch ON usereventswitch.role = eventroles.id
+        WHERE eventroles.event = _event
+        GROUP BY eventroles.id
+        ORDER BY eventroles.accessLevel DESC, eventroles.name;
+     END;
+
+  CREATE PROCEDURE addEventRole(_event int(11), _name varchar(50), _accessLevel int(1))
+    BEGIN
+        INSERT INTO eventroles(event, name, accessLevel)
+        VALUES(_event, _name, _accessLevel);
+     END;
+
+  CREATE PROCEDURE updateEventRole(_id int(11), _name varchar(50), _accessLevel int(1))
+    BEGIN
+        UPDATE eventroles SET name = _name, accessLevel = _accessLevel WHERE id = _id;
+     END;
+
+  CREATE PROCEDURE deleteEventRole(_id int(11))
+    BEGIN
+        DELETE FROM eventroles WHERE id = _id;
      END;
 
   CREATE PROCEDURE getEventAccessLevel(_user int(11), _event int(11))
@@ -588,6 +614,7 @@ CREATE PROCEDURE addEventTeam(_eventId int(11), _name varchar(100))
     BEGIN
       INSERT INTO eventteams (name, event)
         VALUES (_name, _eventId);
+      SELECT LAST_INSERT_ID() As id;
     END;
 
 DROP PROCEDURE setEventTeamIsPaidFixCostStatus;

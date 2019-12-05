@@ -240,17 +240,72 @@
 
     }
 
-    function getEventRoles(){
+    function getEventRoles($event){
         global $db;
 
-        $sql = "CALL getEventRoles();";
+        $sql = "CALL getEventRoles(?);";
         $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $event);
         $stmt->execute();
         $result = $stmt->get_result();
         
         $array = [];
         while($row = $result->fetch_assoc()){
             array_push($array, $row);
+        }
+        echo json_encode($array);
+        $stmt->close();
+    }
+
+    function addEventRole($event, $name, $accessLevel){
+        global $db;
+
+        $sql = "CALL addEventRole(?, ?, ?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("isi", $event, $name, $accessLevel);
+        $stmt->execute();
+        if ($stmt->errno){
+            $array['response'] =  'fail';
+            $array['message'] = 'Az esemény rang létrehozása sikertelen!';
+        }else{
+            $array['response'] =  'success';
+            $array['message'] = 'Az esemény rang létrehozása sikeres!';
+        }
+        echo json_encode($array);
+        $stmt->close();
+    }
+
+    function updateEventRole($id, $name, $accessLevel){
+        global $db;
+
+        $sql = "CALL updateEventRole(?, ?, ?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("isi", $id, $name, $accessLevel);
+        $stmt->execute();
+        if ($stmt->errno){
+            $array['response'] =  'fail';
+            $array['message'] = 'Az esemény rang frissítése sikertelen!';
+        }else{
+            $array['response'] =  'success';
+            $array['message'] = 'Az esemény rang frissítése sikeres!';
+        }
+        echo json_encode($array);
+        $stmt->close();
+    }
+
+    function deleteEventRole($id){
+        global $db;
+
+        $sql = "CALL deleteEventRole(?);";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        if ($stmt->errno){
+            $array['response'] =  'fail';
+            $array['message'] = 'Az esemény rang törlése sikertelen!';
+        }else{
+            $array['response'] =  'success';
+            $array['message'] = 'Az esemény rang törlése sikeres!';
         }
         echo json_encode($array);
         $stmt->close();

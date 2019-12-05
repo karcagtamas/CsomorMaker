@@ -57,13 +57,6 @@ CREATE TABLE notifications(
   REFERENCES users(id)
 );
 
-CREATE TABLE eventroles(
-  id int(11) NOT NULL AUTO_INCREMENT,
-  name varchar(50) NOT NULL,
-  accessLevel int(1) NOT NULL DEFAULT 1,
-  PRIMARY KEY(id)
- );
-
 CREATE TABLE events(
     id int(11) AUTO_INCREMENT NOT NULL,
     name varchar(50) NOT NULL,
@@ -95,6 +88,16 @@ CREATE TABLE events(
     CONSTRAINT fk_lastUpdater_users_events FOREIGN KEY (lastUpdater)
     REFERENCES users(id)
 );
+
+CREATE TABLE eventroles(
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(50) NOT NULL,
+  accessLevel int(1) NOT NULL DEFAULT 1,
+  event int(11) NOT NULL,
+  PRIMARY KEY(id),
+  CONSTRAINT fk_event_events_eventroles FOREIGN KEY (event)
+  REFERENCES events(id) ON DELETE CASCADE
+ );
 
 CREATE TABLE usereventswitch(
   user int(11) NOT NULL,
@@ -383,6 +386,16 @@ CREATE TABLE gts(
   REFERENCES users(id)
   );
 
+  CREATE TABLE gtroles(
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(50) NOT NULL,
+  accessLevel int(1) NOT NULL DEFAULT 1,
+  gt int(11) NOT NULL,
+  PRIMARY KEY(id),
+  CONSTRAINT fk_gt_gts_gtroles FOREIGN KEY (gt)
+  REFERENCES gts(id) ON DELETE CASCADE
+ );
+
 CREATE TABLE usergtswitch(
   gt int(11) NOT NULL,
   user int(11) NOT NULL,
@@ -394,8 +407,8 @@ CREATE TABLE usergtswitch(
   REFERENCES gts(id),
   CONSTRAINT fk_user_users_usergtswitch FOREIGN KEY (user)
   REFERENCES users(id),
-  CONSTRAINT fk_role_eventroles_usergtswitch FOREIGN KEY (role)
-  REFERENCES eventroles(id)
+  CONSTRAINT fk_role_gtroles_usergtswitch FOREIGN KEY (role)
+  REFERENCES gtroles(id)
   );
 
 CREATE TABLE gtclasses(

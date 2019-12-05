@@ -1,0 +1,23 @@
+@import 'src/variables.scss';
+
+.data-table {
+  padding: 1rem;
+
+  table {
+    width: 100%;
+    tr {
+      cursor: pointer;
+    }
+    tr.blocked {
+      cursor: not-allowed !important;
+    }
+  }
+}
+
+::ng-deep th .mat-sort-header-button {
+  color: $primary;
+}
+
+th {
+  color: $primary;
+}

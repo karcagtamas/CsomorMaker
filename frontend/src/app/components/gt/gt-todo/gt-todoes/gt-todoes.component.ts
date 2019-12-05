@@ -49,7 +49,6 @@ export class GtTodoesComponent implements OnInit, OnChanges {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       if (result) {
         if (event) {
           this.gttodoeservice

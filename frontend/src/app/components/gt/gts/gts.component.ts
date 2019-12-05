@@ -29,7 +29,6 @@ export class GtsComponent implements OnInit {
   ngOnInit() {
     this.menuItems = this.gtservice.menuItems;
     this.route.params.subscribe(data => {
-      console.log(data);
       this.gtservice
         .getGts()
         .then(res => {
@@ -46,7 +45,6 @@ export class GtsComponent implements OnInit {
               .catch(() => {
                 this.accessLevel = 0;
               });
-            console.log(this.currentGtId);
           } else {
             this.router.navigateByUrl(`/gts/${this.gts[0].id}/details`);
           }

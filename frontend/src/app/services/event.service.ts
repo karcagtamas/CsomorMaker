@@ -59,8 +59,20 @@ export class EventService {
     return this.http.get<Response>(`${this.url}/injured/dec/${id}`, HttpHeader).toPromise();
   }
 
-  getEventRoles(): Promise<EventRole[]> {
-    return this.http.get<EventRole[]>(`${this.url}/roles/get`, HttpHeader).toPromise();
+  getEventRoles(id: number): Promise<EventRole[]> {
+    return this.http.get<EventRole[]>(`${this.url}/roles/get/${id}`, HttpHeader).toPromise();
+  }
+
+  addEventRole(event: number, name: string, accessLevel: boolean): Promise<Response> {
+    return this.http.post<Response>(`${this.url}/roles/add`, { event, name, accessLevel }, HttpHeader).toPromise();
+  }
+
+  updateEventRole(id: number, name: string, accessLevel: boolean): Promise<Response> {
+    return this.http.post<Response>(`${this.url}/roles/update`, { id, name, accessLevel }, HttpHeader).toPromise();
+  }
+
+  deleteEventRole(id: number): Promise<Response> {
+    return this.http.get<Response>(`${this.url}/roles/delete/${id}`, HttpHeader).toPromise();
   }
 
   disableEvent(event: number): Promise<Response> {

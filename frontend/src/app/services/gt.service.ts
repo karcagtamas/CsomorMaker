@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Gt, Response } from '../models';
+import { Gt, Response, GtRole } from '../models';
 import { HttpClient } from '@angular/common/http';
 
 const URL = environment.api;
@@ -27,7 +27,8 @@ export class GtService {
     { name: 'Bemutatás', link: 'presentings', accessLevel: 1 },
     { name: 'Bemutatás beállítások', link: 'presentings-settings', accessLevel: 3 },
     { name: 'Kérdések', link: 'questions', accessLevel: 3 },
-    { name: 'Válaszok', link: 'answers', accessLevel: 3 }
+    { name: 'Válaszok', link: 'answers', accessLevel: 3 },
+    { name: 'Rangok', link: 'roles', accessLevel: 3 }
   ];
 
   constructor(private http: HttpClient) {}
@@ -58,5 +59,21 @@ export class GtService {
 
   countOfAllPaid(gt: number): Promise<{ countOfCosts: number }> {
     return this.http.get<{ countOfCosts: number }>(`${this.url}/costs/${gt}`, HttpHeader).toPromise();
+  }
+
+  getGtRoles(id: number): Promise<GtRole[]> {
+    return this.http.get<GtRole[]>(`${this.url}/roles/get/${id}`, HttpHeader).toPromise();
+  }
+
+  addGtRole(gt: number, name: string, accessLevel: boolean): Promise<Response> {
+    return this.http.post<Response>(`${this.url}/roles/add`, { gt, name, accessLevel }, HttpHeader).toPromise();
+  }
+
+  updateGtRole(id: number, name: string, accessLevel: boolean): Promise<Response> {
+    return this.http.post<Response>(`${this.url}/roles/update`, { id, name, accessLevel }, HttpHeader).toPromise();
+  }
+
+  deleteGtRole(id: number): Promise<Response> {
+    return this.http.get<Response>(`${this.url}/roles/delete/${id}`, HttpHeader).toPromise();
   }
 }

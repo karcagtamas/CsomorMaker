@@ -1,10 +1,9 @@
-<div class="text-center panel-title border rounded">Csapatok <mat-icon>sports_soccer</mat-icon>
-</div>
+<div class="text-center panel-title border rounded">Csapatok <mat-icon>sports_soccer</mat-icon></div>
 <div class="teams" *ngIf="event">
-  <app-event-team *ngFor="let team of teams" [team]="team" [event]="event" (refresh)="getTeams()">
-  </app-event-team>
+  <app-event-team *ngFor="let team of teams" [team]="team" [event]="event" (refresh)="getTeams()"> </app-event-team>
   <div *ngIf="teams && teams.length === 0" class="text-center">
     Nincs még csapatod :(
   </div>
   <button mat-raised-button color="primary" (click)="openAddTeamModal()" title="Új csapat felvétele">Új csapat</button>
+  <button mat-raised-button (click)="openImportModal()" title="Új csapat felvétele">Importálás</button>
 </div>

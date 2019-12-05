@@ -120,8 +120,6 @@ export class GtMembersComponent implements OnInit, OnChanges {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result.file);
-        console.log(result.value);
         this.gtmembersservice
           .importGtMembers(this.gt.id, result.file, result.value)
           .then(res => {

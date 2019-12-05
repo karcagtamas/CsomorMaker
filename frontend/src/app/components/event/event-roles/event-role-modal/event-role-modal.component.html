@@ -1,0 +1,33 @@
+<div mat-dialog-content>
+  <div class="text-center panel-title border rounded">{{ title }}</div>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Név</mat-label>
+    <input matInput type="text" placeholder="Név" [formControl]="nameControl" />
+    <mat-error *ngIf="nameControl.hasError('required')">A név megadása kötelező!</mat-error>
+    <mat-error *ngIf="nameControl.hasError('maxlength')">A név maximum hossza 50 karakter lehet!</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Szint</mat-label>
+    <mat-select placeholder="Szint" [formControl]="levelControl">
+      <mat-option *ngFor="let level of levels" [value]="level">{{ level }}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="nameControl.hasError('required')">A név megadása kötelező!</mat-error>
+    <mat-error *ngIf="nameControl.hasError('maxlength')">A név maximum hossza 50 karakter lehet!</mat-error>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="save()"
+    cdkFocusInitial
+    [disabled]="nameControl.invalid || levelControl.invalid"
+    title="Mentés"
+  >
+    Mentés
+  </button>
+  <button mat-raised-button color="accent" (click)="onNoClick()" title="Visszalépés mentés nélkül">Mégsem</button>
+  <button mat-raised-button color="warn" (click)="delete()" title="Törlése" *ngIf="data && data.users === 0">
+    Törlés
+  </button>
+</div>

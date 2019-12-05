@@ -21,7 +21,8 @@ export class EventsComponent implements OnInit {
     { name: 'ToDo', link: 'todo', accessLevel: 2, icon: 'check_circle' },
     { name: 'Chat', link: 'chat', accessLevel: 1, icon: 'chat' },
     { name: 'Tagok', link: 'members', accessLevel: 1, icon: 'group' },
-    { name: 'Csapatok', link: 'teams', accessLevel: 2, icon: 'sports_soccer' }
+    { name: 'Csapatok', link: 'teams', accessLevel: 2, icon: 'sports_soccer' },
+    { name: 'Rangok', link: 'roles', accessLevel: 3, icon: 'group' }
   ];
   currentEventId = 0;
   currentEvent = new Event();
