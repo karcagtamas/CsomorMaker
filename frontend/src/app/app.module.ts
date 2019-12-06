@@ -160,6 +160,7 @@ import { EventRolesComponent } from './components/event/event-roles/event-roles/
 import { EventRoleModalComponent } from './components/event/event-roles/event-role-modal/event-role-modal.component';
 import { GtRolesComponent } from './components/gt/gt-roles/gt-roles/gt-roles.component';
 import { GtRoleModalComponent } from './components/gt/gt-roles/gt-role-modal/gt-role-modal.component';
+import { FooterComponent } from './components/main/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -259,7 +260,8 @@ import { GtRoleModalComponent } from './components/gt/gt-roles/gt-role-modal/gt-
     EventRolesComponent,
     EventRoleModalComponent,
     GtRolesComponent,
-    GtRoleModalComponent
+    GtRoleModalComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

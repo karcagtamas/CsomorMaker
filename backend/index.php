@@ -1,11 +1,11 @@
 <?php 
     session_start();
-
-    if ($_SERVER['SERVER_NAME'] == "localhost"){
-        header("Access-Control-Allow-Origin: http://localhost:4200", false);
-    }
-    else if ($_SERVER['SERVER_NAME'] == 'csomormaker.karcags.hu'){
+    // var_dump($_SERVER);
+    if ($_SERVER['HTTP_ORIGIN'] == "http://csomormaker.karcags.hu"){
         header("Access-Control-Allow-Origin: http://csomormaker.karcags.hu", false);
+    }
+    else if ($_SERVER['HTTP_ORIGIN'] == 'http://localhost:4200'){
+        header("Access-Control-Allow-Origin: http://localhost:4200", false);
     }
     else{
         header("Access-Control-Allow-Origin: *", false);

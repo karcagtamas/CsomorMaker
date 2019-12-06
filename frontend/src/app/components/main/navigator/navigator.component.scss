@@ -4,7 +4,10 @@
   flex: 1 1 auto;
 }
 
-.title {
-  font-size: $header-font-size !important;
-  cursor: pointer;
+.toolbar {
+  box-shadow: 0 0 10px 1px black;
+  .title {
+    font-size: $header-font-size !important;
+    cursor: pointer;
+  }
 }
