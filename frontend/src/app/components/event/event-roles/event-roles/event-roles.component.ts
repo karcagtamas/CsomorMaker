@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, OnChanges } from '@angular/core';
 import { EventRole, Event } from 'src/app/models';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -12,7 +12,7 @@ import { EventRoleModalComponent } from '../event-role-modal/event-role-modal.co
   templateUrl: './event-roles.component.html',
   styleUrls: ['./event-roles.component.scss']
 })
-export class EventRolesComponent implements OnInit {
+export class EventRolesComponent implements OnInit, OnChanges {
   @Input() event: Event;
   eventRoles: MatTableDataSource<EventRole>;
   displayedColumns: string[] = ['name', 'accessLevel'];
@@ -28,6 +28,10 @@ export class EventRolesComponent implements OnInit {
 
   ngOnInit() {
     this.eventRoles = new MatTableDataSource();
+    this.getEventRoles();
+  }
+
+  ngOnChanges() {
     this.getEventRoles();
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnChanges } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { GtRole, Gt } from 'src/app/models';
 import { MatPaginator } from '@angular/material/paginator';
@@ -12,7 +12,7 @@ import { GtRoleModalComponent } from '../gt-role-modal/gt-role-modal.component';
   templateUrl: './gt-roles.component.html',
   styleUrls: ['./gt-roles.component.scss']
 })
-export class GtRolesComponent implements OnInit {
+export class GtRolesComponent implements OnInit, OnChanges {
   @Input() gt: Gt;
   gtRoles: MatTableDataSource<GtRole>;
   displayedColumns: string[] = ['name', 'accessLevel'];
@@ -28,6 +28,10 @@ export class GtRolesComponent implements OnInit {
 
   ngOnInit() {
     this.gtRoles = new MatTableDataSource();
+    this.getGtRoles();
+  }
+
+  ngOnChanges() {
     this.getGtRoles();
   }
 
