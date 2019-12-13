@@ -1,4 +1,4 @@
-import { LoginService, CommonService, UserService, Theme, THEMES } from 'src/app/services';
+import { LoginService, CommonService, UserService, THEMES, NAVIGATOR_HEADERS } from 'src/app/services';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models';
@@ -15,6 +15,7 @@ export class NavigatorComponent implements OnInit {
   user: User = null;
 
   themes = THEMES;
+  navigatorHeaders = NAVIGATOR_HEADERS;
 
   selectedTheme: string;
 

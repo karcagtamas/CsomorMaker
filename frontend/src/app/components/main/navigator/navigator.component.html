@@ -60,6 +60,12 @@
         </mat-menu>
       </div>
       <div *ngSwitchCase="false">
+        <div *ngFor="let header of navigatorHeaders">
+          <button mat-button [routerLink]="[header.route]" routerLinkActive="activeMenu" *ngIf="isLoggedIn">
+            {{ header.title }}
+          </button>
+        </div>
+
         <button mat-button [routerLink]="['/login']" routerLinkActive="activeMenu" *ngIf="!isLoggedIn">
           Bejelentkezés
         </button>
